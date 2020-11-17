@@ -1,0 +1,37 @@
+{
+  "author": "Mimiko Phonowell <phnonwell@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/phonowell/genshin-impact-script/issues"
+  },
+  "dependencies": {
+    "coffee-ahk": "^0.0.1",
+    "fire-keeper": "^0.0.176",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  },
+  "description": "",
+  "devDependencies": {
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.7"
+  },
+  "homepage": "https://github.com/phonowell/genshin-impact-script",
+  "keywords": [
+    "ahk",
+    "auto hotkey",
+    "coffee-ahk",
+    "genshin",
+    "genshin impact"
+  ],
+  "license": "MIT",
+  "name": "genshin-impact-script",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phonowell/genshin-impact-script.git"
+  },
+  "scripts": {
+    "alice": "ts-node task/alice",
+    "build": "npm run alice build"
+  },
+  "url": "https://github.com/phonowell/genshin-impact-script",
+  "version": "0.0.1"
+}

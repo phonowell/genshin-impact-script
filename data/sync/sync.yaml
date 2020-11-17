@@ -1,0 +1,12 @@
+# kokoro
+- .gitignore
+- .npmignore
+- .stylintrc
+- coffeelint.json
+- license.md
+- tslint.json
+
+# task
+- task/alice.ts
+- task/sync.ts
+- task/update.ts
