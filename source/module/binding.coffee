@@ -1,7 +1,7 @@
 bind = ->
 
   for key in ['1', '2', '3', '4', '5']
-    $.on key, toggle.Bind key
+    $.on key, (key = key) -> toggle key
 
   $.on 'e', -> $.press 'e:down'
   $.on 'e:up', ->
