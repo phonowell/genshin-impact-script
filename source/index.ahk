@@ -75,9 +75,15 @@ jsShim_2(callback, time) {
   return callback
 }
 jsShim_3(callback) {
+  if !(callback) {
+    return
+  }
   SetTimer, % callback, Delete
 }
 jsShim_4(callback) {
+  if !(callback) {
+    return
+  }
   SetTimer, % callback, Delete
 }
 jsShim_5(message := "") {

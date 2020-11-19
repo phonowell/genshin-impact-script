@@ -5,8 +5,7 @@ import compile_ from 'coffee-ahk'
 async function main_(): Promise<void> {
 
   await compile_('./source/z.coffee', {
-    salt: 'z',
-    verbose: true
+    salt: 'z'
   })
 }
 
