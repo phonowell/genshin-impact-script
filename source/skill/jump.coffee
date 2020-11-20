@@ -7,7 +7,7 @@ jumpTwice = ->
 
   doAs ->
     $.press 'space'
-  , 100, 2, 200
+  , 2, 100, 200
 
 startJumpBack = ->
 

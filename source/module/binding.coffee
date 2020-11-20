@@ -10,12 +10,12 @@ bind = ->
     timer = setTimeout $.beep, 5e3
 
   $.on 'f', ->
-    doAs (e) ->
+    doAs (n) ->
       $.press 'f'
-      unless e.count >= 10
+      unless n >= 10
         $.click 'wheel-down:down'
       else $.click 'wheel-down:up'
-    , 100, 10
+    , 10
 
   $.on 'mbutton', toggleView
 

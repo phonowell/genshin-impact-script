@@ -12,7 +12,7 @@ toggle = (key) ->
 
   doAs ->
     $.press 'e'
-  , 100, 2, 100
+  , 2, 100, 100
 
   clearTimeout timerToggle
   timerToggle = setTimeout $.beep, 5e3

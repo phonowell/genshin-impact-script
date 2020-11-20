@@ -44,12 +44,29 @@ jsShim_1(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
   }
+  __type__ := $.type.Call(time)
+  if !(__type__ == "number") {
+    throw Exception("setTimeout: invalid time type '" . (__type__) . "'")
+  }
+  if (time == 0) {
+    time++
+  }
+  if !(time > 0) {
+    throw Exception("setTimeout: invalid time value '" . (time) . "'")
+  }
   SetTimer, % callback, % 0 - time
   return callback
 }
 jsShim_2(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
+  }
+  __type__ := $.type.Call(time)
+  if !(__type__ == "number") {
+    throw Exception("setTimeout: invalid time type '" . (__type__) . "'")
+  }
+  if !(time > 0) {
+    throw Exception("setTimeout: invalid time value '" . (time) . "'")
   }
   SetTimer, % callback, % time
   return callback

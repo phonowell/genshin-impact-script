@@ -3,7 +3,6 @@
   ExitApp
 }
 #KeyHistory, 0
-#MaxHotkeysPerInterval, 200
 #MaxThreads, 20
 #NoEnv
 #Persistent
@@ -64,12 +63,29 @@ jsShim_1(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
   }
+  __type__ := $.type.Call(time)
+  if !(__type__ == "number") {
+    throw Exception("setTimeout: invalid time type '" . (__type__) . "'")
+  }
+  if (time == 0) {
+    time++
+  }
+  if !(time > 0) {
+    throw Exception("setTimeout: invalid time value '" . (time) . "'")
+  }
   SetTimer, % callback, % 0 - time
   return callback
 }
 jsShim_2(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
+  }
+  __type__ := $.type.Call(time)
+  if !(__type__ == "number") {
+    throw Exception("setTimeout: invalid time type '" . (__type__) . "'")
+  }
+  if !(time > 0) {
+    throw Exception("setTimeout: invalid time value '" . (time) . "'")
   }
   SetTimer, % callback, % time
   return callback
@@ -411,9 +427,9 @@ jsShim_44(input) {
   }
   return _output
 }
-global bind := Func("genshin_25")
-global $dataDoAs := {count: 0, fn: "", interval: 0, limit: 1}
-global doAs := Func("genshin_17")
+
+global bind := Func("genshin_26")
+global doAs := Func("genshin_18")
 global id := "" ; variable
 global isSuspend := false
 global timer := ""
@@ -465,7 +481,7 @@ genshin_5(key) {
   }
   tsToggle := $.now.Call()
   $.press.Call(key)
-  doAs.Call(Func("genshin_4"), 100, 2, 100)
+  doAs.Call(Func("genshin_4"), 2, 100, 100)
   clearTimeout.Call(timerToggle)
   timerToggle := setTimeout.Call($.beep, 5000)
 }
@@ -488,7 +504,7 @@ genshin_8() {
 }
 genshin_9() {
   $.press.Call("space")
-  doAs.Call(Func("genshin_8"), 100, 2, 200)
+  doAs.Call(Func("genshin_8"), 2, 100, 200)
 }
 genshin_10() {
   if !(isDashing) {
@@ -535,68 +551,64 @@ genshin_15() {
   setInterval.Call(watch, 200)
   $.beep.Call()
 }
-genshin_16() {
-  doAs.Call()
+genshin_16(n, callback) {
+  callback.Call(n)
 }
-genshin_17(fn := "", interval := 100, limit := 1, delay := 0) {
-  if (fn) {
-    $dataDoAs.count := 0
-    $dataDoAs.fn := fn
-    $dataDoAs.interval := interval
-    $dataDoAs.limit := limit
-  }
+genshin_17(callback, limit, interval) {
+  doAs.Call(callback, limit, interval, 0)
+}
+genshin_18(callback, limit := 1, interval := 100, delay := 0) {
   if (delay) {
-    setTimeout.Call(doAs, delay)
+    $.delay.Call(delay, Func("genshin_17").Bind(callback, limit, interval))
     return
   }
-  if ($dataDoAs.count >= $dataDoAs.limit) {
-    return
+  n := 1
+  while (n <= limit) {
+    $.delay.Call((n - 1) * interval, Func("genshin_16").Bind(n, callback))
+    n++
   }
-  $dataDoAs.count++
-  $dataDoAs.fn.Call($dataDoAs)
-  setTimeout.Call(Func("genshin_16"), $dataDoAs.interval)
 }
-genshin_18() {
+genshin_19() {
   $.press.Call("s:up")
   stopJumpBack.Call()
 }
-genshin_19() {
+genshin_20() {
   $.press.Call("s:down")
   startJumpBack.Call()
 }
-genshin_20(e) {
+genshin_21(n) {
   $.press.Call("f")
-  if !(e.count >= 10) {
+  if !(n >= 10) {
     $.click.Call("wheel-down:down")
   } else {
     $.click.Call("wheel-down:up")
   }
 }
-genshin_21() {
-  doAs.Call(Func("genshin_20"), 100, 10)
-}
 genshin_22() {
+  doAs.Call(Func("genshin_21"), 10)
+}
+genshin_23() {
   $.press.Call("e:up")
   clearTimeout.Call(timer)
   timer := setTimeout.Call($.beep, 5000)
 }
-genshin_23() {
+genshin_24() {
   $.press.Call("e:down")
 }
-genshin_24(key) {
+genshin_25(key) {
   toggle.Call(key)
 }
-genshin_25() {
+genshin_26() {
   for __i__, key in ["1", "2", "3", "4", "5"] {
-    $.on.Call(key, Func("genshin_24").Bind(key))
+    $.on.Call(key, Func("genshin_25").Bind(key))
   }
-  $.on.Call("e", Func("genshin_23"))
-  $.on.Call("e:up", Func("genshin_22"))
-  $.on.Call("f", Func("genshin_21"))
+  $.on.Call("e", Func("genshin_24"))
+  $.on.Call("e:up", Func("genshin_23"))
+  $.on.Call("f", Func("genshin_22"))
   $.on.Call("mbutton", toggleView)
   $.on.Call("rbutton", startDash)
   $.on.Call("rbutton:up", stopDash)
-  $.on.Call("s", Func("genshin_19"))
-  $.on.Call("s:up", Func("genshin_18"))
+  $.on.Call("s", Func("genshin_20"))
+  $.on.Call("s:up", Func("genshin_19"))
   $.on.Call("space", jumpTwice)
 }

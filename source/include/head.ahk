@@ -1,5 +1,4 @@
 #KeyHistory, 0
-#MaxHotkeysPerInterval, 200
 #MaxThreads, 20
 #NoEnv
 #Persistent
