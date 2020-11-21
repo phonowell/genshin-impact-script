@@ -1,9 +1,9 @@
 isViewing = false
-timerView = ''
+timer.view = ''
 
 toggleView = ->
 
-  clearInterval timerView
+  clearInterval timer.view
   isViewing = !isViewing
 
   # reset key
@@ -12,7 +12,7 @@ toggleView = ->
   unless isViewing
     return
 
-  timerView = setInterval view, 3e3
+  timer.view = setInterval view, 3e3
   view()
 
 view = ->

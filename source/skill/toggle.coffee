@@ -1,4 +1,3 @@
-timerToggle = ''
 tsToggle = 0
 
 toggle = (key) ->
@@ -14,5 +13,4 @@ toggle = (key) ->
     $.press 'e'
   , 2, 100, 100
 
-  clearTimeout timerToggle
-  timerToggle = setTimeout $.beep, 5e3
+  countDown 5e3

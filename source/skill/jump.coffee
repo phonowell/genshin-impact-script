@@ -1,5 +1,5 @@
 isJumping = false
-timerJump = ''
+timer.jump = ''
 
 jumpTwice = ->
 
@@ -14,11 +14,11 @@ startJumpBack = ->
   if isJumping then return
   isJumping = true
 
-  timerJump = setTimeout jumpTwice, 100
+  timer.jump = setTimeout jumpTwice, 100
 
 stopJumpBack = ->
 
   unless isJumping then return
   isJumping = false
 
-  clearTimeout timerJump
+  clearTimeout timer.jump

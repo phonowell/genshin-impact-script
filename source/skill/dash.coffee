@@ -1,5 +1,5 @@
 isDashing = false
-timerDash = ''
+timer.dash = ''
 
 dash = ->
 
@@ -15,8 +15,8 @@ startDash = ->
   if isDashing then return
   isDashing = true
 
-  clearInterval timerDash
-  timerDash = setInterval dash, 1300
+  clearInterval timer.dash
+  timer.dash = setInterval dash, 1300
   dash()
 
 stopDash = ->
@@ -24,4 +24,4 @@ stopDash = ->
   unless isDashing then return
   isDashing = false
 
-  clearInterval timerDash
+  clearInterval timer.dash

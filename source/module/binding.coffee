@@ -6,8 +6,7 @@ bind = ->
   $.on 'e', -> $.press 'e:down'
   $.on 'e:up', ->
     $.press 'e:up'
-    clearTimeout timer
-    timer = setTimeout $.beep, 5e3
+    countDown 5e3
 
   $.on 'f', ->
     doAs (n) ->
