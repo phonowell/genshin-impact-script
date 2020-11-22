@@ -8,13 +8,8 @@ bind = ->
     $.press 'e:up'
     countDown 5e3
 
-  $.on 'f', ->
-    doAs (n) ->
-      $.press 'f'
-      unless n >= 10
-        $.click 'wheel-down:down'
-      else $.click 'wheel-down:up'
-    , 10
+  $.on 'f', startPick
+  $.on 'f:up', stopPick
 
   $.on 'mbutton', toggleView
 

@@ -1,7 +1,10 @@
 # variable
 
-isSuspend = false
+state = {}
 timer = {}
+ts = {}
+
+state.isSuspend = false
 
 resetAll = ->
 
@@ -13,24 +16,24 @@ resetAll = ->
   $.delay 200, ->
 
     for key in ['middle', 'right']
-      if ($.getState key) == 'D'
+      if $.getState key
         $.click "#{key}:up"
 
-    for key in ['e', 'f', 's', 'space']
-      if ($.getState key) == 'D'
+    for key in ['e', 'f', 's', 'space', 'w', 'x']
+      if $.getState key
         $.press "#{key}:up"
 
 watch = ->
 
-  if !isSuspend and !WinActive 'ahk_exe YuanShen.exe'
-    isSuspend = true
+  if !state.isSuspend and !WinActive 'ahk_exe YuanShen.exe'
+    state.isSuspend = true
     $.suspend true
     resetAll()
     `Process, Priority, YuanShen.exe, Low`
     return
 
-  if isSuspend and WinActive 'ahk_exe YuanShen.exe'
-    isSuspend = false
+  if state.isSuspend and WinActive 'ahk_exe YuanShen.exe'
+    state.isSuspend = false
     $.suspend false
     `Process, Priority, YuanShen.exe, Normal`
     return

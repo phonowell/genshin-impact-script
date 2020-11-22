@@ -1,9 +1,4 @@
-﻿if (A_IsAdmin != true) {
-  Run *RunAs "%A_ScriptFullPath%"
-  ExitApp
-}
-#KeyHistory, 0
-#MaxHotkeysPerInterval, 200
+﻿#KeyHistory, 0
 #MaxThreads, 20
 #NoEnv
 #Persistent
@@ -64,6 +59,16 @@ jsShim_1(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
   }
+  __type__ := $.type.Call(time)
+  if !(__type__ == "number") {
+    throw Exception("setTimeout: invalid time type '" . (__type__) . "'")
+  }
+  if (time == 0) {
+    time++
+  }
+  if !(time > 0) {
+    throw Exception("setTimeout: invalid time value '" . (time) . "'")
+  }
   SetTimer, % callback, % 0 - time
   return callback
 }
@@ -71,13 +76,26 @@ jsShim_2(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
   }
+  __type__ := $.type.Call(time)
+  if !(__type__ == "number") {
+    throw Exception("setTimeout: invalid time type '" . (__type__) . "'")
+  }
+  if !(time > 0) {
+    throw Exception("setTimeout: invalid time value '" . (time) . "'")
+  }
   SetTimer, % callback, % time
   return callback
 }
 jsShim_3(callback) {
+  if !(callback) {
+    return
+  }
   SetTimer, % callback, Delete
 }
 jsShim_4(callback) {
+  if !(callback) {
+    return
+  }
   SetTimer, % callback, Delete
 }
 jsShim_5(message := "") {
@@ -405,18 +423,12 @@ jsShim_44(input) {
   }
   return _output
 }
-global bind := Func("z_3") ; function
-global init := Func("z_1")
-$.on.Call("f1", init) ; binding
+
+global isPressing := Func("z_2")
+$.on.Call("f1", Func("z_1"))
 z_1() {
-  $.off.Call("f1", init)
-  bind.Call()
+  alert.Call($.getState.Call("f1"))
 }
 z_2(key) {
-  $.press.Call(key)
-}
-z_3() {
-  for __i__, key in ["1", "2", "3", "4", "5"] {
-    $.on.Call(key, Func("z_2").Bind(key))
-  }
+  return ($.getState.Call(key)) == "D"
 }

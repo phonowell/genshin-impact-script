@@ -1,15 +1,15 @@
-isViewing = false
+state.isViewing = false
 timer.view = ''
 
 toggleView = ->
 
   clearInterval timer.view
-  isViewing = !isViewing
+  state.isViewing = !state.isViewing
 
   # reset key
   $.click 'middle:up'
 
-  unless isViewing
+  unless state.isViewing
     return
 
   timer.view = setInterval view, 3e3

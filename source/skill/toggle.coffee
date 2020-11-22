@@ -1,11 +1,11 @@
-tsToggle = 0
+ts.toggle = 0
 
 toggle = (key) ->
 
-  unless $.now() - tsToggle > 1e3
+  unless $.now() - ts.toggle > 1e3
     $.beep()
     return
-  tsToggle = $.now()
+  ts.toggle = $.now()
 
   $.press key
 

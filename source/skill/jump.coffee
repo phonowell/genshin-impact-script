@@ -1,4 +1,4 @@
-isJumping = false
+state.isJumping = false
 timer.jump = ''
 
 jumpTwice = ->
@@ -11,14 +11,15 @@ jumpTwice = ->
 
 startJumpBack = ->
 
-  if isJumping then return
-  isJumping = true
+  if state.isJumping then return
+  state.isJumping = true
 
-  timer.jump = setTimeout jumpTwice, 100
+  $.press 'x'
+  timer.jump = $.delay 100, jumpTwice
 
 stopJumpBack = ->
 
-  unless isJumping then return
-  isJumping = false
+  unless state.isJumping then return
+  state.isJumping = false
 
   clearTimeout timer.jump
