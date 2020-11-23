@@ -18,47 +18,47 @@ SetKeyDelay, 0, 50
 SetMouseDelay, 0, 50
 StringCaseSense, On
 global $ := {}
-$.beep := Func("jsShim_44") ; beep(): void
-$.click := Func("jsShim_43") ; click(key?: string): void
-$.delay := Func("jsShim_42") ; delay(time: number, callback: Function): string
-$.exit := Func("jsShim_41") ; exit(): void
-$.findColor := Func("jsShim_40") ; findColor( color: number, start: Point = [0, 0], end: Point = [A_ScreenWidth, A_ScreenHeight], variation = 0 ): Point
-$.findImage := Func("jsShim_39") ; findImage( source: string, start: Point = [0, 0], end: Point = [A_ScreenWidth, A_ScreenHeight], ): Point
-$.formatHotkey := Func("jsShim_38") ; formatHotkey(key: string): string
-$.getColor := Func("jsShim_37") ; getColor(point?: Point): number
-$.getPosition := Func("jsShim_36") ; getPosition(): Point
-$.getState := Func("jsShim_35") ; getState(key: string): string
-$.i := Func("jsShim_34") ; i(message: string): string
+$.beep := Func("jsShim_44")
+$.click := Func("jsShim_43")
+$.delay := Func("jsShim_42")
+$.exit := Func("jsShim_41")
+$.findColor := Func("jsShim_40")
+$.findImage := Func("jsShim_39")
+$.formatHotkey := Func("jsShim_38")
+$.getColor := Func("jsShim_37")
+$.getPosition := Func("jsShim_36")
+$.getState := Func("jsShim_35")
+$.i := Func("jsShim_34")
 $.includes := Func("jsShim_33")
-$.info := Func("jsShim_32") ; info(message: string, point?: Point): string
-$.length := Func("jsShim_31") ; length(input: string | array | object): number
-$.move := Func("jsShim_30") ; move(point: Point, speed: number = 0): void
-$.now := Func("jsShim_29") ; now(): number
-$.off := Func("jsShim_28") ; off(key: string, callback: Function): void
-$.on := Func("jsShim_27") ; on(key, string, callback: Function): void
-$.open := Func("jsShim_26") ; open(source: string): void
-$.press := Func("jsShim_25") ; press(key...: string): void
-$.random := Func("jsShim_24") ; random(min: number = 0, max: number = 1): number
-$.reload := Func("jsShim_23") ; reload(): void
-$.replace := Func("jsShim_22") ; replace( input: string, searchment: string, replacement: string, limit: number = -1 )
-$.reverse := Func("jsShim_21") ; reverse(input: unknown[]): unknown[]
-$.setFixed := Func("jsShim_20") ; setFixed(fixed?: boolean): void
-$.sleep := Func("jsShim_19") ; sleep(time: number): void
-$.split := Func("jsShim_18") ; split(input: string, delimiter: string): string
-$.suspend := Func("jsShim_17") ; suspend(suspended?: boolean): void
-$.toLowerCase := Func("jsShim_16") ; toLowerCase(input: string): string
-$.toString := Func("jsShim_15") ; toString(input: unknown): string
-$.toUpperCase := Func("jsShim_14") ; toUpperCase(input: string): string
-$.trim := Func("jsShim_13") ; trim(input: string, omitting: string): string
-$.trimEnd := Func("jsShim_12") ; trimEnd(input: string, omitting: string): string
-$.trimStart := Func("jsShim_11") ; trimStart(input: string, omitting: string): string
-$.type := Func("jsShim_10") ; type(input: unknown): 'array' | 'function' | 'number' | 'object' | 'string'
-global alert := Func("jsShim_9") ; alert(message: string): void
-global clearInterval := Func("jsShim_8") ; clearInterval(callback: Function): void
-global clearTimeout := Func("jsShim_7") ; clearTimeout(callback: Function): void
-global Math := {abs: Func("jsShim_6"), ceil: Func("jsShim_5"), floor: Func("jsShim_4"), round: Func("jsShim_3")} ; abs(n: number): number ceil(n: number): number floor(n: number): number round(n: number): number
-global setInterval := Func("jsShim_2") ; setInterval(callback: Function, time: number): string
-global setTimeout := Func("jsShim_1") ; setTimeout(callback: Function, time: number): string
+$.info := Func("jsShim_32")
+$.length := Func("jsShim_31")
+$.move := Func("jsShim_30")
+$.now := Func("jsShim_29")
+$.off := Func("jsShim_28")
+$.on := Func("jsShim_27")
+$.open := Func("jsShim_26")
+$.press := Func("jsShim_25")
+$.random := Func("jsShim_24")
+$.reload := Func("jsShim_23")
+$.replace := Func("jsShim_22")
+$.reverse := Func("jsShim_21")
+$.setFixed := Func("jsShim_20")
+$.sleep := Func("jsShim_19")
+$.split := Func("jsShim_18")
+$.suspend := Func("jsShim_17")
+$.toLowerCase := Func("jsShim_16")
+$.toString := Func("jsShim_15")
+$.toUpperCase := Func("jsShim_14")
+$.trim := Func("jsShim_13")
+$.trimEnd := Func("jsShim_12")
+$.trimStart := Func("jsShim_11")
+$.type := Func("jsShim_10")
+global alert := Func("jsShim_9")
+global clearInterval := Func("jsShim_8")
+global clearTimeout := Func("jsShim_7")
+global Math := {abs: Func("jsShim_6"), ceil: Func("jsShim_5"), floor: Func("jsShim_4"), round: Func("jsShim_3")}
+global setInterval := Func("jsShim_2")
+global setTimeout := Func("jsShim_1")
 jsShim_1(callback, time) {
   if (($.type.Call(callback)) == "function") {
     callback := callback.Bind()
@@ -429,14 +429,14 @@ timer.countDown := ""
 global countDown := Func("genshin_25")
 global doAs := Func("genshin_24")
 global isMoving := Func("genshin_21")
-global state := {} ; variable
+global state := {}
 global timer := {}
 global ts := {}
 state.isSuspend := false
 global resetAll := Func("genshin_20")
 global watch := Func("genshin_18")
-$.on.Call("alt + f4", Func("genshin_17")) ; binding
-$.delay.Call(1000, Func("genshin_16")) ; execute
+$.on.Call("alt + f4", Func("genshin_17"))
+$.delay.Call(1000, Func("genshin_16"))
 state.isDashing := false
 timer.dash := ""
 global dash := Func("genshin_15")
