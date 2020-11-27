@@ -47,7 +47,4 @@ $.on 'alt + f4', ->
 
 # execute
 
-$.delay 1e3, ->
-
-  bind()
-  setInterval watch, 200
+setInterval watch, 200

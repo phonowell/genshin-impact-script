@@ -424,19 +424,19 @@ jsShim_44() {
   SoundBeep
 }
 
-global bind := Func("genshin_31")
+$.delay.Call(1000, Func("genshin_32"))
 timer.countDown := ""
-global countDown := Func("genshin_25")
-global doAs := Func("genshin_24")
-global isMoving := Func("genshin_21")
-global state := {}
+global countDown := Func("genshin_24")
+global doAs := Func("genshin_23")
+global isMoving := Func("genshin_20")
+global state := {} ; variable
 global timer := {}
 global ts := {}
 state.isSuspend := false
-global resetAll := Func("genshin_20")
-global watch := Func("genshin_18")
-$.on.Call("alt + f4", Func("genshin_17"))
-$.delay.Call(1000, Func("genshin_16"))
+global resetAll := Func("genshin_19")
+global watch := Func("genshin_17")
+$.on.Call("alt + f4", Func("genshin_16")) ; binding
+setInterval.Call(watch, 200) ; execute
 state.isDashing := false
 timer.dash := ""
 global dash := Func("genshin_15")
@@ -562,15 +562,11 @@ genshin_15() {
   $.click.Call("right")
 }
 genshin_16() {
-  bind.Call()
-  setInterval.Call(watch, 200)
-}
-genshin_17() {
   resetAll.Call()
   $.beep.Call()
   $.exit.Call()
 }
-genshin_18() {
+genshin_17() {
   if (!state.isSuspend && !WinActive("ahk_exe YuanShen.exe")) {
     state.isSuspend := true
     $.suspend.Call(true)
@@ -585,7 +581,7 @@ genshin_18() {
     return
   }
 }
-genshin_19() {
+genshin_18() {
   for __i__, key in ["middle", "right"] {
     if ($.getState.Call(key)) {
       $.click.Call("" . (key) . ":up")
@@ -597,14 +593,14 @@ genshin_19() {
     }
   }
 }
-genshin_20() {
+genshin_19() {
   Process, Priority, YuanShen.exe, Normal
   for __i__, _timer in timer {
     clearTimeout.Call(_timer)
   }
-  $.delay.Call(200, Func("genshin_19"))
+  $.delay.Call(200, Func("genshin_18"))
 }
-genshin_21() {
+genshin_20() {
   for __i__, key in ["w", "a", "s", "d"] {
     if ($.getState.Call(key)) {
       return key
@@ -612,57 +608,68 @@ genshin_21() {
   }
   return false
 }
-genshin_22(n, callback) {
+genshin_21(n, callback) {
   callback.Call(n)
 }
-genshin_23(callback, limit, interval) {
+genshin_22(callback, limit, interval) {
   doAs.Call(callback, limit, interval, 0)
 }
-genshin_24(callback, limit := 1, interval := 100, delay := 0) {
+genshin_23(callback, limit := 1, interval := 100, delay := 0) {
   if (delay) {
-    $.delay.Call(delay, Func("genshin_23").Bind(callback, limit, interval))
+    $.delay.Call(delay, Func("genshin_22").Bind(callback, limit, interval))
     return
   }
   n := 1
   while (n <= limit) {
-    $.delay.Call((n - 1) * interval, Func("genshin_22").Bind(n, callback))
+    $.delay.Call((n - 1) * interval, Func("genshin_21").Bind(n, callback))
     n++
   }
 }
-genshin_25(time) {
+genshin_24(time) {
   clearTimeout.Call(timer.countDown)
   timer.countDown := $.delay.Call(time, $.beep)
 }
+genshin_25() {
+  if (state.isDashing) {
+    return
+  }
+  $.press.Call("w:up")
+}
 genshin_26() {
+  $.press.Call("w:down")
+}
+genshin_27() {
   $.press.Call("s:up")
   stopJumpBack.Call()
 }
-genshin_27() {
+genshin_28() {
   $.press.Call("s:down")
   startJumpBack.Call()
 }
-genshin_28() {
+genshin_29() {
   $.press.Call("e:up")
   countDown.Call(5000)
 }
-genshin_29() {
+genshin_30() {
   $.press.Call("e:down")
 }
-genshin_30(key) {
+genshin_31(key) {
   toggle.Call(key)
 }
-genshin_31() {
+genshin_32() {
   for __i__, key in ["1", "2", "3", "4", "5"] {
-    $.on.Call(key, Func("genshin_30").Bind(key))
+    $.on.Call(key, Func("genshin_31").Bind(key))
   }
-  $.on.Call("e", Func("genshin_29"))
-  $.on.Call("e:up", Func("genshin_28"))
+  $.on.Call("e", Func("genshin_30"))
+  $.on.Call("e:up", Func("genshin_29"))
   $.on.Call("f", startPick)
   $.on.Call("f:up", stopPick)
   $.on.Call("mbutton", toggleView)
   $.on.Call("rbutton", startDash)
   $.on.Call("rbutton:up", stopDash)
-  $.on.Call("s", Func("genshin_27"))
-  $.on.Call("s:up", Func("genshin_26"))
+  $.on.Call("s", Func("genshin_28"))
+  $.on.Call("s:up", Func("genshin_27"))
   $.on.Call("space", jumpTwice)
+  $.on.Call("w", Func("genshin_26"))
+  $.on.Call("w:up", Func("genshin_25"))
 }

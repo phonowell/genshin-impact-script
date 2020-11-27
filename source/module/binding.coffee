@@ -1,4 +1,4 @@
-bind = ->
+$.delay 1e3, ->
 
   for key in ['1', '2', '3', '4', '5']
     $.on key, (key = key) -> toggle key
@@ -25,3 +25,8 @@ bind = ->
     stopJumpBack()
 
   $.on 'space', jumpTwice
+
+  $.on 'w', -> $.press 'w:down'
+  $.on 'w:up', ->
+    if state.isDashing then return
+    $.press 'w:up'
