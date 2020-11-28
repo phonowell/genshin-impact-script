@@ -429,14 +429,14 @@ timer.countDown := ""
 global countDown := Func("genshin_24")
 global doAs := Func("genshin_23")
 global isMoving := Func("genshin_20")
-global state := {} ; variable
+global state := {}
 global timer := {}
 global ts := {}
 state.isSuspend := false
 global resetAll := Func("genshin_19")
 global watch := Func("genshin_17")
-$.on.Call("alt + f4", Func("genshin_16")) ; binding
-setInterval.Call(watch, 200) ; execute
+$.on.Call("alt + f4", Func("genshin_16"))
+setInterval.Call(watch, 200)
 state.isDashing := false
 timer.dash := ""
 global dash := Func("genshin_15")
