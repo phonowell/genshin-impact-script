@@ -123,29 +123,29 @@ jsShim_13(input, omitting := " `t") {
   return Trim(input, omitting)
 }
 jsShim_14(input) {
-  StringUpper, __Result__, input
-  return __Result__
+  StringUpper, __result__, input
+  return __result__
 }
 jsShim_15(input) {
-  _type := $.type.Call(input)
-  if (_type == "array") {
-    _result := ""
+  __type__ := $.type.Call(input)
+  if (__type__ == "array") {
+    __result__ := ""
     for __i__, key in input {
-      _result := "" . (_result) . ", " . ($.toString.Call(key)) . ""
+      __result__ := "" . (__result__) . ", " . ($.toString.Call(key)) . ""
     }
-    return "[" . ($.trim.Call(_result, " ,")) . "]"
-  } else if (_type == "object") {
-    _result := ""
+    return "[" . ($.trim.Call(__result__, " ,")) . "]"
+  } else if (__type__ == "object") {
+    __result__ := ""
     for key, value in input {
-      _result := "" . (_result) . ", " . (key) . ": " . ($.toString.Call(value)) . ""
+      __result__ := "" . (__result__) . ", " . (key) . ": " . ($.toString.Call(value)) . ""
     }
-    return "{" . ($.trim.Call(_result, " ,")) . "}"
+    return "{" . ($.trim.Call(__result__, " ,")) . "}"
   }
   return input
 }
 jsShim_16(input) {
-  StringLower, __Result__, input
-  return __Result__
+  StringLower, __result__, input
+  return __result__
 }
 jsShim_17(isSuspended := "Toggle") {
   if (isSuspended != "Toggle") {
@@ -174,16 +174,16 @@ jsShim_20(isFixed := "Toggle") {
   Winset AlwaysOnTop, % isFixed, A
 }
 jsShim_21(input) {
-  _type := $.type.Call(input)
-  if !(_type == "array") {
-    throw Exception("$.reverse: invalid type '" . (_type) . "'")
+  __type__ := $.type.Call(input)
+  if !(__type__ == "array") {
+    throw Exception("$.reverse: invalid type '" . (__type__) . "'")
   }
-  _len := $.length.Call(input)
-  _output := []
+  __len__ := $.length.Call(input)
+  __output__ := []
   for i, key in input {
-    _output[_len - i + 1] := key
+    __output__[__len__ - i + 1] := key
   }
-  return _output
+  return __output__
 }
 jsShim_22(input, searchment, replacement, limit := -1) {
   return StrReplace(input, searchment, replacement, limit)
@@ -192,49 +192,49 @@ jsShim_23() {
   Reload
 }
 jsShim_24(min := 0, max := 1) {
-  Random, __Result__, min, max
-  return __Result__
+  Random, __result__, min, max
+  return __result__
 }
 jsShim_25(listInput*) {
   if !($.length.Call(listInput)) {
     throw Exception("$.press: invalid key")
   }
-  _listKey := []
+  __listKey__ := []
   for __i__, input in listInput {
-    _input := $.toLowerCase.Call(input)
-    _input := $.replace.Call(_input, " ", "")
-    _input := $.replace.Call(_input, "-", "")
-    _list := $.split.Call(_input, "+")
-    for __i__, it in _list {
-      _listKey.Push(it)
+    __input__ := $.toLowerCase.Call(input)
+    __input__ := $.replace.Call(__input__, " ", "")
+    __input__ := $.replace.Call(__input__, "-", "")
+    __list__ := $.split.Call(__input__, "+")
+    for __i__, it in __list__ {
+      __listKey__.Push(it)
     }
   }
-  _listResult := []
-  _len := $.length.Call(_listKey)
-  for i, key in _listKey {
-    if (i == _len) {
-      _listResult[i] := $.split.Call(key, ":")
+  __listResult__ := []
+  __len__ := $.length.Call(__listKey__)
+  for i, key in __listKey__ {
+    if (i == __len__) {
+      __listResult__[i] := $.split.Call(key, ":")
       continue
     }
     if ($.includes.Call(key, ":")) {
-      _listResult[i] := $.split.Call(key, ":")
-      _listResult[_len * 2 - i] := $.split.Call(key, ":")
+      __listResult__[i] := $.split.Call(key, ":")
+      __listResult__[__len__ * 2 - i] := $.split.Call(key, ":")
     } else {
-      _listResult[i] := [key, "down"]
-      _listResult[_len * 2 - i] := [key, "up"]
+      __listResult__[i] := [key, "down"]
+      __listResult__[__len__ * 2 - i] := [key, "up"]
     }
   }
-  for i, it in _listResult {
+  for i, it in __listResult__ {
     if (it[1] == "win") {
       it[1] := "lwin"
     }
-    _listResult[i] := $.trim.Call("" . (it[1]) . " " . (it[2]) . "")
+    __listResult__[i] := $.trim.Call("" . (it[1]) . " " . (it[2]) . "")
   }
-  _output := ""
-  for __i__, it in _listResult {
-    _output := "" . (_output) . "{" . (it) . "}"
+  __output__ := ""
+  for __i__, it in __listResult__ {
+    __output__ := "" . (__output__) . "{" . (it) . "}"
   }
-  Send, % _output
+  Send, % __output__
 }
 jsShim_26(source) {
   Run, % source
@@ -257,8 +257,8 @@ jsShim_30(point := "", speed := 0) {
   MouseMove, point[1], point[2], speed
 }
 jsShim_31(input) {
-  _type := $.type.Call(input)
-  switch _type {
+  __type__ := $.type.Call(input)
+  switch __type__ {
     case "array": {
       return input.Length()
     }
@@ -269,7 +269,7 @@ jsShim_31(input) {
       return StrLen(input)
     }
     default: {
-      throw Exception("$.length: invalid type '" . (_type) . "'")
+      throw Exception("$.length: invalid type '" . (__type__) . "'")
     }
   }
 }
@@ -280,16 +280,16 @@ jsShim_32(message, point := "") {
   if !(point) {
     point := $.getPosition.Call()
   }
-  _msg := $.toString.Call(message)
-  ToolTip, % _msg, % point[1], % point[2]
+  __msg__ := $.toString.Call(message)
+  ToolTip, % __msg__, % point[1], % point[2]
   return message
 }
 jsShim_33(input, needle) {
-  _type := $.type.Call(input)
-  if (_type == "string" || _type == "number") {
+  __type__ := $.type.Call(input)
+  if (__type__ == "string" || __type__ == "number") {
     return (InStr(input, needle)) > 0
   }
-  if (_type == "array") {
+  if (__type__ == "array") {
     for __i__, it in input {
       if (it == needle) {
         return true
@@ -297,7 +297,7 @@ jsShim_33(input, needle) {
     }
     return false
   }
-  throw Exception("$.includes: invalid type '" . (_type) . "'")
+  throw Exception("$.includes: invalid type '" . (__type__) . "'")
 }
 jsShim_34(message) {
   $.info.Call("" . ($.now.Call()) . " " . ($.toString.Call(message)) . "")
@@ -314,60 +314,60 @@ jsShim_37(point := "") {
   if !(point) {
     point := $.getPosition.Call()
   }
-  PixelGetColor, __Result__, % point[1], % point[2], RGB
-  return __Result__
+  PixelGetColor, __result__, % point[1], % point[2], RGB
+  return __result__
 }
 jsShim_38(key) {
-  _listKey := []
-  _key := $.toLowerCase.Call(key)
-  _key := $.replace.Call(_key, " ", "")
-  _key := $.replace.Call(_key, "-", "")
-  _list := $.split.Call(_key, "+")
+  __listkey__ := []
+  __key__ := $.toLowerCase.Call(key)
+  __key__ := $.replace.Call(__key__, " ", "")
+  __key__ := $.replace.Call(__key__, "-", "")
+  _list := $.split.Call(__key__, "+")
   for __i__, it in _list {
-    _listKey.Push(it)
+    __listkey__.Push(it)
   }
-  _isAlt := false
-  _isCtrl := false
-  _isShift := false
-  _isWin := false
-  _listResult := []
-  for __i__, key in _listKey {
+  __isAlt__ := false
+  __isCtrl__ := false
+  __isShift__ := false
+  __isWin__ := false
+  __listResult__ := []
+  for __i__, key in __listkey__ {
     if (key == "alt") {
-      _isAlt := true
+      __isAlt__ := true
       continue
     }
     if (key == "ctrl") {
-      _isCtrl := true
+      __isCtrl__ := true
       continue
     }
     if (key == "shift") {
-      _isShift := true
+      __isShift__ := true
       continue
     }
     if (key == "win") {
-      _isWin := true
+      __isWin__ := true
       continue
     }
-    _listResult.Push(key)
+    __listResult__.Push(key)
   }
-  _prefix := ""
-  if (_isAlt) {
-    _prefix := "" . (_prefix) . "!"
+  __prefix__ := ""
+  if (__isAlt__) {
+    __prefix__ := "" . (__prefix__) . "!"
   }
-  if (_isCtrl) {
-    _prefix := "" . (_prefix) . "^"
+  if (__isCtrl__) {
+    __prefix__ := "" . (__prefix__) . "^"
   }
-  if (_isShift) {
-    _prefix := "" . (_prefix) . "+"
+  if (__isShift__) {
+    __prefix__ := "" . (__prefix__) . "+"
   }
-  if (_isWin) {
-    _prefix := "" . (_prefix) . "#"
+  if (__isWin__) {
+    __prefix__ := "" . (__prefix__) . "#"
   }
-  _result := ""
-  for __i__, it in _listResult {
-    _result := "" . (_result) . " & " . (it) . ""
+  __result__ := ""
+  for __i__, it in __listResult__ {
+    __result__ := "" . (__result__) . " & " . (it) . ""
   }
-  return $.replace.Call("" . (_prefix) . "" . ($.trim.Call(_result, " &")) . "", ":", " ")
+  return $.replace.Call("" . (__prefix__) . "" . ($.trim.Call(__result__, " &")) . "", ":", " ")
 }
 jsShim_39(source, start := "", end := "") {
   if !(start) {

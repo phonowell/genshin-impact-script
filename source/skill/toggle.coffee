@@ -2,12 +2,12 @@ ts.toggle = 0
 
 toggle = (key) ->
 
+  $.press key
+
   unless $.now() - ts.toggle > 1e3
     $.beep()
     return
   ts.toggle = $.now()
-
-  $.press key
 
   doAs ->
     $.press 'e'

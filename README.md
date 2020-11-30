@@ -2,6 +2,12 @@
 
 好耶！是人畜无害的原神脚本！
 
+## 简介
+
+基于`ahk`实现，仅提供部分游戏本应有但却缺失的小功能。没有任何作弊功能，因此安全性较高。
+
+Most of users may speak Chinese, so there is no English wiki. If you really need i18n help, just ISSUE.
+
 ## 功能
 
 - 角色登场时施放元素战技
@@ -34,7 +40,3 @@
 ## 免责声明
 
 你们懂的。
-
-## 联系作者
-
-提issue即可。
