@@ -427,43 +427,48 @@ jsShim_44() {
 global state := {}
 global timer := {}
 global ts := {}
-state.isSuspend := false
 class ClientX {
   name := "YuanShen.exe"
-  check := Func("genshin_35").Bind(this)
-  close := Func("genshin_34").Bind(this)
-  isActive := Func("genshin_33").Bind(this)
-  setPriority := Func("genshin_32").Bind(this)
-  watch := Func("genshin_31").Bind(this)
+  state := {isSuspend: false}
+  check := Func("genshin_38").Bind(this)
+  close := Func("genshin_37").Bind(this)
+  isActive := Func("genshin_36").Bind(this)
+  reset := Func("genshin_35").Bind(this)
+  resetKey := Func("genshin_34").Bind(this)
+  resetTimer := Func("genshin_33").Bind(this)
+  suspend := Func("genshin_32").Bind(this)
+  setPriority := Func("genshin_31").Bind(this)
+  watch := Func("genshin_30").Bind(this)
 }
 timer.countDown := ""
-global countDown := Func("genshin_30")
-global doAs := Func("genshin_29")
-global isMoving := Func("genshin_26")
-global resetAll := Func("genshin_25")
+global countDown := Func("genshin_29")
+global doAs := Func("genshin_28")
 state.isDashing := false
 timer.dash := ""
-global dash := Func("genshin_23")
-global startDash := Func("genshin_22")
-global stopDash := Func("genshin_21")
+global dash := Func("genshin_25")
+global startDash := Func("genshin_24")
+global stopDash := Func("genshin_23")
 state.isJumping := false
 timer.jump := ""
-global jumpTwice := Func("genshin_20")
-global startJumpBack := Func("genshin_18")
-global stopJumpBack := Func("genshin_17")
+global jumpTwice := Func("genshin_22")
+global startJumpBack := Func("genshin_20")
+global stopJumpBack := Func("genshin_19")
+global isMoving := Func("genshin_18")
 state.isPicking := false
 timer.pick := ""
-global pick := Func("genshin_16")
-global startPick := Func("genshin_15")
-global stopPick := Func("genshin_14")
+global pick := Func("genshin_17")
+global startPick := Func("genshin_16")
+global stopPick := Func("genshin_15")
 ts.toggle := 0
-global toggle := Func("genshin_13")
+global toggle := Func("genshin_14")
 state.isViewing := false
 timer.view := ""
-global toggleView := Func("genshin_11")
-global view := Func("genshin_10")
-new ClientX().watch.Call()
-$.on.Call("alt + f4", Func("genshin_8"))
+global toggleView := Func("genshin_12")
+global view := Func("genshin_11")
+global client := new ClientX()
+client.watch.Call()
+$.on.Call("alt + f4", Func("genshin_9"))
+$.on.Call("ctrl + f5", Func("genshin_8"))
 for __i__, key in ["1", "2", "3", "4", "5"] {
   $.on.Call(key, Func("genshin_7").Bind(key))
 }
@@ -507,18 +512,23 @@ genshin_7(key) {
   toggle.Call(key)
 }
 genshin_8() {
-  resetAll.Call()
   $.beep.Call()
-  $.exit.Call()
+  client.reset.Call()
+  $.reload.Call()
 }
 genshin_9() {
-  $.click.Call("middle:up")
+  $.beep.Call()
+  client.reset.Call()
+  $.exit.Call()
 }
 genshin_10() {
-  $.click.Call("middle:down")
-  setTimeout.Call(Func("genshin_9"), 2500)
+  $.click.Call("middle:up")
 }
 genshin_11() {
+  $.click.Call("middle:down")
+  setTimeout.Call(Func("genshin_10"), 2500)
+}
+genshin_12() {
   clearInterval.Call(timer.view)
   state.isViewing := !state.isViewing
   $.click.Call("middle:up")
@@ -528,27 +538,27 @@ genshin_11() {
   timer.view := setInterval.Call(view, 3000)
   view.Call()
 }
-genshin_12() {
+genshin_13() {
   $.press.Call("e")
 }
-genshin_13(key) {
+genshin_14(key) {
   $.press.Call(key)
   if !($.now.Call() - ts.toggle > 1000) {
     $.beep.Call()
     return
   }
   ts.toggle := $.now.Call()
-  doAs.Call(Func("genshin_12"), 2, 100, 100)
+  doAs.Call(Func("genshin_13"), 2, 100, 100)
   countDown.Call(5000)
 }
-genshin_14() {
+genshin_15() {
   if !(state.isPicking) {
     return
   }
   state.isPicking := false
   clearInterval.Call(timer.pick)
 }
-genshin_15() {
+genshin_16() {
   if (state.isPicking) {
     return
   }
@@ -557,18 +567,26 @@ genshin_15() {
   timer.pick := setInterval.Call(pick, 100)
   pick.Call()
 }
-genshin_16() {
+genshin_17() {
   $.press.Call("f")
   $.click.Call("wheel-down")
 }
-genshin_17() {
+genshin_18() {
+  for __i__, key in ["w", "a", "s", "d"] {
+    if ($.getState.Call(key)) {
+      return key
+    }
+  }
+  return false
+}
+genshin_19() {
   if !(state.isJumping) {
     return
   }
   state.isJumping := false
   clearTimeout.Call(timer.jump)
 }
-genshin_18() {
+genshin_20() {
   if (state.isJumping) {
     return
   }
@@ -576,14 +594,14 @@ genshin_18() {
   $.press.Call("x")
   timer.jump := $.delay.Call(100, jumpTwice)
 }
-genshin_19() {
-  $.press.Call("space")
-}
-genshin_20() {
-  $.press.Call("space")
-  doAs.Call(Func("genshin_19"), 2, 100, 200)
-}
 genshin_21() {
+  $.press.Call("space")
+}
+genshin_22() {
+  $.press.Call("space")
+  doAs.Call(Func("genshin_21"), 2, 100, 200)
+}
+genshin_23() {
   if !(state.isDashing) {
     return
   }
@@ -596,7 +614,7 @@ genshin_21() {
     $.press.Call("w:up")
   }
 }
-genshin_22() {
+genshin_24() {
   if (state.isDashing) {
     return
   }
@@ -605,7 +623,7 @@ genshin_22() {
   timer.dash := setInterval.Call(dash, 1300)
   dash.Call()
 }
-genshin_23() {
+genshin_25() {
   key := isMoving.Call()
   if !(key) {
     $.press.Call("w:down")
@@ -614,78 +632,90 @@ genshin_23() {
   }
   $.click.Call("right")
 }
-genshin_24() {
+genshin_26(n, callback) {
+  callback.Call(n)
+}
+genshin_27(callback, limit, interval) {
+  doAs.Call(callback, limit, interval, 0)
+}
+genshin_28(callback, limit := 1, interval := 100, delay := 0) {
+  if (delay) {
+    $.delay.Call(delay, Func("genshin_27").Bind(callback, limit, interval))
+    return
+  }
+  n := 1
+  while (n <= limit) {
+    $.delay.Call((n - 1) * interval, Func("genshin_26").Bind(n, callback))
+    n++
+  }
+}
+genshin_29(time) {
+  clearTimeout.Call(timer.countDown)
+  timer.countDown := $.delay.Call(time, $.beep)
+}
+genshin_30(this) {
+  setInterval.Call(this.check, 200)
+}
+genshin_31(this, level) {
+  Process, Priority, % this.name, % level
+}
+genshin_32(this, isSuspend) {
+  if (isSuspend) {
+    if (this.state.isSuspend) {
+      return
+    }
+    this.state.isSuspend := true
+    $.suspend.Call(true)
+    this.resetTimer.Call()
+    this.resetKey.Call()
+    return
+  }
+  if !(isSuspend) {
+    if !(this.state.isSuspend) {
+      return
+    }
+    this.state.isSuspend := false
+    $.suspend.Call(false)
+    return
+  }
+}
+genshin_33(this) {
+  for __i__, _timer in timer {
+    clearTimeout.Call(_timer)
+  }
+}
+genshin_34(this) {
   for __i__, key in ["middle", "right"] {
     if ($.getState.Call(key)) {
       $.click.Call("" . (key) . ":up")
     }
   }
-  for __i__, key in ["e", "f", "s", "space", "w", "x"] {
+  for __i__, key in ["alt", "ctrl", "f4", "f5", "e", "f", "s", "space", "w", "x"] {
     if ($.getState.Call(key)) {
       $.press.Call("" . (key) . ":up")
     }
   }
 }
-genshin_25() {
-  client.setPriority.Call("normal")
-  for __i__, _timer in timer {
-    clearTimeout.Call(_timer)
-  }
-  $.delay.Call(200, Func("genshin_24"))
+genshin_35(this) {
+  this.setPriority.Call("normal")
+  this.resetTimer.Call()
+  this.resetKey.Call()
 }
-genshin_26() {
-  for __i__, key in ["w", "a", "s", "d"] {
-    if ($.getState.Call(key)) {
-      return key
-    }
-  }
-  return false
-}
-genshin_27(n, callback) {
-  callback.Call(n)
-}
-genshin_28(callback, limit, interval) {
-  doAs.Call(callback, limit, interval, 0)
-}
-genshin_29(callback, limit := 1, interval := 100, delay := 0) {
-  if (delay) {
-    $.delay.Call(delay, Func("genshin_28").Bind(callback, limit, interval))
-    return
-  }
-  n := 1
-  while (n <= limit) {
-    $.delay.Call((n - 1) * interval, Func("genshin_27").Bind(n, callback))
-    n++
-  }
-}
-genshin_30(time) {
-  clearTimeout.Call(timer.countDown)
-  timer.countDown := $.delay.Call(time, $.beep)
-}
-genshin_31(this) {
-  setInterval.Call(this.check, 200)
-}
-genshin_32(this, level) {
-  Process, Priority, % this.name, % level
-}
-genshin_33(this) {
+genshin_36(this) {
   return WinActive("ahk_exe " . (this.name) . "")
 }
-genshin_34(this) {
+genshin_37(this) {
   Process, Close, % this.name
 }
-genshin_35(this) {
-  if (!state.isSuspend && !this.isActive.Call()) {
-    state.isSuspend := true
-    $.suspend.Call(true)
-    resetAll.Call()
+genshin_38(this) {
+  if (!this.state.isSuspend && !this.isActive.Call()) {
     this.setPriority.Call("low")
+    this.suspend.Call(true)
     return
   }
-  if (state.isSuspend && this.isActive.Call()) {
-    state.isSuspend := false
-    $.suspend.Call(false)
+  if (this.state.isSuspend && this.isActive.Call()) {
     this.setPriority.Call("normal")
+    this.suspend.Call(false)
     return
   }
 }

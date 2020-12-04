@@ -13,14 +13,20 @@ ts = {}
 
 # execute
 
-new ClientX().watch()
+client = new ClientX()
+client.watch()
 
 # binding
 
 $.on 'alt + f4', ->
-  resetAll()
   $.beep()
+  client.reset()
   $.exit()
+
+$.on 'ctrl + f5', ->
+  $.beep()
+  client.reset()
+  $.reload()
 
 # binding
 
