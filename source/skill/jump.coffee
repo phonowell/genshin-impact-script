@@ -14,7 +14,6 @@ startJumpBack = ->
   if state.isJumping then return
   state.isJumping = true
 
-  $.press 'x'
   timer.jump = $.delay 100, jumpTwice
 
 stopJumpBack = ->

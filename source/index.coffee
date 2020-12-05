@@ -54,7 +54,7 @@ $.on 's:up', ->
   $.press 's:up'
   stopJumpBack()
 
-$.on 'space', jumpTwice
+$.on 'space', $.throttle 500, jumpTwice
 
 $.on 'w', -> $.press 'w:down'
 $.on 'w:up', ->

@@ -12,6 +12,7 @@ startPick = ->
 
   clearInterval timer.pick
   timer.pick = setInterval pick, 100
+  
   pick()
 
 stopPick = ->

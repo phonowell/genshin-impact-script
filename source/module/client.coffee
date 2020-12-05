@@ -36,7 +36,7 @@ class ClientX
     for key in [
       'alt', 'ctrl'
       'f4', 'f5'
-      'e', 'f', 's', 'space', 'w', 'x'
+      'e', 'f', 's', 'space', 'w'
     ]
       if $.getState key
         $.press "#{key}:up"

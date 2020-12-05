@@ -4,8 +4,8 @@
     "url": "https://github.com/phonowell/genshin-impact-script/issues"
   },
   "dependencies": {
-    "coffee-ahk": "0.0.6",
-    "fire-keeper": "0.0.176",
+    "coffee-ahk": "^0.0.8",
+    "fire-keeper": "^0.0.176",
     "ts-node": "^9.1.0",
     "typescript": "^4.1.2"
   },
