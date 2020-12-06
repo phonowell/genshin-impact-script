@@ -10,6 +10,7 @@ Most of users may speak Chinese, so there is no English wiki. If you really need
 
 ## 功能
 
+- 快捷切换菜单
 - 按下`F`键时快速拾取物品
 - 按下`S`键时自动起跳
 - 按下鼠标中键后维持元素视野，再次按下后停止

@@ -15,6 +15,7 @@ ts = {}
 
 client = new ClientX()
 client.watch()
+paimon = new PaimonX()
 
 # binding
 
@@ -32,6 +33,8 @@ $.on 'ctrl + f5', ->
 
 for key in ['1', '2', '3', '4', '5']
   $.on key, (key = key) -> toggle key
+
+paimon.bind()
 
 $.on 'e', -> $.press 'e:down'
 $.on 'e:up', ->
