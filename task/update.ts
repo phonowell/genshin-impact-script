@@ -24,7 +24,7 @@ async function main_(): Promise<void> {
       const value = pkg.dependencies[key]
       if (!value.startsWith('^')) return
       delete pkg.dependencies[key]
-      listCmd.push(`npm i --legacy-peer-deps ${key}`)
+      listCmd.push(`npm i ${key}`)
     })
 
   Object.keys(pkg.devDependencies)
@@ -32,7 +32,7 @@ async function main_(): Promise<void> {
       const value = pkg.devDependencies[key]
       if (!value.startsWith('^')) return
       delete pkg.devDependencies[key]
-      listCmd.push(`npm i --legacy-peer-deps --save-dev ${key}`)
+      listCmd.push(`npm i --save-dev ${key}`)
     })
 
   await $.backup_(source)
@@ -40,9 +40,12 @@ async function main_(): Promise<void> {
 
   await $.exec_('') // cache
 
-  await $.remove_('./node_modules')
+  await $.remove_([
+    './node_modules',
+    './package-lock.json'
+  ])
   await $.exec_([
-    'npm i --legacy-peer-deps',
+    'npm i',
     ...listCmd
   ])
 
