@@ -4,6 +4,7 @@ class PaimonX
     0xFFFFFF
     0xFAEEE0
     0xE9C48F
+    0x38425C
   ]
   point:
     end: [100, 100]
@@ -39,11 +40,20 @@ class PaimonX
 
     , 100
 
+  findColor = (n) ->
+    point = $.findColor @color[n], @point.start, @point.end
+    return point[1] * point[2] > 0
+
   isVisible: ->
 
-    for n in [1, 2, 3]
-      point = $.findColor @color[n], @point.start, @point.end
-      unless point[1] * point[2] > 0
+    unless @findColor 1
+      return false
+
+    if @findColor 4
+      return true
+
+    for n in [2, 3]
+      unless @findColor n
         return false
 
     return true
