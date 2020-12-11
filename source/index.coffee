@@ -32,7 +32,8 @@ $.on 'ctrl + f5', ->
 # binding
 
 for key in ['1', '2', '3', '4', '5']
-  $.on key, (key = key) -> toggle key
+  $.on key, (key = key) -> startToggle key
+  $.on "#{key}:up", stopToggle
 
 paimon.bind()
 

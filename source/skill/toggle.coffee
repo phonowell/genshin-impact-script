@@ -1,16 +1,30 @@
+state.isLongPressing = false
+timer.toggle = ''
 ts.toggle = 0
 
-toggle = (key) ->
+startToggle = (key) ->
 
-  $.press key
-
-  unless $.now() - ts.toggle > 1e3
-    $.beep()
+  unless $.now() - ts.toggle >= 500
     return
   ts.toggle = $.now()
 
-  doAs ->
-    $.press 'e'
-  , 2, 100, 100
+  $.press key
 
-  countDown 5e3
+  clearTimeout timer.toggle
+  timer.toggle = $.delay 100, (key = key) ->
+
+    if $.getState key
+      state.isLongPressing = true
+      $.press 'e:down'
+    else
+      $.press 'e'
+      countDown 5e3
+
+stopToggle = ->
+
+  unless state.isLongPressing
+    return
+  state.isLongPressing = false
+
+  $.press 'e:up'
+  countDown 10e3
