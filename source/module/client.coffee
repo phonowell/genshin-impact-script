@@ -9,6 +9,7 @@ class ClientX
     if !@state.isSuspend and !@isActive()
       @setPriority 'low'
       @suspend true
+      state.isAttacking = false
       return
 
     if @state.isSuspend and @isActive()
@@ -35,7 +36,7 @@ class ClientX
 
     for key in [
       'alt', 'ctrl'
-      'e', 'f', 's', 'space', 'w'
+      'e', 'f', 's', 'space', 'w', 'x'
     ]
       if $.getState key
         $.press "#{key}:up"

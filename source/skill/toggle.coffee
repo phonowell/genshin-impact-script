@@ -1,17 +1,27 @@
+state.character = 0
 state.isLongPressing = false
+state.isToggleLocked = false
 timer.toggle = ''
-ts.toggle = 0
 
 startToggle = (key) ->
 
-  unless $.now() - ts.toggle >= 500
-    return
-  ts.toggle = $.now()
+  $.press "#{key}:down"
 
-  $.press key
+  state.character = key
+
+  unless config.data.autoESkill
+    return
+
+  if state.isToggleLocked
+    return
+  state.isToggleLocked = true
+
+  pauseMove()
 
   clearTimeout timer.toggle
-  timer.toggle = $.delay 100, (key = key) ->
+  timer.toggle = $.delay 150, (key = key) ->
+
+    resumeMove()
 
     if $.getState key
       state.isLongPressing = true
@@ -20,7 +30,14 @@ startToggle = (key) ->
       $.press 'e'
       countDown 5e3
 
-stopToggle = ->
+stopToggle = (key) ->
+
+  $.press "#{key}:up"
+
+  unless config.data.autoESkill
+    return
+
+  state.isToggleLocked = false
 
   unless state.isLongPressing
     return

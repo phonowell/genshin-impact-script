@@ -34,10 +34,9 @@ $.on 'ctrl + f5', ->
 
 # binding
 
-if config.data.autoESkill
-  for key in ['1', '2', '3', '4', '5']
-    $.on key, (key = key) -> startToggle key
-    $.on "#{key}:up", stopToggle
+for key in ['1', '2', '3', '4', '5']
+  $.on key, (key = key) -> startToggle key
+  $.on "#{key}:up", (key = key) -> stopToggle key
 
 if config.data.backJump
 
@@ -64,14 +63,21 @@ if config.data.fastPick
 
 if config.data.fastWing
   $.on 'space', $.throttle 500, jumpTwice
+  $.on 'x', ->
+    $.press 'x'
+    $.press 'space'
+
+if config.data.improvedAttack
+  $.on 'l-button', startAttack
+  $.on 'l-button:up', stopAttack
 
 if config.data.improvedElementalVision
-  $.on 'mbutton', toggleView
+  $.on 'm-button', toggleView
 
 if config.data.improvedSprint
 
-  $.on 'rbutton', startDash
-  $.on 'rbutton:up', stopDash
+  $.on 'r-button', startDash
+  $.on 'r-button:up', stopDash
 
   $.on 'w', -> $.press 'w:down'
   $.on 'w:up', ->
