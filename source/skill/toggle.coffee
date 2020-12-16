@@ -16,12 +16,14 @@ startToggle = (key) ->
     return
   state.isToggleLocked = true
 
+  # `BlockInput, On`
   pauseMove()
 
   clearTimeout timer.toggle
   timer.toggle = $.delay 150, (key = key) ->
 
     resumeMove()
+    # `BlockInput, Off`
 
     if $.getState key
       state.isLongPressing = true
