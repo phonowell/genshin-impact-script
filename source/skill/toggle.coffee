@@ -17,12 +17,16 @@ startToggle = (key) ->
   state.isToggleLocked = true
 
   # `BlockInput, On`
-  pauseMove()
+  # pauseMove()
+
+  delay = 100
+  if $.now() - ts.dash < 500
+    delay = 500
 
   clearTimeout timer.toggle
-  timer.toggle = $.delay 150, (key = key) ->
+  timer.toggle = $.delay delay, (key = key) ->
 
-    resumeMove()
+    # resumeMove()
     # `BlockInput, Off`
 
     if $.getState key

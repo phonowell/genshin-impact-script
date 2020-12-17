@@ -67,6 +67,8 @@ if config.data.fastWing
     $.press 'x'
     $.press 'space'
 
+# attack
+
 if config.data.improvedAttack
   $.on 'l-button', startAttack
   $.on 'l-button:up', stopAttack
@@ -74,10 +76,12 @@ if config.data.improvedAttack
 if config.data.improvedElementalVision
   $.on 'm-button', toggleView
 
-if config.data.improvedSprint
+# sprint
 
-  $.on 'r-button', startDash
-  $.on 'r-button:up', stopDash
+$.on 'r-button', startDash
+$.on 'r-button:up', stopDash
+
+if config.data.improvedSprint
 
   $.on 'w', -> $.press 'w:down'
   $.on 'w:up', ->

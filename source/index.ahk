@@ -510,6 +510,7 @@ global startAttack := Func("genshin_32")
 global stopAttack := Func("genshin_31")
 state.isDashing := false
 timer.dash := ""
+ts.dash := 0
 global dash := Func("genshin_30")
 global startDash := Func("genshin_29")
 global stopDash := Func("genshin_28")
@@ -572,9 +573,9 @@ if (config.data.improvedAttack) {
 if (config.data.improvedElementalVision) {
   $.on.Call("m-button", toggleView)
 }
+$.on.Call("r-button", startDash)
+$.on.Call("r-button:up", stopDash)
 if (config.data.improvedSprint) {
-  $.on.Call("r-button", startDash)
-  $.on.Call("r-button:up", stopDash)
   $.on.Call("w", Func("genshin_2"))
   $.on.Call("w:up", Func("genshin_1"))
 }
@@ -653,7 +654,6 @@ genshin_15(key) {
   countDown.Call(10000)
 }
 genshin_16(key) {
-  resumeMove.Call()
   if ($.getState.Call(key)) {
     state.isLongPressing := true
     $.press.Call("e:down")
@@ -672,9 +672,12 @@ genshin_17(key) {
     return
   }
   state.isToggleLocked := true
-  pauseMove.Call()
+  delay := 100
+  if ($.now.Call() - ts.dash < 500) {
+    delay := 500
+  }
   clearTimeout.Call(timer.toggle)
-  timer.toggle := $.delay.Call(150, Func("genshin_16").Bind(key))
+  timer.toggle := $.delay.Call(delay, Func("genshin_16").Bind(key))
 }
 genshin_18() {
   if !(state.isPicking) {
@@ -740,6 +743,11 @@ genshin_27() {
   doAs.Call(Func("genshin_26"), 2, 100, 200)
 }
 genshin_28() {
+  ts.dash := $.now.Call()
+  if !(config.data.improvedSprint) {
+    $.click.Call("right:up")
+    return
+  }
   if !(state.isDashing) {
     return
   }
@@ -753,6 +761,10 @@ genshin_28() {
   }
 }
 genshin_29() {
+  if !(config.data.improvedSprint) {
+    $.click.Call("right:down")
+    return
+  }
   if (state.isDashing) {
     return
   }

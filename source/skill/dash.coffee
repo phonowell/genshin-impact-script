@@ -1,5 +1,6 @@
 state.isDashing = false
 timer.dash = ''
+ts.dash = 0
 
 dash = ->
 
@@ -13,6 +14,10 @@ dash = ->
 
 startDash = ->
 
+  unless config.data.improvedSprint
+    $.click 'right:down'
+    return
+
   if state.isDashing then return
   state.isDashing = true
 
@@ -21,6 +26,12 @@ startDash = ->
   dash()
 
 stopDash = ->
+
+  ts.dash = $.now()
+
+  unless config.data.improvedSprint
+    $.click 'right:up'
+    return
 
   unless state.isDashing then return
   state.isDashing = false
