@@ -38,16 +38,6 @@ for key in ['1', '2', '3', '4', '5']
   $.on key, (key = key) -> startToggle key
   $.on "#{key}:up", (key = key) -> stopToggle key
 
-if config.data.backJump
-
-  $.on 's', ->
-    $.press 's:down'
-    startJumpBack()
-
-  $.on 's:up', ->
-    $.press 's:up'
-    stopJumpBack()
-
 if config.data.easySkillTimer
   $.on 'e', -> $.press 'e:down'
   $.on 'e:up', ->

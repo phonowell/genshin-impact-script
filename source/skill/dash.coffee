@@ -14,6 +14,8 @@ dash = ->
 
 startDash = ->
 
+  ts.dash = $.now() + 500
+
   unless config.data.improvedSprint
     $.click 'right:down'
     return

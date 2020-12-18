@@ -8,7 +8,6 @@ class ConfigX
     # feature
     for key in [
       'autoESkill'
-      'backJump'
       'easySkillTimer'
       'fastPaimonMenu'
       'fastPick'

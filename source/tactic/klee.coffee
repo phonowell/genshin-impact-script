@@ -1,31 +1,35 @@
-state.countKlee = 0
+module = {}
 
-tactic.klee = ->
+module.count = 0
 
-  unless state.countKlee >= 2
-    state.countKlee++
-    kleeA()
+module.attack = (module = module) ->
+
+  unless module.count >= 2
+    module.count++
+    module.attackA()
   else
-    state.countKlee = 0
-    kleeB()
+    module.count = 0
+    module.attackB()
 
-kleeA = ->
+module.attackA = (module = module) ->
 
   $.click 'left'
 
-  setTacticDelay 550, ->
+  setTacticDelay 550, (module = module) ->
     $.press 'w'
 
-    setTacticDelay 50, tactic.klee
+    setTacticDelay 50, module.attack
 
-kleeB = ->
+module.attackB = (module = module) ->
 
   $.click 'left:down'
 
-  setTacticDelay 250, ->
+  setTacticDelay 250, (module = module) ->
     $.click 'left:up'
 
-    setTacticDelay 850, ->
+    setTacticDelay 850, (module = module) ->
       $.press 'w'
 
-      setTacticDelay 50, tactic.klee
+      setTacticDelay 50, module.attack
+
+export default module

@@ -16,9 +16,6 @@ Based on `ahk`, provides only a few small features that are missing from the gam
 - 按下`F`键时快速拾取物品
   Quickly pick up items when the `F` button is pressed.
 
-- 按下`S`键时自动起跳
-  Auto-jump when `S` key is pressed.
-
 - 按下鼠标中键后维持元素视野，再次按下后停止
   Maintain elemental vision by pressing middle mouse button, stop when pressed again.
 

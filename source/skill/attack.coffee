@@ -1,9 +1,15 @@
-tactic = {}
+import klee from '../tactic/klee'
+
+# variable
+
+tactic =
+  klee: klee
+
 timer.tactic = ''
 
-# include ../tactic/*
-
 state.isAttacking = false
+
+# function
 
 setTacticDelay = (delay, callback) ->
   clearTimeout timer.tactic
@@ -21,7 +27,7 @@ startAttack = ->
     return
   state.isAttacking = true
 
-  tactic[config.data[state.character]]()
+  tactic[config.data[state.character]].attack()
 
 stopAttack = ->
 
