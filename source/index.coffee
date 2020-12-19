@@ -45,17 +45,11 @@ if config.data.easySkillTimer
     countDown 5e3
 
 if config.data.fastPaimonMenu
-  paimon.bind()
+  paimon.bindEvent()
 
 if config.data.fastPick
   $.on 'f', startPick
   $.on 'f:up', stopPick
-
-if config.data.fastWing
-  $.on 'space', $.throttle 500, jumpTwice
-  $.on 'x', ->
-    $.press 'x'
-    $.press 'space'
 
 # attack
 
@@ -65,6 +59,13 @@ if config.data.improvedAttack
 
 if config.data.improvedElementalVision
   $.on 'm-button', toggleView
+
+if config.data.improvedJump
+  $.on 'space', startJump
+  $.on 'space:up', stopJump
+  $.on 'x', ->
+    $.press 'x'
+    $.press 'space'
 
 # sprint
 

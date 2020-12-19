@@ -1,6 +1,7 @@
 class ConfigX
 
-  data: {}
+  data:
+    character: ['']
   source: 'config.ini'
 
   constructor: ->
@@ -11,16 +12,16 @@ class ConfigX
       'easySkillTimer'
       'fastPaimonMenu'
       'fastPick'
-      'fastWing'
       'improvedAttack'
       'improvedElementalVision'
+      'improvedJump'
       'improvedSprint'
     ]
       @data[key] = @read "feature/enable#{key}", 1
 
     # character
-    for key in [1, 2, 3, 4]
-      @data[key] = @read "character/#{key}", ''
+    for n in [1, 2, 3, 4]
+      $.push @data.character, @read "character/#{n}", ''
 
   read: (key, defaultValue = 1) ->
     [__section__, __key__] = $.split key, '/'

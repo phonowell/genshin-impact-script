@@ -1,8 +1,17 @@
 module = {}
 
+# variable
+
 module.count = 0
+module.ts = 0
+
+# function
 
 module.attack = (module = module) ->
+
+  if $.now() - module.ts >= 10e3
+    module.count = 0
+  module.ts = $.now()
 
   unless module.count >= 2
     module.count++

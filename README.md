@@ -19,11 +19,8 @@ Based on `ahk`, provides only a few small features that are missing from the gam
 - 按下鼠标中键后维持元素视野，再次按下后停止
   Maintain elemental vision by pressing middle mouse button, stop when pressed again.
 
-- 按住`Space`快速破冰
-  Press and hold `Space` to quickly break the ice.
-
-- 更合理的冲刺/快跑
-  More rational sprinting/fast running.
+- 更合理的冲刺/快跑/跳跃
+  More rational sprinting/running/jumping.
 
 - 游戏窗口不在最前端时，将进程优先级调至最低
   Lowest process priority when the game window is not in the forefront.
@@ -33,9 +30,6 @@ Based on `ahk`, provides only a few small features that are missing from the gam
 
 - 角色登场时施放元素战技
   Perform `E` skills when the character is on stage.
-
-- 起跳时打开风之翼
-  Unfold Wings of Wind at jump.
 
 ## 使用 Usage
 

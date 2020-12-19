@@ -14,49 +14,61 @@ class PaimonX
     'b', 'c', 'j', 'm'
   ]
 
-  timer: {}
-  ts: {}
+  state:
+    isVisible: false
 
-  bind: -> for key in @key
-    $.on key, (key = key) => @close (key = key) -> $.press key
+  timer:
+    close: ''
+
+  ts:
+    check: 0
+
+  bindEvent: -> for key in @key
+    $.on key, (key = key) => @close (key = key) =>
+      @state.isVisible = true
+      $.press key
+
+  checkVisibility: (forced = false) ->
+
+    if client.state.isSuspend then return
+
+    if !forced and $.now() - @ts.check <= 5e3
+      return
+    @ts.check = $.now()
+
+    unless @findColor 0
+      @state.isVisible = true
+      return
+
+    if @findColor 3
+      @state.isVisible = false
+      return
+
+    for n in [1, 2]
+      unless @findColor n
+        @state.isVisible = true
+        return
+
+    @state.isVisible = false
 
   close: (callback) ->
 
-    if @isVisible()
+    @checkVisibility true
+
+    unless @state.isVisible
       if callback then callback()
       return
 
     $.press 'esc'
 
-    @ts.close = $.now()
-    clearInterval @timer.close
-    @timer.close = setInterval (callback = callback) =>
-
-      unless @isVisible() or $.now() - @ts.close >= 1e3
-        return
-
-      clearInterval @timer.close
+    clearTimeout @timer.close
+    @timer.close = setTimeout (callback = callback) ->
       if callback then callback()
-
-    , 100
+    , 800
 
   findColor = (n) ->
     point = $.findColor @color[n], @point.start, @point.end
-    return point[1] * point[2] > 0
-
-  isVisible: ->
-
-    unless @findColor 1
-      return false
-
-    if @findColor 4
-      return true
-
-    for n in [2, 3]
-      unless @findColor n
-        return false
-
-    return true
+    return point[0] * point[1] > 0
 
   resetKey = -> for key in @key
     if $.getState key
