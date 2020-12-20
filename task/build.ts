@@ -1,10 +1,10 @@
-import compile_ from 'coffee-ahk'
+import c2a from 'coffee-ahk'
 
 // function
 
 async function main_(): Promise<void> {
 
-  await compile_('./source/index.coffee', {
+  await c2a('./source/index.coffee', {
     salt: 'genshin'
   })
 }

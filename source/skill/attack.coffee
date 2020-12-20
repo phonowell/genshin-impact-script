@@ -15,8 +15,6 @@ state.isAttacking = false
 
 setTacticDelay = (delay, callback) ->
 
-  delay = delay + $.random 100
-
   clearTimeout timer.tactic
   timer.tactic = $.delay delay, (callback = callback) ->
     unless state.isAttacking then return
@@ -26,7 +24,7 @@ startAttack = ->
 
   paimon.checkVisibility()
 
-  unless !paimon.state.isVisible and tactic[config.data.character[state.character]]
+  if paimon.state.isVisible
     $.click 'left:down'
     return
 
@@ -34,16 +32,18 @@ startAttack = ->
     return
   state.isAttacking = true
 
-  tactic[config.data.character[state.character]].attack()
+  key = config.data.character[state.character]
+  unless key
+    key = 'Combo'
+  if tactic[key]
+    tactic[key].attack()
 
 stopAttack = ->
 
+  state.isAttacking = false
+
   paimon.checkVisibility()
 
-  unless !paimon.state.isVisible and tactic[config.data.character[state.character]]
+  if paimon.state.isVisible
     $.click 'left:up'
     return
-
-  unless state.isAttacking
-    return
-  state.isAttacking = false

@@ -24,7 +24,7 @@ startToggle = (key) ->
   clearTimeout timer.toggle
   timer.toggle = $.delay delay, (key = key) ->
 
-    `BlockInput, On`
+    $.blockInput true
     pauseMove()
 
     if $.getState key
@@ -35,7 +35,7 @@ startToggle = (key) ->
       countDown 5e3
 
     resumeMove()
-    `BlockInput, Off`
+    $.blockInput false
 
 stopToggle = (key) ->
 

@@ -1,3 +1,5 @@
+# 0xFF7C00
+# 0xFF8C81
 state.isDashing = false
 timer.dash = ''
 ts.dash = 0

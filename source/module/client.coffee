@@ -1,18 +1,25 @@
 class ClientX
 
+  height: 0
   name: 'YuanShen.exe'
   state:
     isSuspend: false
+  width: 0
 
   check: ->
 
-    if !@state.isSuspend and !@isActive()
+    unless @width
+      size = @getSize()
+      @width = size[0]
+      @height = size[1]
+
+    if !@state.isSuspend and !(@isActive() and @isInside())
       @setPriority 'low'
       @suspend true
       state.isAttacking = false
       return
 
-    if @state.isSuspend and @isActive()
+    if @state.isSuspend and (@isActive() and @isInside())
       @setPriority 'normal'
       @suspend false
       return
@@ -20,8 +27,21 @@ class ClientX
   close: ->
     `Process, Close, % this.name`
 
+  getSize: ->
+    name = "ahk_exe #{@name}"
+    `WinGetPos, __x__, __y__, __width__, __height__, % name`
+    return [__width__, __height__]
+
   isActive: ->
     return WinActive "ahk_exe #{@name}"
+
+  isInside: ->
+    [x, y] = $.getPosition()
+    if x < 0 then return false
+    if x > @width then return false
+    if y < 0 then return false
+    if y > @height then return false
+    return true
 
   reset: ->
     @setPriority 'normal'
