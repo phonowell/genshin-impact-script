@@ -16,16 +16,17 @@ startToggle = (key) ->
     return
   state.isToggleLocked = true
 
-  delay = 150
+  delay = 200
   diff = $.now() - ts.dash
-  if diff > 150 and diff < 550
-    delay = 550 - diff
+  if diff > 200 and diff < 600
+    delay = 600 - diff
 
   clearTimeout timer.toggle
   timer.toggle = $.delay delay, (key = key) ->
 
     $.blockInput true
     pauseMove()
+    client.resetKey()
 
     if $.getState key
       state.isLongPressing = true

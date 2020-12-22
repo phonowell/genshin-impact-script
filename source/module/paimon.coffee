@@ -12,18 +12,44 @@ class PaimonX
   ]
 
   state:
+    current: ''
     isVisible: false
-
-  timer:
-    close: ''
 
   ts:
     check: 0
 
   bindEvent: -> for key in @key
-    $.on key, (key = key) => @close (key = key) =>
+
+    $.on key, (key = key) =>
+
+      @checkVisibility true
+
+      if @state.isVisible
+
+        $.press 'esc'
+
+        if key == @state.current
+          @state.current = ''
+          @state.isVisible = false
+          return
+
+        clearTimeout timer.closePaimon
+        timer.closePaimon = setTimeout (key = key) =>
+          @state.current = key
+          @state.isVisible = true
+          $.press key
+        , 800
+
+        return
+
+      @state.current = key
       @state.isVisible = true
       $.press key
+
+    $.on 'esc', =>
+      @state.current = ''
+      @state.isVisible = false
+      $.press 'esc'
 
   checkVisibility: (forced = false) ->
 
@@ -44,21 +70,6 @@ class PaimonX
       return
 
     @state.isVisible = false
-
-  close: (callback) ->
-
-    @checkVisibility true
-
-    unless @state.isVisible
-      if callback then callback()
-      return
-
-    $.press 'esc'
-
-    clearTimeout @timer.close
-    @timer.close = setTimeout (callback = callback) ->
-      if callback then callback()
-    , 800
 
   findColor: (n) ->
 
