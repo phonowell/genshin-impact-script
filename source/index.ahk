@@ -688,10 +688,11 @@ genshin_15(key) {
     return
   }
   state.isToggleLocked := true
-  delay := 200
+  limit := [150, 600]
+  delay := limit[1]
   diff := $.now.Call() - ts.dash
-  if (diff > 200 && diff < 600) {
-    delay := 600 - diff
+  if (diff > limit[1] && diff < limit[2]) {
+    delay := limit[2] - diff
   }
   clearTimeout.Call(timer.toggle)
   timer.toggle := $.delay.Call(delay, Func("genshin_14").Bind(key))
@@ -751,7 +752,7 @@ genshin_23() {
   }
   state.isJumping := true
   clearInterval.Call(timer.jump)
-  timer.jump := setInterval.Call(jump, 100)
+  timer.jump := setInterval.Call(jump, 150)
   jump.Call()
 }
 genshin_24() {
@@ -759,7 +760,7 @@ genshin_24() {
 }
 genshin_25() {
   $.press.Call("space")
-  $.delay.Call(50, Func("genshin_24"))
+  $.delay.Call(75, Func("genshin_24"))
 }
 genshin_26() {
   ts.dash := $.now.Call()
@@ -863,7 +864,7 @@ genshin_38(module) {
     module.count := 0
   }
   module.ts := $.now.Call()
-  if !(module.count >= 2) {
+  if !(module.count >= 1) {
     module.count++
     module.attackA.Call()
   } else {

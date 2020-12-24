@@ -3,7 +3,7 @@ timer.jump = ''
 
 jump = ->
   $.press 'space'
-  $.delay 50, -> $.press 'space'
+  $.delay 75, -> $.press 'space'
 
 startJump = ->
 
@@ -11,7 +11,7 @@ startJump = ->
   state.isJumping = true
 
   clearInterval timer.jump
-  timer.jump = setInterval jump, 100
+  timer.jump = setInterval jump, 150
 
   jump()
 

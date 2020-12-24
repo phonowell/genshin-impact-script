@@ -16,10 +16,11 @@ startToggle = (key) ->
     return
   state.isToggleLocked = true
 
-  delay = 200
+  limit = [150, 600]
+  delay = limit[0]
   diff = $.now() - ts.dash
-  if diff > 200 and diff < 600
-    delay = 600 - diff
+  if diff > limit[0] and diff < limit[1]
+    delay = limit[1] - diff
 
   clearTimeout timer.toggle
   timer.toggle = $.delay delay, (key = key) ->

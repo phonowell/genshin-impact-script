@@ -13,7 +13,7 @@ module.attack = (module = module) ->
     module.count = 0
   module.ts = $.now()
 
-  unless module.count >= 2
+  unless module.count >= 1
     module.count++
     module.attackA()
   else
