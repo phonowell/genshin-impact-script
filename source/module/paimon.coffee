@@ -38,7 +38,7 @@ class PaimonX
           @state.current = key
           @state.isVisible = true
           $.press key
-        , 800
+        , 1e3
 
         return
 

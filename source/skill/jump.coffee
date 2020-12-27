@@ -2,22 +2,27 @@ state.isJumping = false
 timer.jump = ''
 
 jump = ->
-  $.press 'space'
-  $.delay 75, -> $.press 'space'
-
-startJump = ->
 
   if state.isJumping then return
   state.isJumping = true
 
-  clearInterval timer.jump
-  timer.jump = setInterval jump, 150
+  jumpTwice -> state.isJumping = false
 
-  jump()
+jumpTwice = (callback) ->
 
-stopJump = ->
+  $.press 'space'
 
-  unless state.isJumping then return
-  state.isJumping = false
+  clearTimeout timer.jump
+  timer.jump = $.delay 200, (callback = callback) ->
 
-  clearInterval timer.jump
+    unless isMoving()
+      callback()
+      return
+
+    $.press 'space'
+
+    clearTimeout timer.jump
+    timer.jump = $.delay 100, (callback = callback) ->
+
+      $.press 'space'
+      callback()

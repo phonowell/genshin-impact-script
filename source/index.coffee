@@ -61,8 +61,7 @@ if config.data.improvedElementalVision
   $.on 'm-button', toggleView
 
 if config.data.improvedJump
-  $.on 'space', startJump
-  $.on 'space:up', stopJump
+  $.on 'space', jump
   $.on 'x', ->
     $.press 'x'
     $.press 'space'

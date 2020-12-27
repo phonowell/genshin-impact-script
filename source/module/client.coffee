@@ -13,13 +13,13 @@ class ClientX
       @width = size[0]
       @height = size[1]
 
-    if !@state.isSuspend and !(@isActive() and @isInside())
+    if !@state.isSuspend and !@isActive()
       @setPriority 'low'
       @suspend true
       state.isAttacking = false
       return
 
-    if @state.isSuspend and (@isActive() and @isInside())
+    if @state.isSuspend and @isActive()
       @setPriority 'normal'
       @suspend false
       return
@@ -34,14 +34,6 @@ class ClientX
 
   isActive: ->
     return WinActive "ahk_exe #{@name}"
-
-  isInside: ->
-    [x, y] = $.getPosition()
-    if x < 0 then return false
-    if x > @width then return false
-    if y < 0 then return false
-    if y > @height then return false
-    return true
 
   reset: ->
     @setPriority 'normal'

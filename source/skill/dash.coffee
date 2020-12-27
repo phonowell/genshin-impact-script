@@ -14,6 +14,12 @@ dash = ->
 
   $.click 'right'
 
+  clearTimeout timer.dash
+  timer.dash = $.delay 1300, ->
+
+    unless state.isDashing then return
+    dash()
+
 startDash = ->
 
   ts.dash = $.now() + 500
@@ -25,8 +31,6 @@ startDash = ->
   if state.isDashing then return
   state.isDashing = true
 
-  clearInterval timer.dash
-  timer.dash = setInterval dash, 1300
   dash()
 
 stopDash = ->
@@ -39,8 +43,6 @@ stopDash = ->
 
   unless state.isDashing then return
   state.isDashing = false
-
-  clearInterval timer.dash
 
   key = isMoving()
   unless key
