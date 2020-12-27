@@ -51,12 +51,6 @@ if config.data.fastPick
   $.on 'f', startPick
   $.on 'f:up', stopPick
 
-# attack
-
-if config.data.improvedAttack
-  $.on 'l-button', startAttack
-  $.on 'l-button:up', stopAttack
-
 if config.data.improvedElementalVision
   $.on 'm-button', toggleView
 

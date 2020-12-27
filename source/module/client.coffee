@@ -1,7 +1,6 @@
 class ClientX
 
   height: 0
-  name: 'YuanShen.exe'
   state:
     isSuspend: false
   width: 0
@@ -24,16 +23,13 @@ class ClientX
       @suspend false
       return
 
-  close: ->
-    `Process, Close, % this.name`
-
   getSize: ->
-    name = "ahk_exe #{@name}"
+    name = "ahk_exe #{config.data.process}"
     `WinGetPos, __x__, __y__, __width__, __height__, % name`
     return [__width__, __height__]
 
   isActive: ->
-    return WinActive "ahk_exe #{@name}"
+    return WinActive "ahk_exe #{config.data.process}"
 
   reset: ->
     @setPriority 'normal'
@@ -77,6 +73,6 @@ class ClientX
       return
 
   setPriority: (level) ->
-    `Process, Priority, % this.name, % level`
+    `Process, Priority, % config.data.process, % level`
 
   watch: -> setInterval @check, 200
