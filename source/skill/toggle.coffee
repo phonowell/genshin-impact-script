@@ -4,7 +4,7 @@ timer.toggle = ''
 
 getToggleDelay = ->
 
-  limit = [150, 600]
+  limit = [200, 600]
   delay = limit[0]
   diff = $.now() - ts.dash
   if diff > limit[0] and diff < limit[1]
@@ -24,6 +24,8 @@ startToggle = (key) ->
     return
   state.isToggleLocked = true
 
+  pauseMove()
+
   clearTimeout timer.toggle
   timer.toggle = $.delay getToggleDelay(), (key = key) ->
 
@@ -31,6 +33,8 @@ startToggle = (key) ->
       state.isLongPressing = true
       $.press 'e:down'
     else $.press 'e'
+
+    resumeMove()
 
 stopToggle = (key) ->
 
