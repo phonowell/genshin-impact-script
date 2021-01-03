@@ -49,8 +49,6 @@ class ClientX
       if $.getState key
         $.press "#{key}:up"
 
-    paimon.resetKey()
-
   resetTimer: ->
 
     for _timer of timer

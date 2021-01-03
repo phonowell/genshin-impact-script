@@ -2,6 +2,14 @@
 # include include/head.ahk
 # include include/js-shim.ahk
 
+# declare
+
+$ = $
+clearInterval = clearInterval
+clearTimeout = clearTimeout
+setInterval = setInterval
+setTimeout = setTimeout
+
 # variable
 
 state = {}
@@ -18,8 +26,6 @@ config = new ConfigX()
 client = new ClientX()
 client.watch()
 
-paimon = new PaimonX()
-
 # binding
 
 $.on 'alt + f4', ->
@@ -35,17 +41,14 @@ $.on 'ctrl + f5', ->
 # binding
 
 for key in ['1', '2', '3', '4', '5']
-  $.on key, (key = key) -> startToggle key
-  $.on "#{key}:up", (key = key) -> stopToggle key
+  $.on key, -> startToggle key
+  $.on "#{key}:up", -> stopToggle key
 
 if config.data.easySkillTimer
   $.on 'e', -> $.press 'e:down'
   $.on 'e:up', ->
     $.press 'e:up'
     countDown 5e3
-
-if config.data.fastPaimonMenu
-  paimon.bindEvent()
 
 if config.data.fastPick
   $.on 'f', startPick

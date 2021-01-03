@@ -13,7 +13,6 @@ class ConfigX
     for key in [
       'autoESkill'
       'easySkillTimer'
-      'fastPaimonMenu'
       'fastPick'
       'improvedElementalVision'
       'improvedJump'

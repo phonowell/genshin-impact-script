@@ -13,7 +13,7 @@ jumpTwice = (callback) ->
   $.press 'space'
 
   clearTimeout timer.jump
-  timer.jump = $.delay 200, (callback = callback) ->
+  timer.jump = $.delay 200, ->
 
     unless isMoving()
       callback()
@@ -22,7 +22,7 @@ jumpTwice = (callback) ->
     $.press 'space'
 
     clearTimeout timer.jump
-    timer.jump = $.delay 100, (callback = callback) ->
+    timer.jump = $.delay 100, ->
 
       $.press 'space'
       callback()
