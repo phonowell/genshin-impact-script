@@ -17,7 +17,7 @@ async function ask_(
 
   const isExisted = [
     await $.isExisted_(source),
-    await $.isExisted_(target)
+    await $.isExisted_(target),
   ]
 
   const mtime: [number, number] = [0, 0]
@@ -40,18 +40,18 @@ async function ask_(
     choice.push({
       title: [
         'overwrite, export',
-        mtime[0] > mtime[1] ? '(newer)' : ''
+        mtime[0] > mtime[1] ? '(newer)' : '',
       ].join(' '),
-      value: 'export'
+      value: 'export',
     })
 
   if (isExisted[1])
     choice.push({
       title: [
         'overwrite, import',
-        mtime[1] > mtime[0] ? '(newer)' : ''
+        mtime[1] > mtime[0] ? '(newer)' : '',
       ].join(' '),
-      value: 'import'
+      value: 'import',
     })
 
   if (!choice.length) {
@@ -68,25 +68,24 @@ async function ask_(
 
   choice.push({
     title: 'skip',
-    value: 'skip'
+    value: 'skip',
   })
 
-  return await $.prompt_({
+  return $.prompt_({
+    default: indexDefault,
     list: choice,
     message: 'and you decide to...',
     type: 'select',
-    // @ts-ignore NEED FIXED
-    default: indexDefault
   })
 }
 
 async function load_(): Promise<string[]> {
 
   $.info().pause()
-  const listSource = await $.source_('./data/sync/**/*.yaml')
-  const listData: string[][] = []
-  for (const source of listSource)
-    listData.push(await $.read_(source) as string[])
+  const listData = await Promise.all(
+    (await $.source_('./data/sync/**/*.yaml'))
+      .map(source => $.read_(source))
+  ) as string[][]
   $.info().resume()
 
   let result: string[] = []
@@ -94,7 +93,7 @@ async function load_(): Promise<string[]> {
   for (const data of listData)
     result = [
       ...result,
-      ...data
+      ...data,
     ]
 
   return _.uniq(result)
@@ -113,7 +112,7 @@ async function main_(): Promise<void> {
     const _list2 = extra.split('/')
     const [namespace, version] = [
       _list2[0] || 'default',
-      _list2[1] || 'latest'
+      _list2[1] || 'latest',
     ]
 
     const source = `./${path}`
@@ -121,13 +120,16 @@ async function main_(): Promise<void> {
     const { basename, dirname, extname } = $.getName(target)
     target = `${dirname}/${basename}-${namespace}-${version}${extname}`
 
+    // eslint-disable-next-line no-await-in-loop
     if (await $.isSame_([source, target])) continue
 
     $.info(`'${source}' is different from '${target}'`)
 
+    // eslint-disable-next-line no-await-in-loop
     const value = await ask_(source, target)
     if (!value) break
 
+    // eslint-disable-next-line no-await-in-loop
     await overwrite_(value, source, target)
   }
 }

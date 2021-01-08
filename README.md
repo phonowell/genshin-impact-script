@@ -10,9 +10,6 @@ Based on `ahk`, provides only a few small features that are missing from the gam
 
 ## 功能 Features
 
-- 快捷切换菜单
-  Fast toggle between menus.
-
 - 按下`F`键时快速拾取物品
   Quickly pick up items when the `F` button is pressed.
 
