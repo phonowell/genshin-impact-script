@@ -5,7 +5,7 @@ import c2a from 'coffee-ahk'
 async function main_(): Promise<void> {
 
   await c2a('./source/index.coffee', {
-    salt: 'genshin'
+    salt: 'genshin',
   })
 }
 

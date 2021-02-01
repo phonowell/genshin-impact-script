@@ -7,7 +7,7 @@ import throttle from 'lodash/throttle'
 const compile_ = throttle(async (): Promise<void> => {
 
   await c2a('./source/index.coffee', {
-    salt: 'genshin'
+    salt: 'genshin',
   })
 }, 1e3, { trailing: true })
 

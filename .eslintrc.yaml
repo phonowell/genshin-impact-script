@@ -112,7 +112,7 @@ rules:
   comma-style: 2
   computed-property-spacing: 0
   consistent-this: 2
-  eol-last: 1
+  eol-last: 0
   func-call-spacing: 2
   func-name-matching: 2
   func-names: 2

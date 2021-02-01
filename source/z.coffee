@@ -1,5 +1,5 @@
-# include include/head.ahk
-# include include/js-shim.ahk
+import 'include/head.ahk'
+import 'include/js-shim.ahk'
 
 $.on 'f11', -> $.info $.getColor()
 

@@ -1,6 +1,6 @@
-# include include/admin.ahk
-# include include/head.ahk
-# include include/js-shim.ahk
+import 'include/admin.ahk'
+import 'include/head.ahk'
+import 'js-shim.ahk'
 
 # declare
 
@@ -16,8 +16,8 @@ state = {}
 timer = {}
 ts = {}
 
-# include module/*
-# include skill/*
+import 'module/*'
+import 'skill/*'
 
 # execute
 

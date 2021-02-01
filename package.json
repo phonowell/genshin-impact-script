@@ -4,18 +4,19 @@
     "url": "https://github.com/phonowell/genshin-impact-script/issues"
   },
   "dependencies": {
-    "coffee-ahk": "0.0.26",
-    "fire-keeper": "0.0.185",
+    "coffee-ahk": "^0.0.28",
+    "fire-keeper": "^0.0.185",
+    "js-shim.ahk": "^0.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   },
   "description": "",
   "devDependencies": {
-    "@types/lodash": "^4.14.167",
-    "@types/node": "^14.14.20",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
-    "@typescript-eslint/parser": "^4.12.0",
-    "eslint": "^7.17.0"
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^14.14.22",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0"
   },
   "homepage": "https://github.com/phonowell/genshin-impact-script",
   "keywords": [
