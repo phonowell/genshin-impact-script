@@ -24,7 +24,7 @@ startDash = ->
 
   ts.dash = $.now() + 500
 
-  unless config.data.improvedSprint
+  unless config.data.betterRunning
     $.click 'right:down'
     return
 
@@ -37,7 +37,7 @@ stopDash = ->
 
   ts.dash = $.now()
 
-  unless config.data.improvedSprint
+  unless config.data.betterRunning
     $.click 'right:up'
     return
 

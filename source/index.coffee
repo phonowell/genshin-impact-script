@@ -50,14 +50,14 @@ if config.data.easySkillTimer
     $.press 'e:up'
     countDown 5e3
 
-if config.data.fastPick
+if config.data.fastPickup
   $.on 'f', startPick
   $.on 'f:up', stopPick
 
-if config.data.improvedElementalVision
+if config.data.betterElementalVision
   $.on 'm-button', toggleView
 
-if config.data.improvedJump
+if config.data.betterJumping
   $.on 'space', jump
   $.on 'x', ->
     $.press 'x'
@@ -68,7 +68,7 @@ if config.data.improvedJump
 $.on 'r-button', startDash
 $.on 'r-button:up', stopDash
 
-if config.data.improvedSprint
+if config.data.betterRunning
 
   $.on 'w', -> $.press 'w:down'
   $.on 'w:up', ->

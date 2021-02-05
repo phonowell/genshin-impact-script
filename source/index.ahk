@@ -500,7 +500,7 @@ class ConfigX {
   source := "config.ini"
   __New() {
     this.data.process := this.read.Call("region/process", "YuanShen.exe")
-    for __index_for__, key in ["autoESkill", "easySkillTimer", "fastPick", "improvedElementalVision", "improvedJump", "improvedSprint"] {
+    for __index_for__, key in ["autoESkill", "betterElementalVision", "betterJumping", "betterRunning", "easySkillTimer", "fastPickup"] {
       this.data[__ci_genshin__.Call(key)] := this.read.Call("feature/enable" . (key) . "", 1)
     }
   }
@@ -550,20 +550,20 @@ if (config.data.easySkillTimer) {
   $.on.Call("e", Func("genshin_5"))
   $.on.Call("e:up", Func("genshin_4"))
 }
-if (config.data.fastPick) {
+if (config.data.fastPickup) {
   $.on.Call("f", startPick)
   $.on.Call("f:up", stopPick)
 }
-if (config.data.improvedElementalVision) {
+if (config.data.betterElementalVision) {
   $.on.Call("m-button", toggleView)
 }
-if (config.data.improvedJump) {
+if (config.data.betterJumping) {
   $.on.Call("space", jump)
   $.on.Call("x", Func("genshin_3"))
 }
 $.on.Call("r-button", startDash)
 $.on.Call("r-button:up", stopDash)
-if (config.data.improvedSprint) {
+if (config.data.betterRunning) {
   $.on.Call("w", Func("genshin_2"))
   $.on.Call("w:up", Func("genshin_1"))
 }
@@ -727,7 +727,7 @@ genshin_29() {
 }
 genshin_30() {
   ts.dash := $.now.Call()
-  if !(config.data.improvedSprint) {
+  if !(config.data.betterRunning) {
     $.click.Call("right:up")
     return
   }
@@ -744,7 +744,7 @@ genshin_30() {
 }
 genshin_31() {
   ts.dash := $.now.Call() + 500
-  if !(config.data.improvedSprint) {
+  if !(config.data.betterRunning) {
     $.click.Call("right:down")
     return
   }

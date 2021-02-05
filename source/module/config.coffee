@@ -12,11 +12,11 @@ class ConfigX
     # feature
     for key in [
       'autoESkill'
+      'betterElementalVision'
+      'betterJumping'
+      'betterRunning'
       'easySkillTimer'
-      'fastPick'
-      'improvedElementalVision'
-      'improvedJump'
-      'improvedSprint'
+      'fastPickup'
     ]
       @data[key] = @read "feature/enable#{key}", 1
 
