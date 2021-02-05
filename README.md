@@ -32,7 +32,7 @@ Quickly pick up items when the `F` key is pressed.
 
 Set the process priority to the lowest when the game window is inactive.
 
-## Use
+## Usage
 
 First, go to [ahk official website](https://www.autohotkey.com/) to install `ahk`(1.33+, please don't use v2 version).
 
