@@ -1,7 +1,6 @@
 class ConfigX
 
-  data:
-    character: ['']
+  data: {}
   source: 'config.ini'
 
   constructor: ->

@@ -16,6 +16,10 @@ A script based on `ahk` that provides a few small features for Genshin Impact pl
 
 Use better running when long pressing `right click`. Automatically unfold Wings of Wind when jumping.
 
+### Easy skill timer
+
+Provides countdown timer for E skills.
+
 ### Use E skill when character debuts
 
 When you press or hold `Numeric Key` to switch characters, the character will automatically use E skill when he/she appears on the stage.
@@ -26,7 +30,7 @@ When you press `Middle Button`, you will enter the automatically maintained elem
 
 ### Fast item pickup
 
-Quickly pick up items when the `F` key is pressed.
+Quickly pick up items when the `f` key is pressed.
 
 ### Auto-adjust game process priority
 
@@ -40,7 +44,52 @@ Then, put the [script](./source/index.ahk) and [config file](./source/config.ini
 
 Next, just open the game.
 
-Finally, press `Alt + F4` to kill the script.
+Finally, press `Alt + f4` to kill the script.
+
+### Easy Skill Timer
+
+Before use this feature, you need to identify the characters in your team. Press `f12` to identify the character with their avatar visible on the right.
+
+When you change the team lineup, you need to re-identify them.
+
+Currently only the following characters are supported.
+
+- Ganyu
+- Jean
+- Kaeya
+- Keqing
+- Razor
+- Sucrose
+- Tartaglia
+- Xingqiu
+- Zhongli
+
+Future characters to be added for support.
+
+- Aether
+- Albedo
+- Amber
+- Ayaka
+- Barbara
+- Beidou
+- Bennett
+- Chongyun
+- Diluc
+- Diona
+- Fischl
+- Hu Tao
+- Klee
+- Lisa
+- Lumine
+- Mona
+- Ningguang
+- Noelle
+- Qiqi
+- Rosaria
+- Venti
+- Xiangling
+- Xiao
+- Xinyan
 
 ## Configuration
 

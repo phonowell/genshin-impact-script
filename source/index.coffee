@@ -22,9 +22,15 @@ import 'skill/*'
 # execute
 
 config = new ConfigX()
-
 client = new ClientX()
-client.watch()
+console = new ConsoleX()
+skillTimer = new SkillTimerX()
+hud = new HudX()
+watcher = new WatcherX()
+
+# log
+
+console.log "#{config.data.process} / #{client.width} x #{client.height}"
 
 # binding
 
@@ -38,17 +44,32 @@ $.on 'ctrl + f5', ->
   client.reset()
   $.reload()
 
+$.on 'alt + f11', ->
+  $.beep()
+  hud.getColor()
+
+$.on 'f12', ->
+  $.beep()
+  hud.find()
+
 # binding
 
-for key in ['1', '2', '3', '4', '5']
+for key in [1, 2, 3, 4, 5]
+
   $.on key, -> startToggle key
   $.on "#{key}:up", -> stopToggle key
 
+  $.on "alt + #{key}", ->
+    $.press "alt + #{key}"
+    skillTimer.toggle key
+
 if config.data.easySkillTimer
-  $.on 'e', -> $.press 'e:down'
+  $.on 'e', ->
+    $.press 'e:down'
+    skillTimer.record 'start'
   $.on 'e:up', ->
     $.press 'e:up'
-    countDown 5e3
+    skillTimer.record 'end'
 
 if config.data.fastPickup
   $.on 'f', startPick

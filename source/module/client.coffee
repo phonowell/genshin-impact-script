@@ -72,5 +72,3 @@ class ClientX
 
   setPriority: (level) ->
     `Process, Priority, % config.data.process, % level`
-
-  watch: -> setInterval @check, 200

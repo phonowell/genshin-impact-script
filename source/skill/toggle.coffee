@@ -4,9 +4,9 @@ timer.toggleDown = ''
 timer.toggleUp = ''
 
 getToggleDelay = ->
-  delay = 600 - ($.now() - ts.dash)
-  if delay < 200
-    delay = 200
+  delay = 500 - ($.now() - ts.dash)
+  if delay < 100
+    delay = 100
   return delay
 
 startToggle = (key) ->
@@ -22,10 +22,13 @@ startToggle = (key) ->
     return
   state.isToggleDown = true
 
+  skillTimer.toggle key
+
   state.toggleDelay = getToggleDelay()
 
   timer.toggleDown = $.delay state.toggleDelay, ->
     $.press 'e:down'
+    skillTimer.record 'start'
 
 stopToggle = (key) ->
 
@@ -39,3 +42,4 @@ stopToggle = (key) ->
   timer.toggleUp = $.delay state.toggleDelay, ->
     state.isToggleDown = false
     $.press 'e:up'
+    skillTimer.record 'end'
