@@ -18,7 +18,7 @@ class SkillTimerX
       name = @member[n]
 
       if name == '?'
-        return
+        continue
 
       unless @listCountDown[n]
         continue
@@ -30,13 +30,9 @@ class SkillTimerX
         diff = Math.floor (now - @listCountDown[n]) * 0.001
         hud.render n, "#{diff}s"
 
-  listMember: ->
-
-    msg = ''
-    for n in [1, 2, 3, 4]
-      msg = "#{msg}, #{@member[n]}"
-    msg = "member: #{$.trim msg, ' ,'}"
-    console.log msg
+  isMona: ->
+    n = @current
+    return @member[n] == 'mona'
 
   record: (step) ->
 
@@ -44,6 +40,9 @@ class SkillTimerX
     name = @member[n]
 
     if name == '?'
+      return
+
+    if @listCountDown[n]
       return
 
     now = $.now()
@@ -54,8 +53,11 @@ class SkillTimerX
       return
 
     if step == 'end'
+
       diff = now - @listRecord[n]
-      if diff <= 200 then @listCountDown[n] = now + (char.cd[0] * 1e3)
+
+      if diff <= 200
+        @listCountDown[n] = now + (char.cd[0] * 1e3)
       else @listCountDown[n] = now + (char.cd[1] * 1e3)
       return
 

@@ -28,6 +28,10 @@ startDash = ->
     $.click 'right:down'
     return
 
+  if config.data.easySkillTimer and skillTimer.isMona()
+    $.click 'right:down'
+    return
+
   if state.isDashing then return
   state.isDashing = true
 
@@ -38,6 +42,10 @@ stopDash = ->
   ts.dash = $.now()
 
   unless config.data.betterRunning
+    $.click 'right:up'
+    return
+
+  if config.data.easySkillTimer and skillTimer.isMona()
     $.click 'right:up'
     return
 

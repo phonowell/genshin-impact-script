@@ -5,14 +5,15 @@ timer.toggleUp = ''
 
 getToggleDelay = ->
   delay = 500 - ($.now() - ts.dash)
-  if delay < 100
-    delay = 100
+  if delay < 200
+    delay = 200
   return delay
 
 startToggle = (key) ->
 
   # default
   $.press "#{key}:down"
+  skillTimer.toggle key
   unless config.data.autoESkill
     return
 
@@ -21,8 +22,6 @@ startToggle = (key) ->
   if state.isToggleDown
     return
   state.isToggleDown = true
-
-  skillTimer.toggle key
 
   state.toggleDelay = getToggleDelay()
 

@@ -58,6 +58,8 @@ Currently only the following characters are supported.
 - Jean
 - Kaeya
 - Keqing
+- Mona
+- Qiqi
 - Razor
 - Sucrose
 - Tartaglia
@@ -81,10 +83,8 @@ Future characters to be added for support.
 - Klee
 - Lisa
 - Lumine
-- Mona
 - Ningguang
 - Noelle
-- Qiqi
 - Rosaria
 - Venti
 - Xiangling

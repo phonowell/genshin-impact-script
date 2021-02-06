@@ -28,10 +28,6 @@ skillTimer = new SkillTimerX()
 hud = new HudX()
 watcher = new WatcherX()
 
-# log
-
-console.log "#{config.data.process} / #{client.width} x #{client.height}"
-
 # binding
 
 $.on 'alt + f4', ->
@@ -50,11 +46,11 @@ $.on 'alt + f11', ->
 
 $.on 'f12', ->
   $.beep()
-  hud.find()
+  hud.scan()
 
 # binding
 
-for key in [1, 2, 3, 4, 5]
+for key in [1, 2, 3, 4]
 
   $.on key, -> startToggle key
   $.on "#{key}:up", -> stopToggle key

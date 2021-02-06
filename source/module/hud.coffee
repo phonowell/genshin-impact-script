@@ -1,6 +1,6 @@
 class HudX
 
-  checkPosition: (n) ->
+  findCharacterByPosition: (n) ->
 
     [pointStart, pointEnd] = @getRange n
 
@@ -17,12 +17,6 @@ class HudX
 
     return '?'
 
-  find: ->
-
-    for n in [1, 2, 3, 4]
-      skillTimer.member[n] = @checkPosition n
-    skillTimer.listMember()
-
   getColor: ->
 
     color = $.getColor()
@@ -32,8 +26,8 @@ class HudX
   getPosition: (n) ->
 
     if client.width + 100 < A_ScreenWidth
-      left = client.width + 5
-    else left = client.width - 350
+      left = client.width
+    else left = Math.round client.width * 0.8
 
     return [
       left
@@ -62,3 +56,12 @@ class HudX
     [x, y] = @getPosition n
     id = n + 2
     `ToolTip, % msg, % x, % y, % id`
+
+  scan: ->
+
+    skillTimer.listCountDown = {}
+
+    for n in [1, 2, 3, 4]
+      name = @findCharacterByPosition n
+      skillTimer.member[n] = name
+      @render n, name

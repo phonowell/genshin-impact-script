@@ -62,7 +62,8 @@ Character =
     color: 0
 
   mona:
-    color: 0
+    color: 0x5A5064
+    CD: [12, 12]
 
   ningguang:
     color: 0
@@ -71,7 +72,8 @@ Character =
     color: 0
 
   qiqi:
-    color: 0
+    color: 0xE1DBDE
+    cd: [30, 30]
 
   rezor:
     color: 0xC6CAC6

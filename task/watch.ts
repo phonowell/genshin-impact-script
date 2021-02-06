@@ -20,7 +20,7 @@ const compile_ = debounce(async (): Promise<void> => {
 
   await c2a('./source/index.coffee', {
     salt: 'genshin',
-  })
+  }).catch(e => console.error(e))
 
   isBusy = false
 }, 3e3)

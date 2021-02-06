@@ -481,7 +481,7 @@ jsShim_53(input) {
 global state := {}
 global timer := {}
 global ts := {}
-global Character := {aether: {color: 0}, albedo: {color: 0}, amber: {color: 0}, ayaka: {color: 0}, barbara: {color: 0}, beidou: {color: 0}, bennett: {color: 0}, chongyun: {color: 0}, diluc: {color: 0}, diona: {color: 0}, fischl: {color: 0}, ganyu: {color: 0xBDCCC5, cd: [10, 10]}, hutao: {color: 0}, jean: {color: 0xE6D0A3, cd: [6, 6]}, kaeya: {color: 0x394E64, cd: [6, 6]}, keqing: {color: 0xBEB1C3, cd: [7.5, 7.5]}, klee: {color: 0}, lisa: {color: 0}, lumine: {color: 0}, mona: {color: 0}, ningguang: {color: 0}, noelle: {color: 0}, qiqi: {color: 0}, rezor: {color: 0xC6CAC6, cd: [6, 10]}, rosaria: {color: 0}, sucrose: {color: 0xD4E9CC, cd: [15, 15]}, tartaglia: {color: 0xE08D3F, cd: [6, 6]}, venti: {color: 0}, xiangling: {color: 0}, xiao: {color: 0}, xingqiu: {color: 0x488892, cd: [21, 21]}, xinyan: {color: 0}, zhongli: {color: 0x4B3525, cd: [4, 12]}}
+global Character := {aether: {color: 0}, albedo: {color: 0}, amber: {color: 0}, ayaka: {color: 0}, barbara: {color: 0}, beidou: {color: 0}, bennett: {color: 0}, chongyun: {color: 0}, diluc: {color: 0}, diona: {color: 0}, fischl: {color: 0}, ganyu: {color: 0xBDCCC5, cd: [10, 10]}, hutao: {color: 0}, jean: {color: 0xE6D0A3, cd: [6, 6]}, kaeya: {color: 0x394E64, cd: [6, 6]}, keqing: {color: 0xBEB1C3, cd: [7.5, 7.5]}, klee: {color: 0}, lisa: {color: 0}, lumine: {color: 0}, mona: {color: 0x5A5064, CD: [12, 12]}, ningguang: {color: 0}, noelle: {color: 0}, qiqi: {color: 0xE1DBDE, cd: [30, 30]}, rezor: {color: 0xC6CAC6, cd: [6, 10]}, rosaria: {color: 0}, sucrose: {color: 0xD4E9CC, cd: [15, 15]}, tartaglia: {color: 0xE08D3F, cd: [6, 6]}, venti: {color: 0}, xiangling: {color: 0}, xiao: {color: 0}, xingqiu: {color: 0x488892, cd: [21, 21]}, xinyan: {color: 0}, zhongli: {color: 0x4B3525, cd: [4, 12]}}
 class ClientX {
   height := 0
   state := {isSuspend: false}
@@ -517,13 +517,13 @@ class ConsoleX {
   render := Func("genshin_51").Bind(this)
 }
 class HudX {
-  checkPosition := Func("genshin_50").Bind(this)
-  find := Func("genshin_49").Bind(this)
-  getColor := Func("genshin_48").Bind(this)
-  getPosition := Func("genshin_47").Bind(this)
-  getRange := Func("genshin_46").Bind(this)
-  hide := Func("genshin_45").Bind(this)
-  render := Func("genshin_44").Bind(this)
+  findCharacterByPosition := Func("genshin_50").Bind(this)
+  getColor := Func("genshin_49").Bind(this)
+  getPosition := Func("genshin_48").Bind(this)
+  getRange := Func("genshin_47").Bind(this)
+  hide := Func("genshin_46").Bind(this)
+  render := Func("genshin_45").Bind(this)
+  scan := Func("genshin_44").Bind(this)
 }
 class SkillTimerX {
   current := 0
@@ -531,7 +531,7 @@ class SkillTimerX {
   listRecord := {}
   member := {}
   check := Func("genshin_43").Bind(this)
-  listMember := Func("genshin_42").Bind(this)
+  isMona := Func("genshin_42").Bind(this)
   record := Func("genshin_41").Bind(this)
   toggle := Func("genshin_40").Bind(this)
 }
@@ -579,12 +579,11 @@ global console := new ConsoleX()
 global skillTimer := new SkillTimerX()
 global hud := new HudX()
 global watcher := new WatcherX()
-console.log.Call("" . (config.data.process) . " / " . (client.width) . " x " . (client.height) . "")
 $.on.Call("alt + f4", Func("genshin_12"))
 $.on.Call("ctrl + f5", Func("genshin_11"))
 $.on.Call("alt + f11", Func("genshin_10"))
 $.on.Call("f12", Func("genshin_9"))
-for __index_for__, key in [1, 2, 3, 4, 5] {
+for __index_for__, key in [1, 2, 3, 4] {
   $.on.Call(key, Func("genshin_8").Bind(key))
   $.on.Call("" . (key) . ":up", Func("genshin_7").Bind(key))
   $.on.Call("alt + " . (key) . "", Func("genshin_6").Bind(key))
@@ -643,7 +642,7 @@ genshin_8(key) {
 }
 genshin_9() {
   $.beep.Call()
-  hud.find.Call()
+  hud.scan.Call()
 }
 genshin_10() {
   $.beep.Call()
@@ -694,6 +693,7 @@ genshin_18() {
 }
 genshin_19(key) {
   $.press.Call("" . (key) . ":down")
+  skillTimer.toggle.Call(key)
   if !(config.data.autoESkill) {
     return
   }
@@ -701,14 +701,13 @@ genshin_19(key) {
     return
   }
   state.isToggleDown := true
-  skillTimer.toggle.Call(key)
   state.toggleDelay := getToggleDelay.Call()
   timer.toggleDown := $.delay.Call(state.toggleDelay, Func("genshin_18"))
 }
 genshin_20() {
   delay := 500 - ($.now.Call() - ts.dash)
-  if (delay < 100) {
-    delay := 100
+  if (delay < 200) {
+    delay := 200
   }
   return delay
 }
@@ -790,6 +789,10 @@ genshin_33() {
     $.click.Call("right:up")
     return
   }
+  if (config.data.easySkillTimer && skillTimer.isMona.Call()) {
+    $.click.Call("right:up")
+    return
+  }
   if !(state.isDashing) {
     return
   }
@@ -804,6 +807,10 @@ genshin_33() {
 genshin_34() {
   ts.dash := $.now.Call() + 500
   if !(config.data.betterRunning) {
+    $.click.Call("right:down")
+    return
+  }
+  if (config.data.easySkillTimer && skillTimer.isMona.Call()) {
     $.click.Call("right:down")
     return
   }
@@ -853,6 +860,9 @@ genshin_41(this, step) {
   if (name == "?") {
     return
   }
+  if (this.listCountDown[__ci_genshin__.Call(n)]) {
+    return
+  }
   now := $.now.Call()
   char := Character[__ci_genshin__.Call(name)]
   if (step == "start") {
@@ -870,12 +880,8 @@ genshin_41(this, step) {
   }
 }
 genshin_42(this) {
-  msg := ""
-  for __index_for__, n in [1, 2, 3, 4] {
-    msg := "" . (msg) . ", " . (this.member[__ci_genshin__.Call(n)]) . ""
-  }
-  msg := "member: " . ($.trim.Call(msg, " ,")) . ""
-  console.log.Call(msg)
+  n := this.current
+  return this.member[__ci_genshin__.Call(n)] == "mona"
 }
 genshin_43(this) {
   if (client.state.isSuspend) {
@@ -886,7 +892,7 @@ genshin_43(this) {
   for __index_for__, n in [1, 2, 3, 4] {
     name := this.member[__ci_genshin__.Call(n)]
     if (name == "?") {
-      return
+      continue
     }
     if !(this.listCountDown[__ci_genshin__.Call(n)]) {
       continue
@@ -900,41 +906,43 @@ genshin_43(this) {
     }
   }
 }
-genshin_44(this, n, msg) {
+genshin_44(this) {
+  skillTimer.listCountDown := {}
+  for __index_for__, n in [1, 2, 3, 4] {
+    name := this.findCharacterByPosition.Call(n)
+    skillTimer.member[__ci_genshin__.Call(n)] := name
+    this.render.Call(n, name)
+  }
+}
+genshin_45(this, n, msg) {
   __array__ := this.getPosition.Call(n)
   x := __array__[1]
   y := __array__[2]
   id := n + 2
   ToolTip, % msg, % x, % y, % id
 }
-genshin_45(this) {
+genshin_46(this) {
   for __index_for__, n in [1, 2, 3, 4] {
     this.render.Call(n, "")
   }
 }
-genshin_46(this, n) {
+genshin_47(this, n) {
   pointStart := [client.width - 150, Math.round.Call(client.height * (9 * (n + 1)) * 0.01)]
   pointEnd := [client.width - 60, Math.round.Call(client.height * (9 * (n + 2)) * 0.01)]
   return [pointStart, pointEnd]
 }
-genshin_47(this, n) {
+genshin_48(this, n) {
   if (client.width + 100 < A_ScreenWidth) {
-    left := client.width + 5
+    left := client.width
   } else {
-    left := client.width - 350
+    left := Math.round.Call(client.width * 0.8)
   }
   return [left, Math.round.Call(client.height * (4 + 9 * (n + 1)) * 0.01)]
 }
-genshin_48(this) {
+genshin_49(this) {
   color := $.getColor.Call()
   console.log.Call(color)
   ClipBoard := color
-}
-genshin_49(this) {
-  for __index_for__, n in [1, 2, 3, 4] {
-    skillTimer.member[__ci_genshin__.Call(n)] := this.checkPosition.Call(n)
-  }
-  skillTimer.listMember.Call()
 }
 genshin_50(this, n) {
   __array__ := this.getRange.Call(n)

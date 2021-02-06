@@ -34,7 +34,8 @@
   },
   "scripts": {
     "alice": "ts-node task/alice",
-    "build": "npm run alice build"
+    "build": "npm run alice build",
+    "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
   "version": "0.0.1"
