@@ -3,6 +3,7 @@ class SkillTimerX
   current: 0
   listCountDown: {}
   listRecord: {}
+  listTimer: {}
   member: {}
 
   check: ->
@@ -26,9 +27,17 @@ class SkillTimerX
       if now >= @listCountDown[n]
         @listCountDown[n] = 0
         hud.render n, 'OK'
+        @hide n
       else
         diff = Math.floor (now - @listCountDown[n]) * 0.001
         hud.render n, "#{diff}s"
+
+  hide: (n) ->
+
+    clearTimeout @listTimer[n]
+    @listTimer[n] = setTimeout ->
+      hud.render n, ''
+    , 5e3
 
   record: (step) ->
 

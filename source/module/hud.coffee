@@ -65,3 +65,4 @@ class HudX
       name = @findCharacterByPosition n
       skillTimer.member[n] = name
       @render n, name
+      skillTimer.hide n
