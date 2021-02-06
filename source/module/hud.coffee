@@ -31,8 +31,12 @@ class HudX
 
   getPosition: (n) ->
 
+    if client.width + 100 < A_ScreenWidth
+      left = client.width + 5
+    else left = client.width - 350
+
     return [
-      client.width - 300
+      left
       Math.round client.height * (4 + 9 * (n + 1)) * 0.01
     ]
 

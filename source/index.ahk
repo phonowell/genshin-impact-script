@@ -918,7 +918,12 @@ genshin_46(this, n) {
   return [pointStart, pointEnd]
 }
 genshin_47(this, n) {
-  return [client.width - 300, Math.round.Call(client.height * (4 + 9 * (n + 1)) * 0.01)]
+  if (client.width + 100 < A_ScreenWidth) {
+    left := client.width + 5
+  } else {
+    left := client.width - 350
+  }
+  return [left, Math.round.Call(client.height * (4 + 9 * (n + 1)) * 0.01)]
 }
 genshin_48(this) {
   color := $.getColor.Call()
