@@ -20,6 +20,21 @@ dash = ->
     unless state.isDashing then return
     dash()
 
+isSwimming = ->
+
+  start = [
+    client.width - 300
+    client.height - 100
+  ]
+
+  end = [
+    client.width
+    client.height
+  ]
+
+  point = $.findColor 0xFFE92C, start, end, 0.9
+  return point[0] * point[1] > 0
+
 startDash = ->
 
   ts.dash = $.now() + 500
@@ -28,7 +43,7 @@ startDash = ->
     $.click 'right:down'
     return
 
-  if config.data.easySkillTimer and skillTimer.isMona()
+  if isSwimming()
     $.click 'right:down'
     return
 
@@ -45,7 +60,8 @@ stopDash = ->
     $.click 'right:up'
     return
 
-  if config.data.easySkillTimer and skillTimer.isMona()
+  if isSwimming()
+    state.isDashing = false
     $.click 'right:up'
     return
 

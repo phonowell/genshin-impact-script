@@ -481,7 +481,7 @@ jsShim_53(input) {
 global state := {}
 global timer := {}
 global ts := {}
-global Character := {aether: {color: 0}, albedo: {color: 0}, amber: {color: 0}, ayaka: {color: 0}, barbara: {color: 0}, beidou: {color: 0}, bennett: {color: 0}, chongyun: {color: 0}, diluc: {color: 0}, diona: {color: 0}, fischl: {color: 0}, ganyu: {color: 0xBDCCC5, cd: [10, 10]}, hutao: {color: 0}, jean: {color: 0xE6D0A3, cd: [6, 6]}, kaeya: {color: 0x394E64, cd: [6, 6]}, keqing: {color: 0xBEB1C3, cd: [7.5, 7.5]}, klee: {color: 0}, lisa: {color: 0}, lumine: {color: 0}, mona: {color: 0x5A5064, CD: [12, 12]}, ningguang: {color: 0}, noelle: {color: 0}, qiqi: {color: 0xE1DBDE, cd: [30, 30]}, rezor: {color: 0xC6CAC6, cd: [6, 10]}, rosaria: {color: 0}, sucrose: {color: 0xD4E9CC, cd: [15, 15]}, tartaglia: {color: 0xE08D3F, cd: [6, 6]}, venti: {color: 0}, xiangling: {color: 0}, xiao: {color: 0}, xingqiu: {color: 0x488892, cd: [21, 21]}, xinyan: {color: 0}, zhongli: {color: 0x4B3525, cd: [4, 12]}}
+global Character := {aether: {color: 0}, albedo: {color: 0}, amber: {color: 0}, ayaka: {color: 0}, barbara: {color: 0}, beidou: {color: 0}, bennett: {color: 0}, chongyun: {color: 0}, diluc: {color: 0}, diona: {color: 0}, fischl: {color: 0}, ganyu: {color: 0xBDCCC5, cd: [10, 10]}, hutao: {color: 0}, jean: {color: 0xE6D0A3, cd: [6, 6]}, kaeya: {color: 0x394E64, cd: [6, 6]}, keqing: {color: 0xBEB1C3, cd: [7.5, 7.5]}, klee: {color: 0xBE3A0E, cd: [20, 20]}, lisa: {color: 0}, lumine: {color: 0}, mona: {color: 0x5A5064, CD: [12, 12]}, ningguang: {color: 0}, noelle: {color: 0}, qiqi: {color: 0xE1DBDE, cd: [30, 30]}, rezor: {color: 0xC6CAC6, cd: [6, 10]}, rosaria: {color: 0}, sucrose: {color: 0xD4E9CC, cd: [15, 15]}, tartaglia: {color: 0xE08D3F, cd: [6, 6]}, venti: {color: 0}, xiangling: {color: 0}, xiao: {color: 0}, xingqiu: {color: 0x488892, cd: [21, 21]}, xinyan: {color: 0}, zhongli: {color: 0x4B3525, cd: [4, 12]}}
 class ClientX {
   height := 0
   state := {isSuspend: false}
@@ -531,23 +531,23 @@ class SkillTimerX {
   listRecord := {}
   member := {}
   check := Func("genshin_43").Bind(this)
-  isMona := Func("genshin_42").Bind(this)
-  record := Func("genshin_41").Bind(this)
-  toggle := Func("genshin_40").Bind(this)
+  record := Func("genshin_42").Bind(this)
+  toggle := Func("genshin_41").Bind(this)
 }
 class WatcherX {
   timer := ""
   __New() {
     this.start.Call()
   }
-  check := Func("genshin_39").Bind(this)
-  start := Func("genshin_38").Bind(this)
-  stop := Func("genshin_37").Bind(this)
+  check := Func("genshin_40").Bind(this)
+  start := Func("genshin_39").Bind(this)
+  stop := Func("genshin_38").Bind(this)
 }
 state.isDashing := false
 timer.dash := ""
 ts.dash := 0
-global dash := Func("genshin_36")
+global dash := Func("genshin_37")
+global isSwimming := Func("genshin_35")
 global startDash := Func("genshin_34")
 global stopDash := Func("genshin_33")
 state.isJumping := false
@@ -789,7 +789,8 @@ genshin_33() {
     $.click.Call("right:up")
     return
   }
-  if (config.data.easySkillTimer && skillTimer.isMona.Call()) {
+  if (isSwimming.Call()) {
+    state.isDashing := false
     $.click.Call("right:up")
     return
   }
@@ -810,7 +811,7 @@ genshin_34() {
     $.click.Call("right:down")
     return
   }
-  if (config.data.easySkillTimer && skillTimer.isMona.Call()) {
+  if (isSwimming.Call()) {
     $.click.Call("right:down")
     return
   }
@@ -821,12 +822,18 @@ genshin_34() {
   dash.Call()
 }
 genshin_35() {
+  start := [client.width - 300, client.height - 100]
+  end := [client.width, client.height]
+  point := $.findColor.Call(0xFFE92C, start, end, 0.9)
+  return point[1] * point[2] > 0
+}
+genshin_36() {
   if !(state.isDashing) {
     return
   }
   dash.Call()
 }
-genshin_36() {
+genshin_37() {
   key := isMoving.Call()
   if !(key) {
     $.press.Call("w:down")
@@ -835,26 +842,26 @@ genshin_36() {
   }
   $.click.Call("right")
   clearTimeout.Call(timer.dash)
-  timer.dash := $.delay.Call(1300, Func("genshin_35"))
-}
-genshin_37(this) {
-  clearInterval.Call(this.check)
+  timer.dash := $.delay.Call(1300, Func("genshin_36"))
 }
 genshin_38(this) {
+  clearInterval.Call(this.check)
+}
+genshin_39(this) {
   this.timer := setInterval.Call(this.check, 200)
   this.check.Call()
 }
-genshin_39(this) {
+genshin_40(this) {
   client.check.Call()
   console.check.Call()
   if (config.data.easySkillTimer) {
     skillTimer.check.Call()
   }
 }
-genshin_40(this, n) {
+genshin_41(this, n) {
   this.current := n
 }
-genshin_41(this, step) {
+genshin_42(this, step) {
   n := this.current
   name := this.member[__ci_genshin__.Call(n)]
   if (name == "?") {
@@ -878,10 +885,6 @@ genshin_41(this, step) {
     }
     return
   }
-}
-genshin_42(this) {
-  n := this.current
-  return this.member[__ci_genshin__.Call(n)] == "mona"
 }
 genshin_43(this) {
   if (client.state.isSuspend) {

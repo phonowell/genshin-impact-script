@@ -57,6 +57,7 @@ Currently only the following characters are supported.
 - Ganyu
 - Jean
 - Kaeya
+- Klee
 - Keqing
 - Mona
 - Qiqi
@@ -80,7 +81,6 @@ Future characters to be added for support.
 - Diona
 - Fischl
 - Hu Tao
-- Klee
 - Lisa
 - Lumine
 - Ningguang

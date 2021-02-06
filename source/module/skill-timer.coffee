@@ -30,10 +30,6 @@ class SkillTimerX
         diff = Math.floor (now - @listCountDown[n]) * 0.001
         hud.render n, "#{diff}s"
 
-  isMona: ->
-    n = @current
-    return @member[n] == 'mona'
-
   record: (step) ->
 
     n = @current

@@ -53,7 +53,8 @@ Character =
     cd: [7.5, 7.5]
 
   klee:
-    color: 0
+    color: 0xBE3A0E
+    cd: [20, 20]
 
   lisa:
     color: 0
