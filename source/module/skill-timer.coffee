@@ -26,11 +26,10 @@ class SkillTimerX
 
       if now >= @listCountDown[n]
         @listCountDown[n] = 0
-        hud.render n, 'OK'
-        @hide n
+        @show n, 'OK'
       else
         diff = Math.floor (now - @listCountDown[n]) * 0.001
-        hud.render n, "#{diff}s"
+        @show n, "#{diff}s"
 
   hide: (n) ->
 
@@ -65,5 +64,9 @@ class SkillTimerX
         @listCountDown[n] = now + (char.cd[0] * 1e3)
       else @listCountDown[n] = now + (char.cd[1] * 1e3)
       return
+
+  show: (n, msg) ->
+    @hide n
+    hud.render n, msg
 
   toggle: (n) -> @current = n
