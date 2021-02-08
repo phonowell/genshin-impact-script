@@ -23,8 +23,8 @@ dash = ->
 isSwimming = ->
 
   start = [
-    client.width - 300
-    client.height - 100
+    client.vw 80
+    client.vh 90
   ]
 
   end = [

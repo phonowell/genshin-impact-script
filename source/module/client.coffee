@@ -72,3 +72,7 @@ class ClientX
 
   setPriority: (level) ->
     `Process, Priority, % config.data.process, % level`
+
+  vh: (n) -> return Math.round @height * n * 0.01
+
+  vw: (n) -> return Math.round @width * n * 0.01

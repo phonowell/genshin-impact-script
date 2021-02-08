@@ -20,30 +20,33 @@ class HudX
   getColor: ->
 
     color = $.getColor()
-    console.log color
+    [x, y] = $.getPosition()
+    x1 = Math.round (x * 100) / client.width
+    y1 = Math.round (y * 100) / client.height
+    console.log "#{x1}, #{y1} / #{color}"
     ClipBoard = color
 
   getPosition: (n) ->
 
     if client.width + 100 < A_ScreenWidth
       left = client.width
-    else left = Math.round client.width * 0.8
+    else left = client.vw 80
 
     return [
       left
-      Math.round client.height * (4 + 9 * (n + 1)) * 0.01
+      client.vh 4 + 9 * (n + 1)
     ]
 
   getRange: (n) ->
 
     pointStart = [
-      client.width - 150
-      Math.round client.height * (9 * (n + 1)) * 0.01
+      client.vw 90
+      client.vh 9 * (n + 1)
     ]
 
     pointEnd = [
-      client.width - 60
-      Math.round client.height * (9 * (n + 2)) * 0.01
+      client.vw 96
+      client.vh 9 * (n + 2)
     ]
 
     return [pointStart, pointEnd]

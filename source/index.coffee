@@ -87,7 +87,9 @@ $.on 'r-button:up', stopDash
 
 if config.data.betterRunning
 
-  $.on 'w', -> $.press 'w:down'
+  $.on 'w', ->
+    if state.isDashing then return
+    $.press 'w:down'
   $.on 'w:up', ->
     if state.isDashing then return
     $.press 'w:up'

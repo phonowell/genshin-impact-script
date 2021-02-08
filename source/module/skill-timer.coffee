@@ -53,6 +53,10 @@ class SkillTimerX
     char = Character[name]
 
     if step == 'start'
+
+      if @listRecord[n]
+        return
+
       @listRecord[n] = now
       return
 
@@ -60,7 +64,9 @@ class SkillTimerX
 
       diff = now - @listRecord[n]
 
-      if diff <= 200
+      @listRecord[n] = 0
+
+      if diff <= 500
         @listCountDown[n] = now + (char.cd[0] * 1e3)
       else @listCountDown[n] = now + (char.cd[1] * 1e3)
       return
