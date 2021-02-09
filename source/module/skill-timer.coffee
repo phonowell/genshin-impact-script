@@ -1,14 +1,12 @@
 class SkillTimerX
 
-  current: 0
   listCountDown: {}
   listRecord: {}
   listTimer: {}
-  member: {}
 
   check: ->
 
-    if client.state.isSuspend
+    if client.isSuspend
       hud.hide()
       return
 
@@ -16,9 +14,7 @@ class SkillTimerX
 
     for n in [1, 2, 3, 4]
 
-      name = @member[n]
-
-      if name == '?'
+      unless member.name
         continue
 
       unless @listCountDown[n]
@@ -26,7 +22,7 @@ class SkillTimerX
 
       if now >= @listCountDown[n]
         @listCountDown[n] = 0
-        @show n, 'OK'
+        @show n, ''
       else
         diff = Math.floor (now - @listCountDown[n]) * 0.001
         @show n, "#{diff}s"
@@ -40,10 +36,10 @@ class SkillTimerX
 
   record: (step) ->
 
-    n = @current
-    name = @member[n]
+    n = member.current
+    name = member.name
 
-    if name == '?'
+    unless name
       return
 
     if @listCountDown[n]
@@ -74,5 +70,3 @@ class SkillTimerX
   show: (n, msg) ->
     @hide n
     hud.render n, msg
-
-  toggle: (n) -> @current = n

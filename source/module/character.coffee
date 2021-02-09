@@ -13,25 +13,30 @@ Character =
     color: 0
 
   barbara:
-    color: 0
+    color: 0xE2E0D4
+    cd: [32, 32]
 
   beidou:
     color: 0
 
   bennett:
-    color: 0
+    color: 0xFBF3CF
+    cd: [5, 10]
 
   chongyun:
-    color: 0
+    color: 0xCDEFDF
+    cd: [15, 15]
 
   diluc:
     color: 0
 
   diona:
-    color: 0
+    color: 0xFED6CE
+    cd: [6, 15]
 
   fischl:
-    color: 0
+    color: 0xFFE3A9
+    cd: [25, 25]
 
   ganyu:
     color: 0xBDCCC5
@@ -57,7 +62,8 @@ Character =
     cd: [20, 20]
 
   lisa:
-    color: 0
+    color: 0xB6A69B
+    cd: [1, 16]
 
   lumine:
     color: 0
@@ -70,7 +76,8 @@ Character =
     color: 0
 
   noelle:
-    color: 0
+    color: 0xDED8D2
+    cd: [24, 24]
 
   qiqi:
     color: 0xE1DBDE
@@ -92,10 +99,12 @@ Character =
     cd: [6, 6]
 
   venti:
-    color: 0
+    color: 0x5D917E
+    cd: [6, 15]
 
   xiangling:
-    color: 0
+    color: 0x22337B
+    cd: [12, 12]
 
   xiao:
     color: 0

@@ -26,6 +26,7 @@ client = new ClientX()
 console = new ConsoleX()
 skillTimer = new SkillTimerX()
 hud = new HudX()
+member = new MemberX()
 watcher = new WatcherX()
 
 # binding
@@ -46,7 +47,8 @@ $.on 'alt + f11', ->
 
 $.on 'f12', ->
   $.beep()
-  hud.scan()
+  client.setSize()
+  member.scan()
 
 # binding
 
@@ -57,7 +59,7 @@ for key in [1, 2, 3, 4]
 
   $.on "alt + #{key}", ->
     $.press "alt + #{key}"
-    skillTimer.toggle key
+    member.toggle key
 
 if config.data.easySkillTimer
   $.on 'e', ->
@@ -87,9 +89,7 @@ $.on 'r-button:up', stopDash
 
 if config.data.betterRunning
 
-  $.on 'w', ->
-    if state.isDashing then return
-    $.press 'w:down'
+  $.on 'w', -> $.press 'w:down'
   $.on 'w:up', ->
     if state.isDashing then return
     $.press 'w:up'

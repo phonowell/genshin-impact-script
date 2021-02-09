@@ -295,7 +295,7 @@ jsShim_31(source) {
   Run, % source
 }
 jsShim_32(key, callback) {
-  key := "$" . ($.formatHotkey.Call(key)) . ""
+  key := $.formatHotkey.Call(key)
   Hotkey, % key, % callback, On
 }
 jsShim_33(key, callback) {
@@ -483,17 +483,20 @@ jsShim_53(input) {
 global state := {}
 global timer := {}
 global ts := {}
-global Character := {aether: {color: 0}, albedo: {color: 0}, amber: {color: 0}, ayaka: {color: 0}, barbara: {color: 0}, beidou: {color: 0}, bennett: {color: 0}, chongyun: {color: 0}, diluc: {color: 0}, diona: {color: 0}, fischl: {color: 0}, ganyu: {color: 0xBDCCC5, cd: [10, 10]}, hutao: {color: 0}, jean: {color: 0xE6D0A3, cd: [6, 6]}, kaeya: {color: 0x394E64, cd: [6, 6]}, keqing: {color: 0xBEB1C3, cd: [7.5, 7.5]}, klee: {color: 0xBE3A0E, cd: [20, 20]}, lisa: {color: 0}, lumine: {color: 0}, mona: {color: 0x5A5064, CD: [12, 12]}, ningguang: {color: 0}, noelle: {color: 0}, qiqi: {color: 0xE1DBDE, cd: [30, 30]}, rezor: {color: 0xC6CAC6, cd: [6, 10]}, rosaria: {color: 0}, sucrose: {color: 0xD4E9CC, cd: [15, 15]}, tartaglia: {color: 0xE08D3F, cd: [6, 6]}, venti: {color: 0}, xiangling: {color: 0}, xiao: {color: 0}, xingqiu: {color: 0x488892, cd: [21, 21]}, xinyan: {color: 0}, zhongli: {color: 0x4B3525, cd: [4, 12]}}
+global Character := {aether: {color: 0}, albedo: {color: 0}, amber: {color: 0}, ayaka: {color: 0}, barbara: {color: 0xE2E0D4, cd: [32, 32]}, beidou: {color: 0}, bennett: {color: 0xFBF3CF, cd: [5, 10]}, chongyun: {color: 0xCDEFDF, cd: [15, 15]}, diluc: {color: 0}, diona: {color: 0xFED6CE, cd: [6, 15]}, fischl: {color: 0xFFE3A9, cd: [25, 25]}, ganyu: {color: 0xBDCCC5, cd: [10, 10]}, hutao: {color: 0}, jean: {color: 0xE6D0A3, cd: [6, 6]}, kaeya: {color: 0x394E64, cd: [6, 6]}, keqing: {color: 0xBEB1C3, cd: [7.5, 7.5]}, klee: {color: 0xBE3A0E, cd: [20, 20]}, lisa: {color: 0xB6A69B, cd: [1, 16]}, lumine: {color: 0}, mona: {color: 0x5A5064, CD: [12, 12]}, ningguang: {color: 0}, noelle: {color: 0xDED8D2, cd: [24, 24]}, qiqi: {color: 0xE1DBDE, cd: [30, 30]}, rezor: {color: 0xC6CAC6, cd: [6, 10]}, rosaria: {color: 0}, sucrose: {color: 0xD4E9CC, cd: [15, 15]}, tartaglia: {color: 0xE08D3F, cd: [6, 6]}, venti: {color: 0x5D917E, cd: [6, 15]}, xiangling: {color: 0x22337B, cd: [12, 12]}, xiao: {color: 0}, xingqiu: {color: 0x488892, cd: [21, 21]}, xinyan: {color: 0}, zhongli: {color: 0x4B3525, cd: [4, 12]}}
 class ClientX {
   height := 0
-  state := {isSuspend: false}
+  isSuspend := false
   width := 0
+  __New() {
+    this.setSize.Call()
+  }
   check := Func("genshin_69").Bind(this)
-  getSize := Func("genshin_68").Bind(this)
-  isActive := Func("genshin_67").Bind(this)
-  reset := Func("genshin_66").Bind(this)
-  resetKey := Func("genshin_65").Bind(this)
-  resetTimer := Func("genshin_64").Bind(this)
+  isActive := Func("genshin_68").Bind(this)
+  reset := Func("genshin_67").Bind(this)
+  resetKey := Func("genshin_66").Bind(this)
+  resetTimer := Func("genshin_65").Bind(this)
+  setSize := Func("genshin_64").Bind(this)
   suspend := Func("genshin_63").Bind(this)
   setPriority := Func("genshin_62").Bind(this)
   vh := Func("genshin_61").Bind(this)
@@ -521,25 +524,28 @@ class ConsoleX {
   render := Func("genshin_54").Bind(this)
 }
 class HudX {
-  findCharacterByPosition := Func("genshin_53").Bind(this)
-  getColor := Func("genshin_52").Bind(this)
-  getPosition := Func("genshin_51").Bind(this)
-  getRange := Func("genshin_50").Bind(this)
-  hide := Func("genshin_49").Bind(this)
-  render := Func("genshin_48").Bind(this)
+  getColor := Func("genshin_53").Bind(this)
+  getPosition := Func("genshin_52").Bind(this)
+  hide := Func("genshin_51").Bind(this)
+  render := Func("genshin_50").Bind(this)
+}
+class MemberX {
+  current := 0
+  map := {}
+  name := ""
+  checkCharacterByPosition := Func("genshin_49").Bind(this)
+  getRange := Func("genshin_48").Bind(this)
   scan := Func("genshin_47").Bind(this)
+  toggle := Func("genshin_46").Bind(this)
 }
 class SkillTimerX {
-  current := 0
   listCountDown := {}
   listRecord := {}
   listTimer := {}
-  member := {}
-  check := Func("genshin_46").Bind(this)
-  hide := Func("genshin_45").Bind(this)
-  record := Func("genshin_43").Bind(this)
-  show := Func("genshin_42").Bind(this)
-  toggle := Func("genshin_41").Bind(this)
+  check := Func("genshin_45").Bind(this)
+  hide := Func("genshin_44").Bind(this)
+  record := Func("genshin_42").Bind(this)
+  show := Func("genshin_41").Bind(this)
 }
 class WatcherX {
   timer := ""
@@ -585,6 +591,7 @@ global client := new ClientX()
 global console := new ConsoleX()
 global skillTimer := new SkillTimerX()
 global hud := new HudX()
+global member := new MemberX()
 global watcher := new WatcherX()
 $.on.Call("alt + f4", Func("genshin_12"))
 $.on.Call("ctrl + f5", Func("genshin_11"))
@@ -623,9 +630,6 @@ genshin_1() {
   $.press.Call("w:up")
 }
 genshin_2() {
-  if (state.isDashing) {
-    return
-  }
   $.press.Call("w:down")
 }
 genshin_3() {
@@ -642,7 +646,7 @@ genshin_5() {
 }
 genshin_6(key) {
   $.press.Call("alt + " . (key) . "")
-  skillTimer.toggle.Call(key)
+  member.toggle.Call(key)
 }
 genshin_7(key) {
   stopToggle.Call(key)
@@ -652,7 +656,8 @@ genshin_8(key) {
 }
 genshin_9() {
   $.beep.Call()
-  hud.scan.Call()
+  client.setSize.Call()
+  member.scan.Call()
 }
 genshin_10() {
   $.beep.Call()
@@ -703,7 +708,7 @@ genshin_18() {
 }
 genshin_19(key) {
   $.press.Call("" . (key) . ":down")
-  skillTimer.toggle.Call(key)
+  member.toggle.Call(key)
   if !(config.data.autoESkill) {
     return
   }
@@ -868,17 +873,14 @@ genshin_40(this) {
     skillTimer.check.Call()
   }
 }
-genshin_41(this, n) {
-  this.current := n
-}
-genshin_42(this, n, msg) {
+genshin_41(this, n, msg) {
   this.hide.Call(n)
   hud.render.Call(n, msg)
 }
-genshin_43(this, step) {
-  n := this.current
-  name := this.member[__ci_genshin__.Call(n)]
-  if (name == "?") {
+genshin_42(this, step) {
+  n := member.current
+  name := member.name
+  if !(name) {
     return
   }
   if (this.listCountDown[__ci_genshin__.Call(n)]) {
@@ -904,22 +906,21 @@ genshin_43(this, step) {
     return
   }
 }
-genshin_44(n) {
+genshin_43(n) {
   hud.render.Call(n, "")
 }
-genshin_45(this, n) {
+genshin_44(this, n) {
   clearTimeout.Call(this.listTimer[__ci_genshin__.Call(n)])
-  this.listTimer[__ci_genshin__.Call(n)] := setTimeout.Call(Func("genshin_44").Bind(n), 5000)
+  this.listTimer[__ci_genshin__.Call(n)] := setTimeout.Call(Func("genshin_43").Bind(n), 5000)
 }
-genshin_46(this) {
-  if (client.state.isSuspend) {
+genshin_45(this) {
+  if (client.isSuspend) {
     hud.hide.Call()
     return
   }
   now := $.now.Call()
   for __index_for__, n in [1, 2, 3, 4] {
-    name := this.member[__ci_genshin__.Call(n)]
-    if (name == "?") {
+    if !(member.name) {
       continue
     }
     if !(this.listCountDown[__ci_genshin__.Call(n)]) {
@@ -927,58 +928,32 @@ genshin_46(this) {
     }
     if (now >= this.listCountDown[__ci_genshin__.Call(n)]) {
       this.listCountDown[__ci_genshin__.Call(n)] := 0
-      this.show.Call(n, "OK")
+      this.show.Call(n, "")
     } else {
       diff := Math.floor.Call((now - this.listCountDown[__ci_genshin__.Call(n)]) * 0.001)
       this.show.Call(n, "" . (diff) . "s")
     }
   }
 }
+genshin_46(this, n) {
+  this.current := n
+  this.name := this.map[__ci_genshin__.Call(n)]
+}
 genshin_47(this) {
   skillTimer.listCountDown := {}
   for __index_for__, n in [1, 2, 3, 4] {
-    name := this.findCharacterByPosition.Call(n)
-    skillTimer.member[__ci_genshin__.Call(n)] := name
-    this.render.Call(n, name)
+    name := this.checkCharacterByPosition.Call(n)
+    this.map[__ci_genshin__.Call(n)] := name
+    hud.render.Call(n, name)
     skillTimer.hide.Call(n)
   }
 }
-genshin_48(this, n, msg) {
-  __array__ := this.getPosition.Call(n)
-  x := __array__[1]
-  y := __array__[2]
-  id := n + 2
-  ToolTip, % msg, % x, % y, % id
-}
-genshin_49(this) {
-  for __index_for__, n in [1, 2, 3, 4] {
-    this.render.Call(n, "")
-  }
-}
-genshin_50(this, n) {
+genshin_48(this, n) {
   pointStart := [client.vw.Call(90), client.vh.Call(9 * (n + 1))]
   pointEnd := [client.vw.Call(96), client.vh.Call(9 * (n + 2))]
   return [pointStart, pointEnd]
 }
-genshin_51(this, n) {
-  if (client.width + 100 < A_ScreenWidth) {
-    left := client.width
-  } else {
-    left := client.vw.Call(80)
-  }
-  return [left, client.vh.Call(4 + 9 * (n + 1))]
-}
-genshin_52(this) {
-  color := $.getColor.Call()
-  __array__ := $.getPosition.Call()
-  x := __array__[1]
-  y := __array__[2]
-  x1 := Math.round.Call((x * 100) / client.width)
-  y1 := Math.round.Call((y * 100) / client.height)
-  console.log.Call("" . (x1) . ", " . (y1) . " / " . (color) . "")
-  ClipBoard := color
-}
-genshin_53(this, n) {
+genshin_49(this, n) {
   __array__ := this.getRange.Call(n)
   pointStart := __array__[1]
   pointEnd := __array__[2]
@@ -992,7 +967,37 @@ genshin_53(this, n) {
     }
     return name
   }
-  return "?"
+  return ""
+}
+genshin_50(this, n, msg) {
+  __array__ := this.getPosition.Call(n)
+  x := __array__[1]
+  y := __array__[2]
+  id := n + 2
+  ToolTip, % msg, % x, % y, % id
+}
+genshin_51(this) {
+  for __index_for__, n in [1, 2, 3, 4] {
+    this.render.Call(n, "")
+  }
+}
+genshin_52(this, n) {
+  if (client.width + 100 < A_ScreenWidth) {
+    left := client.width
+  } else {
+    left := client.vw.Call(80)
+  }
+  return [left, client.vh.Call(4 + 9 * (n + 1))]
+}
+genshin_53(this) {
+  color := $.getColor.Call()
+  __array__ := $.getPosition.Call()
+  x := __array__[1]
+  y := __array__[2]
+  x1 := Math.round.Call((x * 100) / client.width)
+  y1 := Math.round.Call((y * 100) / client.height)
+  console.log.Call("" . (x1) . ", " . (y1) . " / " . (color) . "")
+  ClipBoard := color
 }
 genshin_54(this) {
   text := ""
@@ -1036,7 +1041,7 @@ genshin_57(this) {
   this.list := listResult
 }
 genshin_58(this) {
-  if (client.state.isSuspend) {
+  if (client.isSuspend) {
     this.hide.Call()
     return
   }
@@ -1061,30 +1066,36 @@ genshin_62(this, level) {
 }
 genshin_63(this, isSuspend) {
   if (isSuspend) {
-    if (this.state.isSuspend) {
+    if (this.isSuspend) {
       return
     }
-    this.state.isSuspend := true
+    this.isSuspend := true
     $.suspend.Call(true)
     this.resetTimer.Call()
     this.resetKey.Call()
     return
   }
   if !(isSuspend) {
-    if !(this.state.isSuspend) {
+    if !(this.isSuspend) {
       return
     }
-    this.state.isSuspend := false
+    this.isSuspend := false
     $.suspend.Call(false)
     return
   }
 }
 genshin_64(this) {
+  name := "ahk_exe " . (config.data.process) . ""
+  WinGetPos, __x__, __y__, __width__, __height__, % name
+  this.width := __width__
+  this.height := __height__
+}
+genshin_65(this) {
   for __key_for__, _timer in timer {
     clearTimeout.Call(_timer)
   }
 }
-genshin_65(this) {
+genshin_66(this) {
   for __index_for__, key in ["middle", "right"] {
     if ($.getState.Call(key)) {
       $.click.Call("" . (key) . ":up")
@@ -1096,32 +1107,22 @@ genshin_65(this) {
     }
   }
 }
-genshin_66(this) {
+genshin_67(this) {
   this.setPriority.Call("normal")
   this.resetTimer.Call()
   this.resetKey.Call()
 }
-genshin_67(this) {
+genshin_68(this) {
   return WinActive("ahk_exe " . (config.data.process) . "")
 }
-genshin_68(this) {
-  name := "ahk_exe " . (config.data.process) . ""
-  WinGetPos, __x__, __y__, __width__, __height__, % name
-  return [__width__, __height__]
-}
 genshin_69(this) {
-  if !(this.width) {
-    size := this.getSize.Call()
-    this.width := size[1]
-    this.height := size[2]
-  }
-  if (!this.state.isSuspend && !this.isActive.Call()) {
+  if (!this.isSuspend && !this.isActive.Call()) {
     this.setPriority.Call("low")
     this.suspend.Call(true)
     state.isAttacking := false
     return
   }
-  if (this.state.isSuspend && this.isActive.Call()) {
+  if (this.isSuspend && this.isActive.Call()) {
     this.setPriority.Call("normal")
     this.suspend.Call(false)
     return

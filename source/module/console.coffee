@@ -8,7 +8,7 @@ class ConsoleX
 
   check: ->
 
-    if client.state.isSuspend
+    if client.isSuspend
       @hide()
       return
 

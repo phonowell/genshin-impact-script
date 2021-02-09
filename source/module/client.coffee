@@ -1,37 +1,29 @@
 class ClientX
 
   height: 0
-  state:
-    isSuspend: false
+  isSuspend: false
   width: 0
+
+  constructor: -> @setSize()
 
   check: ->
 
-    unless @width
-      size = @getSize()
-      @width = size[0]
-      @height = size[1]
-
-    if !@state.isSuspend and !@isActive()
+    if !@isSuspend and !@isActive()
       @setPriority 'low'
       @suspend true
       state.isAttacking = false
       return
 
-    if @state.isSuspend and @isActive()
+    if @isSuspend and @isActive()
       @setPriority 'normal'
       @suspend false
       return
-
-  getSize: ->
-    name = "ahk_exe #{config.data.process}"
-    `WinGetPos, __x__, __y__, __width__, __height__, % name`
-    return [__width__, __height__]
 
   isActive: ->
     return WinActive "ahk_exe #{config.data.process}"
 
   reset: ->
+
     @setPriority 'normal'
     @resetTimer()
     @resetKey()
@@ -49,24 +41,30 @@ class ClientX
       if $.getState key
         $.press "#{key}:up"
 
-  resetTimer: ->
+  resetTimer: -> for _timer of timer
+    clearTimeout _timer
 
-    for _timer of timer
-      clearTimeout _timer
+  setSize: ->
+
+    name = "ahk_exe #{config.data.process}"
+    `WinGetPos, __x__, __y__, __width__, __height__, % name`
+
+    @width = __width__
+    @height = __height__
 
   suspend: (isSuspend) ->
 
     if isSuspend
-      if @state.isSuspend then return
-      @state.isSuspend = true
+      if @isSuspend then return
+      @isSuspend = true
       $.suspend true
       @resetTimer()
       @resetKey()
       return
 
     unless isSuspend
-      unless @state.isSuspend then return
-      @state.isSuspend = false
+      unless @isSuspend then return
+      @isSuspend = false
       $.suspend false
       return
 

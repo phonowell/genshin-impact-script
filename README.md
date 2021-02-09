@@ -54,16 +54,25 @@ When you change the team lineup, you need to re-identify them.
 
 Currently only the following characters are supported.
 
+- Barbara
+- Bennett
+- Chongyun
+- Diona
+- Fischl
 - Ganyu
 - Jean
 - Kaeya
 - Klee
 - Keqing
+- Lisa
 - Mona
+- Noelle
 - Qiqi
 - Razor
 - Sucrose
 - Tartaglia
+- Venti
+- Xiangling
 - Xingqiu
 - Zhongli
 
@@ -73,21 +82,12 @@ Future characters to be added for support.
 - Albedo
 - Amber
 - Ayaka
-- Barbara
 - Beidou
-- Bennett
-- Chongyun
 - Diluc
-- Diona
-- Fischl
 - Hu Tao
-- Lisa
 - Lumine
 - Ningguang
-- Noelle
 - Rosaria
-- Venti
-- Xiangling
 - Xiao
 - Xinyan
 

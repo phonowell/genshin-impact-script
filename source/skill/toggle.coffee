@@ -13,7 +13,7 @@ startToggle = (key) ->
 
   # default
   $.press "#{key}:down"
-  skillTimer.toggle key
+  member.toggle key
   unless config.data.autoESkill
     return
 
