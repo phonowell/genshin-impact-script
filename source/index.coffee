@@ -27,28 +27,41 @@ console = new ConsoleX()
 skillTimer = new SkillTimerX()
 hud = new HudX()
 member = new MemberX()
-watcher = new WatcherX()
+ticker = new TickerX()
+
+# watch
+
+ticker.on 'change', (tick) ->
+
+  client.check()
+
+  if config.data.easySkillTimer
+    skillTimer.check()
+
+  if tick == 1e3
+    console.check()
 
 # binding
+
+$.on 'alt + enter', ->
+  $.press 'alt + enter'
+  $.delay 1e3, client.setSize
 
 $.on 'alt + f4', ->
   $.beep()
   client.reset()
   $.exit()
 
+$.on 'alt + f11', ->
+  $.beep()
+  hud.getColor()
+
 $.on 'ctrl + f5', ->
   $.beep()
   client.reset()
   $.reload()
 
-$.on 'alt + f11', ->
-  $.beep()
-  hud.getColor()
-
-$.on 'f12', ->
-  $.beep()
-  client.setSize()
-  member.scan()
+$.on 'f12', member.scan
 
 # binding
 
