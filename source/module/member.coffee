@@ -40,11 +40,10 @@ class MemberX
     skillTimer.listCountDown = {}
 
     for n in [1, 2, 3, 4]
-      $.delay (n - 1) * 500, =>
-        name = @checkCharacterByPosition n
-        @map[n] = name
-        hud.render n, name
-        skillTimer.hide n
+      name = @checkCharacterByPosition n
+      @map[n] = name
+      hud.render n, name
+      skillTimer.hide n
 
   toggle: (n) ->
 

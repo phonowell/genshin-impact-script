@@ -7,7 +7,8 @@ Character =
     color: 0
 
   amber:
-    color: 0
+    color: 0x5C4C63
+    cd: [15, 15]
 
   ayaka:
     color: 0
@@ -17,7 +18,8 @@ Character =
     cd: [32, 32]
 
   beidou:
-    color: 0
+    color: 0x4C332E
+    cd: [7.5, 7.5]
 
   bennett:
     color: 0xFBF3CF
@@ -107,14 +109,16 @@ Character =
     cd: [12, 12]
 
   xiao:
-    color: 0
+    color: 0x39483E
+    cd: [10, 10]
 
   xingqiu:
     color: 0x488892
     cd: [21, 21]
 
   xinyan:
-    color: 0
+    color: 0x503B40
+    cd: [18, 18]
 
   zhongli:
     color: 0x4B3525

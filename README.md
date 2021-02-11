@@ -54,7 +54,9 @@ When you change the team lineup, you need to re-identify them.
 
 Currently only the following characters are supported.
 
+- Amber
 - Barbara
+- Beidou
 - Bennett
 - Chongyun
 - Diona
@@ -73,23 +75,21 @@ Currently only the following characters are supported.
 - Tartaglia
 - Venti
 - Xiangling
+- Xiao
 - Xingqiu
+- Xinyan
 - Zhongli
 
 Future characters to be added for support.
 
 - Aether
 - Albedo
-- Amber
 - Ayaka
-- Beidou
 - Diluc
 - Hu Tao
 - Lumine
 - Ningguang
 - Rosaria
-- Xiao
-- Xinyan
 
 ## Configuration
 
