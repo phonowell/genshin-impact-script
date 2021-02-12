@@ -37,13 +37,12 @@ class MemberX
 
   scan: ->
 
-    skillTimer.listCountDown = {}
-
     for n in [1, 2, 3, 4]
       name = @checkCharacterByPosition n
       @map[n] = name
       hud.render n, name
-      skillTimer.hide n
+
+    skillTimer.reset()
 
   toggle: (n) ->
 

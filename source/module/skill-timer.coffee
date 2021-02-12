@@ -14,9 +14,6 @@ class SkillTimerX
 
     for n in [1, 2, 3, 4]
 
-      unless member.name
-        continue
-
       unless @listCountDown[n]
         continue
 
@@ -46,27 +43,64 @@ class SkillTimerX
       return
 
     now = $.now()
-    char = Character[name]
-
-    if step == 'start'
-
-      if @listRecord[n]
-        return
-
-      @listRecord[n] = now
-      return
 
     if step == 'end'
-
-      diff = now - @listRecord[n]
-
-      @listRecord[n] = 0
-
-      if diff <= 500
-        @listCountDown[n] = now + (char.cd[0] * 1e3)
-      else @listCountDown[n] = now + (char.cd[1] * 1e3)
+      @recordEnd now
       return
 
+    if step == 'start'
+      @recordStart now
+      return
+
+  recordEnd: (now) ->
+
+    n = member.current
+    name = member.name
+    {cd, mode} = Character[name]
+    if ($.type cd) == 'number'
+      cd = [cd, cd]
+
+    unless @listRecord[n]
+      return
+
+    diff = now - @listRecord[n]
+
+    if diff < 500 # short press
+      @listCountDown[n] = @listRecord[n] + (cd[0] * 1e3)
+      @listRecord[n] = 0
+      return
+
+    # long press
+
+    if mode == 1
+      @listCountDown[n] = now + (cd[1] * 1e3)
+    else @listCountDown[n] = @listRecord[n] + (cd[1] * 1e3)
+
+    @listRecord[n] = 0
+
+  recordStart: (now) ->
+
+    n = member.current
+    name = member.name
+    {cd} = Character[name]
+    if ($.type cd) == 'number'
+      cd = [cd, cd]
+
+    if @listRecord[n]
+      return
+
+    @listRecord[n] = now
+
+  reset: ->
+
+    @listCountDown = {}
+    @listRecord = {}
+    @listTimer = {}
+
+    for n in [1, 2, 3, 4]
+      @hide n
+
   show: (n, msg) ->
+
     @hide n
     hud.render n, msg
