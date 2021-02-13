@@ -14,7 +14,7 @@ A script based on `ahk` that provides a few small features for Genshin Impact pl
 
 ### Better running/jumping
 
-Use better running when long pressing `right click`. Automatically unfold Wings of Wind when jumping.
+Use better running when long pressing `right click`. Automatically open wind glider when jumping.
 
 ### Easy skill timer
 

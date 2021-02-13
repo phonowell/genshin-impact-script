@@ -1,22 +1,20 @@
 class TickerX extends EmitterX
 
-  emitter: ''
-  interval: 200
+  interval: 50
   max: 1e3
   tick: 0
 
   # ---
 
   constructor: ->
-  
     super()
-    setInterval @change, @interval
+    setInterval @update, @interval
 
-  change: ->
-
+  update: ->
     @tick = @tick + @interval
-
     @emit 'change', @tick
-
     if @tick >= @max
       @tick = 0
+
+# execute
+ticker = new TickerX()

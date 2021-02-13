@@ -1,5 +1,10 @@
 class HudX
 
+  lifetime: 5e3
+  listTimer: {}
+
+  # ---
+
   getColor: ->
 
     color = $.getColor()
@@ -27,6 +32,23 @@ class HudX
 
   render: (n, msg) ->
 
+    clearTimeout @listTimer[n]
+    @listTimer[n] = setTimeout =>
+      @render n, ''
+    , @lifetime
+
     [x, y] = @getPosition n
-    id = n + 2
+    id = n + 1
     `ToolTip, % msg, % x, % y, % id`
+
+  reset: ->
+    for timer of @listTimer
+      clearTimeout timer
+    @listTimer = {}
+    @hide()
+
+# execute
+
+hud = new HudX()
+
+client.on 'leave', hud.hide

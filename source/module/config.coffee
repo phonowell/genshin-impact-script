@@ -3,6 +3,8 @@ class ConfigX
   data: {}
   source: 'config.ini'
 
+  # ---
+
   constructor: ->
 
     # region
@@ -12,8 +14,8 @@ class ConfigX
     for key in [
       'autoESkill'
       'betterElementalVision'
-      'betterJumping'
-      'betterRunning'
+      'betterJump'
+      'betterSprint'
       'easySkillTimer'
       'fastPickup'
     ]
@@ -23,3 +25,6 @@ class ConfigX
     [__section__, __key__] = $.split key, '/'
     `IniRead, __result__, % this.source, % __section__, % __key__, % defaultValue`
     return __result__
+
+# execute
+config = new ConfigX()

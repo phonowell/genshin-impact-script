@@ -16,30 +16,8 @@ state = {}
 timer = {}
 ts = {}
 
-import 'module/*'
+import 'module'
 import 'skill/*'
-
-# execute
-
-config = new ConfigX()
-client = new ClientX()
-console = new ConsoleX()
-skillTimer = new SkillTimerX()
-hud = new HudX()
-member = new MemberX()
-ticker = new TickerX()
-
-# watch
-
-ticker.on 'change', (tick) ->
-
-  client.check()
-
-  if config.data.easySkillTimer
-    skillTimer.check()
-
-  if tick == 1e3
-    console.check()
 
 # binding
 
@@ -88,21 +66,3 @@ if config.data.fastPickup
 
 if config.data.betterElementalVision
   $.on 'm-button', toggleView
-
-if config.data.betterJumping
-  $.on 'space', jump
-  $.on 'x', ->
-    $.press 'x'
-    $.press 'space'
-
-# sprint
-
-$.on 'r-button', startDash
-$.on 'r-button:up', stopDash
-
-if config.data.betterRunning
-
-  $.on 'w', -> $.press 'w:down'
-  $.on 'w:up', ->
-    if state.isDashing then return
-    $.press 'w:up'

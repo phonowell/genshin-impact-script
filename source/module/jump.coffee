@@ -15,7 +15,7 @@ jumpTwice = (callback) ->
   clearTimeout timer.jump
   timer.jump = $.delay 200, ->
 
-    unless isMoving()
+    unless player.isMoving
       callback()
       return
 
@@ -26,3 +26,11 @@ jumpTwice = (callback) ->
 
       $.press 'space'
       callback()
+
+# binding
+
+if config.data.betterJump
+  $.on 'space', jump
+  $.on 'x', ->
+    $.press 'x'
+    $.press 'space'

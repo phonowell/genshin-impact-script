@@ -4,7 +4,7 @@ timer.toggleDown = ''
 timer.toggleUp = ''
 
 getToggleDelay = ->
-  delay = 500 - ($.now() - ts.dash)
+  delay = 500 - ($.now() - ts.sprint)
   if delay < 200
     delay = 200
   return delay

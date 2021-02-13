@@ -2,12 +2,12 @@ class SkillTimerX
 
   listCountDown: {}
   listRecord: {}
-  listTimer: {}
+
+  # ---
 
   check: ->
 
     if client.isSuspend
-      hud.hide()
       return
 
     now = $.now()
@@ -19,17 +19,10 @@ class SkillTimerX
 
       if now >= @listCountDown[n]
         @listCountDown[n] = 0
-        @show n, ''
+        hud.render n, ''
       else
         diff = Math.floor (now - @listCountDown[n]) * 0.001
-        @show n, "#{diff}s"
-
-  hide: (n) ->
-
-    clearTimeout @listTimer[n]
-    @listTimer[n] = setTimeout ->
-      hud.render n, ''
-    , 5e3
+        hud.render n, "#{diff}s"
 
   record: (step) ->
 
@@ -92,15 +85,15 @@ class SkillTimerX
     @listRecord[n] = now
 
   reset: ->
-
     @listCountDown = {}
     @listRecord = {}
-    @listTimer = {}
 
-    for n in [1, 2, 3, 4]
-      @hide n
+# execute
 
-  show: (n, msg) ->
+skillTimer = new SkillTimerX()
 
-    @hide n
-    hud.render n, msg
+if config.data.easySkillTimer
+  ticker.on 'change', (tick) ->
+    if Mod tick, 200
+      return
+    skillTimer.check()

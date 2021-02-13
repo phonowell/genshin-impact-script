@@ -1,29 +1,31 @@
-class ClientX
+class ClientX extends EmitterX
 
   height: 0
   isSuspend: false
   width: 0
 
-  constructor: -> @setSize()
+  constructor: ->
+    super()
+    @setSize()
 
   check: ->
 
-    if !@isSuspend and !@isActive()
+    if !@isSuspend and !@checkActive()
       @setPriority 'low'
       @suspend true
-      state.isAttacking = false
+      @emit 'leave'
       return
 
-    if @isSuspend and @isActive()
+    if @isSuspend and @checkActive()
       @setPriority 'normal'
       @suspend false
+      @emit 'enter'
       return
 
-  isActive: ->
+  checkActive: ->
     return WinActive "ahk_exe #{config.data.process}"
 
   reset: ->
-
     @setPriority 'normal'
     @resetTimer()
     @resetKey()
@@ -74,3 +76,12 @@ class ClientX
   vh: (n) -> return Math.round @height * n * 0.01
 
   vw: (n) -> return Math.round @width * n * 0.01
+
+# execute
+
+client = new ClientX()
+
+ticker.on 'change', (tick) ->
+  if Mod tick, 200
+    return
+  client.check()

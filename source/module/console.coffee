@@ -2,7 +2,7 @@ class ConsoleX
 
   lifetime: 5e3
   list: []
-  tsLast: 0
+  tsClean: 0
 
   # ---
 
@@ -17,22 +17,22 @@ class ConsoleX
 
   clean: ->
 
-    tsNow = $.now()
-    unless tsNow - @tsLast >= 1e3
+    now = $.now()
+    unless now - @tsClean >= 1e3
       return
-    @tsLast = tsNow
+    @tsClean = now
 
     listResult = []
 
     for item in @list
       [ts] = item
-      if tsNow - ts >= @lifetime
+      if now - ts >= @lifetime
         continue
       listResult.Push item
 
     @list = listResult
 
-  hide: -> `ToolTip, , 0, 0, 2`
+  hide: -> `ToolTip, , 0, 0, 20`
 
   log: (input) ->
 
@@ -51,4 +51,13 @@ class ConsoleX
       text = "#{text}\n#{item[1]}"
     text = $.trim text, ' \n'
 
-    `ToolTip, % text, 0, 0, 2`
+    `ToolTip, % text, 0, 0, 20`
+
+# execute
+
+console = new ConsoleX()
+
+ticker.on 'change', (tick) ->
+  if Mod tick, 500
+    return
+  console.check()
