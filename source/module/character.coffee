@@ -14,7 +14,7 @@ Character =
     color: 0
 
   barbara:
-    color: 0xE2E0D4
+    color: 0xDED3BE
     cd: 32
 
   beidou:

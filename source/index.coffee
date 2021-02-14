@@ -60,9 +60,5 @@ if config.data.easySkillTimer
     $.press 'e:up'
     skillTimer.record 'end'
 
-if config.data.fastPickup
-  $.on 'f', startPick
-  $.on 'f:up', stopPick
-
 if config.data.betterElementalVision
   $.on 'm-button', toggleView
