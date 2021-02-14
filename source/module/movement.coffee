@@ -25,18 +25,20 @@ class MovementX extends EmitterX
 
     @count = count
 
-    # sprint
-    @checkSprint()
+    # toggle
+    for key in [1, 2, 3, 4]
+      @checkEvent 'toggle', key
+    @checkEvent 'use-skill', 'e'
 
-    # jump
-    @checkJump()
+    # run & jump
+    @checkEvent 'sprint', 'r-button', 'right'
+    @checkEvent 'jump', 'space'
 
-    # pick
-    @checkPick()
+    # others?
+    @checkEvent 'pick', 'f'
+    @checkEvent 'view', 'm-button', 'middle'
 
-  checkJump: ->
-
-    key = 'space'
+  checkEvent: (name, key, key2 = '') ->
 
     if $.getState key
 
@@ -44,8 +46,10 @@ class MovementX extends EmitterX
         return
       @isPressed[key] = true
 
-      $.press 'space:down'
-      player.emit 'jump-start'
+      if key2 then $.click "#{key2}:down"
+      else $.press "#{key}:down"
+
+      player.emit "#{name}-start", key
 
     else
 
@@ -53,8 +57,10 @@ class MovementX extends EmitterX
         return
       @isPressed[key] = false
 
-      $.press 'space:up'
-      player.emit 'jump-end'
+      if key2 then $.click "#{key2}:up"
+      else $.press "#{key}:up"
+
+      player.emit "#{name}-end", key
 
   checkMove: ->
 
@@ -82,58 +88,29 @@ class MovementX extends EmitterX
 
     return count
 
-  checkPick: ->
-
-    key = 'f'
-
-    if $.getState key
-
-      if @isPressed[key]
-        return
-      @isPressed[key] = true
-
-      $.press 'f:down'
-      player.emit 'pick-start'
-
-    else
-
-      unless @isPressed[key]
-        return
-      @isPressed[key] = false
-
-      $.press 'f:up'
-      player.emit 'pick-end'
-
-  checkSprint: ->
-
-    key = 'r-button'
-
-    if $.getState key
-
-      if @isPressed[key]
-        return
-      @isPressed[key] = true
-
-      $.click 'right:down'
-      player.emit 'sprint-start'
-
-    else
-
-      unless @isPressed[key]
-        return
-      @isPressed[key] = false
-
-      $.click 'right:up'
-      player.emit 'sprint-end'
-
   preventDefault: ->
     for key in [
       'w', 'a', 's', 'd'
-      'r-button'
-      'space'
-      'f'
+      1, 2, 3, 4
+      'm-button', 'r-button'
+      'e', 'f', 'space'
     ]
       $.on key, -> return
+
+  resetKey: ->
+
+    for key in [
+      'w', 'a', 's', 'd'
+      1, 2, 3, 4
+      'e', 'f', 'space'
+    ]
+      if $.getState key
+        $.press "#{key}:up"
+
+    if $.getState 'm-button'
+      $.click 'middle:up'
+    if $.getState 'r-button'
+      $.click 'right:up'
 
   startMove: (key) ->
     if $.getState key

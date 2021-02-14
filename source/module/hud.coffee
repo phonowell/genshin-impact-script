@@ -27,7 +27,7 @@ class HudX
       client.vh 4 + 9 * (n + 1)
     ]
 
-  hide: -> for n in [1, 2, 3, 4]
+  hide: -> for n in [1, 2, 3, 4, 5]
     @render n, ''
 
   render: (n, msg) ->

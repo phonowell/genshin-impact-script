@@ -1,3 +1,4 @@
+state.isSprinting = false
 state.isSprintSwimming = false
 timer.sprint = ''
 ts.sprint = 0
@@ -36,29 +37,36 @@ sprint = ->
     sprint()
 
 startSprint = ->
+
   unless config.data.betterSprint
     return
+
+  state.isSprinting = true
+
   sprint()
 
 stopSprint = ->
 
-  state.isSprintSwimming = false
   ts.sprint = $.now()
 
   unless config.data.betterSprint
     return
+
+  state.isSprinting = false
+  state.isSprintSwimming = false
 
   clearTimeout timer.sprint
   movement.stopMove 'w'
 
 # binding
 
-player.on 'sprint-start', startSprint
-player.on 'sprint-end', stopSprint
+player
+  .on 'sprint-start', startSprint
+  .on 'sprint-end', stopSprint
 
 if config.data.betterSprint
   $.on 'w:up', -> $.delay 50, ->
-    unless player.isSprinting
+    unless state.isSprinting
       return
     if player.isMoving
       return

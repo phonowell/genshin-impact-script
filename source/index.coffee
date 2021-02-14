@@ -17,7 +17,6 @@ timer = {}
 ts = {}
 
 import 'module'
-import 'skill/*'
 
 # binding
 
@@ -40,25 +39,3 @@ $.on 'ctrl + f5', ->
   $.reload()
 
 $.on 'f12', member.scan
-
-# binding
-
-for key in [1, 2, 3, 4]
-
-  $.on key, -> startToggle key
-  $.on "#{key}:up", -> stopToggle key
-
-  $.on "alt + #{key}", ->
-    $.press "alt + #{key}"
-    member.toggle key
-
-if config.data.easySkillTimer
-  $.on 'e', ->
-    $.press 'e:down'
-    skillTimer.record 'start'
-  $.on 'e:up', ->
-    $.press 'e:up'
-    skillTimer.record 'end'
-
-if config.data.betterElementalVision
-  $.on 'm-button', toggleView

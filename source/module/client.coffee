@@ -28,20 +28,7 @@ class ClientX extends EmitterX
   reset: ->
     @setPriority 'normal'
     @resetTimer()
-    @resetKey()
-
-  resetKey: ->
-
-    for key in ['middle', 'right']
-      if $.getState key
-        $.click "#{key}:up"
-
-    for key in [
-      'alt', 'ctrl'
-      'e', 'esc', 'f', 'space', 'w', 'x'
-    ]
-      if $.getState key
-        $.press "#{key}:up"
+    movement.resetKey()
 
   resetTimer: -> for _timer of timer
     clearTimeout _timer
@@ -61,7 +48,7 @@ class ClientX extends EmitterX
       @isSuspend = true
       $.suspend true
       @resetTimer()
-      @resetKey()
+      movement.resetKey()
       return
 
     unless isSuspend

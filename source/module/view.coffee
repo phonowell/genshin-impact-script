@@ -1,13 +1,12 @@
 state.isViewing = false
 timer.view = ''
 
+# function
+
 toggleView = ->
 
   clearInterval timer.view
   state.isViewing = !state.isViewing
-
-  # reset key
-  $.click 'middle:up'
 
   unless state.isViewing
     return
@@ -22,3 +21,8 @@ view = ->
   setTimeout ->
     $.click 'middle:up'
   , 2500
+
+# execute
+
+if config.data.betterElementalVision
+  player.on 'view-end', toggleView
