@@ -17,6 +17,7 @@ timer = {}
 ts = {}
 
 import 'module'
+import 'action/*'
 
 # binding
 

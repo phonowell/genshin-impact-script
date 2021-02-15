@@ -46,5 +46,4 @@ player
 
 for key in [1, 2, 3, 4]
   $.on "alt + #{key}", ->
-    $.press "alt + #{key}"
-    member.toggle key
+    player.toggleQ key

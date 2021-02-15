@@ -25,43 +25,6 @@ class MovementX extends EmitterX
 
     @count = count
 
-    # toggle
-    for key in [1, 2, 3, 4]
-      @checkEvent 'toggle', key
-    @checkEvent 'use-skill', 'e'
-
-    # run & jump
-    @checkEvent 'sprint', 'r-button', 'right'
-    @checkEvent 'jump', 'space'
-
-    # others?
-    @checkEvent 'pick', 'f'
-    @checkEvent 'view', 'm-button', 'middle'
-
-  checkEvent: (name, key, key2 = '') ->
-
-    if $.getState key
-
-      if @isPressed[key]
-        return
-      @isPressed[key] = true
-
-      if key2 then $.click "#{key2}:down"
-      else $.press "#{key}:down"
-
-      player.emit "#{name}-start", key
-
-    else
-
-      unless @isPressed[key]
-        return
-      @isPressed[key] = false
-
-      if key2 then $.click "#{key2}:up"
-      else $.press "#{key}:up"
-
-      player.emit "#{name}-end", key
-
   checkMove: ->
 
     count = 0
@@ -89,28 +52,14 @@ class MovementX extends EmitterX
     return count
 
   preventDefault: ->
-    for key in [
-      'w', 'a', 's', 'd'
-      1, 2, 3, 4
-      'm-button', 'r-button'
-      'e', 'f', 'space'
-    ]
+    for key in ['w', 'a', 's', 'd']
       $.on key, -> return
+      $.on "#{key}:up", -> return
 
   resetKey: ->
-
-    for key in [
-      'w', 'a', 's', 'd'
-      1, 2, 3, 4
-      'e', 'f', 'space'
-    ]
-      if $.getState key
+    for key in ['w', 'a', 's', 'd']
+      if @isPressed[key]
         $.press "#{key}:up"
-
-    if $.getState 'm-button'
-      $.click 'middle:up'
-    if $.getState 'r-button'
-      $.click 'right:up'
 
   startMove: (key) ->
     if $.getState key
@@ -132,3 +81,13 @@ class MovementX extends EmitterX
 movement = new MovementX()
 
 ticker.on 'change', movement.check
+
+player
+  .on 'move-start', ->
+    if player.isMoving
+      return
+    player.isMoving = true
+  .on 'move-end', ->
+    unless player.isMoving
+      return
+    player.isMoving = false
