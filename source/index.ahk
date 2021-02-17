@@ -589,18 +589,13 @@ class KeyBindingX extends EmitterX {
   isPressed := {}
   __New() {
     base.__New()
-    this.bindEvent.Call("attack", "l-button", "left")
-    this.bindEvent.Call("toggle-aim", "r")
     for __index_for__, key in [1, 2, 3, 4] {
       this.bindEvent.Call("toggle", key)
     }
-    this.bindEvent.Call("use-e", "e")
-    this.bindEvent.Call("use-q", "q")
-    this.bindEvent.Call("sprint", "r-button", "right")
-    this.bindEvent.Call("jump", "space")
-    this.bindEvent.Call("pick", "f")
-    this.bindEvent.Call("find", "v")
-    this.bindEvent.Call("view", "m-button", "middle")
+    this.bindEvent.Call("attack", "l-button", "left").bindEvent.Call("toggle-aim", "r").bindEvent.Call("use-e", "e").bindEvent.Call("use-q", "q").bindEvent.Call("jump", "space").bindEvent.Call("sprint", "r-button", "right").bindEvent.Call("find", "v").bindEvent.Call("pause", "p").bindEvent.Call("pick", "f").bindEvent.Call("use-item", "z").bindEvent.Call("view", "m-button", "middle")
+    for __index_for__, key in ["esc", "b", "c", "j", "m", "f1", "f2", "f3", "f4", "f5"] {
+      this.bindEvent.Call("menu-" . (key) . "", key)
+    }
   }
   bindEvent := Func("genshin_44").Bind(this)
   resetKey := Func("genshin_41").Bind(this)
@@ -837,6 +832,7 @@ genshin_28(this, key) {
   if !(this.count) {
     player.emit.Call("move-end")
   }
+  return this
 }
 genshin_29(this, key) {
   if ($.getState.Call(key)) {
@@ -847,13 +843,16 @@ genshin_29(this, key) {
   }
   $.press.Call("" . (key) . ":down")
   player.emit.Call("move-start")
+  return this
 }
 genshin_30(this) {
-  for __index_for__, key in ["w", "a", "s", "d"] {
-    if (this.isPressed[__ci_genshin__.Call(key)]) {
-      $.press.Call("" . (key) . ":up")
+  for key, value in this.isPressed {
+    if !(value) {
+      continue
     }
+    $.press.Call("" . (key) . ":up")
   }
+  return this
 }
 genshin_31() {
   return
@@ -866,6 +865,7 @@ genshin_33(this) {
     $.on.Call(key, Func("genshin_32"))
     $.on.Call("" . (key) . ":up", Func("genshin_31"))
   }
+  return this
 }
 genshin_34(this) {
   count := 0
@@ -919,20 +919,22 @@ genshin_40() {
   $.delay.Call(200, Func("genshin_39"))
 }
 genshin_41(this) {
-  for __index_for__, key in [1, 2, 3, 4, "e", "f", "q", "r", "space", "v"] {
-    if (this.isPressed[__ci_genshin__.Call(key)]) {
-      $.press.Call("" . (key) . ":up")
+  for key, value in this.isPressed {
+    if !(value) {
+      continue
     }
+    if (key == "l-button") {
+      $.click.Call("left:up")
+    }
+    if (key == "m-button") {
+      $.click.Call("middle:up")
+    }
+    if (key == "r-button") {
+      $.click.Call("right:up")
+    }
+    $.press.Call("" . (key) . ":up")
   }
-  if (this.isPressed["l-button"]) {
-    $.click.Call("left:up")
-  }
-  if (this.isPressed["m-button"]) {
-    $.click.Call("middle:up")
-  }
-  if (this.isPressed["r-button"]) {
-    $.click.Call("right:up")
-  }
+  return this
 }
 genshin_42(key, key2, name, this) {
   if !(this.isPressed[__ci_genshin__.Call(key)]) {
@@ -961,6 +963,7 @@ genshin_43(key, key2, name, this) {
 genshin_44(this, name, key, key2 := "") {
   $.on.Call("" . (key) . "", Func("genshin_43").Bind(key, key2, name, this))
   $.on.Call("" . (key) . ":up", Func("genshin_42").Bind(key, key2, name, this))
+  return this
 }
 genshin_45(this, key) {
   $.press.Call("alt + " . (key) . "")

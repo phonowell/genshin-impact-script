@@ -7,26 +7,38 @@ class KeyBindingX extends EmitterX
   constructor: ->
     super()
 
-    # attack
-    @bindEvent 'attack', 'l-button', 'left'
-    @bindEvent 'toggle-aim', 'r'
-
     # toggle
     for key in [1, 2, 3, 4]
       @bindEvent 'toggle', key
 
-    # use skill
-    @bindEvent 'use-e', 'e'
-    @bindEvent 'use-q', 'q'
+    @
 
-    # run & jump
-    @bindEvent 'sprint', 'r-button', 'right'
-    @bindEvent 'jump', 'space'
+      # attack
+      .bindEvent 'attack', 'l-button', 'left'
+      .bindEvent 'toggle-aim', 'r'
 
-    # others?
-    @bindEvent 'pick', 'f'
-    @bindEvent 'find', 'v'
-    @bindEvent 'view', 'm-button', 'middle'
+      # use skill
+      .bindEvent 'use-e', 'e'
+      .bindEvent 'use-q', 'q'
+
+      # run & jump
+      .bindEvent 'jump', 'space'
+      .bindEvent 'sprint', 'r-button', 'right'
+
+      # others?
+      .bindEvent 'find', 'v'
+      .bindEvent 'pause', 'p'
+      .bindEvent 'pick', 'f'
+      .bindEvent 'use-item', 'z'
+      .bindEvent 'view', 'm-button', 'middle'
+
+    # menu
+    for key in [
+      'esc'
+      'b', 'c', 'j', 'm'
+      'f1', 'f2', 'f3', 'f4', 'f5'
+    ]
+      @bindEvent "menu-#{key}", key
 
   bindEvent: (name, key, key2 = '') ->
 
@@ -52,21 +64,22 @@ class KeyBindingX extends EmitterX
 
       player.emit "#{name}-end", key
 
+    return @
+
   resetKey: ->
 
-    for key in [
-      1, 2, 3, 4
-      'e', 'f', 'q', 'r', 'space', 'v'
-    ]
-      if @isPressed[key]
-        $.press "#{key}:up"
+    for key, value of @isPressed
 
-    if @isPressed['l-button']
-      $.click 'left:up'
-    if @isPressed['m-button']
-      $.click 'middle:up'
-    if @isPressed['r-button']
-      $.click 'right:up'
+      unless value
+        continue
+
+      if key == 'l-button' then $.click 'left:up'
+      if key == 'm-button' then $.click 'middle:up'
+      if key == 'r-button' then $.click 'right:up'
+
+      $.press "#{key}:up"
+
+    return @
 
 # execute
 

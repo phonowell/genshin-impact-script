@@ -52,29 +52,47 @@ class MovementX extends EmitterX
     return count
 
   preventDefault: ->
+
     for key in ['w', 'a', 's', 'd']
       $.on key, -> return
       $.on "#{key}:up", -> return
 
+    return @
+
   resetKey: ->
-    for key in ['w', 'a', 's', 'd']
-      if @isPressed[key]
-        $.press "#{key}:up"
+
+    for key, value of @isPressed
+      unless value
+        continue
+      $.press "#{key}:up"
+
+    return @
 
   startMove: (key) ->
+
     if $.getState key
       return
+
     if @isPressed[key]
       return
+
     $.press "#{key}:down"
+
     player.emit 'move-start'
 
+    return @
+
   stopMove: (key) ->
+
     if $.getState key
       return
+
     $.press "#{key}:up"
+
     unless @count
       player.emit 'move-end'
+
+    return @
 
 # execute
 
