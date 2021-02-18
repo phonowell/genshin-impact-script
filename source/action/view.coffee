@@ -24,5 +24,5 @@ view = ->
 
 # execute
 
-if config.data.betterElementalVision
+if Config.data.betterElementalVision
   player.on 'view-end', toggleView

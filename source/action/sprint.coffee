@@ -38,7 +38,7 @@ sprint = ->
 
 startSprint = ->
 
-  unless config.data.betterSprint
+  unless Config.data.betterSprint
     return
 
   state.isSprinting = true
@@ -49,7 +49,7 @@ stopSprint = ->
 
   ts.sprint = $.now()
 
-  unless config.data.betterSprint
+  unless Config.data.betterSprint
     return
 
   state.isSprinting = false
@@ -64,7 +64,7 @@ player
   .on 'sprint-start', startSprint
   .on 'sprint-end', stopSprint
 
-if config.data.betterSprint
+if Config.data.betterSprint
   $.on 'w:up', -> $.delay 50, ->
     unless state.isSprinting
       return

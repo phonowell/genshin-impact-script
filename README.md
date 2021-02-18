@@ -38,13 +38,11 @@ Set the process priority to the lowest when the game window is inactive.
 
 ## Usage
 
-First, go to [ahk official website](https://www.autohotkey.com/) to install `ahk`(1.33+, please don't use v2 version).
+First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, put the [script](./source/index.ahk) and [config file](./source/config.ini) to the same directory and double-click to open the script (you will be prompted whether to apply administrator privileges, select Apply).
+Then, put the [script](. /source/index.ahk), [character data](. /source/character.ini) and [function configuration](. /source/config.ini) to the same directory.
 
-Next, just open the game.
-
-Finally, press `Alt + f4` to kill the script.
+Finally, open the game and double-click to run the script (you will be prompted whether to apply administrator privileges, select Apply).
 
 ### Easy Skill Timer
 
@@ -68,6 +66,7 @@ Currently only the following characters are supported.
 - Keqing
 - Lisa
 - Mona
+- Ningguang
 - Noelle
 - Qiqi
 - Razor
@@ -88,12 +87,27 @@ Future characters to be added for support.
 - Diluc
 - Hu Tao
 - Lumine
-- Ningguang
 - Rosaria
 
 ## Configuration
 
-After editing and saving the configuration file, press `ctrl + f5` to make it work instantly.
+### Character data
+
+#### type-apr
+
+The type of appearance. Can be one of the following values.
+
+- 0 Does nothing, i.e. the game's default behavior
+- 1 Default value of script; Uses the corresponding E skill depending on the length of time the number key is pressed
+- 2 Uses E skill (tap)
+- 3 Uses E skill (long press)
+- 4 Uses Q skill
+
+### Function configuration
+
+Refer to the [function configuration](. /source/config.ini) for details.
+
+When finished editing, press `ctrl + f5` to take effect instantly.
 
 ## Note
 

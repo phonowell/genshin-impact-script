@@ -14,7 +14,7 @@ stopPick = -> clearTimeout timer.pick
 
 # binding
 
-if config.data.fastPickup
+if Config.data.fastPickup
   player
     .on 'pick-start', pick
     .on 'pick-end', stopPick

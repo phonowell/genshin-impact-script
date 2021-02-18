@@ -49,9 +49,7 @@ class SkillTimerX
 
     n = member.current
     name = member.name
-    {cd, mode} = Character[name]
-    if ($.type cd) == 'number'
-      cd = [cd, cd]
+    {cd, typeE} = Character[name]
 
     unless @listRecord[n]
       return
@@ -65,7 +63,7 @@ class SkillTimerX
 
     # long press
 
-    if mode == 1
+    if typeE == 1
       @listCountDown[n] = now + (cd[1] * 1e3)
     else @listCountDown[n] = @listRecord[n] + (cd[1] * 1e3)
 
@@ -76,8 +74,6 @@ class SkillTimerX
     n = member.current
     name = member.name
     {cd} = Character[name]
-    if ($.type cd) == 'number'
-      cd = [cd, cd]
 
     if @listRecord[n]
       return
@@ -92,7 +88,7 @@ class SkillTimerX
 
 skillTimer = new SkillTimerX()
 
-if config.data.easySkillTimer
+if Config.data.easySkillTimer
   ticker.on 'change', (tick) ->
     if Mod tick, 200
       return

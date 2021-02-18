@@ -23,7 +23,7 @@ class ClientX extends EmitterX
       return
 
   checkActive: ->
-    return WinActive "ahk_exe #{config.data.process}"
+    return WinActive "ahk_exe #{Config.data.process}"
 
   reset: ->
     @setPriority 'normal'
@@ -36,7 +36,7 @@ class ClientX extends EmitterX
 
   setSize: ->
 
-    name = "ahk_exe #{config.data.process}"
+    name = "ahk_exe #{Config.data.process}"
     `WinGetPos, __x__, __y__, __width__, __height__, % name`
 
     @width = __width__
@@ -60,7 +60,7 @@ class ClientX extends EmitterX
       return
 
   setPriority: (level) ->
-    `Process, Priority, % config.data.process, % level`
+    `Process, Priority, % Config.data.process, % level`
 
   vh: (n) -> return Math.round @height * n * 0.01
 

@@ -15,7 +15,18 @@ startToggle = (key) ->
 
   member.toggle key
 
-  unless config.data.autoESkill
+  unless Config.data.autoESkill
+    return
+
+  {name} = member
+  unless name
+    return
+
+  {typeApr} = Character[name]
+  unless typeApr
+    return
+
+  unless typeApr == 1
     return
 
   if state.isToggleDown
@@ -30,7 +41,33 @@ startToggle = (key) ->
 
 stopToggle = (key) ->
 
-  unless config.data.autoESkill
+  unless Config.data.autoESkill
+    return
+
+  {name} = member
+  unless name
+    return
+
+  {typeApr} = Character[name]
+  unless typeApr
+    return
+
+  if typeApr == 2
+    $.press 'e'
+    skillTimer.record 'start'
+    skillTimer.record 'end'
+    return
+
+  if typeApr == 3
+    $.press 'e:down'
+    skillTimer.record 'start'
+    $.delay 1e3, ->
+      $.press 'e:up'
+      skillTimer.record 'end'
+    return
+
+  if typeApr == 4
+    $.press 'q'
     return
 
   timer.toggleUp = $.delay state.toggleDelay, ->

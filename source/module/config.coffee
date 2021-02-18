@@ -27,4 +27,4 @@ class ConfigX
     return __result__
 
 # execute
-config = new ConfigX()
+Config = new ConfigX()
