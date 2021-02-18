@@ -75,7 +75,7 @@ Character =
 
   mona:
     color: 0x5A5064
-    CD: 12
+    cd: 12
 
   ningguang:
     color: 0
