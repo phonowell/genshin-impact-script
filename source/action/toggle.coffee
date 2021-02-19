@@ -53,21 +53,15 @@ stopToggle = (key) ->
     return
 
   if typeApr == 2
-    $.press 'e'
-    skillTimer.record 'start'
-    skillTimer.record 'end'
+    player.useE()
     return
 
   if typeApr == 3
-    $.press 'e:down'
-    skillTimer.record 'start'
-    $.delay 1e3, ->
-      $.press 'e:up'
-      skillTimer.record 'end'
+    player.useE 'holding'
     return
 
   if typeApr == 4
-    $.press 'q'
+    player.useQ()
     return
 
   timer.toggleUp = $.delay state.toggleDelay, ->

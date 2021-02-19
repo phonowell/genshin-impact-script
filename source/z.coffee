@@ -1,6 +1,14 @@
 import 'include/head.ahk'
 import 'include/js-shim.ahk'
 
-$.on 'f11', -> $.info $.getColor()
+$ = $
+clearInterval = clearInterval
+clearTimeout = clearTimeout
+setInterval = setInterval
+setTimeout = setTimeout
 
-$.on 'f12', -> alert "#{A_GuiWidth} x #{A_GuiHeight}"
+$.on 'l-button', ->
+  $.click 'right:down'
+  setTimeout ->
+    $.click 'right:up'
+  , 1e3

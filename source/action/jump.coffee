@@ -6,7 +6,6 @@ jumpTwice = -> $.delay 200, ->
 # binding
 
 if Config.data.betterJump
-  player.on 'jump-end', jumpTwice
-  $.on 'x', ->
-    $.press 'x'
-    $.press 'space'
+  player
+    .on 'jump-end', jumpTwice
+    .on 'unhold-end', -> $.press 'space'

@@ -29,6 +29,7 @@ class KeyBindingX extends EmitterX
       .bindEvent 'find', 'v'
       .bindEvent 'pause', 'p'
       .bindEvent 'pick', 'f'
+      .bindEvent 'unhold', 'x'
       .bindEvent 'use-item', 'z'
       .bindEvent 'view', 'm-button', 'middle'
 
