@@ -1,5 +1,7 @@
 timer.pick = ''
 
+# function
+
 pick = ->
 
   clearTimeout timer.pick

@@ -23,7 +23,7 @@ checkSwimming = ->
 sprint = ->
 
   unless player.isMoving
-    movement.startMove 'w'
+    player.startMove 'w'
 
   unless checkSwimming()
     state.isSprintSwimming = true
@@ -56,7 +56,7 @@ stopSprint = ->
   state.isSprintSwimming = false
 
   clearTimeout timer.sprint
-  movement.stopMove 'w'
+  player.stopMove 'w'
 
 # binding
 
@@ -65,9 +65,9 @@ player
   .on 'sprint-end', stopSprint
 
 if Config.data.betterSprint
-  $.on 'w:up', -> $.delay 50, ->
+  player.on 'move-end', ->
     unless state.isSprinting
       return
     if player.isMoving
       return
-    movement.startMove 'w'
+    player.startMove 'w'

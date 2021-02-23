@@ -1,3 +1,5 @@
+# function
+
 jumpTwice = -> $.delay 200, ->
     unless player.isMoving
       return
@@ -8,4 +10,5 @@ jumpTwice = -> $.delay 200, ->
 if Config.data.betterJump
   player
     .on 'jump-end', jumpTwice
-    .on 'unhold-end', -> $.press 'space'
+    .on 'unhold-end', -> $.delay 50, ->
+      $.press 'space'

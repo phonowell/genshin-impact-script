@@ -1,6 +1,6 @@
 class TickerX extends EmitterX
 
-  interval: 50
+  interval: 100
   max: 1e3
   tick: 0
 

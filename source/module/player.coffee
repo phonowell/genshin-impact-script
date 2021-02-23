@@ -4,9 +4,26 @@ class PlayerX extends EmitterX
 
   # ---
 
+  startMove: (key) ->
+
+    if movement.isPressed[key]
+      return @
+
+    $.press "#{key}:down"
+    return @
+
+  stopMove: (key) ->
+
+    if movement.isPressed[key]
+      return @
+
+    $.press "#{key}:up"
+    return @
+
   toggleQ: (key) ->
     $.press "alt + #{key}"
     member.toggle key
+    return @
 
   useE: (isHolding = false) ->
 
@@ -14,15 +31,18 @@ class PlayerX extends EmitterX
       $.press 'e'
       skillTimer.record 'start'
       skillTimer.record 'end'
-      return
+      return @
 
     $.press 'e:down'
     skillTimer.record 'start'
     $.delay 1e3, ->
       $.press 'e:up'
       skillTimer.record 'end'
+    return @
 
-  useQ: -> $.press 'q'
+  useQ: ->
+    $.press 'q'
+    return @
 
 # execute
 

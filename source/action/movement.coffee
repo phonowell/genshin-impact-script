@@ -7,14 +7,17 @@ class MovementX extends EmitterX
 
   constructor: ->
     super()
-    @preventDefault()
 
-  check: ->
+    for key in ['w', 'a', 's', 'd']
+      $.on key, => @check key, 'down'
+      $.on "#{key}:up", => @check key, 'up'
 
-    if client.isSuspend
+  check: (key, action) ->
+
+    if action == 'down' and @isPressed[key]
       return
-
-    # move
+    else if action == 'up' and !@isPressed[key]
+      return
 
     count = @checkMove()
 
@@ -51,14 +54,6 @@ class MovementX extends EmitterX
 
     return count
 
-  preventDefault: ->
-
-    for key in ['w', 'a', 's', 'd']
-      $.on key, -> return
-      $.on "#{key}:up", -> return
-
-    return @
-
   resetKey: ->
 
     for key, value of @isPressed
@@ -68,37 +63,9 @@ class MovementX extends EmitterX
 
     return @
 
-  startMove: (key) ->
-
-    if $.getState key
-      return
-
-    if @isPressed[key]
-      return
-
-    $.press "#{key}:down"
-
-    player.emit 'move-start'
-
-    return @
-
-  stopMove: (key) ->
-
-    if $.getState key
-      return
-
-    $.press "#{key}:up"
-
-    unless @count
-      player.emit 'move-end'
-
-    return @
-
 # execute
 
 movement = new MovementX()
-
-ticker.on 'change', movement.check
 
 player
   .on 'move-start', ->

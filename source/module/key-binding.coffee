@@ -83,5 +83,4 @@ class KeyBindingX extends EmitterX
     return @
 
 # execute
-
 keyBinding = new KeyBindingX()

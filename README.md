@@ -40,7 +40,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, put the [script](. /source/index.ahk), [character data](. /source/character.ini) and [function configuration](. /source/config.ini) to the same directory.
+Then, put the [script](./source/index.ahk), [character data](./source/character.ini) and [function configuration](./source/config.ini) to the same directory.
 
 Finally, open the game and double-click to run the script (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -105,7 +105,7 @@ The type of appearance. Can be one of the following values.
 
 ### Function configuration
 
-Refer to the [function configuration](. /source/config.ini) for details.
+Refer to the [function configuration](./source/config.ini) for details.
 
 When finished editing, press `ctrl + f5` to take effect instantly.
 
