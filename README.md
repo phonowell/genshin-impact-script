@@ -40,7 +40,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, put the [script](./source/index.ahk), [character data](./source/character.ini) and [function configuration](./source/config.ini) to the same directory.
+Then, put the [script](./source/index.ahk) and [function configuration](./source/config.ini) to the same directory.
 
 Finally, open the game and double-click to run the script (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -91,7 +91,20 @@ Future characters to be added for support.
 
 ## Configuration
 
-### Character data
+Refer to the [function configuration](./source/config.ini) for details.
+
+When finished editing, press `ctrl + f5` to take effect instantly.
+
+### Characters
+
+Add the chanacter name at the bottom of the file to enable character-specific configuration.
+
+For Example:
+
+```ini
+[zhongli]
+type-apr = 3
+```
 
 #### type-apr
 
@@ -102,12 +115,6 @@ The type of appearance. Can be one of the following values.
 - 2 Uses E skill (tap)
 - 3 Uses E skill (long press)
 - 4 Uses Q skill
-
-### Function configuration
-
-Refer to the [function configuration](./source/config.ini) for details.
-
-When finished editing, press `ctrl + f5` to take effect instantly.
 
 ## Note
 

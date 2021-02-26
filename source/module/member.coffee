@@ -10,7 +10,7 @@ class MemberX
 
     [pointStart, pointEnd] = @getRange n
 
-    for name, char of Character
+    for name, char of Character.data
 
       unless char.color
         continue
@@ -25,17 +25,17 @@ class MemberX
 
   getRange: (n) ->
 
-    pointStart = [
-      client.vw 90
-      client.vh 9 * (n + 1)
+    start = client.point [
+      90
+      9 * (n + 1)
     ]
 
-    pointEnd = [
-      client.vw 96
-      client.vh 9 * (n + 2)
+    end = client.point [
+      96
+      9 * (n + 2)
     ]
 
-    return [pointStart, pointEnd]
+    return [start, end]
 
   scan: ->
     for n in [1, 2, 3, 4]

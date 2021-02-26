@@ -7,10 +7,7 @@ ts.sprint = 0
 
 checkSwimming = ->
 
-  start = [
-    client.vw 80
-    client.vh 90
-  ]
+  start = client.point [80, 90]
 
   end = [
     client.width

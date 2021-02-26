@@ -18,11 +18,38 @@ class SkillTimerX
         continue
 
       if now >= @listCountDown[n]
-        @listCountDown[n] = 0
-        hud.render n, ''
+        @hide n
       else
         diff = Math.floor (now - @listCountDown[n]) * 0.001
         hud.render n, "#{diff}s"
+
+  # checkSkillStatus: ->
+
+  #   n = member.current
+  #   name = member.name
+
+  #   unless name
+  #     return
+
+  #   if @listRecord[n]
+  #     return
+
+  #   unless @listCountDown[n]
+  #     return
+
+  #   start = client.point [87, 88]
+  #   end = client.point [88, 93]
+
+  #   [x, y] = $.findColor 0xFFFFFF, start, end
+
+  #   if x * y > 0
+  #     return
+
+  #   @hide member.current
+
+  hide: (n) ->
+    @listCountDown[n] = 0
+    hud.render n, ''
 
   record: (step) ->
 
@@ -32,10 +59,10 @@ class SkillTimerX
     unless name
       return
 
-    if @listCountDown[n]
-      return
-
     now = $.now()
+
+    if @listCountDown[n] and @listCountDown[n] - now > 1e3
+      return
 
     if step == 'end'
       @recordEnd now
@@ -49,7 +76,7 @@ class SkillTimerX
 
     n = member.current
     name = member.name
-    {cd, typeE} = Character[name]
+    {cd, typeE} = Character.data[name]
 
     unless @listRecord[n]
       return
@@ -73,7 +100,7 @@ class SkillTimerX
 
     n = member.current
     name = member.name
-    {cd} = Character[name]
+    {cd} = Character.data[name]
 
     if @listRecord[n]
       return
@@ -90,6 +117,9 @@ skillTimer = new SkillTimerX()
 
 if Config.data.easySkillTimer
   ticker.on 'change', (tick) ->
-    if Mod tick, 200
-      return
-    skillTimer.check()
+
+    unless Mod tick, 200
+      skillTimer.check()
+
+    # unless Mod tick, 1e3
+    #   skillTimer.checkSkillStatus()

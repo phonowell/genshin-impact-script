@@ -1,7 +1,4 @@
-state.isToggleDown = false
-state.toggleDelay = 100
-timer.toggleDown = ''
-timer.toggleUp = ''
+state.toggleDelay = 200
 
 # function
 
@@ -22,20 +19,16 @@ startToggle = (key) ->
   unless name
     return
 
-  {typeApr} = Character[name]
+  state.toggleDelay = getToggleDelay()
+
+  {typeApr} = Character.data[name]
   unless typeApr
     return
 
   unless typeApr == 1
     return
 
-  if state.isToggleDown
-    return
-  state.isToggleDown = true
-
-  state.toggleDelay = getToggleDelay()
-
-  timer.toggleDown = $.delay state.toggleDelay, ->
+  $.delay state.toggleDelay, ->
     $.press 'e:down'
     skillTimer.record 'start'
 
@@ -48,24 +41,24 @@ stopToggle = (key) ->
   unless name
     return
 
-  {typeApr} = Character[name]
+  {typeApr} = Character.data[name]
   unless typeApr
     return
 
   if typeApr == 2
-    player.useE()
+    $.delay state.toggleDelay, player.useE
     return
 
   if typeApr == 3
-    player.useE 'holding'
+    $.delay state.toggleDelay, ->
+      player.useE 'holding'
     return
 
   if typeApr == 4
-    player.useQ()
+    $.delay state.toggleDelay, player.useQ
     return
 
-  timer.toggleUp = $.delay state.toggleDelay, ->
-    state.isToggleDown = false
+  $.delay state.toggleDelay, ->
     $.press 'e:up'
     skillTimer.record 'end'
 

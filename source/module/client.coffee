@@ -25,6 +25,11 @@ class ClientX extends EmitterX
   checkActive: ->
     return WinActive "ahk_exe #{Config.data.process}"
 
+  point: (input) -> return [
+    @vw input[0]
+    @vh input[1]
+  ]
+
   reset: ->
     @setPriority 'normal'
     @resetTimer()

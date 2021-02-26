@@ -1,26 +1,161 @@
 class CharacterX
 
-  source: 'character.ini'
+  data:
+
+    aether:
+      color: 0
+
+    albedo:
+      color: 0
+
+    amber:
+      cd: 15
+      color: 0x5C4C63
+
+    ayaka:
+      color: 0
+
+    barbara:
+      cd: 32
+      color: 0xDED3BE
+
+    beidou:
+      cd: 7.5
+      color: 0x4C332E
+      typeE: 1
+
+    bennett:
+      cd: [5, 10]
+      color: 0xFBF3CF
+
+    chongyun:
+      cd: 15
+      color: 0xCDEFDF
+
+    diluc:
+      color: 0
+
+    diona:
+      cd: [6, 15]
+      color: 0xFED6CE
+
+    fischl:
+      cd: 25
+      color: 0xFFE3A9
+      typeE: 1
+
+    ganyu:
+      cd: 10
+      color: 0xBDCCC5
+
+    hu_tao:
+      color: 0
+
+    jean:
+      cd: 6
+      color: 0xE6D0A3
+      typeE: 1
+
+    kaeya:
+      cd: 6
+      color: 0x394E64
+
+    keqing:
+      cd: 7.5
+      color: 0xBEB1C3
+      typeE: 1
+
+    klee:
+      cd: 20
+      color: 0xBE3A0E
+
+    lisa:
+      cd: [1, 16]
+      color: 0xB6A69B
+
+    lumine:
+      color: 0
+
+    mona:
+      cd: 12
+      color: 0x5A5064
+
+    ningguang:
+      cd: 12
+      color: 0xFEFDDE
+
+    noelle:
+      cd: 24
+      color: 0xDED8D2
+
+    qiqi:
+      cd: 30
+      color: 0xE1DBDE
+
+    rezor:
+      cd: [6, 10]
+      color: 0xC6CAC6
+
+    rosaria:
+      color: 0
+
+    sucrose:
+      cd: 15
+      color: 0xD4E9CC
+
+    tartaglia:
+      cd: 6
+      color: 0xE08D3F
+
+    venti:
+      cd: [6, 15]
+      color: 0x5D917E
+
+    xiangling:
+      cd: 12
+      color: 0x22337B
+
+    xiao:
+      cd: 10
+      color: 0x39483E
+
+    xingqiu:
+      cd: 21
+      color: 0x488892
+
+    xinyan:
+      cd: 18
+      color: 0x503B40
+
+    zhongli:
+      cd: [4, 12]
+      color: 0x4B3525
 
   # ---
 
   constructor: ->
 
-    @index = $.split (@read 'index/index'), ','
+    for name, char of @data
 
-    for name in @index
-      @[name] =
-        cd: $.split (@read "#{name}/cd", '0,0'), ','
-        color: @read "#{name}/color", 0
-        typeApr: @read "#{name}/type-apr", 1
-        typeAtk: @read "#{name}/type-atk", 1
-        typeE: @read "#{name}/type-e", 0
+      # cd
 
-  read: (key, defaultValue = '') ->
-    [__section__, __key__] = $.split key, '/'
-    `IniRead, __result__, % this.source, % __section__, % __key__, % defaultValue`
-    return __result__
+      unless char.cd
+        char.cd = [0, 0]
+
+      if ($.type char.cd) == 'number'
+        char.cd = [char.cd, char.cd]
+
+      # color
+
+      # type-apr
+      char.typeApr = Config.read "#{name}/type-apr", 1
+
+      # type-atk
+      char.typeAtk = Config.read "#{name}/type-atk", 1
+
+      # type-e
+      unless char.typeE
+        char.typeE = 0
 
 # execute
-
 Character = new CharacterX()
