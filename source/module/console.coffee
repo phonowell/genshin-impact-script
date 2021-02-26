@@ -6,10 +6,11 @@ class ConsoleX
 
   # ---
 
+  constructor: -> client.on 'leave', @hide
+
   check: ->
 
     if client.isSuspend
-      @hide()
       return
 
     @clean()

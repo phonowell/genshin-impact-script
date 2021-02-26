@@ -72,8 +72,8 @@ stopToggle = (key) ->
 # binding
 
 player
-  .on 'toggle-start', startToggle
-  .on 'toggle-end', stopToggle
+  .on 'toggle:start', startToggle
+  .on 'toggle:end', stopToggle
 
 for key in [1, 2, 3, 4]
   $.on "alt + #{key}", ->

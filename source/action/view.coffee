@@ -25,4 +25,4 @@ view = ->
 # execute
 
 if Config.data.betterElementalVision
-  player.on 'view-end', toggleView
+  player.on 'view:end', toggleView

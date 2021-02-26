@@ -1,8 +1,45 @@
-class PlayerX extends EmitterX
+class PlayerX extends KeyBindingX
 
   isMoving: false
 
   # ---
+
+  constructor: ->
+    super()
+
+    # toggle
+    for key in [1, 2, 3, 4]
+      @bindEvent 'toggle', key
+
+    @
+
+      # attack
+      .bindEvent 'attack', 'l-button'
+      .bindEvent 'toggle-aim', 'r'
+
+      # use skill
+      .bindEvent 'use-e', 'e'
+      .bindEvent 'use-q', 'q'
+
+      # run & jump
+      .bindEvent 'jump', 'space'
+      .bindEvent 'sprint', 'r-button'
+
+      # others?
+      .bindEvent 'find', 'v'
+      .bindEvent 'pause', 'p'
+      .bindEvent 'pick', 'f'
+      .bindEvent 'unhold', 'x'
+      .bindEvent 'use-item', 'z'
+      .bindEvent 'view', 'm-button'
+
+    # menu
+    for key in [
+      'esc'
+      'b', 'c', 'j', 'm'
+      'f1', 'f2', 'f3', 'f4', 'f5'
+    ]
+      @bindEvent "menu-#{key}", key
 
   startMove: (key) ->
 
@@ -45,5 +82,4 @@ class PlayerX extends EmitterX
     return @
 
 # execute
-
 player = new PlayerX()

@@ -10,5 +10,6 @@ import 'character'
 import 'member'
 import 'skill-timer'
 
-import 'player'
 import 'key-binding'
+import 'player'
+import 'movement'

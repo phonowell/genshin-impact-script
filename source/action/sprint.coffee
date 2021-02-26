@@ -61,11 +61,11 @@ stopSprint = ->
 # binding
 
 player
-  .on 'sprint-start', startSprint
-  .on 'sprint-end', stopSprint
+  .on 'sprint:start', startSprint
+  .on 'sprint:end', stopSprint
 
 if Config.data.betterSprint
-  player.on 'move-end', ->
+  player.on 'move:end', ->
     unless state.isSprinting
       return
     if player.isMoving

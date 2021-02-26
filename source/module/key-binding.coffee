@@ -1,47 +1,22 @@
 class KeyBindingX extends EmitterX
 
   isPressed: {}
+  isPrevented: {}
 
   # ---
 
   constructor: ->
     super()
+    client.on 'leave', @resetKey
 
-    # toggle
-    for key in [1, 2, 3, 4]
-      @bindEvent 'toggle', key
+  bindEvent: (name, key, option = '') ->
 
-    @
+    unless option
+      option =
+        prevent: false
 
-      # attack
-      .bindEvent 'attack', 'l-button', 'left'
-      .bindEvent 'toggle-aim', 'r'
-
-      # use skill
-      .bindEvent 'use-e', 'e'
-      .bindEvent 'use-q', 'q'
-
-      # run & jump
-      .bindEvent 'jump', 'space'
-      .bindEvent 'sprint', 'r-button', 'right'
-
-      # others?
-      .bindEvent 'find', 'v'
-      .bindEvent 'pause', 'p'
-      .bindEvent 'pick', 'f'
-      .bindEvent 'unhold', 'x'
-      .bindEvent 'use-item', 'z'
-      .bindEvent 'view', 'm-button', 'middle'
-
-    # menu
-    for key in [
-      'esc'
-      'b', 'c', 'j', 'm'
-      'f1', 'f2', 'f3', 'f4', 'f5'
-    ]
-      @bindEvent "menu-#{key}", key
-
-  bindEvent: (name, key, key2 = '') ->
+    if option.prevent
+      @isPrevented[key] = true
 
     $.on "#{key}", =>
 
@@ -49,10 +24,10 @@ class KeyBindingX extends EmitterX
         return
       @isPressed[key] = true
 
-      if key2 then $.click "#{key2}:down"
-      else $.press "#{key}:down"
+      unless @isPrevented[key]
+        @press "#{key}:down"
 
-      player.emit "#{name}-start", key
+      @emit "#{name}:start", key
 
     $.on "#{key}:up", =>
 
@@ -60,27 +35,41 @@ class KeyBindingX extends EmitterX
         return
       @isPressed[key] = false
 
-      if key2 then $.click "#{key2}:up"
-      else $.press "#{key}:up"
+      unless @isPrevented[key]
+        @press "#{key}:up"
 
-      player.emit "#{name}-end", key
+      @emit "#{name}:end", key
 
+    return @
+
+  press: (key) ->
+
+    unless $.includes key, '-button'
+      $.press key
+      return @
+
+    if $.includes key, 'l-button'
+      key = $.replace key, 'l-button', 'left'
+    else if $.includes key, 'm-button'
+      key = $.replace key, 'm-button', 'middle'
+    else if $.includes key, 'r-button'
+      key = $.replace key, 'r-button', 'right'
+
+    $.click key
     return @
 
   resetKey: ->
 
     for key, value of @isPressed
 
+      if @isPrevented[key]
+        continue
+
       unless value
         continue
 
-      if key == 'l-button' then $.click 'left:up'
-      if key == 'm-button' then $.click 'middle:up'
-      if key == 'r-button' then $.click 'right:up'
-
-      $.press "#{key}:up"
+      if $.getState key
+        continue
+      @press "#{key}:up"
 
     return @
-
-# execute
-keyBinding = new KeyBindingX()

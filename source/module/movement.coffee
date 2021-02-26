@@ -1,7 +1,6 @@
-class MovementX extends EmitterX
+class MovementX extends KeyBindingX
 
   count: 0
-  isPressed: {}
 
   # ---
 
@@ -22,9 +21,9 @@ class MovementX extends EmitterX
     count = @checkMove()
 
     if count and !@count
-      player.emit 'move-start'
+      player.emit 'move:start'
     else if !count and @count
-      player.emit 'move-end'
+      player.emit 'move:end'
 
     @count = count
 
@@ -54,25 +53,16 @@ class MovementX extends EmitterX
 
     return count
 
-  resetKey: ->
-
-    for key, value of @isPressed
-      unless value
-        continue
-      $.press "#{key}:up"
-
-    return @
-
 # execute
 
 movement = new MovementX()
 
 player
-  .on 'move-start', ->
+  .on 'move:start', ->
     if player.isMoving
       return
     player.isMoving = true
-  .on 'move-end', ->
+  .on 'move:end', ->
     unless player.isMoving
       return
     player.isMoving = false

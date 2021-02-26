@@ -28,8 +28,6 @@ class ClientX extends EmitterX
   reset: ->
     @setPriority 'normal'
     @resetTimer()
-    keyBinding.resetKey()
-    movement.resetKey()
 
   resetTimer: -> for _timer of timer
     clearTimeout _timer
@@ -49,8 +47,6 @@ class ClientX extends EmitterX
       @isSuspend = true
       $.suspend true
       @resetTimer()
-      keyBinding.resetKey()
-      movement.resetKey()
       return
 
     unless isSuspend
