@@ -1,0 +1,86 @@
+ts.tacticCheckStatus = 0
+state.tacticCheckStatus = false
+
+# function
+
+class TacticX
+
+  count: 0
+  isActive: false
+
+  constructor: ->
+    player
+      .on 'attack:start', @start
+      .on 'attack:end', @stop
+
+  checkStatus: ->
+
+    now = $.now()
+
+    unless now - ts.tacticCheckStatus > 1e3
+      return state.tacticCheckStatus
+    ts.tacticCheckStatus = now
+
+    start = client.point [95, 5]
+    end = [
+      client.vw 96
+      start[1] + 1
+    ]
+
+    [x, y] = $.findColor 0xFFFFFF, start, end
+
+    state.tacticCheckStatus = x * y > 0
+    return state.tacticCheckStatus
+
+  delay: (time, callback) ->
+
+    unless @isActive
+      return
+
+    clearTimeout timer.tacticDelay
+    timer.tacticDelay = $.delay time, callback
+
+  start: ->
+
+    if @isActive
+      return
+
+    callback = @validate()
+    unless callback
+      $.click 'left:down'
+      return
+
+    @isActive = true
+    callback()
+
+  stop: ->
+
+    if @isActive
+      @count = 0
+      @isActive = false
+      return
+
+    $.click 'left:up'
+
+  validate: ->
+
+    name = member.name
+    unless name
+      return false
+
+    {typeAtk} = Character.data[name]
+    unless typeAtk
+      return false
+
+    unless @[name]
+      return false
+
+    unless @checkStatus()
+      return false
+
+    return @[name]
+
+# execute
+tactic = new TacticX()
+
+import 'data/*'

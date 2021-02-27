@@ -9,13 +9,9 @@ class KeyBindingX extends EmitterX
     super()
     client.on 'leave', @resetKey
 
-  bindEvent: (name, key, option = '') ->
+  bindEvent: (name, key, prevent = false) ->
 
-    unless option
-      option =
-        prevent: false
-
-    if option.prevent
+    if prevent
       @isPrevented[key] = true
 
     $.on "#{key}", =>

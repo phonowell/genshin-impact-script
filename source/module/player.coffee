@@ -14,7 +14,7 @@ class PlayerX extends KeyBindingX
     @
 
       # attack
-      .bindEvent 'attack', 'l-button'
+      .bindEvent 'attack', 'l-button', 'prevent'
       .bindEvent 'toggle-aim', 'r'
 
       # use skill
@@ -40,6 +40,8 @@ class PlayerX extends KeyBindingX
       'f1', 'f2', 'f3', 'f4', 'f5'
     ]
       @bindEvent "menu-#{key}", key
+
+  jump: -> $.press 'space'
 
   startMove: (key) ->
 
