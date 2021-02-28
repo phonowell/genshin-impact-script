@@ -2,14 +2,22 @@ class MovementX extends KeyBindingX
 
   count: 0
 
-  # ---
-
   constructor: ->
     super()
 
     for key in ['w', 'a', 's', 'd']
       $.on key, => @check key, 'down'
       $.on "#{key}:up", => @check key, 'up'
+
+    player
+      .on 'move:start', ->
+        if player.isMoving
+          return
+        player.isMoving = true
+      .on 'move:end', ->
+        unless player.isMoving
+          return
+        player.isMoving = false
 
   check: (key, action) ->
 
@@ -54,15 +62,4 @@ class MovementX extends KeyBindingX
     return count
 
 # execute
-
 movement = new MovementX()
-
-player
-  .on 'move:start', ->
-    if player.isMoving
-      return
-    player.isMoving = true
-  .on 'move:end', ->
-    unless player.isMoving
-      return
-    player.isMoving = false

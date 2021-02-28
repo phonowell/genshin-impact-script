@@ -110,11 +110,11 @@ type-apr = 3
 
 The type of appearance. Can be one of the following values.
 
-- 0 Does nothing, i.e. the game's default behavior
-- 1 Default value of script; Uses the corresponding E skill depending on the length of time the number key is pressed
-- 2 Uses E skill (tap)
-- 3 Uses E skill (long press)
-- 4 Uses Q skill
+- `0` Does nothing, i.e. the game's default behavior
+- `1` Default value of script; Uses the corresponding E skill depending on the length of time the number key is pressed
+- `2` Uses E skill (tap)
+- `3` Uses E skill (hold)
+- `4` Uses Q skill
 
 ## Note
 

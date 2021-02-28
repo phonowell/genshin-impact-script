@@ -3,8 +3,9 @@ import 'ticker'
 
 import 'config'
 import 'client'
-import 'console'
 import 'hud'
+
+import 'status-checker'
 
 import 'character'
 import 'member'

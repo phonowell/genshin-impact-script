@@ -3,8 +3,6 @@ class SkillTimerX
   listCountDown: {}
   listRecord: {}
 
-  # ---
-
   check: ->
 
     if client.isSuspend
@@ -116,6 +114,7 @@ class SkillTimerX
 skillTimer = new SkillTimerX()
 
 if Config.data.easySkillTimer
+
   ticker.on 'change', (tick) ->
 
     unless Mod tick, 200

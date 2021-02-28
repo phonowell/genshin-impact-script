@@ -72,6 +72,5 @@ class ClientX extends EmitterX
 client = new ClientX()
 
 ticker.on 'change', (tick) ->
-  if Mod tick, 200
-    return
-  client.check()
+  unless Mod tick, 200
+    client.check()

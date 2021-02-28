@@ -2,8 +2,6 @@ class PlayerX extends KeyBindingX
 
   isMoving: false
 
-  # ---
-
   constructor: ->
     super()
 
@@ -22,10 +20,11 @@ class PlayerX extends KeyBindingX
       .bindEvent 'use-q', 'q'
 
       # run & jump
-      .bindEvent 'jump', 'space'
+      .bindEvent 'jump', 'space', 'prevent'
       .bindEvent 'sprint', 'r-button'
 
       # others?
+      .bindEvent 'confirm', 'y'
       .bindEvent 'find', 'v'
       .bindEvent 'pause', 'p'
       .bindEvent 'pick', 'f'
@@ -42,6 +41,10 @@ class PlayerX extends KeyBindingX
       @bindEvent "menu-#{key}", key
 
   jump: -> $.press 'space'
+
+  pick: ->
+    $.press 'f'
+    $.click 'wheel-down'
 
   startMove: (key) ->
 

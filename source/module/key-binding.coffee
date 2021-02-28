@@ -3,8 +3,6 @@ class KeyBindingX extends EmitterX
   isPressed: {}
   isPrevented: {}
 
-  # ---
-
   constructor: ->
     super()
     client.on 'leave', @resetKey

@@ -3,13 +3,9 @@ timer.pick = ''
 # function
 
 pick = ->
-
   clearTimeout timer.pick
   timer.pick = $.delay 100, ->
-
-    $.press 'f'
-    $.click 'wheel-down'
-
+    player.pick()
     pick()
 
 stopPick = -> clearTimeout timer.pick

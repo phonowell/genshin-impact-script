@@ -4,8 +4,6 @@ class TickerX extends EmitterX
   max: 1e3
   tick: 0
 
-  # ---
-
   constructor: ->
     super()
     setInterval @update, @interval

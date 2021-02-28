@@ -1,8 +1,3 @@
-ts.tacticCheckStatus = 0
-state.tacticCheckStatus = false
-
-# function
-
 class TacticX
 
   count: 0
@@ -12,25 +7,6 @@ class TacticX
     player
       .on 'attack:start', @start
       .on 'attack:end', @stop
-
-  checkStatus: ->
-
-    now = $.now()
-
-    unless now - ts.tacticCheckStatus > 1e3
-      return state.tacticCheckStatus
-    ts.tacticCheckStatus = now
-
-    start = client.point [95, 5]
-    end = [
-      client.vw 96
-      start[1] + 1
-    ]
-
-    [x, y] = $.findColor 0xFFFFFF, start, end
-
-    state.tacticCheckStatus = x * y > 0
-    return state.tacticCheckStatus
 
   delay: (time, callback) ->
 
@@ -75,7 +51,7 @@ class TacticX
     unless @[name]
       return false
 
-    unless @checkStatus()
+    unless statusChecker.isActive
       return false
 
     return @[name]

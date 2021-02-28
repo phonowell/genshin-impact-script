@@ -2,8 +2,6 @@ class EmitterX
 
   bus: []
 
-  # ---
-
   emit: (key, args...) ->
     [type, name] = $.split key, '.'
 

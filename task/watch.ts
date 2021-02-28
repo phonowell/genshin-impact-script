@@ -1,5 +1,6 @@
 import c2a from 'coffee-ahk'
 import debounce from 'lodash/debounce'
+import sleep_ from 'fire-keeper/sleep_'
 import watch from 'fire-keeper/watch'
 
 // variable
@@ -22,6 +23,7 @@ const compile_ = debounce(async (): Promise<void> => {
     salt: 'genshin',
   }).catch(e => console.error(e))
 
+  await sleep_(1e3)
   isBusy = false
 }, 3e3)
 

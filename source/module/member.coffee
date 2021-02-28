@@ -4,8 +4,6 @@ class MemberX
   map: {}
   name: ''
 
-  # ---
-
   checkCharacterByPosition: (n) ->
 
     [pointStart, pointEnd] = @getRange n
@@ -38,11 +36,17 @@ class MemberX
     return [start, end]
 
   scan: ->
+
     for n in [1, 2, 3, 4]
       name = @checkCharacterByPosition n
       @map[n] = name
       hud.render n, name
+
     skillTimer.reset()
+
+    unless @current
+      $.press '1'
+      @toggle 1
 
   toggle: (n) ->
     @current = n

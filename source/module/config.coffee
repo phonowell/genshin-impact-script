@@ -3,8 +3,6 @@ class ConfigX
   data: {}
   source: 'config.ini'
 
-  # ---
-
   constructor: ->
 
     # region

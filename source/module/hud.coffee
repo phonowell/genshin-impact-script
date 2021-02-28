@@ -3,7 +3,7 @@ class HudX
   lifetime: 5e3
   listTimer: {}
 
-  # ---
+  constructor: -> client.on 'leave', @hide
 
   getColor: ->
 
@@ -13,7 +13,7 @@ class HudX
     x1 = Math.round (x * 100) / client.width
     y1 = Math.round (y * 100) / client.height
 
-    console.log "#{x1}, #{y1} / #{color}"
+    @render 5, "#{x1}, #{y1} / #{color}"
     ClipBoard = color
 
   getPosition: (n) ->
@@ -33,9 +33,8 @@ class HudX
   render: (n, msg) ->
 
     clearTimeout @listTimer[n]
-    @listTimer[n] = setTimeout =>
+    @listTimer[n] = $.delay @lifetime, =>
       @render n, ''
-    , @lifetime
 
     [x, y] = @getPosition n
     id = n + 1
@@ -48,7 +47,4 @@ class HudX
     @hide()
 
 # execute
-
 hud = new HudX()
-
-client.on 'leave', hud.hide

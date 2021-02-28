@@ -131,8 +131,6 @@ class CharacterX
       cd: [4, 12]
       color: 0x4B3525
 
-  # ---
-
   constructor: ->
 
     for name, char of @data
