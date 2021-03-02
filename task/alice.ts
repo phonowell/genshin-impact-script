@@ -22,11 +22,16 @@ async function ask_(
 
 async function load_(): Promise<string[]> {
 
-  const listSource = await $.source_('./task/*.ts')
+  const listSource = await $.source_([
+    './task/*.js',
+    './task/*.ts',
+    '!*.d.ts',
+  ])
   const listResult: string[] = []
   for (const source of listSource) {
     const basename = $.getBasename(source)
     if (basename === 'alice') continue
+    if (listResult.includes(basename)) continue
     listResult.push(basename)
   }
   return listResult
@@ -52,7 +57,10 @@ async function run_(
   task: string
 ): Promise<void> {
 
-  const [source] = await $.source_(`./task/${task}.ts`)
+  const [source] = await $.source_([
+    `./task/${task}.js`,
+    `./task/${task}.ts`,
+  ])
   const fn_: FnAsync = (await import(source)).default
   await fn_()
 }

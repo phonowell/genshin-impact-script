@@ -1,36 +1,55 @@
 import c2a from 'coffee-ahk'
-import debounce from 'lodash/debounce'
-import sleep_ from 'fire-keeper/sleep_'
 import watch from 'fire-keeper/watch'
-
-// variable
-
-let isBusy = false
-let timer: NodeJS.Timeout | number = 0
 
 // function
 
-const compile_ = debounce(async (): Promise<void> => {
+class Compiler {
 
-  if (isBusy) {
-    clearTimeout(timer as NodeJS.Timeout)
-    timer = setTimeout(compile_, 5e3)
-    return
-  }
-  isBusy = true
-
-  await c2a('./source/index.coffee', {
-    salt: 'genshin',
-  }).catch(e => console.error(e))
-
-  await sleep_(1e3)
   isBusy = false
-}, 3e3)
+  list: string[] = []
+
+  constructor() {
+    setInterval(() => {
+      this.next()
+    }, 1e3)
+  }
+
+  add(
+    path: string
+  ): void {
+
+    if (!this.list.includes(path))
+      this.list.push(path)
+  }
+
+  next(): void {
+
+    if (!this.list?.length) return
+    if (this.isBusy) return
+
+    this.isBusy = true
+
+    c2a(this.list.shift() as string, {
+      salt: 'genshin',
+    })
+      .catch(e => {
+        console.log(e.stack)
+      })
+      .finally(() => {
+        this.isBusy = false
+      })
+  }
+}
 
 function main(): void {
 
   process.on('uncaughtException', e => console.error(e))
-  watch('./source/**/*.coffee', compile_)
+
+  const compiler = new Compiler()
+
+  watch('./source/**/*.coffee', () => {
+    compiler.add('./source/index.coffee')
+  })
 }
 
 // export
