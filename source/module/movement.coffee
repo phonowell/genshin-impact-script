@@ -49,7 +49,8 @@ class MovementX extends KeyBindingX
           continue
         @isPressed[key] = true
 
-        @press "#{key}:down"
+        recorder.record "#{key}:down"
+        $.press "#{key}:down"
 
       else
 
@@ -57,13 +58,10 @@ class MovementX extends KeyBindingX
           continue
         @isPressed[key] = false
 
-        @press "#{key}:up"
+        recorder.record "#{key}:up"
+        $.press "#{key}:up"
 
     return count
-
-  press: (key) ->
-    recorder.record key
-    $.press key
 
 # execute
 movement = new MovementX()

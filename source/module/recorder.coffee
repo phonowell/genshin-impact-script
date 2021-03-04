@@ -38,6 +38,8 @@ class RecorderX
     if $.includes @listIgnore, key
       return
 
+    hud.render 5, key
+
     [x, y] = $.getPosition()
 
     now = $.now()
@@ -66,10 +68,15 @@ class RecorderX
     @list = []
     @ts = $.now()
 
+    hud.render 5, 'start recording'
+
   stop: ->
+
     unless @isActive
       return
     @isActive = false
+
+    hud.render 5, 'stop recording'
 
 # execute
 recorder = new RecorderX()
