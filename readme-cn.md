@@ -40,9 +40,9 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，将[脚本](./source/index.ahk)和[功能配置](./source/config.ini)下载至本地放置于同一目录下。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.1/Genshin_Impact_Script_0.0.1.zip)并解压。
 
-最后，打开游戏，并双击打开脚本（会提示是否应用管理员权限，选择应用）。
+最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
 ### 技能计时器
 

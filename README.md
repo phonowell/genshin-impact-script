@@ -40,9 +40,9 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, put the [script](./source/index.ahk) and [function configuration](./source/config.ini) to the same directory.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.1/Genshin_Impact_Script_0.0.1.zip) and unzip it.
 
-Finally, open the game and double-click to run the script (you will be prompted whether to apply administrator privileges, select Apply).
+Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
 ### Easy Skill Timer
 
@@ -50,7 +50,7 @@ Before use this feature, you need to identify the characters in your team. Press
 
 When you change the team lineup, you need to re-identify them.
 
-Currently only the following characters are supported.
+Currently only the following characters are supported:
 
 - Amber
 - Barbara
@@ -79,7 +79,7 @@ Currently only the following characters are supported.
 - Xinyan
 - Zhongli
 
-Future characters to be added for support.
+Future characters to be added for support:
 
 - Aether
 - Albedo
