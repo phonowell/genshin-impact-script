@@ -11,6 +11,7 @@ import 'character'
 import 'member'
 import 'skill-timer'
 
+import 'recorder'
 import 'key-binding'
 import 'player'
 import 'movement'

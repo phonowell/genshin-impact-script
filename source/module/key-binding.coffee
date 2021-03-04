@@ -38,6 +38,8 @@ class KeyBindingX extends EmitterX
 
   press: (key) ->
 
+    recorder.record key
+
     unless $.includes key, '-button'
       $.press key
       return @
