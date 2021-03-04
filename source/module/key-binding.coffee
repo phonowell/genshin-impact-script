@@ -18,6 +18,7 @@ class KeyBindingX extends EmitterX
         return
       @isPressed[key] = true
 
+      recorder.record "#{key}:down"
       unless @isPrevented[key]
         @press "#{key}:down"
 
@@ -29,6 +30,7 @@ class KeyBindingX extends EmitterX
         return
       @isPressed[key] = false
 
+      recorder.record "#{key}:up"
       unless @isPrevented[key]
         @press "#{key}:up"
 
