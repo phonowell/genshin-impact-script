@@ -45,7 +45,8 @@ ganyu:
   color: 0xBDCCC5
 
 hu_tao:
-  color: 0
+  cd: 16
+  color: 0x7B5B61
 
 jean:
   cd: 6

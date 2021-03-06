@@ -40,7 +40,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.1/Genshin_Impact_Script_0.0.1.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.2/Genshin_Impact_Script_0.0.2.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -60,6 +60,7 @@
 - 迪奥娜
 - 菲谢尔
 - 甘雨
+- 胡桃
 - 琴
 - 凯亚
 - 可莉
@@ -85,7 +86,6 @@
 - 阿贝多
 - 神里
 - 迪卢克
-- 胡桃
 - 荧
 - 罗莎莉亚
 

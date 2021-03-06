@@ -40,7 +40,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.1/Genshin_Impact_Script_0.0.1.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.2/Genshin_Impact_Script_0.0.2.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -60,6 +60,7 @@ Currently only the following characters are supported:
 - Diona
 - Fischl
 - Ganyu
+- Hu Tao
 - Jean
 - Kaeya
 - Klee
@@ -85,7 +86,6 @@ Future characters to be added for support:
 - Albedo
 - Ayaka
 - Diluc
-- Hu Tao
 - Lumine
 - Rosaria
 
