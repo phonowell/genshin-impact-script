@@ -3,12 +3,12 @@ timer.pick = ''
 # function
 
 pick = ->
-  clearTimeout timer.pick
+  $.clearTimeout timer.pick
   timer.pick = $.delay 100, ->
     player.pick()
     pick()
 
-stopPick = -> clearTimeout timer.pick
+stopPick = -> $.clearTimeout timer.pick
 
 # binding
 

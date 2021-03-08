@@ -1,0 +1,6 @@
+﻿688|space:down
+172|space:up
+609|space:down
+141|space:up
+656|space:down
+156|space:up

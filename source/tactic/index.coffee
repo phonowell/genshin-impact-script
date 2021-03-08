@@ -13,7 +13,7 @@ class TacticX
     unless @isActive
       return
 
-    clearTimeout timer.tacticDelay
+    $.clearTimeout timer.tacticDelay
     timer.tacticDelay = $.delay time, callback
 
   start: ->

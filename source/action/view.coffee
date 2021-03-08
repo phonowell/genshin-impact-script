@@ -5,22 +5,18 @@ timer.view = ''
 
 toggleView = ->
 
-  clearInterval timer.view
+  $.clearInterval timer.view
   state.isViewing = !state.isViewing
 
   unless state.isViewing
     return
 
-  timer.view = setInterval view, 3e3
+  timer.view = $.setInterval view, 3e3
   view()
 
 view = ->
-
   $.click 'middle:down'
-
-  setTimeout ->
-    $.click 'middle:up'
-  , 2500
+  $.delay 2500, -> $.click 'middle:up'
 
 # execute
 

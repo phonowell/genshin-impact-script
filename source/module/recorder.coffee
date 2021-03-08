@@ -1,5 +1,7 @@
 class RecorderX
 
+  current: 0
+  file: ''
   isActive: false
   list: []
   listIgnore: []
@@ -7,18 +9,19 @@ class RecorderX
 
   constructor: ->
 
+    @file = $.file 'replay.txt'
+
     client.on 'leave', @stop
 
-    $.on 'ctrl + r', =>
+    $.on 'f11', @replay
 
-      $.beep()
-
+    $.on 'f10', =>
       unless @isActive
-        @ignore 'ctrl + r'
+        @ignore 'f10'
         @start()
       else
         @stop()
-        ClipBoard = @save()
+        @save()
 
   ignore: (key) ->
 
@@ -28,7 +31,21 @@ class RecorderX
 
     if $.includes @listIgnore, key
       return
-    @listIgnore.Push key
+    $.push @listIgnore, key
+
+  next: (list) ->
+
+    n = @current
+    if n >= $.length list
+      $$.log 'end playing'
+      $.beep()
+      return
+
+    [delay, key] = list[n]
+    $.delay delay, =>
+      $.trigger key
+      @current++
+      @next list
 
   record: (key) ->
 
@@ -38,26 +55,41 @@ class RecorderX
     if $.includes @listIgnore, key
       return
 
-    hud.render 5, key
-
-    [x, y] = $.getPosition()
+    $$.log key
 
     now = $.now()
     delay = now - @ts
     @ts = now
 
-    @list.Push {delay, key, x, y}
+    $.push @list, {delay, key}
+
+  replay: ->
+
+    list = []
+    @current = 0
+
+    for item in $.split @file.load(), '\n'
+
+      unless item
+        continue
+
+      [delay, key] = $.split item, '|'
+      $.push list, [delay, key]
+
+    $.delay 500, =>
+      $$.log 'start playing'
+      $.beep()
+      @next list
 
   save: ->
 
+    unless $.length @list
+      return
+
     result = ''
-
     for item in @list
-      result = "#{result}-\n"
-      for key, value of item
-        result = "#{result}  #{key}: #{value}\n"
-
-    return result
+      result = "#{result}#{item.delay}|#{item.key}\n"
+    @file.save result
 
   start: ->
 
@@ -68,15 +100,18 @@ class RecorderX
     @list = []
     @ts = $.now()
 
-    hud.render 5, 'start recording'
+    $$.log 'start recording'
+    $.beep()
 
   stop: ->
 
     unless @isActive
       return
+
     @isActive = false
 
-    hud.render 5, 'stop recording'
+    $$.log 'end recording'
+    $.beep()
 
 # execute
 recorder = new RecorderX()

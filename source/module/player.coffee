@@ -26,6 +26,7 @@ class PlayerX extends KeyBindingX
       # others?
       .bindEvent 'confirm', 'y'
       .bindEvent 'find', 'v'
+      .bindEvent 'guide', 'g'
       .bindEvent 'pause', 'p'
       .bindEvent 'pick', 'f'
       .bindEvent 'unhold', 'x'

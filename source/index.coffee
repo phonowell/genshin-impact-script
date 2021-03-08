@@ -1,14 +1,10 @@
 import 'include/admin.ahk'
 import 'include/head.ahk'
-import 'js-shim.ahk'
+import 'shell-ahk'
 
 # declare
 
 $ = $
-clearInterval = clearInterval
-clearTimeout = clearTimeout
-setInterval = setInterval
-setTimeout = setTimeout
 
 # variable
 
@@ -30,10 +26,6 @@ $.on 'alt + f4', ->
   $.beep()
   client.reset()
   $.exit()
-
-$.on 'alt + f11', ->
-  $.beep()
-  hud.getColor()
 
 $.on 'ctrl + f5', ->
   $.beep()

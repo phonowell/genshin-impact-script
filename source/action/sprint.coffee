@@ -26,7 +26,7 @@ sprint = ->
     state.isSprintSwimming = true
     $.click 'right:up'
 
-  clearTimeout timer.sprint
+  $.clearTimeout timer.sprint
   timer.sprint = $.delay 1300, ->
     if state.isSprintSwimming
       state.isSprintSwimming = false
@@ -52,7 +52,7 @@ stopSprint = ->
   state.isSprinting = false
   state.isSprintSwimming = false
 
-  clearTimeout timer.sprint
+  $.clearTimeout timer.sprint
   player.stopMove 'w'
 
 # binding

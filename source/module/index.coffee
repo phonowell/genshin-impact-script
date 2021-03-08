@@ -1,4 +1,5 @@
-import 'emitter'
+$$ = {}
+
 import 'ticker'
 
 import 'config'

@@ -1,4 +1,4 @@
-class TickerX extends EmitterX
+class TickerX extends EmitterShellX
 
   interval: 100
   max: 1e3
@@ -6,7 +6,7 @@ class TickerX extends EmitterX
 
   constructor: ->
     super()
-    setInterval @update, @interval
+    $.setInterval @update, @interval
 
   update: ->
     @tick = @tick + @interval

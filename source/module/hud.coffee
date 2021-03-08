@@ -3,15 +3,21 @@ class HudX
   lifetime: 5e3
   listTimer: {}
 
-  constructor: -> client.on 'leave', @hide
+  constructor: ->
+
+    client.on 'leave', @hide
+
+    $.on 'f9', ->
+      $.beep()
+      hud.getColor()
 
   getColor: ->
 
     color = $.getColor()
 
     [x, y] = $.getPosition()
-    x1 = Math.round (x * 100) / client.width
-    y1 = Math.round (y * 100) / client.height
+    x1 = $.round (x * 100) / client.width
+    y1 = $.round (y * 100) / client.height
 
     @render 5, "#{x1}, #{y1} / #{color}"
     ClipBoard = color
@@ -32,7 +38,7 @@ class HudX
 
   render: (n, msg) ->
 
-    clearTimeout @listTimer[n]
+    $.clearTimeout @listTimer[n]
     @listTimer[n] = $.delay @lifetime, =>
       @render n, ''
 
@@ -42,9 +48,14 @@ class HudX
 
   reset: ->
     for timer of @listTimer
-      clearTimeout timer
+      $.clearTimeout timer
     @listTimer = {}
     @hide()
 
 # execute
+
 hud = new HudX()
+
+$$.log = (message) ->
+  hud.render 5, message
+  return message

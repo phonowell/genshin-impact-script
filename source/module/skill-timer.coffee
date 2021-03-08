@@ -18,7 +18,7 @@ class SkillTimerX
       if now >= @listCountDown[n]
         @hide n
       else
-        diff = Math.floor (now - @listCountDown[n]) * 0.001
+        diff = $.floor (now - @listCountDown[n]) * 0.001
         hud.render n, "#{diff}s"
 
   # checkSkillStatus: ->

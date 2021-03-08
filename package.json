@@ -4,9 +4,10 @@
     "url": "https://github.com/phonowell/genshin-impact-script/issues"
   },
   "dependencies": {
-    "coffee-ahk": "^0.0.35",
+    "coffee-ahk": "^0.0.37",
     "fire-keeper": "^0.0.188",
-    "js-shim.ahk": "0.0.4",
+    "js-shim.ahk": "^0.0.5",
+    "shell-ahk": "^0.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.2"
   },
@@ -39,5 +40,5 @@
     "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
-  "version": "0.0.2"
+  "version": "0.0.3"
 }

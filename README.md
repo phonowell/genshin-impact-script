@@ -12,25 +12,29 @@ A script based on `ahk` that provides a few small features for Genshin Impact pl
 
 ## Features
 
+### Easy skill timer
+
+Provides countdown timer for E skills, with overlay.
+
+### Use E skill when character debuts
+
+When you press or hold `numeric key` to switch characters, the character will automatically use E skill when he/she appears on the stage.
+
 ### Better running/jumping
 
 Use better running when long pressing `right click`. Automatically open wind glider when jumping.
 
-### Easy skill timer
-
-Provides countdown timer for E skills.
-
-### Use E skill when character debuts
-
-When you press or hold `Numeric Key` to switch characters, the character will automatically use E skill when he/she appears on the stage.
-
-### Better elemental vision
-
-When you press `Middle Button`, you will enter the automatically maintained elemental vision; press Middle Button again to exit.
-
 ### Fast item pickup
 
 Quickly pick up items when the `f` key is pressed.
+
+### Record/replay action
+
+Press `f10` to record your action; press `f11` to replay.
+
+### Better elemental vision
+
+When you press `middle button`, you will enter the automatically maintained elemental vision; press Middle Button again to exit.
 
 ### Auto-adjust game process priority
 
@@ -108,13 +112,22 @@ type-apr = 3
 
 #### type-apr
 
-The type of appearance. Can be one of the following values.
+The type of appearance. Can be one of the following values:
 
 - `0` Does nothing, i.e. the game's default behavior
 - `1` Default value of script; Uses the corresponding E skill depending on the length of time the number key is pressed
 - `2` Uses E skill (tap)
 - `3` Uses E skill (hold)
 - `4` Uses Q skill
+
+#### type-atk
+
+The attack mode. Can be one of the following values:
+
+- `0` Off
+- `1` On
+
+This feature is currently only available for Klee; more character support will be added later.
 
 ## Note
 

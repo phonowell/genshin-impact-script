@@ -1,4 +1,4 @@
-class ClientX extends EmitterX
+class ClientX extends EmitterShellX
 
   height: 0
   isSuspend: false
@@ -35,7 +35,7 @@ class ClientX extends EmitterX
     @resetTimer()
 
   resetTimer: -> for _timer of timer
-    clearTimeout _timer
+    $.clearTimeout _timer
 
   setSize: ->
 
@@ -63,9 +63,9 @@ class ClientX extends EmitterX
   setPriority: (level) ->
     `Process, Priority, % Config.data.process, % level`
 
-  vh: (n) -> return Math.round @height * n * 0.01
+  vh: (n) -> return $.round @height * n * 0.01
 
-  vw: (n) -> return Math.round @width * n * 0.01
+  vw: (n) -> return $.round @width * n * 0.01
 
 # execute
 

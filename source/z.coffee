@@ -1,14 +1,10 @@
 import 'include/head.ahk'
-import 'include/js-shim.ahk'
+import 'include/shell-ahk'
 
 $ = $
-clearInterval = clearInterval
-clearTimeout = clearTimeout
-setInterval = setInterval
-setTimeout = setTimeout
 
 $.on 'l-button', ->
   $.click 'right:down'
-  setTimeout ->
+  $.setTimeout ->
     $.click 'right:up'
   , 1e3
