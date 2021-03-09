@@ -7,7 +7,7 @@
     "coffee-ahk": "^0.0.37",
     "fire-keeper": "^0.0.188",
     "js-shim.ahk": "^0.0.5",
-    "shell-ahk": "^0.0.2",
+    "shell-ahk": "^0.0.4",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   },

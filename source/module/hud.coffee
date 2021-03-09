@@ -7,7 +7,7 @@ class HudX
 
     client.on 'leave', @hide
 
-    $.on 'f9', ->
+    $.on 'alt + f9', ->
       $.beep()
       hud.getColor()
 
@@ -39,8 +39,9 @@ class HudX
   render: (n, msg) ->
 
     $.clearTimeout @listTimer[n]
-    @listTimer[n] = $.delay @lifetime, =>
+    @listTimer[n] = $.setTimeout =>
       @render n, ''
+    , @lifetime
 
     [x, y] = @getPosition n
     id = n + 1

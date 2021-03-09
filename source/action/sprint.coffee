@@ -7,14 +7,14 @@ ts.sprint = 0
 
 checkSwimming = ->
 
-  start = client.point [80, 90]
+  start = client.point [90, 90]
 
   end = [
     client.width
     client.height
   ]
 
-  point = $.findColor 0xFFE92C, start, end, 0.9
+  point = $.findColor 0xFFE92C, start, end
   return point[0] * point[1] > 0
 
 sprint = ->
@@ -27,11 +27,12 @@ sprint = ->
     $.click 'right:up'
 
   $.clearTimeout timer.sprint
-  timer.sprint = $.delay 1300, ->
+  timer.sprint = $.setTimeout ->
     if state.isSprintSwimming
       state.isSprintSwimming = false
       $.click 'right:down'
     sprint()
+  , 1300
 
 startSprint = ->
 

@@ -4,9 +4,10 @@ timer.pick = ''
 
 pick = ->
   $.clearTimeout timer.pick
-  timer.pick = $.delay 100, ->
+  timer.pick = $.setTimeout ->
     player.pick()
     pick()
+  , 100
 
 stopPick = -> $.clearTimeout timer.pick
 

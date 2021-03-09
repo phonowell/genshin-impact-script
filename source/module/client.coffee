@@ -8,6 +8,10 @@ class ClientX extends EmitterShellX
     super()
     @setSize()
 
+    $.on 'alt + enter', ->
+      $.press 'alt + enter'
+      $.setTimeout @setSize, 1e3
+
   check: ->
 
     if !@isSuspend and !@checkActive()

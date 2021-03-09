@@ -4,6 +4,8 @@ class MemberX
   map: {}
   name: ''
 
+  constructor: -> $.on 'f12', @scan
+
   checkCharacterByPosition: (n) ->
 
     [pointStart, pointEnd] = @getRange n

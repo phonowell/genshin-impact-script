@@ -14,7 +14,7 @@ class TacticX
       return
 
     $.clearTimeout timer.tacticDelay
-    timer.tacticDelay = $.delay time, callback
+    timer.tacticDelay = $.setTimeout callback, time
 
   start: ->
 

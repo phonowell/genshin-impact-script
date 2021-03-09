@@ -1,7 +1,9 @@
-jumpTwice = -> $.delay 200, ->
-  unless player.isMoving
-    return
-  player.jump()
+jumpTwice = ->
+  $.setTimeout ->
+    unless player.isMoving
+      return
+    player.jump()
+  , 200
 
 # binding
 
@@ -11,5 +13,7 @@ if Config.data.betterJump
 
   player
     .on 'jump:end', jumpTwice
-    .on 'unhold:end', -> $.delay 50, ->
-      player.jump()
+    .on 'unhold:end', ->
+      $.setTimeout ->
+        player.jump()
+      , 50

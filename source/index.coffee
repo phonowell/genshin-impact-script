@@ -18,10 +18,6 @@ import 'tactic'
 
 # binding
 
-$.on 'alt + enter', ->
-  $.press 'alt + enter'
-  $.delay 1e3, client.setSize
-
 $.on 'alt + f4', ->
   $.beep()
   client.reset()
@@ -31,5 +27,3 @@ $.on 'ctrl + f5', ->
   $.beep()
   client.reset()
   $.reload()
-
-$.on 'f12', member.scan

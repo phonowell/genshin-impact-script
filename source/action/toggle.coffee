@@ -28,9 +28,10 @@ startToggle = (key) ->
   unless typeApr == 1
     return
 
-  $.delay state.toggleDelay, ->
+  $.setTimeout ->
     $.press 'e:down'
     skillTimer.record 'start'
+  , state.toggleDelay
 
 stopToggle = (key) ->
 
@@ -46,21 +47,23 @@ stopToggle = (key) ->
     return
 
   if typeApr == 2
-    $.delay state.toggleDelay, player.useE
+    $.setTimeout player.useE, state.toggleDelay
     return
 
   if typeApr == 3
-    $.delay state.toggleDelay, ->
+    $.setTimeout ->
       player.useE 'holding'
+    , state.toggleDelay
     return
 
   if typeApr == 4
-    $.delay state.toggleDelay, player.useQ
+    $.setTimeout player.useQ, state.toggleDelay
     return
 
-  $.delay state.toggleDelay, ->
+  $.setTimeout ->
     $.press 'e:up'
     skillTimer.record 'end'
+  , state.toggleDelay
 
 # binding
 

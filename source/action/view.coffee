@@ -16,7 +16,9 @@ toggleView = ->
 
 view = ->
   $.click 'middle:down'
-  $.delay 2500, -> $.click 'middle:up'
+  $.setTimeout ->
+    $.click 'middle:up'
+  , 2500
 
 # execute
 

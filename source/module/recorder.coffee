@@ -42,10 +42,11 @@ class RecorderX
       return
 
     [delay, key] = list[n]
-    $.delay delay, =>
+    $.setTimeout =>
       $.trigger key
       @current++
       @next list
+    , delay
 
   record: (key) ->
 
@@ -76,10 +77,11 @@ class RecorderX
       [delay, key] = $.split item, '|'
       $.push list, [delay, key]
 
-    $.delay 500, =>
+    $.setTimeout =>
       $$.log 'start playing'
       $.beep()
       @next list
+    , 500
 
   save: ->
 
