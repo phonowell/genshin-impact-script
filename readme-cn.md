@@ -44,7 +44,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.3/Genshin_Impact_Script_0.0.3.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.4/Genshin_Impact_Script_0.0.4.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -130,7 +130,13 @@ type-apr = 3
 - `0` 关闭
 - `1` 开启
 
-该功能目前仅对可莉有效；稍后会添加更多角色支持。
+目前仅支持如下角色：
+
+- 胡桃
+- 可莉
+- 香菱
+
+稍后会添加更多角色支持。
 
 ## 注意
 

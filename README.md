@@ -44,7 +44,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.3/Genshin_Impact_Script_0.0.3.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.4/Genshin_Impact_Script_0.0.4.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -127,7 +127,13 @@ The attack mode. Can be one of the following values:
 - `0` Off
 - `1` On
 
-This feature is currently only available for Klee; more character support will be added later.
+Currently only the following characters are supported:
+
+- Hu Tao
+- Klee
+- Xiangling
+
+More character support will be added later.
 
 ## Note
 

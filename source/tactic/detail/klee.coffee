@@ -16,7 +16,7 @@ kleeChargedAttack = ->
 
   tactic.chargedAttack ->
 
-    tactic.delay 200, ->
+    tactic.delay 100, ->
 
       unless player.isMoving
         tactic.klee()

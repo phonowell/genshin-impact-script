@@ -10,7 +10,7 @@ class TacticX
 
   chargedAttack: (callback) ->
     $.click 'left:down'
-    @delay 300, ->
+    @delay 400, ->
       $.click 'left:up'
       callback()
 
@@ -29,6 +29,11 @@ class TacticX
     else @delay 550, callback
 
   normalAttack: (callback) ->
+
+    if player.isMoving
+      @jump callback
+      return
+
     $.click 'left'
     @delay 100, callback
 

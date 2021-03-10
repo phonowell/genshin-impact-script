@@ -3,19 +3,12 @@ tactic.hu_tao = ->
   unless tactic.isActive
     return
 
-  if tactic.count > 1
-    tactic.count = 0
+  if skillTimer.listCountDown[member.current] - $.now() < 7e3
+    tactic.normalAttack tactic.hu_tao
+    return
 
-  switch tactic.count
-    when 0 then tactic.normalAttack tactic.hu_tao
-    when 1 then taoChargedAttack()
-
-  tactic.count++
+  taoChargedAttack()
 
 taoChargedAttack = ->
-
-  tactic.chargedAttack ->
-
-    tactic.delay 300, ->
-
-      tactic.jump tactic.hu_tao
+  tactic.chargedAttack -> tactic.delay 50, ->
+    tactic.jump -> tactic.delay 100, tactic.hu_tao

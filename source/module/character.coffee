@@ -22,7 +22,7 @@ class CharacterX
       char.typeApr = Config.read "#{name}/type-apr", 1
 
       # type-atk
-      char.typeAtk = Config.read "#{name}/type-atk", 1
+      char.typeAtk = Config.read "#{name}/type-atk", 0
 
       # type-e
       unless char.typeE
