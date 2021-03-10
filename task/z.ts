@@ -1,10 +1,10 @@
-import compile_ from 'coffee-ahk'
+import c2a from 'coffee-ahk'
 
 // function
 
-async function main_(): Promise<void> {
+const main_ = async (): Promise<void> => {
 
-  await compile_('./source/z.coffee', {
+  await c2a('./source/z.coffee', {
     salt: 'z',
   })
 }

@@ -1,5 +1,13 @@
-import $ from 'fire-keeper'
-import _ from 'lodash'
+import $copy_ from 'fire-keeper/copy_'
+import $getName from 'fire-keeper/getName'
+import $info from 'fire-keeper/info'
+import $isExisted_ from 'fire-keeper/isExisted_'
+import $isSame_ from 'fire-keeper/isSame_'
+import $prompt_ from 'fire-keeper/prompt_'
+import $read_ from 'fire-keeper/read_'
+import $source_ from 'fire-keeper/source_'
+import $stat_ from 'fire-keeper/stat_'
+import _uniq from 'lodash/uniq'
 
 // interface
 
@@ -10,25 +18,25 @@ type Option = {
 
 // function
 
-async function ask_(
+const ask_ = async (
   source: string,
   target: string
-): Promise<string> {
+): Promise<string> => {
 
   const isExisted = [
-    await $.isExisted_(source),
-    await $.isExisted_(target),
+    await $isExisted_(source),
+    await $isExisted_(target),
   ]
 
   const mtime: [number, number] = [0, 0]
   if (isExisted[0]) {
-    const stat = await $.stat_(source)
+    const stat = await $stat_(source)
     mtime[0] = stat
       ? stat.mtimeMs
       : 0
   }
   if (isExisted[1]) {
-    const stat = await $.stat_(target)
+    const stat = await $stat_(target)
     mtime[1] = stat
       ? stat.mtimeMs
       : 0
@@ -55,7 +63,7 @@ async function ask_(
     })
 
   if (!choice.length) {
-    $.info('skip')
+    $info('skip')
     return 'skip'
   }
 
@@ -71,7 +79,7 @@ async function ask_(
     value: 'skip',
   })
 
-  return $.prompt_({
+  return $prompt_({
     default: indexDefault,
     list: choice,
     message: 'and you decide to...',
@@ -79,14 +87,14 @@ async function ask_(
   })
 }
 
-async function load_(): Promise<string[]> {
+const load_ = async (): Promise<string[]> => {
 
-  $.info().pause()
+  $info().pause()
   const listData = await Promise.all(
-    (await $.source_('./data/sync/**/*.yaml'))
-      .map(source => $.read_(source))
+    (await $source_('./data/sync/**/*.yaml'))
+      .map(source => $read_(source))
   ) as string[][]
-  $.info().resume()
+  $info().resume()
 
   let result: string[] = []
 
@@ -96,10 +104,10 @@ async function load_(): Promise<string[]> {
       ...data,
     ]
 
-  return _.uniq(result)
+  return _uniq(result)
 }
 
-async function main_(): Promise<void> {
+const main_ = async (): Promise<void> => {
 
   const data = await load_()
 
@@ -117,13 +125,13 @@ async function main_(): Promise<void> {
 
     const source = `./${path}`
     let target = `../midway/${path}`
-    const { basename, dirname, extname } = $.getName(target)
+    const { basename, dirname, extname } = $getName(target)
     target = `${dirname}/${basename}-${namespace}-${version}${extname}`
 
     // eslint-disable-next-line no-await-in-loop
-    if (await $.isSame_([source, target])) continue
+    if (await $isSame_([source, target])) continue
 
-    $.info(`'${source}' is different from '${target}'`)
+    $info(`'${source}' is different from '${target}'`)
 
     // eslint-disable-next-line no-await-in-loop
     const value = await ask_(source, target)
@@ -134,20 +142,20 @@ async function main_(): Promise<void> {
   }
 }
 
-async function overwrite_(
+const overwrite_ = async (
   value: string,
   source: string,
   target: string
-): Promise<void> {
+): Promise<void> => {
 
   if (value === 'export') {
-    const { dirname, filename } = $.getName(target)
-    await $.copy_(source, dirname, filename)
+    const { dirname, filename } = $getName(target)
+    await $copy_(source, dirname, filename)
   }
 
   if (value === 'import') {
-    const { dirname, filename } = $.getName(source)
-    await $.copy_(target, dirname, filename)
+    const { dirname, filename } = $getName(source)
+    await $copy_(target, dirname, filename)
   }
 }
 

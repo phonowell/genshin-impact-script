@@ -1,4 +1,5 @@
-import $ from 'fire-keeper'
+import $exec_ from 'fire-keeper/exec_'
+import $read_ from 'fire-keeper/read_'
 
 // interface
 
@@ -14,10 +15,10 @@ type Package = {
 
 // function
 
-async function main_(): Promise<void> {
+const main_ = async (): Promise<void> => {
 
   const source = './package.json'
-  const pkg: Package = await $.read_(source) as Package
+  const pkg: Package = await $read_(source) as Package
   const listCmd: string[] = []
 
   if (pkg.dependencies)
@@ -44,7 +45,7 @@ async function main_(): Promise<void> {
         listCmd.push(`npm i ${key}@latest`)
       })
 
-  await $.exec_(listCmd)
+  await $exec_(listCmd)
 }
 
 // export

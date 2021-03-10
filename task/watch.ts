@@ -41,7 +41,7 @@ class Compiler {
   }
 }
 
-function main(): void {
+const main = (): void => {
 
   process.on('uncaughtException', e => console.error(e))
 

@@ -1,15 +1,20 @@
-import $ from 'fire-keeper'
+import $argv from 'fire-keeper/argv'
+import $getBasename from 'fire-keeper/getBasename'
+import $prompt_ from 'fire-keeper/prompt_'
+import $source_ from 'fire-keeper/source_'
+import _compact from 'lodash/compact'
+
 // interface
 
-type FnAsync = (...args: unknown[]) => Promise<unknown>
+type FnAsync = () => Promise<unknown>
 
 // function
 
-async function ask_(
+const ask_ = async (
   list: string[]
-): Promise<string> {
+): Promise<string> => {
 
-  const answer = await $.prompt_({
+  const answer = await $prompt_({
     id: 'default-task',
     list,
     message: 'select a task',
@@ -20,47 +25,43 @@ async function ask_(
   return answer
 }
 
-async function load_(): Promise<string[]> {
+const load_ = async (): Promise<string[]> => {
 
-  const listSource = await $.source_([
+  const listSource = await $source_([
     './task/*.js',
     './task/*.ts',
     '!*.d.ts',
   ])
-  const listResult: string[] = []
-  for (const source of listSource) {
-    const basename = $.getBasename(source)
-    if (basename === 'alice') continue
-    if (listResult.includes(basename)) continue
-    listResult.push(basename)
-  }
-  return listResult
+
+  const listResult = listSource.map((source) => {
+    const basename = $getBasename(source)
+    return basename === 'alice'
+      ? ''
+      : basename
+  })
+
+  return _compact(listResult)
 }
 
-async function main_(): Promise<void> {
+const main_ = async (): Promise<void> => {
 
-  let task = $.argv()._[0]
-    ? $.argv()._[0].toString()
-    : ''
+  const task = $argv()._[0]
+    ? $argv()._[0].toString()
+    : await (async () => ask_(await load_()))()
 
-  const list = await load_()
-
-  if (!task) {
-    task = await ask_(list)
-    if (!task) return
-  }
-
+  if (!task) return
   await run_(task)
 }
 
-async function run_(
+const run_ = async (
   task: string
-): Promise<void> {
+): Promise<void> => {
 
-  const [source] = await $.source_([
+  const [source] = await $source_([
     `./task/${task}.js`,
     `./task/${task}.ts`,
   ])
+
   const fn_: FnAsync = (await import(source)).default
   await fn_()
 }
