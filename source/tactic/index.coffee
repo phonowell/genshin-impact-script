@@ -8,6 +8,12 @@ class TacticX
       .on 'attack:start', @start
       .on 'attack:end', @stop
 
+  chargedAttack: (callback) ->
+    $.click 'left:down'
+    @delay 300, ->
+      $.click 'left:up'
+      callback()
+
   delay: (time, callback) ->
 
     unless @isActive
@@ -15,6 +21,16 @@ class TacticX
 
     $.clearTimeout timer.tacticDelay
     timer.tacticDelay = $.setTimeout callback, time
+
+  jump: (callback) ->
+    player.jump()
+    unless player.isMoving
+      @delay 450, callback
+    else @delay 550, callback
+
+  normalAttack: (callback) ->
+    $.click 'left'
+    @delay 100, callback
 
   start: ->
 
@@ -59,4 +75,4 @@ class TacticX
 # execute
 tactic = new TacticX()
 
-import 'data/*'
+import 'detail/*'
