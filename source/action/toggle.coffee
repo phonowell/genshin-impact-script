@@ -10,12 +10,15 @@ getToggleDelay = ->
 
 startToggle = (key) ->
 
+  if menu.isVisible
+    return
+
   member.toggle key
 
   unless Config.data.autoESkill
     return
 
-  {name} = member
+  {name} = player
   unless name
     return
 
@@ -35,10 +38,13 @@ startToggle = (key) ->
 
 stopToggle = (key) ->
 
+  if menu.isVisible
+    return
+
   unless Config.data.autoESkill
     return
 
-  {name} = member
+  {name} = player
   unless name
     return
 

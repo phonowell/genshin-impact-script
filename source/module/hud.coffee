@@ -24,9 +24,9 @@ class HudX
 
   getPosition: (n) ->
 
-    if client.width + 100 < A_ScreenWidth
-      left = client.width
-    else left = client.vw 80
+    if client.isFullScreen
+      left = client.vw 80
+    else left = client.width
 
     return [
       left

@@ -13,10 +13,18 @@ class CharacterX
       unless char.cd
         char.cd = [0, 0]
 
-      if ($.type char.cd) == 'number'
+      if $.isNumber char.cd
         char.cd = [char.cd, char.cd]
 
       # color
+
+      # duration
+
+      unless char.duration
+        char.duration = [0, 0]
+
+      if $.isNumber char.duration
+        char.duration = [char.duration, char.duration]
 
       # type-apr
       char.typeApr = Config.read "#{name}/type-apr", 1

@@ -1,6 +1,8 @@
 class PlayerX extends KeyBindingX
 
+  current: 0
   isMoving: false
+  name: ''
 
   constructor: ->
     super()

@@ -3,7 +3,7 @@ tactic.hu_tao = ->
   unless tactic.isActive
     return
 
-  if skillTimer.listCountDown[member.current] - $.now() < 7e3
+  if skillTimer.listCountDown[player.current] - $.now() < 7e3
     tactic.normalAttack tactic.hu_tao
     return
 

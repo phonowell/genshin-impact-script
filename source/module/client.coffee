@@ -1,6 +1,7 @@
 class ClientX extends EmitterShellX
 
   height: 0
+  isFullScreen: false
   isSuspend: false
   width: 0
 
@@ -49,6 +50,9 @@ class ClientX extends EmitterShellX
     @width = __width__
     @height = __height__
 
+    unless @width + 100 < A_ScreenWidth
+      @isFullScreen = true
+
   suspend: (isSuspend) ->
 
     if isSuspend
@@ -76,5 +80,5 @@ class ClientX extends EmitterShellX
 client = new ClientX()
 
 ticker.on 'change', (tick) ->
-  unless Mod tick, 200
+  unless $.mod tick, 200
     client.check()

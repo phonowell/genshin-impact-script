@@ -7,6 +7,7 @@ albedo:
 amber:
   cd: 15
   color: 0x5C4C63
+  duration: 8
 
 ayaka:
   color: 0
@@ -14,6 +15,7 @@ ayaka:
 barbara:
   cd: 32
   color: 0xDED3BE
+  duration: 15
 
 beidou:
   cd: 7.5
@@ -27,6 +29,7 @@ bennett:
 chongyun:
   cd: 15
   color: 0xCDEFDF
+  duration: 10
 
 diluc:
   color: 0
@@ -34,19 +37,23 @@ diluc:
 diona:
   cd: [6, 15]
   color: 0xFED6CE
+  duration: [4, 10]
 
 fischl:
   cd: 25
   color: 0xFFE3A9
+  duration: 10
   typeE: 1
 
 ganyu:
   cd: 10
   color: 0xBDCCC5
+  duration: 6
 
 hu_tao:
   cd: 16
   color: 0x7B5B61
+  duration: 9
 
 jean:
   cd: 6
@@ -60,6 +67,7 @@ kaeya:
 keqing:
   cd: 7.5
   color: 0xBEB1C3
+  duration: 5
   typeE: 1
 
 klee:
@@ -76,18 +84,22 @@ lumine:
 mona:
   cd: 12
   color: 0x5A5064
+  duration: 6
 
 ningguang:
   cd: 12
   color: 0xFEFDDE
+  duration: 29
 
 noelle:
   cd: 24
   color: 0xDED8D2
+  duration: 12
 
 qiqi:
   cd: 30
   color: 0xE1DBDE
+  duration: 15
 
 rezor:
   cd: [6, 10]
@@ -111,6 +123,7 @@ venti:
 xiangling:
   cd: 12
   color: 0x22337B
+  duration: 6
 
 xiao:
   cd: 10
@@ -119,11 +132,14 @@ xiao:
 xingqiu:
   cd: 21
   color: 0x488892
+  duration: 15
 
 xinyan:
   cd: 18
   color: 0x503B40
+  duration: 12
 
 zhongli:
   cd: [4, 12]
   color: 0x4B3525
+  duration: 20

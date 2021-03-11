@@ -61,7 +61,7 @@ class TacticX
 
   validate: ->
 
-    name = member.name
+    name = player.name
     unless name
       return false
 
@@ -72,7 +72,7 @@ class TacticX
     unless @[name]
       return false
 
-    unless statusChecker.isActive
+    if menu.isVisible
       return false
 
     return @[name]

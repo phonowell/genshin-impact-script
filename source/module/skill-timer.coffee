@@ -1,6 +1,7 @@
 class SkillTimerX
 
   listCountDown: {}
+  listDuration: {}
   listRecord: {}
 
   check: ->
@@ -12,27 +13,44 @@ class SkillTimerX
 
     for n in [1, 2, 3, 4]
 
-      unless @listCountDown[n]
+      unless @listCountDown[n] or @listDuration[n]
         continue
 
       if now >= @listCountDown[n]
-        @hide n
-      else
+        @listCountDown[n] = 0
+        player.emit 'ready-e'
+
+      if now >= @listDuration[n]
+        @listDuration[n] = 0
+        player.emit 'timeout-e'
+
+      listMessage = []
+
+      if @listCountDown[n]
         diff = $.floor (now - @listCountDown[n]) * 0.001
-        hud.render n, "#{diff}s"
+        $.push listMessage, "#{diff}s"
+
+      if @listDuration[n]
+        diff = $.abs $.floor (now - @listDuration[n]) * 0.001
+        $.push listMessage, "[#{diff}s]"
+
+      unless $.length listMessage
+        @hide n
+        return
+
+      @render n, $.join listMessage, ' '
 
   # checkSkillStatus: ->
 
-  #   n = member.current
-  #   name = member.name
+  #   {current, name} = player
 
   #   unless name
   #     return
 
-  #   if @listRecord[n]
+  #   if @listRecord[current]
   #     return
 
-  #   unless @listCountDown[n]
+  #   unless @listCountDown[current]
   #     return
 
   #   start = client.point [87, 88]
@@ -43,23 +61,23 @@ class SkillTimerX
   #   if x * y > 0
   #     return
 
-  #   @hide member.current
+  #   @hide player.current
 
   hide: (n) ->
-    @listCountDown[n] = 0
+    unless Config.data.easySkillTimer
+      return
     hud.render n, ''
 
   record: (step) ->
 
-    n = member.current
-    name = member.name
+    {current, name} = player
 
     unless name
       return
 
     now = $.now()
 
-    if @listCountDown[n] and @listCountDown[n] - now > 1e3
+    if @listCountDown[current]
       return
 
     if step == 'end'
@@ -72,38 +90,47 @@ class SkillTimerX
 
   recordEnd: (now) ->
 
-    n = member.current
-    name = member.name
-    {cd, typeE} = Character.data[name]
+    {current, name} = player
+    {cd, duration, typeE} = Character.data[name]
 
-    unless @listRecord[n]
+    unless @listRecord[current]
       return
 
-    diff = now - @listRecord[n]
+    diff = now - @listRecord[current]
 
-    if diff < 500 # short press
-      @listCountDown[n] = @listRecord[n] + (cd[0] * 1e3)
-      @listRecord[n] = 0
+    if diff < 500 # tap
+      @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3)
+      @listDuration[current] = @listRecord[current] + (duration[0] * 1e3)
+      @listRecord[current] = 0
+      player.emit 'use-e'
       return
 
-    # long press
+    # hold
 
     if typeE == 1
-      @listCountDown[n] = now + (cd[1] * 1e3)
-    else @listCountDown[n] = @listRecord[n] + (cd[1] * 1e3)
+      @listCountDown[current] = now + (cd[1] * 1e3)
+      @listDuration[current] = now + (duration[1] * 1e3)
+    else
+      @listCountDown[current] = @listRecord[current] + (cd[1] * 1e3)
+      @listDuration[current] = @listRecord[current] + (duration[1] * 1e3)
 
-    @listRecord[n] = 0
+    @listRecord[current] = 0
+    player.emit 'use-e'
 
   recordStart: (now) ->
 
-    n = member.current
-    name = member.name
+    {current, name} = player
     {cd} = Character.data[name]
 
-    if @listRecord[n]
+    if @listRecord[current]
       return
 
-    @listRecord[n] = now
+    @listRecord[current] = now
+
+  render: (n, message) ->
+    unless Config.data.easySkillTimer
+      return
+    hud.render n, message
 
   reset: ->
     @listCountDown = {}
@@ -113,12 +140,10 @@ class SkillTimerX
 
 skillTimer = new SkillTimerX()
 
-if Config.data.easySkillTimer
+ticker.on 'change', (tick) ->
 
-  ticker.on 'change', (tick) ->
+  unless $.mod tick, 200
+    skillTimer.check()
 
-    unless Mod tick, 200
-      skillTimer.check()
-
-    # unless Mod tick, 1e3
-    #   skillTimer.checkSkillStatus()
+  # unless $.mod tick, 1e3
+  #   skillTimer.checkSkillStatus()

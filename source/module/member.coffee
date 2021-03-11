@@ -1,8 +1,6 @@
 class MemberX
 
-  current: 0
   map: {}
-  name: ''
 
   constructor: -> $.on 'f12', @scan
 
@@ -46,13 +44,13 @@ class MemberX
 
     skillTimer.reset()
 
-    unless @current
+    unless player.current
       $.press '1'
       @toggle 1
 
   toggle: (n) ->
-    @current = n
-    @name = @map[n]
+    player.current = n
+    player.name = @map[n]
 
 # execute
 member = new MemberX()

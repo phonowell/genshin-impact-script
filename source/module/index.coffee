@@ -6,7 +6,7 @@ import 'config'
 import 'client'
 import 'hud'
 
-import 'status-checker'
+import 'menu'
 
 import 'character'
 import 'member'
