@@ -18,11 +18,9 @@ class SkillTimerX
 
       if now >= @listCountDown[n]
         @listCountDown[n] = 0
-        player.emit 'ready-e'
 
       if now >= @listDuration[n]
         @listDuration[n] = 0
-        player.emit 'timeout-e'
 
       listMessage = []
 
@@ -102,7 +100,6 @@ class SkillTimerX
       @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3)
       @listDuration[current] = @listRecord[current] + (duration[0] * 1e3)
       @listRecord[current] = 0
-      player.emit 'use-e'
       return
 
     # hold
@@ -115,7 +112,6 @@ class SkillTimerX
       @listDuration[current] = @listRecord[current] + (duration[1] * 1e3)
 
     @listRecord[current] = 0
-    player.emit 'use-e'
 
   recordStart: (now) ->
 

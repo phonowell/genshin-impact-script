@@ -2051,7 +2051,6 @@ genshin_81(this, now) {
     this.listCountDown[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (cd[1] * 1000)
     this.listDuration[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (duration[1] * 1000)
     this.listRecord[__ci_genshin__.Call(current)] := 0
-    player.emit.Call("use-e")
     return
   }
   if (typeE == 1) {
@@ -2062,7 +2061,6 @@ genshin_81(this, now) {
     this.listDuration[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (duration[2] * 1000)
   }
   this.listRecord[__ci_genshin__.Call(current)] := 0
-  player.emit.Call("use-e")
 }
 genshin_82(this, step) {
   __object__ := player
@@ -2101,11 +2099,9 @@ genshin_84(this) {
     }
     if (now >= this.listCountDown[__ci_genshin__.Call(n)]) {
       this.listCountDown[__ci_genshin__.Call(n)] := 0
-      player.emit.Call("ready-e")
     }
     if (now >= this.listDuration[__ci_genshin__.Call(n)]) {
       this.listDuration[__ci_genshin__.Call(n)] := 0
-      player.emit.Call("timeout-e")
     }
     listMessage := []
     if (this.listCountDown[__ci_genshin__.Call(n)]) {
