@@ -3,22 +3,24 @@ tactic.common = ->
   unless tactic.isActive
     return
 
-  if tactic.useBackendE tactic.common
+  if tactic.useBackend tactic.common
     return
 
-  unless skillTimer.listCountDown[player.current]
-    player.useE()
-    tactic.freeze 2e3
-    tactic.delay 100, tactic.common
-    return
+  unless tactic.isFrozen
+
+    unless skillTimer.listCountDown[player.current]
+      player.useE()
+      tactic.freeze 1e3
+      tactic.delay 100, tactic.common
+      return
 
   tactic.normalAttack tactic.common
 
-do ->
+member.on 'change', ->
 
-  for name, char of Character.data
+  for n, name of member.map
 
-    {backend} = char
+    {backend} = Character.data[name]
     unless backend
       continue
 

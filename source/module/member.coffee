@@ -1,8 +1,19 @@
-class MemberX
+ts.toggle = 0
+
+# function
+
+class MemberX extends EmitterShellX
 
   map: {}
 
-  constructor: -> $.on 'f12', @scan
+  constructor: ->
+    super()
+
+    @on 'change', =>
+      $.press '1'
+      @toggle 1
+
+    $.on 'f12', @scan
 
   checkCharacterByPosition: (n) ->
 
@@ -51,18 +62,14 @@ class MemberX
       @map[n] = name
       hud.render n, name
 
-    skillTimer.reset()
-
-    unless player.current
-      $.press '1'
-      @toggle 1
-    else @toggle player.current
+    @emit 'change'
 
   toggle: (n) ->
     unless n
       return
     player.current = n
     player.name = @map[n]
+    ts.toggle = $.now()
 
   toggleBy: (name) -> @toggle @getIndexBy name
 

@@ -4,12 +4,15 @@ class TacticX
   count: 0
   isActive: false
   isFrozen: false
-  timer: ''
+  origin: 0
 
   constructor: ->
+
     player
       .on 'attack:start', @start
       .on 'attack:end', @stop
+
+    member.on 'change', @reset
 
   chargedAttack: (callback) ->
     $.click 'left:down'
@@ -25,12 +28,12 @@ class TacticX
     $.clearTimeout timer.tacticDelay
     timer.tacticDelay = $.setTimeout callback, time
 
-  freeze: (wait = 1e3) ->
+  freeze: (wait) ->
 
     @isFrozen = true
 
-    $.clearTimeout @timer
-    @timer = $.setTimeout =>
+    $.clearTimeout timer.tacticFreeze
+    timer.tacticFreeze = $.setTimeout =>
       @isFrozen = false
     , wait
 
@@ -42,7 +45,13 @@ class TacticX
 
   normalAttack: (callback) ->
     $.click 'left'
-    @delay 100, callback
+    @delay 200, callback
+
+  reset: ->
+    @count = 0
+    @isActive = false
+    @isFrozen = false
+    @origin = 0
 
   start: ->
 
@@ -55,31 +64,35 @@ class TacticX
       return
 
     @isActive = true
+
+    wait = 1e3 - ($.now() - ts.toggle)
+    if wait < 200
+      wait = 200
+    @freeze wait
+
     callback()
 
   stop: ->
 
     if @isActive
-      @count = 0
-      @isActive = false
+      @reset()
       return
 
     $.click 'left:up'
 
   toggle: (n, callback) ->
+
+    unless @isActive
+      return
+
     $.press n
     member.toggle n
-    @delay 300, callback
+    @delay 200, callback
 
-  useBackendE: (callback) ->
+  useBackend: (callback) ->
 
-    if @isFrozen
-      return
-
-    unless Character.data[player.name].typeAtk == 2
-      return
-
-    m = player.current
+    unless @validateBackend()
+      return false
 
     for n in [4, 3, 2, 1]
 
@@ -93,11 +106,22 @@ class TacticX
       unless @backend[name]
         continue
 
-      @freeze 5e3
-      @toggle n, => @backend[name] => @toggle m, =>
+      unless @origin
+        @origin = player.current
+
+      @freeze 10e3
+      @toggle n, => @backend[name] =>
         callback()
         @freeze 1e3
 
+      return true
+
+    if @origin and @origin != player.current
+      @freeze 10e3
+      @toggle @origin, =>
+        callback()
+        @freeze 1e3
+        @origin = 0
       return true
 
     return false
@@ -119,6 +143,25 @@ class TacticX
       return @[name]
 
     return @common
+
+  validateBackend: ->
+
+    if @isFrozen
+      return false
+
+    now = $.now()
+
+    unless now - ts.sprint >= 500
+      return false
+
+    unless now - ts.jump >= 500
+      return false
+
+    unless @origin
+      unless Character.data[player.name].typeAtk >= 2
+        return false
+
+    return true
 
 # execute
 tactic = new TacticX()

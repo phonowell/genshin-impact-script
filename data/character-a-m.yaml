@@ -63,6 +63,7 @@ hu_tao:
   duration: 9
 
 jean:
+  backend: -0.5
   cd: 6
   color: 0xE6D0A3
   typeE: 1
