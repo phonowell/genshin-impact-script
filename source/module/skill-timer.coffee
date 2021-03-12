@@ -2,6 +2,7 @@ class SkillTimerX
 
   listCountDown: {}
   listDuration: {}
+  listFrozen: {}
   listRecord: {}
 
   check: ->
@@ -18,6 +19,7 @@ class SkillTimerX
 
       if now >= @listCountDown[n]
         @listCountDown[n] = 0
+        @listFrozen[n] = false
 
       if now >= @listDuration[n]
         @listDuration[n] = 0
@@ -73,10 +75,10 @@ class SkillTimerX
     unless name
       return
 
-    now = $.now()
-
-    if @listCountDown[current]
+    if @listFrozen[current]
       return
+
+    now = $.now()
 
     if step == 'end'
       @recordEnd now
@@ -94,24 +96,31 @@ class SkillTimerX
     unless @listRecord[current]
       return
 
-    diff = now - @listRecord[current]
-
-    if diff < 500 # tap
-      @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3)
-      @listDuration[current] = @listRecord[current] + (duration[0] * 1e3)
+    if now - @listRecord[current] < 500 # tap
+      @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3) + 500
+      if duration[0]
+        @listDuration[current] = @listRecord[current] + (duration[0] * 1e3)
       @listRecord[current] = 0
+      $.setTimeout =>
+        @listFrozen[current] = true
+      , 2e3
       return
 
     # hold
 
     if typeE == 1
-      @listCountDown[current] = now + (cd[1] * 1e3)
-      @listDuration[current] = now + (duration[1] * 1e3)
+      @listCountDown[current] = now + (cd[1] * 1e3) + 500
+      if duration[1]
+        @listDuration[current] = now + (duration[1] * 1e3)
     else
-      @listCountDown[current] = @listRecord[current] + (cd[1] * 1e3)
-      @listDuration[current] = @listRecord[current] + (duration[1] * 1e3)
+      @listCountDown[current] = @listRecord[current] + (cd[1] * 1e3) + 500
+      if duration[1]
+        @listDuration[current] = @listRecord[current] + (duration[1] * 1e3)
 
     @listRecord[current] = 0
+    $.setTimeout =>
+      @listFrozen[current] = true
+    , 2e3
 
   recordStart: (now) ->
 

@@ -1,7 +1,10 @@
 class TacticX
 
+  backend: {}
   count: 0
   isActive: false
+  isFrozen: false
+  timer: ''
 
   constructor: ->
     player
@@ -21,6 +24,15 @@ class TacticX
 
     $.clearTimeout timer.tacticDelay
     timer.tacticDelay = $.setTimeout callback, time
+
+  freeze: (wait = 1e3) ->
+
+    @isFrozen = true
+
+    $.clearTimeout @timer
+    @timer = $.setTimeout =>
+      @isFrozen = false
+    , wait
 
   jump: (callback) ->
     player.jump()
@@ -54,7 +66,46 @@ class TacticX
 
     $.click 'left:up'
 
+  toggle: (n, callback) ->
+    $.press n
+    member.toggle n
+    @delay 300, callback
+
+  useBackendE: (callback) ->
+
+    if @isFrozen
+      return
+
+    unless Character.data[player.name].typeAtk == 2
+      return
+
+    m = player.current
+
+    for n in [4, 3, 2, 1]
+
+      if n == player.current
+        continue
+
+      if skillTimer.listCountDown[n]
+        continue
+
+      name = member.map[n]
+      unless @backend[name]
+        continue
+
+      @freeze 5e3
+      @toggle n, => @backend[name] => @toggle m, =>
+        callback()
+        @freeze 1e3
+
+      return true
+
+    return false
+
   validate: ->
+
+    if menu.isVisible
+      return false
 
     name = player.name
     unless name
@@ -64,13 +115,10 @@ class TacticX
     unless typeAtk
       return false
 
-    unless @[name]
-      return false
+    if @[name]
+      return @[name]
 
-    if menu.isVisible
-      return false
-
-    return @[name]
+    return @common
 
 # execute
 tactic = new TacticX()

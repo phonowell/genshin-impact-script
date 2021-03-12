@@ -44,7 +44,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.5/Genshin_Impact_Script_0.0.5.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.6/Genshin_Impact_Script_0.0.6.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -122,18 +122,28 @@ The type of appearance. Can be one of the following values:
 
 #### type-atk
 
-The attack mode. Can be one of the following values:
+Attack tactic. Can be one of the following values:
 
 - `0` Off
-- `1` On
+- `1` Basic
+- `2` Advanced
 
-Currently only the following characters are supported:
+The following characters currently have unique tactics:
 
 - Hu Tao
 - Klee
-- Xiangling
+- Zhongli
 
-More character support will be added later.
+The rest of the characters use a generic tactic.
+
+- Generic basic tactic cycles through normal attacks and uses E skills when they are ready
+- The advanced tactic also uses E skills of teammates on top of the basic one
+
+## Note
+
+- All actions are bound to the default key
+- If possible, avoid discussing in public
+- If you do need to discuss it, make sure to avoid revealing your `uid`
 
 ## Note
 

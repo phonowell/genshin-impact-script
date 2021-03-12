@@ -1,12 +1,15 @@
-import __character__ from '../../data/character.yaml'
+import __character_a_m__ from '../../data/character-a-m.yaml'
+import __character_n_z__ from '../../data/character-n-z.yaml'
 
 class CharacterX
 
-  data: __character__
+  data: $.mixin __character_a_m__, __character_n_z__
 
   constructor: ->
 
     for name, char of @data
+
+      # backend
 
       # cd
 

@@ -21,6 +21,13 @@ class MemberX
 
     return ''
 
+  getIndexBy: (name) ->
+    unless @has name
+      return 0
+    for n in [1, 2, 3, 4]
+      if @map[n] == name
+        return n
+
   getRange: (n) ->
 
     start = client.point [
@@ -34,6 +41,8 @@ class MemberX
     ]
 
     return [start, end]
+
+  has: (name) -> return $.includes ($.values @map), name
 
   scan: ->
 
@@ -50,8 +59,12 @@ class MemberX
     else @toggle player.current
 
   toggle: (n) ->
+    unless n
+      return
     player.current = n
     player.name = @map[n]
+
+  toggleBy: (name) -> @toggle @getIndexBy name
 
 # execute
 member = new MemberX()

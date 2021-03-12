@@ -5,6 +5,7 @@ albedo:
   color: 0
 
 amber:
+  backend: 1
   cd: 15
   color: 0x5C4C63
   duration: 8
@@ -13,6 +14,7 @@ ayaka:
   color: 0
 
 barbara:
+  backend: 1
   cd: 32
   color: 0xDED3BE
   duration: 15
@@ -23,10 +25,12 @@ beidou:
   typeE: 1
 
 bennett:
-  cd: [5, 10]
+  backend: 1
+  cd: [4.5, 10] # [5, 10]
   color: 0xFBF3CF
 
 chongyun:
+  backend: 1
   cd: 15
   color: 0xCDEFDF
   duration: 10
@@ -35,17 +39,20 @@ diluc:
   color: 0
 
 diona:
+  backend: -1
   cd: [6, 15]
   color: 0xFED6CE
   duration: [4, 10]
 
 fischl:
+  backend: 1
   cd: 25
   color: 0xFFE3A9
   duration: 10
   typeE: 1
 
 ganyu:
+  backend: 1
   cd: 10
   color: 0xBDCCC5
   duration: 6
@@ -61,6 +68,7 @@ jean:
   typeE: 1
 
 kaeya:
+  backend: 1
   cd: 6
   color: 0x394E64
 
@@ -71,10 +79,12 @@ keqing:
   typeE: 1
 
 klee:
+  backend: 1
   cd: 20
   color: 0xBE3A0E
 
 lisa:
+  backend: 1
   cd: [1, 16]
   color: 0xB6A69B
 
@@ -82,64 +92,7 @@ lumine:
   color: 0
 
 mona:
+  backend: 1
   cd: 12
   color: 0x5A5064
   duration: 6
-
-ningguang:
-  cd: 12
-  color: 0xFEFDDE
-  duration: 29
-
-noelle:
-  cd: 24
-  color: 0xDED8D2
-  duration: 12
-
-qiqi:
-  cd: 30
-  color: 0xE1DBDE
-  duration: 15
-
-rezor:
-  cd: [6, 10]
-  color: 0xC6CAC6
-
-rosaria:
-  color: 0
-
-sucrose:
-  cd: 15
-  color: 0xD4E9CC
-
-tartaglia:
-  cd: 6
-  color: 0xE08D3F
-
-venti:
-  cd: [6, 15]
-  color: 0x5D917E
-
-xiangling:
-  cd: 12
-  color: 0x22337B
-  duration: 7
-
-xiao:
-  cd: 10
-  color: 0x39483E
-
-xingqiu:
-  cd: 21
-  color: 0x488892
-  duration: 15
-
-xinyan:
-  cd: 18
-  color: 0x503B40
-  duration: 12
-
-zhongli:
-  cd: [4, 12]
-  color: 0x4B3525
-  duration: 20

@@ -44,7 +44,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.5/Genshin_Impact_Script_0.0.5.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.6/Genshin_Impact_Script_0.0.6.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -128,19 +128,25 @@ type-apr = 3
 攻击模式。可为以下数值之一：
 
 - `0` 关闭
-- `1` 开启
+- `1` 使用基础策略
+- `2` 使用进阶策略
 
-目前仅支持如下角色：
+目前如下角色拥有独特的策略：
 
 - 胡桃
 - 可莉
-- 香菱
+- 钟离
 
-稍后会添加更多角色支持。
+其余角色使用通用策略。
+
+- 通用基础策略循环使用普通攻击，并在元素战技就绪时使用元素战技
+- 进阶策略在基础策略的基础上，也会使用队友的元素战技
 
 ## 注意
 
-所有操作均绑定默认按键。
+- 所有操作均绑定默认按键
+- 如果可能，尽量避免在公开场合讨论
+- 在确实需要讨论时，务必避免透露自己的`uid`
 
 ## 免责声明
 
