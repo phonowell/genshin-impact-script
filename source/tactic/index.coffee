@@ -29,11 +29,6 @@ class TacticX
     else @delay 550, callback
 
   normalAttack: (callback) ->
-
-    if player.isMoving
-      @jump callback
-      return
-
     $.click 'left'
     @delay 100, callback
 

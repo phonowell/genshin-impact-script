@@ -47,6 +47,7 @@ class MemberX
     unless player.current
       $.press '1'
       @toggle 1
+    else @toggle player.current
 
   toggle: (n) ->
     player.current = n

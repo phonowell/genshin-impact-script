@@ -9,9 +9,11 @@ class ClientX extends EmitterShellX
     super()
     @setSize()
 
-    $.on 'alt + enter', ->
+    $.on 'alt + enter', =>
       $.press 'alt + enter'
       $.setTimeout @setSize, 1e3
+
+    @on 'enter', => $.setTimeout @setSize, 1e3
 
   check: ->
 
@@ -48,7 +50,12 @@ class ClientX extends EmitterShellX
     `WinGetPos, __x__, __y__, __width__, __height__, % name`
 
     @width = __width__
+    unless @width
+      @width = 0
+
     @height = __height__
+    unless @height
+      @height = 0
 
     unless @width + 100 < A_ScreenWidth
       @isFullScreen = true

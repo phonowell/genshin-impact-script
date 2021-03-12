@@ -123,7 +123,7 @@ venti:
 xiangling:
   cd: 12
   color: 0x22337B
-  duration: 6
+  duration: 7
 
 xiao:
   cd: 10
