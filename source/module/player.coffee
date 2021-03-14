@@ -19,21 +19,23 @@ class PlayerX extends KeyBindingX
 
       # use skill
       .bindEvent 'use-e', 'e'
-      .bindEvent 'use-q', 'q'
+      .bindEvent 'use-q', 'q', 'prevent'
 
       # run & jump
       .bindEvent 'jump', 'space', 'prevent'
       .bindEvent 'sprint', 'r-button'
 
-      # others?
-      .bindEvent 'confirm', 'y'
-      .bindEvent 'find', 'v'
-      .bindEvent 'guide', 'g'
-      .bindEvent 'pause', 'p'
-      .bindEvent 'pick', 'f'
+      # others
       .bindEvent 'unhold', 'x'
-      .bindEvent 'use-item', 'z'
       .bindEvent 'view', 'm-button'
+
+      # unknown
+      .bindEvent 'g', 'g'
+      .bindEvent 'p', 'p'
+      .bindEvent 'pick', 'f'
+      .bindEvent 'v', 'v'
+      .bindEvent 'y', 'y'
+      .bindEvent 'z', 'z'
 
     # menu
     for key in [
@@ -87,6 +89,7 @@ class PlayerX extends KeyBindingX
     return @
 
   useQ: ->
+    ts.q = $.now()
     $.press 'q'
     return @
 

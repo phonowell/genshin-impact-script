@@ -15,9 +15,6 @@ startToggle = (key) ->
 
   member.toggle key
 
-  unless Config.data.autoESkill
-    return
-
   {name} = player
   unless name
     return
@@ -41,9 +38,6 @@ stopToggle = (key) ->
   if menu.isVisible
     return
 
-  unless Config.data.autoESkill
-    return
-
   {name} = player
   unless name
     return
@@ -53,17 +47,9 @@ stopToggle = (key) ->
     return
 
   if typeApr == 2
-    $.setTimeout player.useE, state.toggleDelay
-    return
-
-  if typeApr == 3
     $.setTimeout ->
       player.useE 'holding'
     , state.toggleDelay
-    return
-
-  if typeApr == 4
-    $.setTimeout player.useQ, state.toggleDelay
     return
 
   $.setTimeout ->

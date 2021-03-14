@@ -1198,7 +1198,7 @@ class ConfigX {
   source := "config.ini"
   __New() {
     this.data.process := this.read.Call("region/process", "YuanShen.exe")
-    for __index_for__, key in ["autoESkill", "betterElementalVision", "betterJump", "betterSprint", "easySkillTimer", "fastPickup"] {
+    for __index_for__, key in ["betterElementalVision", "betterJump", "betterSprint", "easySkillTimer", "fastPickup"] {
       this.data[__ci_genshin__.Call(key)] := this.read.Call("feature/enable" . (key) . "", 1)
     }
   }
@@ -1270,8 +1270,8 @@ class CharacterX {
       if ($.isNumber.Call(char.duration)) {
         char.duration := [char.duration, char.duration]
       }
-      char.typeApr := Config.read.Call("" . (name) . "/type-apr", 1)
-      char.typeAtk := Config.read.Call("" . (name) . "/type-atk", 0)
+      char.typeApr := Config.read.Call("" . (name) . "/type-apr", 0)
+      char.typeCbt := Config.read.Call("" . (name) . "/type-cbt", 0)
       if !(char.typeE) {
         char.typeE := 0
       }
@@ -1300,7 +1300,6 @@ class SkillTimerX {
   listCountDown := {}
   listDuration := {}
   listRecord := {}
-  timer := {}
   __New() {
     member.on.Call("change", this.reset)
   }
@@ -1356,7 +1355,7 @@ class PlayerX extends KeyBindingX {
     for __index_for__, key in [1, 2, 3, 4] {
       this.bindEvent.Call("toggle", key)
     }
-    this.bindEvent.Call("attack", "l-button", "prevent").bindEvent.Call("toggle-aim", "r").bindEvent.Call("use-e", "e").bindEvent.Call("use-q", "q").bindEvent.Call("jump", "space", "prevent").bindEvent.Call("sprint", "r-button").bindEvent.Call("confirm", "y").bindEvent.Call("find", "v").bindEvent.Call("guide", "g").bindEvent.Call("pause", "p").bindEvent.Call("pick", "f").bindEvent.Call("unhold", "x").bindEvent.Call("use-item", "z").bindEvent.Call("view", "m-button")
+    this.bindEvent.Call("attack", "l-button", "prevent").bindEvent.Call("toggle-aim", "r").bindEvent.Call("use-e", "e").bindEvent.Call("use-q", "q", "prevent").bindEvent.Call("jump", "space", "prevent").bindEvent.Call("sprint", "r-button").bindEvent.Call("unhold", "x").bindEvent.Call("view", "m-button").bindEvent.Call("g", "g").bindEvent.Call("p", "p").bindEvent.Call("pick", "f").bindEvent.Call("v", "v").bindEvent.Call("y", "y").bindEvent.Call("z", "z")
     for __index_for__, key in ["esc", "b", "c", "j", "m", "f1", "f2", "f3", "f4", "f5"] {
       this.bindEvent.Call("menu-" . (key) . "", key)
     }
@@ -1416,7 +1415,7 @@ player.on.Call("toggle:start", startToggle).on.Call("toggle:end", stopToggle)
 for __index_for__, key in [1, 2, 3, 4] {
   $.on.Call("alt + " . (key) . "", Func("genshin_41").Bind(key))
 }
-player.on.Call("use-e:start", Func("genshin_40")).on.Call("use-e:end", Func("genshin_39"))
+player.on.Call("use-e:start", Func("genshin_40")).on.Call("use-e:end", Func("genshin_39")).on.Call("use-q:start", player.useQ)
 state.isViewing := false
 timer.view := ""
 global toggleView := Func("genshin_38")
@@ -1539,11 +1538,19 @@ genshin_14() {
   if !(tactic.isActive) {
     return
   }
-  if (skillTimer.listCountDown[__ci_genshin__.Call(player.current)] - $.now.Call() < 7000) {
-    tactic.normalAttack.Call(tactic.hu_tao)
+  if (skillTimer.listDuration[__ci_genshin__.Call(player.current)]) {
+    taoChargedAttack.Call()
     return
   }
-  taoChargedAttack.Call()
+  if !(tactic.isFrozen) {
+    if !(skillTimer.listCountDown[__ci_genshin__.Call(player.current)]) {
+      player.useE.Call()
+      tactic.freeze.Call(1000)
+      tactic.delay.Call(400, tactic.hu_tao)
+      return
+    }
+  }
+  tactic.normalAttack.Call(tactic.hu_tao)
 }
 genshin_15(backend, callback) {
   player.useE.Call("holding")
@@ -1596,7 +1603,7 @@ genshin_19(this) {
     return false
   }
   if !(this.origin) {
-    if !(Character.data[__ci_genshin__.Call(player.name)].typeAtk >= 2) {
+    if !(Character.data[__ci_genshin__.Call(player.name)].typeCbt >= 2) {
       return false
     }
   }
@@ -1611,8 +1618,8 @@ genshin_20(this) {
     return false
   }
   __object__ := Character.data[__ci_genshin__.Call(name)]
-  typeAtk := __object__["typeAtk"]
-  if !(typeAtk) {
+  typeCbt := __object__["typeCbt"]
+  if !(typeCbt) {
     return false
   }
   if (this[__ci_genshin__.Call(name)]) {
@@ -1770,9 +1777,6 @@ genshin_44(key) {
   if (menu.isVisible) {
     return
   }
-  if !(Config.data.autoESkill) {
-    return
-  }
   __object__ := player
   name := __object__["name"]
   if !(name) {
@@ -1784,15 +1788,7 @@ genshin_44(key) {
     return
   }
   if (typeApr == 2) {
-    $.setTimeout.Call(player.useE, state.toggleDelay)
-    return
-  }
-  if (typeApr == 3) {
     $.setTimeout.Call(Func("genshin_43"), state.toggleDelay)
-    return
-  }
-  if (typeApr == 4) {
-    $.setTimeout.Call(player.useQ, state.toggleDelay)
     return
   }
   $.setTimeout.Call(Func("genshin_42"), state.toggleDelay)
@@ -1806,9 +1802,6 @@ genshin_46(key) {
     return
   }
   member.toggle.Call(key)
-  if !(Config.data.autoESkill) {
-    return
-  }
   __object__ := player
   name := __object__["name"]
   if !(name) {
@@ -1969,6 +1962,7 @@ genshin_67(key, this) {
   this.check.Call(key, "down")
 }
 genshin_68(this) {
+  ts.q := $.now.Call()
   $.press.Call("q")
   return this
 }
@@ -2208,7 +2202,7 @@ genshin_95(this, now) {
     return
   }
   if (now - this.listRecord[__ci_genshin__.Call(current)] < 500) {
-    this.listCountDown[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (cd[1] * 1000) + 1000
+    this.listCountDown[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (cd[1] * 1000) + 500
     if (duration[1]) {
       this.listDuration[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (duration[1] * 1000)
     }
@@ -2216,12 +2210,12 @@ genshin_95(this, now) {
     return
   }
   if (typeE == 1) {
-    this.listCountDown[__ci_genshin__.Call(current)] := now + (cd[2] * 1000) + 1000
+    this.listCountDown[__ci_genshin__.Call(current)] := now + (cd[2] * 1000) + 500
     if (duration[2]) {
       this.listDuration[__ci_genshin__.Call(current)] := now + (duration[2] * 1000)
     }
   } else {
-    this.listCountDown[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (cd[2] * 1000) + 1000
+    this.listCountDown[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (cd[2] * 1000) + 500
     if (duration[2]) {
       this.listDuration[__ci_genshin__.Call(current)] := this.listRecord[__ci_genshin__.Call(current)] + (duration[2] * 1000)
     }
@@ -2235,10 +2229,11 @@ genshin_96(this, step) {
   if !(name) {
     return
   }
-  if (this.listCountDown[__ci_genshin__.Call(current)]) {
+  now := $.now.Call()
+  countdown := this.listCountDown[__ci_genshin__.Call(current)]
+  if (countdown && countdown - now > 1000) {
     return
   }
-  now := $.now.Call()
   if (step == "end") {
     this.recordEnd.Call(now)
     return

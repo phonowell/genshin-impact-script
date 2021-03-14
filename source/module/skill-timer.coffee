@@ -3,7 +3,6 @@ class SkillTimerX
   listCountDown: {}
   listDuration: {}
   listRecord: {}
-  timer: {}
 
   constructor: -> member.on 'change', @reset
 
@@ -76,10 +75,11 @@ class SkillTimerX
     unless name
       return
 
-    if @listCountDown[current]
-      return
-
     now = $.now()
+
+    countdown = @listCountDown[current]
+    if countdown and countdown - now > 1e3
+      return
 
     if step == 'end'
       @recordEnd now
@@ -98,7 +98,7 @@ class SkillTimerX
       return
 
     if now - @listRecord[current] < 500 # tap
-      @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3) + 1e3
+      @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3) + 500
       if duration[0]
         @listDuration[current] = @listRecord[current] + (duration[0] * 1e3)
       @listRecord[current] = 0
@@ -107,11 +107,11 @@ class SkillTimerX
     # hold
 
     if typeE == 1
-      @listCountDown[current] = now + (cd[1] * 1e3) + 1e3
+      @listCountDown[current] = now + (cd[1] * 1e3) + 500
       if duration[1]
         @listDuration[current] = now + (duration[1] * 1e3)
     else
-      @listCountDown[current] = @listRecord[current] + (cd[1] * 1e3) + 1e3
+      @listCountDown[current] = @listRecord[current] + (cd[1] * 1e3) + 500
       if duration[1]
         @listDuration[current] = @listRecord[current] + (duration[1] * 1e3)
 

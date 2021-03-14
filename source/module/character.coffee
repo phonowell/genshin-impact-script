@@ -30,10 +30,10 @@ class CharacterX
         char.duration = [char.duration, char.duration]
 
       # type-apr
-      char.typeApr = Config.read "#{name}/type-apr", 1
+      char.typeApr = Config.read "#{name}/type-apr", 0
 
-      # type-atk
-      char.typeAtk = Config.read "#{name}/type-atk", 0
+      # type-cbt
+      char.typeCbt = Config.read "#{name}/type-cbt", 0
 
       # type-e
       unless char.typeE

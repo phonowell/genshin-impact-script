@@ -135,8 +135,8 @@ class TacticX
     unless name
       return false
 
-    {typeAtk} = Character.data[name]
-    unless typeAtk
+    {typeCbt} = Character.data[name]
+    unless typeCbt
       return false
 
     if @[name]
@@ -158,7 +158,7 @@ class TacticX
       return false
 
     unless @origin
-      unless Character.data[player.name].typeAtk >= 2
+      unless Character.data[player.name].typeCbt >= 2
         return false
 
     return true
