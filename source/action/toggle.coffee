@@ -4,8 +4,8 @@ state.toggleDelay = 200
 
 getToggleDelay = ->
   delay = 500 - ($.now() - ts.sprint)
-  if delay < 200
-    delay = 200
+  if delay < 150
+    delay = 150
   return delay
 
 startToggle = (key) ->
@@ -64,7 +64,4 @@ stopToggle = ->
 player
   .on 'toggle:start', startToggle
   .on 'toggle:end', stopToggle
-
-for key in [1, 2, 3, 4]
-  $.on "alt + #{key}", ->
-    player.toggleQ key
+  .on 'toggle-q:end', player.toggleQ

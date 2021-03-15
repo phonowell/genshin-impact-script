@@ -2,9 +2,12 @@ class SkillTimerX
 
   listCountDown: {}
   listDuration: {}
+  listQ: {}
   listRecord: {}
 
-  constructor: -> member.on 'change', @reset
+  constructor: ->
+    @reset()
+    member.on 'change', @reset
 
   check: ->
 
@@ -147,9 +150,11 @@ class SkillTimerX
 
     hud.render n, message
 
-  reset: ->
-    @listCountDown = {}
-    @listRecord = {}
+  reset: -> for n in [1, 2, 3, 4]
+    @listCountDown[n] = 0
+    @listDuration[n] = 0
+    @listQ[n] = 0
+    @listRecord[n] = 0
 
 # execute
 

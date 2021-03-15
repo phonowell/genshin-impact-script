@@ -7,6 +7,9 @@ ts.sprint = 0
 
 checkSwimming = ->
 
+  if player.name == 'mona'
+    return true
+
   start = client.point [90, 90]
 
   end = [

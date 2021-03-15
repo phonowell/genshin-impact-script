@@ -1,7 +1,10 @@
-$$ = {}
+$$ =
+  isDebug: false
 
-# validate type
 $$.vt = (name, target, type...) ->
+
+  unless $$.isDebug
+    return
 
   _type = $.type target
 

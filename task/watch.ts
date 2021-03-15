@@ -36,7 +36,9 @@ class Compiler {
         console.log(e.stack)
       })
       .finally(() => {
-        this.isBusy = false
+        setTimeout(() => {
+          this.isBusy = false
+        }, 1e3)
       })
   }
 }

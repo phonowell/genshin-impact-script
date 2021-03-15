@@ -15,15 +15,3 @@ ts = {}
 import 'module'
 import 'action/*'
 import 'tactic'
-
-# binding
-
-$.on 'alt + f4', ->
-  $.beep()
-  client.reset()
-  $.exit()
-
-$.on 'ctrl + f5', ->
-  $.beep()
-  client.reset()
-  $.reload()

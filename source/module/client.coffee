@@ -1,4 +1,4 @@
-class ClientX extends EmitterShellX
+class ClientX extends KeyBindingX
 
   height: 0
   isFullScreen: false
@@ -9,11 +9,22 @@ class ClientX extends EmitterShellX
     super()
     @setSize()
 
-    $.on 'alt + enter', =>
-      $.press 'alt + enter'
-      $.setTimeout @setSize, 1e3
-
     @on 'enter', => $.setTimeout @setSize, 1e3
+
+    $
+      .on 'alt + f4', =>
+        $.beep()
+        @reset()
+        $.exit()
+
+      .on 'ctrl + f5', =>
+        $.beep()
+        @reset()
+        $.reload()
+
+      .on 'alt + enter', =>
+        $.press 'alt + enter'
+        $.setTimeout @setSize, 1e3
 
   check: ->
 

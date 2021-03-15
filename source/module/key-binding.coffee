@@ -15,7 +15,7 @@ class KeyBindingX extends EmitterShellX
     if prevent
       @isPrevented[key] = true
 
-    $.on "#{key}", =>
+    $.on key, =>
 
       if @isPressed[key]
         return
@@ -23,9 +23,10 @@ class KeyBindingX extends EmitterShellX
 
       recorder.record "#{key}:down"
       unless @isPrevented[key]
-        @press "#{key}:down"
+        $.press "#{key}:down"
 
       @emit "#{name}:start", key
+      $$.log "#{name}:start"
 
     $.on "#{key}:up", =>
 
@@ -35,28 +36,11 @@ class KeyBindingX extends EmitterShellX
 
       recorder.record "#{key}:up"
       unless @isPrevented[key]
-        @press "#{key}:up"
+        $.press "#{key}:up"
 
       @emit "#{name}:end", key
+      $$.log "#{name}:end"
 
-    return @
-
-  press: (key) ->
-
-    $$.vt 'keyBinding.press', key, 'string'
-
-    unless $.includes key, '-button'
-      $.press key
-      return @
-
-    if $.includes key, 'l-button'
-      key = $.replace key, 'l-button', 'left'
-    else if $.includes key, 'm-button'
-      key = $.replace key, 'm-button', 'middle'
-    else if $.includes key, 'r-button'
-      key = $.replace key, 'r-button', 'right'
-
-    $.click key
     return @
 
   resetKey: ->
@@ -71,6 +55,6 @@ class KeyBindingX extends EmitterShellX
 
       if $.getState key
         continue
-      @press "#{key}:up"
+      $.press "#{key}:up"
 
     return @

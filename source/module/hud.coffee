@@ -64,6 +64,9 @@ hud = new HudX()
 
 $$.log = (message) ->
 
+  unless $$.isDebug
+    return
+
   $$.vt '$$.log', message, 'string'
 
   hud.render 5, message

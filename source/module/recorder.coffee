@@ -35,13 +35,19 @@ class RecorderX
       return
     $.push @listIgnore, key
 
+  log: (message) ->
+
+    $$.vt 'record.log', message, 'string'
+
+    hud.render 5, message
+
   next: (list) ->
 
     $$.vt 'record.next', list, 'array'
 
     n = @current
     if n >= $.length list
-      $$.log 'end playing'
+      @log 'end playing'
       $.beep()
       return
 
@@ -62,7 +68,7 @@ class RecorderX
     if $.includes @listIgnore, key
       return
 
-    $$.log key
+    @log key
 
     now = $.now()
     delay = now - @ts
@@ -84,7 +90,7 @@ class RecorderX
       $.push list, [delay, key]
 
     $.setTimeout =>
-      $$.log 'start playing'
+      @log 'start playing'
       $.beep()
       @next list
     , 500
@@ -108,7 +114,7 @@ class RecorderX
     @list = []
     @ts = $.now()
 
-    $$.log 'start recording'
+    @log 'start recording'
     $.beep()
 
   stop: ->
@@ -118,7 +124,7 @@ class RecorderX
 
     @isActive = false
 
-    $$.log 'end recording'
+    @log 'end recording'
     $.beep()
 
 # execute
