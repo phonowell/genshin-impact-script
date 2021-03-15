@@ -14,11 +14,11 @@
   "description": "",
   "devDependencies": {
     "@types/lodash": "^4.14.168",
-    "@types/node": "^14.14.33",
+    "@types/node": "^14.14.34",
     "@types/yargs": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
-    "eslint": "^7.21.0"
+    "eslint": "^7.22.0"
   },
   "homepage": "https://github.com/phonowell/genshin-impact-script",
   "keywords": [
@@ -40,5 +40,5 @@
     "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
-  "version": "0.0.7"
+  "version": "0.0.8"
 }

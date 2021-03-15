@@ -9,6 +9,8 @@ class KeyBindingX extends EmitterShellX
 
   bindEvent: (name, key, prevent = false) ->
 
+    ($$.vt 'keyBinding.bindEvent', name, 'string') key, ['number', 'string']
+
     if prevent
       @isPrevented[key] = true
 
@@ -39,6 +41,8 @@ class KeyBindingX extends EmitterShellX
     return @
 
   press: (key) ->
+
+    $$.vt 'keyBinding.press', key, 'string'
 
     unless $.includes key, '-button'
       $.press key

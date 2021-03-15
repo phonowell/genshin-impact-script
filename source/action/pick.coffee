@@ -7,7 +7,7 @@ pick = ->
   timer.pick = $.setTimeout ->
     player.pick()
     pick()
-  , 100
+  , 150
 
 stopPick = -> $.clearTimeout timer.pick
 

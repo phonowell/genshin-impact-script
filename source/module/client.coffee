@@ -32,10 +32,15 @@ class ClientX extends EmitterShellX
   checkActive: ->
     return WinActive "ahk_exe #{Config.data.process}"
 
-  point: (input) -> return [
-    @vw input[0]
-    @vh input[1]
-  ]
+  point: (input) ->
+
+    # need to be fixed, type-checking
+    $$.vt 'client.point', input, ['array', 'function']
+
+    return [
+      @vw input[0]
+      @vh input[1]
+    ]
 
   reset: ->
     @setPriority 'normal'
@@ -76,11 +81,16 @@ class ClientX extends EmitterShellX
       return
 
   setPriority: (level) ->
+    $$.vt 'client.setPriority', level, 'string'
     `Process, Priority, % Config.data.process, % level`
 
-  vh: (n) -> return $.round @height * n * 0.01
+  vh: (n) ->
+    $$.vt 'client.vh', n, 'number'
+    return $.round @height * n * 0.01
 
-  vw: (n) -> return $.round @width * n * 0.01
+  vw: (n) ->
+    $$.vt 'client.vw', n, 'number'
+    return $.round @width * n * 0.01
 
 # execute
 

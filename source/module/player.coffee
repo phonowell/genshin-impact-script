@@ -26,13 +26,13 @@ class PlayerX extends KeyBindingX
       .bindEvent 'sprint', 'r-button'
 
       # others
+      .bindEvent 'pick', 'f'
       .bindEvent 'unhold', 'x'
       .bindEvent 'view', 'm-button'
 
       # unknown
       .bindEvent 'g', 'g'
       .bindEvent 'p', 'p'
-      .bindEvent 'pick', 'f'
       .bindEvent 'v', 'v'
       .bindEvent 'y', 'y'
       .bindEvent 'z', 'z'
@@ -48,10 +48,18 @@ class PlayerX extends KeyBindingX
   jump: -> $.press 'space'
 
   pick: ->
-    $.press 'f'
+    $.press 'f:up'
+    $.setTimeout ->
+      $.press 'f:down'
+      $.setTimeout ->
+        $.click 'wheel-down'
+      , 50
+    , 50
     $.click 'wheel-down'
 
   startMove: (key) ->
+
+    $$.vt 'player.startMove', key, 'string'
 
     if movement.isPressed[key]
       return @
@@ -61,6 +69,8 @@ class PlayerX extends KeyBindingX
 
   stopMove: (key) ->
 
+    $$.vt 'player.stopMove', key, 'string'
+
     if movement.isPressed[key]
       return @
 
@@ -68,6 +78,9 @@ class PlayerX extends KeyBindingX
     return @
 
   toggleQ: (key) ->
+
+    $$.vt 'player.toggleQ', key, 'string'
+
     $.press "alt + #{key}"
     member.toggle key
     return @

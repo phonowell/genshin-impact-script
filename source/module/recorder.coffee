@@ -25,6 +25,8 @@ class RecorderX
 
   ignore: (key) ->
 
+    $$.vt 'record.ignore', key, 'string'
+
     unless key
       @listIgnore = []
       return
@@ -34,6 +36,8 @@ class RecorderX
     $.push @listIgnore, key
 
   next: (list) ->
+
+    $$.vt 'record.next', list, 'array'
 
     n = @current
     if n >= $.length list
@@ -49,6 +53,8 @@ class RecorderX
     , delay
 
   record: (key) ->
+
+    $$.vt 'record.record', key, 'string'
 
     unless @isActive
       return

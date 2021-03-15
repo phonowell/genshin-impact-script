@@ -15,12 +15,17 @@ class TacticX
     member.on 'change', @reset
 
   chargedAttack: (callback) ->
+
+    $$.vt 'tactic.chargedAttack', callback, 'function'
+
     $.click 'left:down'
     @delay 400, ->
       $.click 'left:up'
       callback()
 
   delay: (time, callback) ->
+
+    ($$.vt 'tactic.delay', time, 'number') callback, 'function'
 
     unless @isActive
       return
@@ -30,6 +35,8 @@ class TacticX
 
   freeze: (wait) ->
 
+    $$.vt 'tactic.freeze', wait, 'number'
+
     @isFrozen = true
 
     $.clearTimeout timer.tacticFreeze
@@ -38,12 +45,18 @@ class TacticX
     , wait
 
   jump: (callback) ->
+
+    $$.vt 'tactic.jump', callback, 'function'
+
     player.jump()
     unless player.isMoving
       @delay 450, callback
     else @delay 550, callback
 
   normalAttack: (callback) ->
+
+    $$.vt 'tactic.normalAttack', callback, 'function'
+
     $.click 'left'
     @delay 200, callback
 
@@ -82,6 +95,8 @@ class TacticX
 
   toggle: (n, callback) ->
 
+    ($$.vt 'tactic.toggle', n, 'number') callback, 'function'
+
     unless @isActive
       return
 
@@ -90,6 +105,8 @@ class TacticX
     @delay 200, callback
 
   useBackend: (callback) ->
+
+    $$.vt 'tactic.useBackend', callback, 'function'
 
     unless @validateBackend()
       return false

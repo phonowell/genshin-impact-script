@@ -21,6 +21,8 @@ class MovementX extends KeyBindingX
 
   check: (key, action) ->
 
+    ($$.vt 'movement.check', key, 'string') action, 'string'
+
     if action == 'down' and @isPressed[key]
       return
     else if action == 'up' and !@isPressed[key]

@@ -64,11 +64,17 @@ class SkillTimerX
   #   @hide player.current
 
   hide: (n) ->
+
+    $$.vt 'skillTimer.hide', n, 'number'
+
     unless Config.data.easySkillTimer
       return
+
     hud.render n, ''
 
   record: (step) ->
+
+    $$.vt 'skillTimer.record', step, 'string'
 
     {current, name} = player
 
@@ -90,6 +96,8 @@ class SkillTimerX
       return
 
   recordEnd: (now) ->
+
+    $$.vt 'skillTimer.recordEnd', now, 'number'
 
     {current, name} = player
     {cd, duration, typeE} = Character.data[name]
@@ -119,6 +127,8 @@ class SkillTimerX
 
   recordStart: (now) ->
 
+    $$.vt 'skillTimer.recordStart', now, 'number'
+
     {current, name} = player
     {cd} = Character.data[name]
 
@@ -128,8 +138,12 @@ class SkillTimerX
     @listRecord[current] = now
 
   render: (n, message) ->
+
+    ($$.vt 'skillTimer.render', n, 'number') message, 'string'
+
     unless Config.data.easySkillTimer
       return
+
     hud.render n, message
 
   reset: ->

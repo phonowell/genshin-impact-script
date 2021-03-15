@@ -1,5 +1,4 @@
-$$ = {}
-
+import 'function'
 import 'ticker'
 
 import 'config'

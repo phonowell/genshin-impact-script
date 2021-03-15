@@ -10,6 +10,8 @@ getToggleDelay = ->
 
 startToggle = (key) ->
 
+  $$.vt 'startToggle', key, 'number'
+
   if menu.isVisible
     return
 
@@ -33,7 +35,7 @@ startToggle = (key) ->
     skillTimer.record 'start'
   , state.toggleDelay
 
-stopToggle = (key) ->
+stopToggle = ->
 
   if menu.isVisible
     return

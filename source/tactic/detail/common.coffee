@@ -26,10 +26,12 @@ member.on 'change', ->
 
     if backend > 0
       tactic.backend[name] = (callback) ->
+        $$.vt "tactic.backend.#{name}", callback, 'function'
         player.useE()
         tactic.delay backend * 1e3, callback
       continue
 
     tactic.backend[name] = (callback) ->
+      $$.vt "tactic.backend.#{name}", callback, 'function'
       player.useE 'holding'
       tactic.delay 0 - backend * 1e3, callback

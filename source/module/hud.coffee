@@ -24,6 +24,8 @@ class HudX
 
   getPosition: (n) ->
 
+    $$.vt 'hud.getPosition', n, 'number'
+
     if client.isFullScreen
       left = client.vw 80
     else left = client.width
@@ -37,6 +39,8 @@ class HudX
     @render n, ''
 
   render: (n, msg) ->
+
+    ($$.vt 'hud.render', n, 'number') msg, 'string'
 
     $.clearTimeout @listTimer[n]
     @listTimer[n] = $.setTimeout =>
@@ -58,5 +62,8 @@ class HudX
 hud = new HudX()
 
 $$.log = (message) ->
+
+  $$.vt '$$.log', message, 'string'
+
   hud.render 5, message
   return message

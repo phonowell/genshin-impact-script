@@ -17,6 +17,8 @@ class MemberX extends EmitterShellX
 
   checkCharacterByPosition: (n) ->
 
+    $$.vt 'member.checkCharacterByPosition', n, 'number'
+
     [pointStart, pointEnd] = @getRange n
 
     for name, char of Character.data
@@ -33,6 +35,9 @@ class MemberX extends EmitterShellX
     return ''
 
   getIndexBy: (name) ->
+
+    $$.vt 'member.getIndexBy', name, 'string'
+
     unless @has name
       return 0
     for n in [1, 2, 3, 4]
@@ -40,6 +45,8 @@ class MemberX extends EmitterShellX
         return n
 
   getRange: (n) ->
+
+    $$.vt 'member.getRange', n, 'number'
 
     start = client.point [
       90
@@ -53,7 +60,9 @@ class MemberX extends EmitterShellX
 
     return [start, end]
 
-  has: (name) -> return $.includes ($.values @map), name
+  has: (name) ->
+    $$.vt 'client.has', name, 'string'
+    return $.includes ($.values @map), name
 
   scan: ->
 
@@ -65,13 +74,19 @@ class MemberX extends EmitterShellX
     @emit 'change'
 
   toggle: (n) ->
+
+    $$.vt 'member.toggle', n, 'number'
+
     unless n
       return
+
     player.current = n
     player.name = @map[n]
     ts.toggle = $.now()
 
-  toggleBy: (name) -> @toggle @getIndexBy name
+  toggleBy: (name) ->
+    $$.vt 'client.toggleBy', name, 'string'
+    @toggle @getIndexBy name
 
 # execute
 member = new MemberX()
