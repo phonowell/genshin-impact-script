@@ -9,7 +9,8 @@ class KeyBindingX extends EmitterShellX
 
   bindEvent: (name, key, prevent = false) ->
 
-    ($$.vt 'keyBinding.bindEvent', name, 'string') key, ['number', 'string']
+    $$.vt 'keyBinding.bindEvent', name, 'string'
+    $$.vt 'keyBinding.bindEvent', 'number', 'string'
 
     if prevent
       @isPrevented[key] = true

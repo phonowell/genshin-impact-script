@@ -25,7 +25,8 @@ class TacticX
 
   delay: (time, callback) ->
 
-    ($$.vt 'tactic.delay', time, 'number') callback, 'function'
+    $$.vt 'tactic.delay', time, 'number'
+    $$.vt 'tactic.delay', callback, 'function'
 
     unless @isActive
       return
@@ -95,7 +96,8 @@ class TacticX
 
   toggle: (n, callback) ->
 
-    ($$.vt 'tactic.toggle', n, 'number') callback, 'function'
+    $$.vt 'tactic.toggle', n, 'number'
+    $$.vt 'tactic.toggle', callback, 'function'
 
     unless @isActive
       return

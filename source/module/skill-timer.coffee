@@ -139,7 +139,8 @@ class SkillTimerX
 
   render: (n, message) ->
 
-    ($$.vt 'skillTimer.render', n, 'number') message, 'string'
+    $$.vt 'skillTimer.render', n, 'number'
+    $$.vt 'skillTimer.render', message, 'string'
 
     unless Config.data.easySkillTimer
       return

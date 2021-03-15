@@ -40,7 +40,8 @@ class HudX
 
   render: (n, msg) ->
 
-    ($$.vt 'hud.render', n, 'number') msg, 'string'
+    $$.vt 'hud.render', n, 'number'
+    $$.vt 'hud.render', msg, 'string'
 
     $.clearTimeout @listTimer[n]
     @listTimer[n] = $.setTimeout =>

@@ -34,8 +34,7 @@ class ClientX extends EmitterShellX
 
   point: (input) ->
 
-    # need to be fixed, type-checking
-    $$.vt 'client.point', input, ['array', 'function']
+    $$.vt 'client.point', input, 'array'
 
     return [
       @vw input[0]
