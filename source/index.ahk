@@ -1444,7 +1444,7 @@ global getToggleDelay := Func("genshin_46")
 global startToggle := Func("genshin_45")
 global stopToggle := Func("genshin_43")
 player.on.Call("toggle:start", startToggle).on.Call("toggle:end", stopToggle).on.Call("toggle-q:end", player.toggleQ)
-player.on.Call("use-e:start", Func("genshin_40")).on.Call("use-e:end", Func("genshin_39"))
+player.on.Call("use-e:start", Func("genshin_40")).on.Call("use-e:end", Func("genshin_39")).on.Call("use-q:start", player.useQ)
 for __index_for__, n in [1, 2, 3, 4] {
   $.on.Call("alt + " . (key) . "", Func("genshin_38"))
 }
