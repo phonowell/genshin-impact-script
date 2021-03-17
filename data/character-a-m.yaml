@@ -44,6 +44,9 @@ diona:
   color: 0xFED6CE
   duration: [4, 10]
 
+eula:
+  color: 0
+
 fischl:
   backend: 1
   cd: 25
