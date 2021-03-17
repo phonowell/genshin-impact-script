@@ -159,7 +159,7 @@ $.type := Func("shell_4")
 $.uniq := Func("shell_3")
 global __vt__ := Func("shell_2")
 $.values := Func("shell_1")
-$.VERSION := "0.0.8"
+$.VERSION := "0.0.9"
 shell_1(input) {
   __vt__.Call("values", input, "object")
   __listResult__ := []
@@ -709,14 +709,14 @@ shell_53(this, key) {
 shell_54(this, key, callback) {
   __vt__.Call("keyBinding.on", key, "string", "number")
   __vt__.Call("keyBinding.on", callback, "function")
-  key := $.formatHotkey.Call(key)
+  key := $.formatHotkey.Call($.replace.Call(key, ":down", ""))
   Hotkey, % key, % callback, On
   return $
 }
 shell_55(this, key, callback) {
   __vt__.Call("keyBinding.off", key, "string", "number")
   __vt__.Call("keyBinding.off", key, callback, "function")
-  key := $.formatHotkey.Call(key)
+  key := $.formatHotkey.Call($.replace.Call(key, ":down", ""))
   Hotkey, % key, % callback, Off
   return $
 }
@@ -864,6 +864,9 @@ shell_73(point := "") {
   return __result__
 }
 shell_74(listKey) {
+  if (($.length.Call(listKey)) == 1) {
+    return ["", listKey]
+  }
   __prefix__ := ""
   __listNew__ := []
   for __index_for__, __key__ in listKey {

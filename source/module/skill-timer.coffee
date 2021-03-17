@@ -43,29 +43,6 @@ class SkillTimerX
 
       @render n, $.join listMessage, ' '
 
-  # checkSkillStatus: ->
-
-  #   {current, name} = player
-
-  #   unless name
-  #     return
-
-  #   if @listRecord[current]
-  #     return
-
-  #   unless @listCountDown[current]
-  #     return
-
-  #   start = client.point [87, 88]
-  #   end = client.point [88, 93]
-
-  #   [x, y] = $.findColor 0xFFFFFF, start, end
-
-  #   if x * y > 0
-  #     return
-
-  #   @hide player.current
-
   hide: (n) ->
 
     $$.vt 'skillTimer.hide', n, 'number'
