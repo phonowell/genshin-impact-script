@@ -44,7 +44,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.8/Genshin_Impact_Script_0.0.8.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.9/Genshin_Impact_Script_0.0.9.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -131,8 +131,10 @@ type-apr = 3
 
 目前如下角色拥有独特的策略：
 
+- 菲谢尔
 - 胡桃
 - 可莉
+- 七七
 - 钟离
 
 其余角色使用通用策略。

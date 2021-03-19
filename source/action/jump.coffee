@@ -24,4 +24,4 @@ if Config.data.betterJump
     .on 'unhold:end', ->
       $.setTimeout ->
         player.jump()
-      , 50
+      , 100

@@ -18,5 +18,5 @@ tactic.hu_tao = ->
   tactic.normalAttack tactic.hu_tao
 
 taoChargedAttack = ->
-  tactic.chargedAttack -> tactic.delay 50, ->
+  tactic.chargedAttack -> tactic.delay 100, ->
     tactic.jump -> tactic.delay 100, tactic.hu_tao

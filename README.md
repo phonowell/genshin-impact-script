@@ -44,7 +44,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.8/Genshin_Impact_Script_0.0.8.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.9/Genshin_Impact_Script_0.0.9.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -129,8 +129,10 @@ Combat tactic. Can be one of the following values:
 
 The following characters currently have unique tactics:
 
+- Fischl
 - Hu Tao
 - Klee
+- Qiqi
 - Zhongli
 
 The rest of the characters use a generic tactic.
