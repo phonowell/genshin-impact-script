@@ -12,12 +12,12 @@ tactic.fischl = ->
       tactic.delay 400, tactic.fischl
       return
 
-  if tactic.count > 3
+  if tactic.count > 4
     tactic.count = 0
 
   switch tactic.count
-    when 0, 1, 2 then tactic.normalAttack tactic.fischl
-    when 3 then fischlAim()
+    when 0, 1, 2, 3 then tactic.normalAttack tactic.fischl
+    when 4 then fischlAim()
 
   tactic.count++
 

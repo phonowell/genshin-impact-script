@@ -18,15 +18,15 @@ Provides countdown timer for E skills, with overlay.
 
 ### Use E skill when character debuts
 
-When you press or hold `numeric key` to switch characters, the character will automatically use E skill when he/she appears on the stage.
+When you press or hold down the `number key` to switch characters, the character will automatically cast the corresponding E skill when he/she appears on the stage.
 
 ### Better running/jumping
 
 Use better running when long pressing `right click`. Automatically open wind glider when jumping.
 
-### Fast item pickup
+### Fast pickup/skip conversations
 
-Quickly pick up items when the `f` key is pressed.
+Quickly pick up items/skip conversations when `f` key is pressed.
 
 ### Record/replay action
 
@@ -44,7 +44,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.9/Genshin_Impact_Script_0.0.9.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.10/Genshin_Impact_Script_0.0.10.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -90,8 +90,10 @@ Future characters to be added for support:
 - Albedo
 - Ayaka
 - Diluc
+- Eula
 - Lumine
 - Rosaria
+- Yanfei
 
 ## Configuration
 
@@ -143,6 +145,7 @@ The rest of the characters use a generic tactic.
 ## Note
 
 - All actions are bound to the default key
+- The game should run in `16:9` resolution
 - If possible, avoid discussing in public
 - If you do need to discuss it, make sure to avoid revealing your `uid`
 

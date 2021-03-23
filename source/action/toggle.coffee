@@ -1,4 +1,4 @@
-state.toggleDelay = 200
+state.toggleDelay = 150
 
 # function
 

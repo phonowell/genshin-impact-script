@@ -22,42 +22,60 @@ checkSwimming = ->
 
 sprint = ->
 
-  unless player.isMoving
-    player.startMove 'w'
+  if checkSwimming()
+    stopSprint()
+    startSprint()
+    return
 
-  unless checkSwimming()
-    state.isSprintSwimming = true
-    $.click 'right:up'
-
-  $.clearTimeout timer.sprint
-  timer.sprint = $.setTimeout ->
-    if state.isSprintSwimming
-      state.isSprintSwimming = false
-      $.click 'right:down'
-    sprint()
-  , 1300
+  $.click 'right'
 
 startSprint = ->
+
+  $.click 'right:down'
 
   unless Config.data.betterSprint
     return
 
   state.isSprinting = true
 
-  sprint()
+  unless player.isMoving
+    player.startMove 'w'
+
+  if checkSwimming()
+    state.isSprintSwimming = true
+    $.clearInterval timer.sprint
+    timer.sprint = $.setInterval swim, 1e3
+    return
+
+  $.click 'right:up'
+
+  $.clearInterval timer.sprint
+  timer.sprint = $.setInterval sprint, 1300
 
 stopSprint = ->
 
   ts.sprint = $.now()
 
   unless Config.data.betterSprint
+    $.click 'right:up'
     return
 
   state.isSprinting = false
-  state.isSprintSwimming = false
+
+  if state.isSprintSwimming
+    $.click 'right:up'
+    state.isSprintSwimming = false
 
   $.clearTimeout timer.sprint
   player.stopMove 'w'
+
+swim = ->
+
+  if checkSwimming()
+    return
+
+  stopSprint()
+  startSprint()
 
 # binding
 
@@ -65,8 +83,16 @@ player
   .on 'sprint:start', startSprint
   .on 'sprint:end', stopSprint
 
-if Config.data.betterSprint
-  player.on 'move:end', ->
+  .on 'move:start', ->
+    unless Config.data.betterSprint
+      return
+    unless state.isSprinting
+      return
+    player.stopMove 'w'
+
+  .on 'move:end', ->
+    unless Config.data.betterSprint
+      return
     unless state.isSprinting
       return
     if player.isMoving

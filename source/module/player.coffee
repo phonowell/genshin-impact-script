@@ -23,11 +23,11 @@ class PlayerX extends KeyBindingX
 
       # run & jump
       .bindEvent 'jump', 'space', 'prevent'
-      .bindEvent 'sprint', 'r-button'
+      .bindEvent 'sprint', 'r-button', 'prevent'
 
       # others
-      .bindEvent 'pick', 'f'
-      .bindEvent 'unhold', 'x'
+      .bindEvent 'pick', 'f', 'prevent'
+      .bindEvent 'unhold', 'x', 'prevent'
       .bindEvent 'view', 'm-button'
 
       # unknown
@@ -46,16 +46,6 @@ class PlayerX extends KeyBindingX
       @bindEvent "menu-#{key}", key
 
   jump: -> $.press 'space'
-
-  pick: ->
-    $.press 'f:up'
-    $.setTimeout ->
-      $.press 'f:down'
-      $.setTimeout ->
-        $.click 'wheel-down'
-      , 50
-    , 50
-    $.click 'wheel-down'
 
   startMove: (key) ->
 

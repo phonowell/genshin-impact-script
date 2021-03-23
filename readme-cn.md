@@ -24,9 +24,9 @@
 
 长按`右键`时，使用优化过的动作快跑。在起跳时自动打开风之翼。
 
-### 快速拾取物品
+### 快速拾取物品/跳过对话
 
-按下`f`键时快速拾取物品。
+按下`f`键时快速拾取物品/跳过对话。
 
 ### 可维持的元素视野
 
@@ -44,7 +44,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.9/Genshin_Impact_Script_0.0.9.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.10/Genshin_Impact_Script_0.0.10.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -88,10 +88,12 @@
 
 - 空
 - 阿贝多
-- 神里
+- 绫华
 - 迪卢克
+- 优la
 - 荧
 - 罗莎莉亚
+- 烟绯
 
 ## 配置
 
@@ -145,6 +147,7 @@ type-apr = 3
 ## 注意
 
 - 所有操作均绑定默认按键
+- 游戏应以`16:9`分辨率运行
 - 如果可能，尽量避免在公开场合讨论
 - 在确实需要讨论时，务必避免透露自己的`uid`
 

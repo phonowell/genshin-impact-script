@@ -2,12 +2,7 @@ ts.jump = 0
 
 # function
 
-jumpTwice = ->
-  $.setTimeout ->
-    unless player.isMoving
-      return
-    player.jump()
-  , 200
+jumpTwice = -> $.setTimeout player.jump, 200
 
 # binding
 
@@ -18,10 +13,12 @@ player
     if Config.data.betterJump
       jumpTwice()
 
-if Config.data.betterJump
+  .on 'unhold:end', ->
+    $.press 'x:down'
+    $.setTimeout ->
+      $.press 'x:up'
 
-  player
-    .on 'unhold:end', ->
-      $.setTimeout ->
-        player.jump()
-      , 100
+      if Config.data.betterJump
+        $.setTimeout player.jump, 50
+
+    , 100
