@@ -1,20 +1,13 @@
 class MenuX
 
   isVisible: false
-
-  constructor: ->
-
-    ticker.on 'change', (tick) =>
-
-      if client.isSuspend
-        return
-
-      if $.mod tick, 1e3
-        return
-
-      @checkVisibility()
+  tsCheck: 0
 
   checkVisibility: ->
+
+    unless $.now() - @tsCheck > 1e3
+      return @isVisible
+    @tsCheck = $.now()
 
     start = client.point [95, 5]
     end = [
@@ -24,6 +17,8 @@ class MenuX
 
     [x, y] = $.findColor 0xFFFFFF, start, end
     @isVisible = not (x * y > 0)
+
+    return @isVisible
 
 # execute
 menu =  new MenuX()

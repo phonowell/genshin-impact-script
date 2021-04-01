@@ -21,6 +21,8 @@ class CharacterX
 
       # color
 
+      # delayJump
+
       # duration
 
       unless char.duration
@@ -29,11 +31,20 @@ class CharacterX
       if $.isNumber char.duration
         char.duration = [char.duration, char.duration]
 
+      # tactic
+      tactic = Config.read "#{name}/tactic", 0
+      if tactic
+        tactic = $.replace tactic, ' ', ''
+        listAll = []
+        for group in $.split tactic, ';'
+          listGroup = []
+          for item in $.split group, ','
+            $.push listGroup, item
+          $.push listAll, listGroup
+        char.tactic = listAll
+
       # type-apr
       char.typeApr = Config.read "#{name}/type-apr", 0
-
-      # type-cbt
-      char.typeCbt = Config.read "#{name}/type-cbt", 0
 
       # type-e
       unless char.typeE

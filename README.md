@@ -24,6 +24,10 @@ When you press or hold down the `number key` to switch characters, the character
 
 Use better running when long pressing `right click`. Automatically open wind glider when jumping.
 
+### Customized tactic
+
+Customized combat loops can be set up independently for each character.
+
 ### Fast pickup/skip conversations
 
 Quickly pick up items/skip conversations when `f` key is pressed.
@@ -44,7 +48,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.10/Genshin_Impact_Script_0.0.10.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.11/Genshin_Impact_Script_0.0.11.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -108,9 +112,16 @@ Add the chanacter name at the bottom of the file to enable character-specific co
 For Example:
 
 ```ini
+[klee]
+tactic = A, a
+
 [zhongli]
-type-apr = 3
+type-apr = 2
 ```
+
+#### tactic
+
+Customized tactic module. For details, please click [here](./doc/tactic.md).
 
 #### type-apr
 
@@ -121,26 +132,9 @@ The type of appearance. Can be one of the following values:
 - `2` Uses E skill (hold)
 - `3` Uses Q skill
 
-#### type-cbt
+#### ~~type-cbt~~
 
-Combat tactic. Can be one of the following values:
-
-- `0` Off
-- `1` Basic
-- `2` Advanced
-
-The following characters currently have unique tactics:
-
-- Fischl
-- Hu Tao
-- Klee
-- Qiqi
-- Zhongli
-
-The rest of the characters use a generic tactic.
-
-- Generic basic tactic cycles through normal attacks and uses E skills when they are ready
-- The advanced tactic also uses E skills of teammates on top of the basic one
+Deprecated.
 
 ## Note
 

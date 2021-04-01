@@ -1,7 +1,6 @@
 class TacticX
 
   backend: {}
-  count: 0
   isActive: false
   isFrozen: false
   origin: 0
@@ -14,14 +13,24 @@ class TacticX
 
     member.on 'change', @reset
 
-  chargedAttack: (callback) ->
+  attack: (isCharged, callback) ->
 
-    $$.vt 'tactic.chargedAttack', callback, 'function'
+    $$.vt 'tactic.attack', callback, 'function'
 
-    $.click 'left:down'
-    @delay 400, ->
-      $.click 'left:up'
-      callback()
+    if isCharged
+      $.click 'left:down'
+      @delay 300, =>
+        $.click 'left:up'
+
+        if player.isMoving and player.name == 'klee'
+          @delay 200, => @jump callback
+          return
+
+        @delay 100, callback
+      return
+
+    $.click 'left'
+    @delay 200, callback
 
   delay: (time, callback) ->
 
@@ -34,6 +43,28 @@ class TacticX
     $.clearTimeout timer.tacticDelay
     timer.tacticDelay = $.setTimeout callback, time
 
+  execute: (listTactic, g = 0, i = 0) ->
+
+    item = @get listTactic, g, i
+    unless item
+      @execute listTactic
+      return
+
+    next = => @execute listTactic, g, i + 1
+
+    switch item
+      when '@e' then @ongoing next, => @execute listTactic, g + 1, 0
+      when 'a' then @attack false, next
+      when 'A' then @attack true, next
+      when 'e' then @useE false, next
+      when 'E' then @useE true, next
+      when 'j' then @jump next
+      when 's' then @sprint next
+      when 't'
+        $.press 'r'
+        @delay 100, next
+      else @wait item, next
+
   freeze: (wait) ->
 
     $$.vt 'tactic.freeze', wait, 'number'
@@ -45,6 +76,17 @@ class TacticX
       @isFrozen = false
     , wait
 
+  get: (list, g = 0, i = 0) ->
+
+    if g >= $.length list
+      return false
+    group = list[g]
+
+    if i >= $.length group
+      return false
+
+    return group[i]
+
   jump: (callback) ->
 
     $$.vt 'tactic.jump', callback, 'function'
@@ -54,26 +96,34 @@ class TacticX
       @delay 450, callback
     else @delay 550, callback
 
-  normalAttack: (callback) ->
+  ongoing: (cbA, cbB) ->
 
-    $$.vt 'tactic.normalAttack', callback, 'function'
+    $$.vt 'tactic.ongoing', cbA, 'function'
+    $$.vt 'tactic.ongoing', cbB, 'function'
 
-    $.click 'left'
-    @delay 200, callback
+    if skillTimer.listDuration[player.current]
+      @delay 100, cbA
+    else @delay 100, cbB
 
   reset: ->
-    @count = 0
     @isActive = false
     @isFrozen = false
     @origin = 0
+
+  sprint: (callback) ->
+
+    $$.vt 'tactic.sprint', callback, 'function'
+
+    player.sprint()
+    @delay 100, callback
 
   start: ->
 
     if @isActive
       return
 
-    callback = @validate()
-    unless callback
+    listTactic = @validate()
+    unless listTactic
       $.click 'left:down'
       return
 
@@ -84,7 +134,7 @@ class TacticX
       wait = 200
     @freeze wait
 
-    callback()
+    @execute listTactic, 0, 0
 
   stop: ->
 
@@ -145,23 +195,32 @@ class TacticX
 
     return false
 
+  useE: (isHolding, callback) ->
+
+    $$.vt 'tactic.useE', callback, 'function'
+
+    unless skillTimer.listCountDown[player.current]
+      player.useE isHolding
+      @freeze 1e3
+      @delay 100, callback
+      return
+
+    @delay 100, callback
+
   validate: ->
 
-    if menu.isVisible
+    if menu.checkVisibility()
       return false
 
     name = player.name
     unless name
       return false
 
-    {typeCbt} = Character.data[name]
-    unless typeCbt
+    listTactic = Character.data[name].tactic
+    unless listTactic
       return false
 
-    if @[name]
-      return @[name]
-
-    return @common
+    return listTactic
 
   validateBackend: ->
 
@@ -182,7 +241,10 @@ class TacticX
 
     return true
 
+  wait: (time, callback) ->
+    unless ($.type time) == 'number'
+      throw new Error "tactic.wait: invalid time #{time}"
+    @delay time, callback
+
 # execute
 tactic = new TacticX()
-
-import 'detail/*'

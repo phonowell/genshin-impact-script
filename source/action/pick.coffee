@@ -12,17 +12,23 @@ pick = ->
 
 skip = ->
 
-  unless menu.isVisible
+  unless menu.checkVisibility()
     return false
 
   start = client.point [65, 48]
   end = client.point [70, 78]
 
-  [x, y] = $.findColor 0xFFFFFF, start, end
-  unless x * y > 0
+  point = ''
+  for color in [0x806200, 0xFFFFFF]
+    [x, y] = $.findColor color, start, end
+    if x * y > 0
+      point = [x, y]
+      break
+
+  unless point
     return false
 
-  $.move [x, y]
+  $.move point
   $.click()
   return true
 

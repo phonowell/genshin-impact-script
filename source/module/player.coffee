@@ -9,7 +9,7 @@ class PlayerX extends KeyBindingX
 
     # toggle
     for key in [1, 2, 3, 4]
-      @bindEvent 'toggle', key
+      @bindEvent 'toggle', key, 'prevent'
 
     @
 
@@ -46,6 +46,10 @@ class PlayerX extends KeyBindingX
       @bindEvent "menu-#{key}", key
 
   jump: -> $.press 'space'
+
+  sprint: ->
+    $.click 'right'
+    ts.sprint = $.now()
 
   startMove: (key) ->
 

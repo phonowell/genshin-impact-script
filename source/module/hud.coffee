@@ -67,5 +67,5 @@ $$.log = (message) ->
   unless $$.isDebug
     return
 
-  hud.render 5, "[#{message}]"
+  hud.render 5, "<#{$.now()}>[#{message}]"
   return message

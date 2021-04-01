@@ -26,7 +26,7 @@ class KeyBindingX extends EmitterShellX
         $.press "#{key}:down"
 
       @emit "#{name}:start", key
-      $$.log "#{name}:start"
+      # $$.log "#{name}:start"
 
     $.on "#{key}:up", =>
 
@@ -39,7 +39,7 @@ class KeyBindingX extends EmitterShellX
         $.press "#{key}:up"
 
       @emit "#{name}:end", key
-      $$.log "#{name}:end"
+      # $$.log "#{name}:end"
 
     return @
 

@@ -12,7 +12,9 @@ startToggle = (key) ->
 
   $$.vt 'startToggle', key, 'number'
 
-  if menu.isVisible
+  $.press key
+
+  if menu.checkVisibility()
     return
 
   member.toggle key
@@ -37,7 +39,7 @@ startToggle = (key) ->
 
 stopToggle = ->
 
-  if menu.isVisible
+  if menu.checkVisibility()
     return
 
   {name} = player

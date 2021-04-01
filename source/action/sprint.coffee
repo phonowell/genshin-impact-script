@@ -31,6 +31,11 @@ sprint = ->
 
 startSprint = ->
 
+  if menu.checkVisibility()
+    if Config.data.fastPickup
+      $.press 'esc'
+    return
+
   $.click 'right:down'
 
   unless Config.data.betterSprint

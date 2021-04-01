@@ -24,6 +24,10 @@
 
 长按`右键`时，使用优化过的动作快跑。在起跳时自动打开风之翼。
 
+### 自定义战术动作
+
+可以为每个角色独立设置自定义的战斗循环。
+
 ### 快速拾取物品/跳过对话
 
 按下`f`键时快速拾取物品/跳过对话。
@@ -44,7 +48,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.10/Genshin_Impact_Script_0.0.10.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.11/Genshin_Impact_Script_0.0.11.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -109,11 +113,15 @@
 
 ```ini
 [klee]
-type-atk = 1
+tactic = A, a
 
 [zhongli]
-type-apr = 3
+type-apr = 2
 ```
+
+#### tactic
+
+自定义的战术模组。详情请点击[这里](./doc/tactic-cn.md)。
 
 #### type-apr
 
@@ -123,26 +131,9 @@ type-apr = 3
 - `1` 依据登场按下数字键的时长，使用对应的元素战技
 - `2` 登场时使用角色的元素战技（长按）
 
-#### type-cbt
+#### ~~type-cbt~~
 
-战斗方式。可为以下数值之一：
-
-- `0` 关闭
-- `1` 使用基础策略
-- `2` 使用进阶策略
-
-目前如下角色拥有独特的策略：
-
-- 菲谢尔
-- 胡桃
-- 可莉
-- 七七
-- 钟离
-
-其余角色使用通用策略。
-
-- 通用基础策略循环使用普通攻击，并在元素战技就绪时使用元素战技
-- 进阶策略在基础策略的基础上，也会使用队友的元素战技
+已废弃。
 
 ## 注意
 
