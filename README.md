@@ -101,7 +101,7 @@ Future characters to be added for support:
 
 ## Configuration
 
-Refer to the [function configuration](./source/config.ini) for details.
+Refer to the [configuration](./data/config.ini) for details.
 
 When finished editing, press `ctrl + f5` to take effect instantly.
 

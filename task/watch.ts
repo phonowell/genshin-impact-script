@@ -5,13 +5,15 @@ import watch from 'fire-keeper/watch'
 
 class Compiler {
 
+  delay = 5e3
+  interval = 1e4
   isBusy = false
   list: string[] = []
 
   constructor() {
     setInterval(() => {
       this.next()
-    }, 1e3)
+    }, this.interval)
   }
 
   add(
@@ -38,7 +40,7 @@ class Compiler {
       .finally(() => {
         setTimeout(() => {
           this.isBusy = false
-        }, 1e3)
+        }, this.delay)
       })
   }
 }

@@ -13,13 +13,13 @@ First, look at a few examples:
 tactic = a, 100, a, 100, t, t
 
 [hu_tao]
-tactic = @e, A, 150, j; e, a
+tactic = a, @e, A, 150, j; a, e
 
 klee]
 tactic = a, A
 
 [zhongli]
-tactic = E, a
+tactic = a, E
 ```
 
 The tactic module consists of the following units:
@@ -61,13 +61,13 @@ The remaining two examples are both relatively simple: Klee will use a cycle of 
 tactic = a, 100, a, 100, t, t
 
 [hu_tao]
-tactic = @e, A, 150, j; e, a
+tactic = a, @e, A, 150, j; a, e
 
 klee]
 tactic = a, A
 
 [zhongli]
-tactic = E, a
+tactic = a, E
 ```
 
 The above tactics do not mean they are the optimal solution, if you have a better tactic, feel free to suggest it in the `issue`.
@@ -75,5 +75,5 @@ The above tactics do not mean they are the optimal solution, if you have a bette
 For most characters, the following settings would also be useful.
 
 ```ini
-tactic = e, a
+tactic = a, e
 ```
