@@ -15,6 +15,7 @@ class ConfigX
       'betterSprint'
       'easySkillTimer'
       'fastPickup'
+      'quickDialog'
     ]
       @data[key] = @read "feature/enable#{key}", 1
 

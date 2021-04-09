@@ -4,13 +4,13 @@ ts.toggle = 0
 
 class MemberX extends EmitterShellX
 
-  map: {}
+  list: ['']
 
   constructor: ->
     super()
 
     @on 'change', =>
-      $.press '1'
+      $.press 1
       @toggle 1
 
     $.on 'f12', @scan
@@ -23,10 +23,13 @@ class MemberX extends EmitterShellX
 
     for name, char of Character.data
 
-      unless char.color
+      if @has name
         continue
 
-      point = $.findColor char.color, pointStart, pointEnd
+      unless char.colorAvatar
+        continue
+
+      point = $.findColor char.colorAvatar, pointStart, pointEnd
       unless point[0] * point[1] > 0
         continue
 
@@ -41,7 +44,7 @@ class MemberX extends EmitterShellX
     unless @has name
       return 0
     for n in [1, 2, 3, 4]
-      if @map[n] == name
+      if @list[n] == name
         return n
 
   getRange: (n) ->
@@ -62,13 +65,15 @@ class MemberX extends EmitterShellX
 
   has: (name) ->
     $$.vt 'client.has', name, 'string'
-    return $.includes ($.values @map), name
+    return $.includes @list, name
 
   scan: ->
 
+    @list = ['']
+
     for n in [1, 2, 3, 4]
       name = @checkCharacterByPosition n
-      @map[n] = name
+      $.push @list, name
       hud.render n, name
 
     @emit 'change'
@@ -81,8 +86,11 @@ class MemberX extends EmitterShellX
       return
 
     player.current = n
-    player.name = @map[n]
+    player.name = @list[n]
     ts.toggle = $.now()
+
+    if @has 'tartaglia'
+      skillTimer.endTartaglia()
 
   toggleBy: (name) ->
     $$.vt 'client.toggleBy', name, 'string'

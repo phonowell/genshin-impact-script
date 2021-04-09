@@ -3,52 +3,40 @@ import __character_n_z__ from '../../data/character-n-z.yaml'
 
 class CharacterX
 
-  data: $.mixin __character_a_m__, __character_n_z__
+  data: {}
 
-  constructor: ->
+  constructor: -> for name, char of $.mixin __character_a_m__, __character_n_z__
+    @data[name] =
+      backendE: char['backend-e']
+      cdE: @getValueIntoArray char['cd-e']
+      cdQ: char['cd-q']
+      colorAvatar: char['color-avatar']
+      durationE: @getValueIntoArray char['duration-e']
+      durationQ: char['duration-q']
+      tactic: @getTactic Config.read "#{name}/tactic", 0
+      typeApr: Config.read "#{name}/type-apr", 0
+      typeE: char['type-e']
 
-    for name, char of @data
+  getValueIntoArray: (value) -> switch $.type value
+    when 'array' then return value
+    when 'number' then return [value, value]
+    else return [0, 0]
 
-      # backend
+  getTactic: (value) ->
 
-      # cd
+    unless value
+      return 0
 
-      unless char.cd
-        char.cd = [0, 0]
+    value = $.replace value, ' ', ''
+    listAll = []
 
-      if $.isNumber char.cd
-        char.cd = [char.cd, char.cd]
+    for group in $.split value, ';'
+      listGroup = []
+      for item in $.split group, ','
+        $.push listGroup, item
+      $.push listAll, listGroup
 
-      # color
-
-      # delayJump
-
-      # duration
-
-      unless char.duration
-        char.duration = [0, 0]
-
-      if $.isNumber char.duration
-        char.duration = [char.duration, char.duration]
-
-      # tactic
-      tactic = Config.read "#{name}/tactic", 0
-      if tactic
-        tactic = $.replace tactic, ' ', ''
-        listAll = []
-        for group in $.split tactic, ';'
-          listGroup = []
-          for item in $.split group, ','
-            $.push listGroup, item
-          $.push listAll, listGroup
-        char.tactic = listAll
-
-      # type-apr
-      char.typeApr = Config.read "#{name}/type-apr", 0
-
-      # type-e
-      unless char.typeE
-        char.typeE = 0
+    return listAll
 
 # execute
 Character = new CharacterX()

@@ -24,7 +24,7 @@
 
 长按`右键`时，使用优化过的动作快跑。在起跳时自动打开风之翼。
 
-### 自定义战术动作
+### 自定义动作
 
 可以为每个角色独立设置自定义的战斗循环。
 
@@ -48,7 +48,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.11/Genshin_Impact_Script_0.0.11.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.12/Genshin_Impact_Script_0.0.12.zip)并解压。
 
 最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -113,7 +113,7 @@
 
 ```ini
 [klee]
-tactic = A, a
+tactic = a, A
 
 [zhongli]
 type-apr = 2
@@ -121,7 +121,7 @@ type-apr = 2
 
 #### tactic
 
-自定义的战术模组。详情请点击[这里](./doc/tactic-cn.md)。
+自定义的动作模组。详情请点击[这里](./doc/tactic-cn.md)。
 
 #### type-apr
 
@@ -137,7 +137,7 @@ type-apr = 2
 
 ## 注意
 
-- 所有操作均绑定默认按键
+- 所有操作均绑定默认按键；但奔跑/行走切换键除外，它应当由左`ctrl`设置为右`ctrl`
 - 游戏应以`16:9`分辨率运行
 - 如果可能，尽量避免在公开场合讨论
 - 在确实需要讨论时，务必避免透露自己的`uid`

@@ -1,8 +1,9 @@
 class TacticX
 
-  backend: {}
+  backendE: {}
   isActive: false
   isFrozen: false
+  isPressed: {}
   origin: 0
 
   constructor: ->
@@ -19,8 +20,15 @@ class TacticX
 
     if isCharged
       $.click 'left:down'
-      @delay 300, =>
+      @isPressed['l-button'] = true
+
+      delay = 300
+      if player.name == 'ganyu'
+        delay = 1750
+
+      @delay delay, =>
         $.click 'left:up'
+        @isPressed['l-button'] = false
 
         if player.isMoving and player.name == 'klee'
           @delay 200, => @jump callback
@@ -49,21 +57,29 @@ class TacticX
     unless item
       @execute listTactic
       return
+    unless item == $.toLowerCase item
+      item = "#{item}~"
 
     next = => @execute listTactic, g, i + 1
 
-    switch item
-      when '@e' then @ongoing next, => @execute listTactic, g + 1, 0
-      when 'a' then @attack false, next
-      when 'A' then @attack true, next
-      when 'e' then @useE false, next
-      when 'E' then @useE true, next
-      when 'j' then @jump next
-      when 's' then @sprint next
-      when 't'
-        $.press 'r'
-        @delay 100, next
-      else @wait item, next
+    map = {}
+    map['@e'] = => @ongoing next, => @execute listTactic, g + 1, 0
+    map['@m'] = => @onMoving next, => @execute listTactic, g + 1, 0
+    map.a = => @attack false, next
+    map['A~'] = => @attack true, next
+    map.e = => @useE false, next
+    map['E~'] = => @useE true, next
+    map.j = => @jump next
+    map.s = => @sprint next
+    map.t = =>
+      $.press 'r'
+      @delay 100, next
+
+    callback = map[item]
+    unless callback
+      callback = => @wait item, next
+
+    callback()
 
   freeze: (wait) ->
 
@@ -102,10 +118,25 @@ class TacticX
     $$.vt 'tactic.ongoing', cbB, 'function'
 
     if skillTimer.listDuration[player.current]
-      @delay 100, cbA
-    else @delay 100, cbB
+      @delay 50, cbA
+    else @delay 50, cbB
+
+  onMoving: (cbA, cbB) ->
+
+    $$.vt 'tactic.onMoving', cbA, 'function'
+    $$.vt 'tactic.onMoving', cbB, 'function'
+
+    if player.isMoving
+      @delay 50, cbA
+    else @delay 50, cbB
 
   reset: ->
+
+    $.clearTimeout timer.tacticDelay
+
+    if @isPressed['l-button']
+      $.click 'left:up'
+
     @isActive = false
     @isFrozen = false
     @origin = 0
@@ -156,7 +187,7 @@ class TacticX
     member.toggle n
     @delay 200, callback
 
-  useBackend: (callback) ->
+  useBackendE: (callback) ->
 
     $$.vt 'tactic.useBackend', callback, 'function'
 
@@ -171,15 +202,15 @@ class TacticX
       if skillTimer.listCountDown[n]
         continue
 
-      name = member.map[n]
-      unless @backend[name]
+      name = member.list[n]
+      unless @backendE[name]
         continue
 
       unless @origin
         @origin = player.current
 
       @freeze 10e3
-      @toggle n, => @backend[name] =>
+      @toggle n, => @backendE[name] =>
         callback()
         @freeze 1e3
 

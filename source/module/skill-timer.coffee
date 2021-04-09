@@ -43,6 +43,20 @@ class SkillTimerX
 
       @render n, $.join listMessage, ' '
 
+  endTartaglia: ->
+
+    n = member.getIndexBy 'tartaglia'
+
+    unless @listDuration[n]
+      return false
+
+    now = $.now()
+
+    @listCountDown[n] = now + 30e3 - (@listDuration[n] - now) + 6e3
+    @listDuration[n] = 0
+
+    return true
+
   hide: (n) ->
 
     $$.vt 'skillTimer.hide', n, 'number'
@@ -63,6 +77,9 @@ class SkillTimerX
 
     now = $.now()
 
+    if (name == 'tartaglia') and @endTartaglia()
+      return
+
     countdown = @listCountDown[current]
     if countdown and countdown - now > 1e3
       return
@@ -80,28 +97,28 @@ class SkillTimerX
     $$.vt 'skillTimer.recordEnd', now, 'number'
 
     {current, name} = player
-    {cd, duration, typeE} = Character.data[name]
+    {cdE, durationE, typeE} = Character.data[name]
 
     unless @listRecord[current]
       return
 
     if now - @listRecord[current] < 500 # tap
-      @listCountDown[current] = @listRecord[current] + (cd[0] * 1e3) + 500
-      if duration[0]
-        @listDuration[current] = @listRecord[current] + (duration[0] * 1e3)
+      @listCountDown[current] = @listRecord[current] + (cdE[0] * 1e3) + 500
+      if durationE[0]
+        @listDuration[current] = @listRecord[current] + (durationE[0] * 1e3)
       @listRecord[current] = 0
       return
 
     # hold
 
     if typeE == 1
-      @listCountDown[current] = now + (cd[1] * 1e3) + 500
-      if duration[1]
-        @listDuration[current] = now + (duration[1] * 1e3)
+      @listCountDown[current] = now + (cdE[1] * 1e3) + 500
+      if durationE[1]
+        @listDuration[current] = now + (durationE[1] * 1e3)
     else
-      @listCountDown[current] = @listRecord[current] + (cd[1] * 1e3) + 500
-      if duration[1]
-        @listDuration[current] = @listRecord[current] + (duration[1] * 1e3)
+      @listCountDown[current] = @listRecord[current] + (cdE[1] * 1e3) + 500
+      if durationE[1]
+        @listDuration[current] = @listRecord[current] + (durationE[1] * 1e3)
 
     @listRecord[current] = 0
 
@@ -110,7 +127,7 @@ class SkillTimerX
     $$.vt 'skillTimer.recordStart', now, 'number'
 
     {current, name} = player
-    {cd} = Character.data[name]
+    {cdE} = Character.data[name]
 
     if @listRecord[current]
       return
@@ -141,6 +158,3 @@ ticker.on 'change', (tick) ->
 
   unless $.mod tick, 200
     skillTimer.check()
-
-  # unless $.mod tick, 1e3
-  #   skillTimer.checkSkillStatus()

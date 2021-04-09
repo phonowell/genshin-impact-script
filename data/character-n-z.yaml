@@ -1,70 +1,91 @@
 ningguang:
-  backend: 1
-  cd: 12
-  color: 0xFFFDF8
-  duration: 29
+  backend-e: 1
+  cd-e: 12
+  cd-q: 12
+  color-avatar: 0xFFFDF8
+  duration-e: 29
 
 noelle:
-  backend: 1
-  cd: 24
-  color: 0xDED8D2
-  duration: 12
+  backend-e: 1
+  cd-e: 24
+  cd-q: 15
+  color-avatar: 0xDED8D2
+  duration-e: 12
+  duration-q: 15
 
 qiqi:
-  backend: 1
-  cd: 30
-  color: 0xE1DBDE
-  duration: 15
+  backend-e: 1
+  cd-e: 30
+  cd-q: 20
+  color-avatar: 0xE1DBDE
+  duration-e: 15
+  duration-q: 15
 
 rezor:
-  backend: 1
-  cd: [6, 10]
-  color: 0xC6CAC6
+  backend-e: 1
+  cd-e: [6, 10]
+  cd-q: 20
+  color-avatar: 0xC6CAC6
+  duration-q: 15
 
 rosaria:
-  color: 0
+  color-avatar: 0
 
 sucrose:
-  backend: 1
-  cd: 14.5 # 15
-  color: 0xD4E9CC
+  backend-e: 1
+  cd-e: 14.5 # 15
+  cd-q: 20
+  color-avatar: 0xD4E9CC
+  duration-q: 6
 
 tartaglia:
-  cd: 6
-  color: 0xB9733A
+  cd-e: 1 # 6
+  cd-q: 15
+  color-avatar: 0xB9733A
+  duration-e: 30
 
 venti:
-  backend: 1.5
-  cd: [6, 15]
-  color: 0x5D917E
+  backend-e: 1.5
+  cd-e: [6, 15]
+  cd-q: 15
+  color-avatar: 0x5D917E
+  duration-q: 8
 
 xiangling:
-  backend: 1
-  cd: 12
-  color: 0x38487B
-  duration: 7
+  backend-e: 1
+  cd-e: 12
+  cd-q: 20
+  color-avatar: 0x38487B
+  duration-e: 7
+  duration-q: 10
 
 xiao:
-  cd: 10
-  color: 0x39483E
+  cd-e: 10
+  color-avatar: 0x39483E
 
 xingqiu:
-  backend: 1
-  cd: 21
-  color: 0x488892
-  duration: 15
+  backend-e: 1
+  cd-e: 21
+  cd-q: 20
+  color-avatar: 0x488892
+  duration-e: 15
+  duration-q: 15
 
 xinyan:
-  backend: 1
-  cd: 18
-  color: 0x503B40
-  duration: 12
+  backend-e: 1
+  cd-e: 18
+  cd-q: 15
+  color-avatar: 0x503B40
+  duration-e: 12
+  duration-q: 2
 
 Yanfei:
-  color: 0
+  color-avatar: 0
 
 zhongli:
-  backend: -1.5
-  cd: [4, 12.5] # [4, 12]
-  color: 0x4B3525
-  duration: 20.5 # 20
+  backend-e: -1.5
+  cd-e: [4, 12.5] # [4, 12]
+  cd-q: 12
+  color-avatar: 0x4B3525
+  duration-e: 20.5 # 20
+  duration-q: 3.6

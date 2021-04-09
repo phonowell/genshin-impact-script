@@ -31,9 +31,8 @@ sprint = ->
 
 startSprint = ->
 
-  if menu.checkVisibility()
-    if Config.data.fastPickup
-      $.press 'esc'
+  if Config.data.quickDialog and menu.checkVisibility()
+    $.press 'esc'
     return
 
   $.click 'right:down'

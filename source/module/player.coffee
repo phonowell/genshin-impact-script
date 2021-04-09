@@ -76,8 +76,8 @@ class PlayerX extends KeyBindingX
     $$.vt 'player.toggleQ', key, 'number'
 
     $.press "alt + #{key}"
-
     member.toggle key
+    skillTimer.listQ[player.current] = $.now()
     return @
 
   useE: (isHolding = false) ->
@@ -97,8 +97,8 @@ class PlayerX extends KeyBindingX
     return @
 
   useQ: ->
-    skillTimer.listQ[player.current] = $.now()
     $.press 'q'
+    skillTimer.listQ[player.current] = $.now()
     return @
 
 # execute

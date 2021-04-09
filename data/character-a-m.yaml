@@ -1,102 +1,134 @@
+# backend-e
+# cd-e
+# cd-q
+# color-avatar
+# duration-e
+# duration-q
+# tactic
+# type-e
+
 aether:
-  color: 0
+  color-avatar: 0
 
 albedo:
-  color: 0
+  color-avatar: 0
 
 amber:
-  backend: 1
-  cd: 15
-  color: 0x5C4C63
-  duration: 8
+  backend-e: 1
+  cd-e: 15
+  cd-q: 12
+  color-avatar: 0x5C4C63
+  duration-e: 8
+  duration-q: 2
 
 ayaka:
-  color: 0
+  color-avatar: 0
 
 barbara:
-  backend: 1
-  cd: 32
-  color: 0xDED3BE
-  duration: 15
+  backend-e: 1
+  cd-e: 32
+  cd-q: 20
+  color-avatar: 0xDED3BE
+  duration-e: 15
 
 beidou:
-  cd: 7.5
-  color: 0x4C332E
-  typeE: 1
+  cd-e: 7.5
+  cd-q: 20
+  color-avatar: 0x4C332E
+  duration-q: 15
+  type-e: 1
 
 bennett:
-  backend: 1
-  cd: [4.5, 10] # [5, 10]
-  color: 0xFBF3CF
+  backend-e: 1
+  cd-e: [4.5, 10] # [5, 10]
+  cd-q: 15
+  color-avatar: 0xFBF3CF
+  duration-q: 12
 
 chongyun:
-  backend: 1
-  cd: 15
-  color: 0xCDEFDF
-  duration: 10
+  backend-e: 1
+  cd-e: 15
+  cd-q: 12
+  color-avatar: 0xCDEFDF
+  duration-e: 10
 
 diluc:
-  color: 0
+  color-avatar: 0
 
 diona:
-  backend: -1
-  cd: [6, 15]
-  color: 0xFED6CE
-  duration: [4, 10]
+  backend-e: -1
+  cd-e: [6, 15]
+  cd-q: 20
+  color-avatar: 0xFED6CE
+  duration-e: [4, 10]
+  duration-q: 12
 
 eula:
-  color: 0
+  color-avatar: 0
 
 fischl:
-  backend: 1
-  cd: 25
-  color: 0xFFE3A9
-  duration: 10
-  typeE: 1
+  backend-e: 1
+  cd-e: 25
+  cd-q: 15
+  color-avatar: 0xFFE3A9
+  duration-e: 10
+  type-e: 1
 
 ganyu:
-  backend: 1
-  cd: 10
-  color: 0xBDCCC5
-  duration: 6
+  backend-e: 1
+  cd-e: 10
+  cd-q: 15
+  color-avatar: 0xBDCCC5
+  duration-e: 6
+  duration-q: 15
 
 hu_tao:
-  cd: 16
-  color: 0x7B5B61
-  duration: 9
+  cd-e: 16
+  cd-q: 15
+  color-avatar: 0x7B5B61
+  duration-e: 9
 
 jean:
-  backend: 1
-  cd: 6
-  color: 0xEED6C0
-  typeE: 1
+  backend-e: 1
+  cd-e: 6
+  color-avatar: 0xEED6C0
+  type-e: 1
 
 kaeya:
-  backend: 1
-  cd: 6
-  color: 0x394E64
+  backend-e: 1
+  cd-e: 6
+  cd-q: 15
+  color-avatar: 0x394E64
+  duration-q: 8
 
 keqing:
-  cd: 7.5
-  color: 0xBEB1C3
-  duration: 5
-  typeE: 1
+  cd-e: 7.5
+  cd-q: 12
+  color-avatar: 0xBEB1C3
+  duration-e: 5
+  type-e: 1
 
 klee:
-  backend: 1
-  cd: 20
-  color: 0xBE3A0E
+  backend-e: 1
+  cd-e: 20
+  cd-q: 15
+  color-avatar: 0xBE3A0E
+  duration-q: 10
 
 lisa:
-  backend: 1
-  cd: [1, 16]
-  color: 0xB6A69B
+  backend-e: 1
+  cd-e: [1, 16]
+  cd-q: 20
+  color-avatar: 0xB6A69B
+  duration-q: 15
 
 lumine:
-  color: 0
+  color-avatar: 0
 
 mona:
-  backend: 1
-  cd: 12
-  color: 0x5A5064
-  duration: 6
+  backend-e: 1
+  cd-e: 12
+  cd-q: 15
+  color-avatar: 0x5A5064
+  duration-e: 6
+  duration-q: 4.5

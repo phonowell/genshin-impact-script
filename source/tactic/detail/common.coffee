@@ -18,7 +18,7 @@ tactic.common = ->
 
 member.on 'change', ->
 
-  for n, name of member.map
+  for name, n in member.list
 
     {backend} = Character.data[name]
     unless backend

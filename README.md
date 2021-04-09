@@ -48,7 +48,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.11/Genshin_Impact_Script_0.0.11.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.12/Genshin_Impact_Script_0.0.12.zip) and unzip it.
 
 Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -113,7 +113,7 @@ For Example:
 
 ```ini
 [klee]
-tactic = A, a
+tactic = a, A
 
 [zhongli]
 type-apr = 2
@@ -138,7 +138,7 @@ Deprecated.
 
 ## Note
 
-- All actions are bound to the default key
+- All actions are bound to the default key; except for the run/walk toggle, which should be set from `left ctrl` to `right ctrl`
 - The game should run in `16:9` resolution
 - If possible, avoid discussing in public
 - If you do need to discuss it, make sure to avoid revealing your `uid`

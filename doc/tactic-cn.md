@@ -13,9 +13,9 @@
 tactic = a, 100, a, 100, t, t
 
 [hu_tao]
-tactic = a, @e, A, 150, j; a, e
+tactic = @e, A, 150, j; a, e
 
-klee]
+[klee]
 tactic = a, A
 
 [zhongli]
@@ -25,6 +25,7 @@ tactic = a, E
 动作模组由如下的单元构成：
 
 - `@e` 元素战技生效阶段
+- `@m` 角色移动
 - `a`/`A` 普通攻击/蓄力攻击
 - `e`/`E` 点按/长按元素战技
 - `j` 跳跃
@@ -59,6 +60,9 @@ tactic = a, E
 ```ini
 [fischl]
 tactic = a, 100, a, 100, t, t
+
+[ganyu]
+tactic = A, 150
 
 [hu_tao]
 tactic = a, @e, A, 150, j; e, a

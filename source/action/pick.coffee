@@ -4,7 +4,7 @@ timer.pick = ''
 
 pick = ->
 
-  if skip()
+  if Config.data.quickDialog and skip()
     return
 
   $.press 'f'
@@ -40,7 +40,7 @@ startPick = ->
     return
 
   $.clearInterval timer.pick
-  timer.pick = $.setInterval pick, 150
+  timer.pick = $.setInterval pick, 100
 
 stopPick = ->
 

@@ -13,9 +13,9 @@ First, look at a few examples:
 tactic = a, 100, a, 100, t, t
 
 [hu_tao]
-tactic = a, @e, A, 150, j; a, e
+tactic = @e, A, 150, j; a, e
 
-klee]
+[klee]
 tactic = a, A
 
 [zhongli]
@@ -25,6 +25,7 @@ tactic = a, E
 The tactic module consists of the following units:
 
 - `@e` E skill effective phase
+- `@m` Moving
 - `a`/`A` Normal attack/Charged attack
 - `e`/`E` E skill (tap/hold)
 - `j` Jump
@@ -60,10 +61,13 @@ The remaining two examples are both relatively simple: Klee will use a cycle of 
 [fischl]
 tactic = a, 100, a, 100, t, t
 
-[hu_tao]
-tactic = a, @e, A, 150, j; a, e
+[ganyu]
+tactic = A, 150
 
-klee]
+[hu_tao]
+tactic = @e, A, 150, j; a, e
+
+[klee]
 tactic = a, A
 
 [zhongli]
