@@ -1,115 +1,119 @@
 # genshin-impact-script
 
-Sweet! What a cute Genshin Impact script!
+好耶！是人畜无害的原神脚本！
 
-## Introduction
+企鹅群：515565970
 
-A script based on `ahk` that provides a few small features for Genshin Impact players.
+[English](./readme-en.md)
 
-**Does not contain any cheats**.
+## 简介
 
-[中文](./readme-cn.md)
+一个基于`ahk`实现，为原神玩家提供一点点额外小功能的游戏脚本。
 
-## Features
+**不含任何作弊功能**。
 
-### Easy skill timer
+## 功能
 
-Provides countdown timer for E skills, with overlay.
+### 简易技能计时器
 
-### Use E skill when character debuts
+提供元素战技倒计时。
 
-When you press or hold down the `number key` to switch characters, the character will automatically cast the corresponding E skill when he/she appears on the stage.
+### 角色登场时施放元素战技
 
-### Better running/jumping
+按下或按住`数字键`切换角色时，角色在登场时会自动施放对应的元素战技。
 
-Use better running when long pressing `right click`. Automatically open wind glider when jumping.
+### 更合理的快跑/跳跃
 
-### Customized tactic
+长按`右键`时，使用优化过的动作快跑。在起跳时自动打开风之翼。
 
-Customized combat loops can be set up independently for each character.
+### 自定义动作
 
-### Fast pickup/skip conversations
+可以为每个角色独立设置自定义的战斗循环。
 
-Quickly pick up items/skip conversations when `f` key is pressed.
+### 快速拾取物品/跳过对话
 
-### Record/replay action
+按下`f`键时快速拾取物品/跳过对话。
 
-Press `f10` to record your action; press `f11` to replay.
+### 可维持的元素视野
 
-### Better elemental vision
+按下`中键`时，进入自动维持的元素视野；再次按下中键退出。
 
-When you press `middle button`, you will enter the automatically maintained elemental vision; press Middle Button again to exit.
+### 录制/重播动作
 
-### Auto-adjust game process priority
+按下`f10`录制动作；按下`f11`重播
 
-Set the process priority to the lowest when the game window is inactive.
+### 自动调整游戏进程优先级
 
-## Usage
+当游戏窗口处于非活动状态时，将进程优先级设为最低。
 
-First, go to [ahk official website](https://www.autohotkey.com/) and install `ahk` (1.33+, do not use v2 version).
+## 使用
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.12/Genshin_Impact_Script_0.0.12.zip) and unzip it.
+首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-Finally, after opening the game, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.13/Genshin_Impact_Script_CN_0.0.13.zip)并解压。
 
-### Easy Skill Timer
+最后，打开游戏后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
-Before use this feature, you need to identify the characters in your team. Press `f12` to identify the character with their avatar visible on the right.
+注意，自`0.0.13`后，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。
 
-When you change the team lineup, you need to re-identify them.
+### 技能计时器
 
-Currently only the following characters are supported:
+在使用该功能前，需要识别队伍角色。在右侧队员头像可见情况下，按下`f12`键识别角色。
 
-- Amber
-- Barbara
-- Beidou
-- Bennett
-- Chongyun
-- Diona
-- Fischl
-- Ganyu
-- Hu Tao
-- Jean
-- Kaeya
-- Klee
-- Keqing
-- Lisa
-- Mona
-- Ningguang
-- Noelle
-- Qiqi
-- Razor
-- Sucrose
-- Tartaglia
-- Venti
-- Xiangling
-- Xiao
-- Xingqiu
-- Xinyan
-- Zhongli
+当改变队伍阵容后，需要重新识别角色。
 
-Future characters to be added for support:
+目前仅支持如下角色：
 
-- Aether
-- Albedo
-- Ayaka
-- Diluc
-- Eula
-- Lumine
-- Rosaria
-- Yanfei
+- 安柏
+- 芭芭拉
+- 北斗
+- 班尼特
+- 重云
+- 迪奥娜
+- 菲谢尔
+- 甘雨
+- 胡桃
+- 琴
+- 凯亚
+- 可莉
+- 刻晴
+- 丽莎
+- 莫娜
+- 凝光
+- 诺艾尔
+- 七七
+- 雷泽
+- 砂糖
+- 达达利亚
+- 温迪
+- 香菱
+- 魈
+- 行秋
+- 辛焱
+- 钟离
 
-## Configuration
+未来将加入支持的角色：
 
-Refer to the [configuration](./data/config.ini) for details.
+- 空
+- 阿贝多
+- 绫华
+- 迪卢克
+- 优菈
+- 荧
+- 罗莎莉亚
+- 烟绯
 
-When finished editing, press `ctrl + f5` to take effect instantly.
+## 配置
 
-### Characters
+详细请参考[功能配置](./data/config.ini)内的说明。
 
-Add the chanacter name at the bottom of the file to enable character-specific configuration.
+当完成编辑后，按下`ctrl + f5`即可即时生效。
 
-For Example:
+### 角色
+
+在文件底部加入角色名以开启针对特定角色的配置。
+
+例如：
 
 ```ini
 [klee]
@@ -121,32 +125,24 @@ type-apr = 2
 
 #### tactic
 
-Customized tactic module. For details, please click [here](./doc/tactic.md).
+自定义的动作模组。详情请点击[这里](./doc/tactic.md)。
 
 #### type-apr
 
-The type of appearance. Can be one of the following values:
+登场方式。可为以下数值之一：
 
-- `0` Off
-- `1` Uses the corresponding E skill depending on the length of time the number key is pressed
-- `2` Uses E skill (hold)
-- `3` Uses Q skill
+- `0` 关闭
+- `1` 依据登场按下数字键的时长，使用对应的元素战技
+- `2` 登场时使用角色的元素战技（长按）
 
-#### ~~type-cbt~~
+## 注意
 
-Deprecated.
+- 所有操作均绑定默认按键；但`切换走/跑`除外，它应当由`左Ctrl`变更为`右Ctrl`
+- 使用`右键`进行冲刺，而不是`左Shift`
+- 游戏应以`16:9`分辨率运行
+- 如果可能，尽量避免在公开场合讨论
+- 在确实需要讨论时，务必避免透露自己的`uid`
 
-## Note
+## 免责声明
 
-- All actions are bound to the default key; except for the run/walk toggle, which should be set from `left ctrl` to `right ctrl`
-- The game should run in `16:9` resolution
-- If possible, avoid discussing in public
-- If you do need to discuss it, make sure to avoid revealing your `uid`
-
-## Note
-
-All actions are bound to default keys.
-
-## Disclaimers
-
-You knew that.
+你们懂的。

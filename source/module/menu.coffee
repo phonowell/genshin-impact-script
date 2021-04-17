@@ -18,5 +18,9 @@ class MenuX
 
     return @isVisible
 
+  setVisibility: (visibility) ->
+    @tsCheck = $.now()
+    @isVisible = visibility
+
 # execute
-menu =  new MenuX()
+menu = new MenuX()

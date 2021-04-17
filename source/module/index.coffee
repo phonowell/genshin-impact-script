@@ -1,7 +1,8 @@
 import 'function'
 import 'ticker'
-
 import 'config'
+import 'console'
+
 import 'client'
 import 'hud'
 
@@ -16,4 +17,4 @@ import 'key-binding'
 import 'player'
 import 'movement'
 
-# import 'follower'
+import 'tactic'

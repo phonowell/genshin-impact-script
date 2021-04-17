@@ -1,9 +1,8 @@
-$$ =
-  isDebug: false
+$$ = {}
 
 $$.vt = (name, target, type...) ->
 
-  unless $$.isDebug
+  unless Config.data.isDebug
     return
 
   _type = $.type target

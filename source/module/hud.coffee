@@ -7,21 +7,6 @@ class HudX
 
     client.on 'leave', @hide
 
-    $.on 'alt + f9', ->
-      $.beep()
-      hud.getColor()
-
-  getColor: ->
-
-    color = $.getColor()
-
-    [x, y] = $.getPosition()
-    x1 = $.round (x * 100) / client.width
-    y1 = $.round (y * 100) / client.height
-
-    @render 5, "#{x1}, #{y1} / #{color}"
-    ClipBoard = color
-
   getPosition: (n) ->
 
     $$.vt 'hud.getPosition', n, 'number'
@@ -59,13 +44,4 @@ class HudX
     @hide()
 
 # execute
-
 hud = new HudX()
-
-$$.log = (message) ->
-
-  unless $$.isDebug
-    return
-
-  hud.render 5, "<#{$.now()}>[#{message}]"
-  return message

@@ -16,7 +16,7 @@ const saveMd = async (
 
   const listSource = [
     './readme.md',
-    './readme-cn.md',
+    './readme-en.md',
   ]
 
   for (const source of listSource) {

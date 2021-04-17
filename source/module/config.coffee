@@ -5,6 +5,9 @@ class ConfigX
 
   constructor: ->
 
+    # debug
+    @data.isDebug = @read 'debug/debug', 0
+
     # region
     @data.process = @read 'region/process', 'YuanShen.exe'
 

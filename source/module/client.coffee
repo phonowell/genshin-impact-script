@@ -3,28 +3,33 @@ class ClientX extends KeyBindingX
   height: 0
   isFullScreen: false
   isSuspend: false
+  left: 0
+  top: 0
   width: 0
 
   constructor: ->
     super()
     @setSize()
 
+    ticker.on 'change', (tick) =>
+      unless $.mod tick, 200
+        @check()
+
     @on 'enter', => $.setTimeout @setSize, 1e3
 
-    $
-      .on 'alt + f4', =>
-        $.beep()
-        @reset()
-        $.exit()
+    $.on 'alt + f4', =>
+      $.beep()
+      @reset()
+      $.exit()
 
-      .on 'ctrl + f5', =>
-        $.beep()
-        @reset()
-        $.reload()
+    $.on 'ctrl + f5', =>
+      $.beep()
+      @reset()
+      $.reload()
 
-      .on 'alt + enter', =>
-        $.press 'alt + enter'
-        $.setTimeout @setSize, 1e3
+    $.on 'alt + enter', =>
+      $.press 'alt + enter'
+      $.setTimeout @setSize, 1e3
 
   check: ->
 
@@ -62,15 +67,16 @@ class ClientX extends KeyBindingX
   setSize: ->
 
     name = "ahk_exe #{Config.data.process}"
-    `WinGetPos, __x__, __y__, __width__, __height__, % name`
+    `WinGetPos, __left__, __top__, __width__, __height__, % name`
 
+    @left = __left__
+    @top = __top__
     @width = __width__
-    unless @width
-      @width = 0
-
     @height = __height__
-    unless @height
-      @height = 0
+
+    for key in ['left', 'top', 'width', 'height']
+      unless @[key]
+        @[key] = 0
 
     unless @width + 100 < A_ScreenWidth
       @isFullScreen = true
@@ -103,9 +109,4 @@ class ClientX extends KeyBindingX
     return $.round @width * n * 0.01
 
 # execute
-
 client = new ClientX()
-
-ticker.on 'change', (tick) ->
-  unless $.mod tick, 200
-    client.check()

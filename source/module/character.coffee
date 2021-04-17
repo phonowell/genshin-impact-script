@@ -7,7 +7,6 @@ class CharacterX
 
   constructor: -> for name, char of $.mixin __character_a_m__, __character_n_z__
     @data[name] =
-      backendE: char['backend-e']
       cdE: @getValueIntoArray char['cd-e']
       cdQ: char['cd-q']
       colorAvatar: char['color-avatar']
@@ -16,6 +15,7 @@ class CharacterX
       tactic: @getTactic Config.read "#{name}/tactic", 0
       typeApr: Config.read "#{name}/type-apr", 0
       typeE: char['type-e']
+      weapon: char.weapon
 
   getValueIntoArray: (value) -> switch $.type value
     when 'array' then return value

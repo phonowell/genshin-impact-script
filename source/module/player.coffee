@@ -11,31 +11,29 @@ class PlayerX extends KeyBindingX
     for key in [1, 2, 3, 4]
       @bindEvent 'toggle', key, 'prevent'
 
-    @
+    # attack
+    @bindEvent 'attack', 'l-button', 'prevent'
+    @bindEvent 'toggle-aim', 'r'
 
-      # attack
-      .bindEvent 'attack', 'l-button', 'prevent'
-      .bindEvent 'toggle-aim', 'r'
+    # use skill
+    @bindEvent 'use-e', 'e'
+    @bindEvent 'use-q', 'q', 'prevent'
 
-      # use skill
-      .bindEvent 'use-e', 'e'
-      .bindEvent 'use-q', 'q', 'prevent'
+    # run & jump
+    @bindEvent 'jump', 'space', 'prevent'
+    @bindEvent 'sprint', 'r-button', 'prevent'
 
-      # run & jump
-      .bindEvent 'jump', 'space', 'prevent'
-      .bindEvent 'sprint', 'r-button', 'prevent'
+    # others
+    @bindEvent 'pick', 'f', 'prevent'
+    @bindEvent 'unhold', 'x', 'prevent'
+    @bindEvent 'view', 'm-button'
 
-      # others
-      .bindEvent 'pick', 'f', 'prevent'
-      .bindEvent 'unhold', 'x', 'prevent'
-      .bindEvent 'view', 'm-button'
-
-      # unknown
-      .bindEvent 'g', 'g'
-      .bindEvent 'p', 'p'
-      .bindEvent 'v', 'v'
-      .bindEvent 'y', 'y'
-      .bindEvent 'z', 'z'
+    # unknown
+    @bindEvent 'g', 'g'
+    @bindEvent 'p', 'p'
+    @bindEvent 'v', 'v'
+    @bindEvent 'y', 'y'
+    @bindEvent 'z', 'z'
 
     # menu
     for key in [
@@ -56,20 +54,18 @@ class PlayerX extends KeyBindingX
     $$.vt 'player.startMove', key, 'string'
 
     if movement.isPressed[key]
-      return @
+      return
 
     $.press "#{key}:down"
-    return @
 
   stopMove: (key) ->
 
     $$.vt 'player.stopMove', key, 'string'
 
     if movement.isPressed[key]
-      return @
+      return
 
     $.press "#{key}:up"
-    return @
 
   toggleQ: (key) ->
 
@@ -78,7 +74,9 @@ class PlayerX extends KeyBindingX
     $.press "alt + #{key}"
     member.toggle key
     skillTimer.listQ[player.current] = $.now()
-    return @
+
+    await $.sleep 1e3
+    menu.setVisibility false
 
   useE: (isHolding = false) ->
 
@@ -86,7 +84,7 @@ class PlayerX extends KeyBindingX
       $.press 'e'
       skillTimer.record 'start'
       skillTimer.record 'end'
-      return @
+      return
 
     $.press 'e:down'
     skillTimer.record 'start'
@@ -94,12 +92,14 @@ class PlayerX extends KeyBindingX
       $.press 'e:up'
       skillTimer.record 'end'
     , 1e3
-    return @
 
   useQ: ->
+
     $.press 'q'
     skillTimer.listQ[player.current] = $.now()
-    return @
+
+    await $.sleep 1e3
+    menu.setVisibility false
 
 # execute
 player = new PlayerX()

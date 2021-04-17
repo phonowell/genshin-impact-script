@@ -14,4 +14,3 @@ ts = {}
 
 import 'module'
 import 'action/*'
-import 'tactic'

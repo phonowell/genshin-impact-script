@@ -1,24 +1,26 @@
 ts.jump = 0
 
-# function
-
-jumpTwice = -> $.setTimeout player.jump, 200
-
 # binding
 
 player
-  .on 'jump:start', player.jump
-  .on 'jump:end', ->
+  .on 'jump:start', ->
+
+    player.jump()
     ts.jump = $.now()
-    if Config.data.betterJump
-      jumpTwice()
 
-  .on 'unhold:end', ->
-    $.press 'x:down'
-    $.setTimeout ->
-      $.press 'x:up'
+    unless Config.data.betterJump and !menu.checkVisibility()
+      return
 
-      if Config.data.betterJump
-        $.setTimeout player.jump, 50
+    await $.sleep 350
+    player.jump()
+    ts.jump = $.now()
 
-    , 100
+  .on 'unhold:start', ->
+
+    $.press 'x'
+
+    unless Config.data.betterJump and !menu.checkVisibility()
+      return
+
+    await $.sleep 200
+    player.jump()

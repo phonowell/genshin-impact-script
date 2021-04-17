@@ -1,91 +1,93 @@
 ningguang:
-  backend-e: 1
   cd-e: 12
   cd-q: 12
   color-avatar: 0xFFFDF8
   duration-e: 29
+  weapon: catalyst
 
 noelle:
-  backend-e: 1
   cd-e: 24
   cd-q: 15
   color-avatar: 0xDED8D2
   duration-e: 12
   duration-q: 15
+  weapon: claymore
 
 qiqi:
-  backend-e: 1
   cd-e: 30
   cd-q: 20
   color-avatar: 0xE1DBDE
   duration-e: 15
   duration-q: 15
+  weapon: sword
 
 rezor:
-  backend-e: 1
   cd-e: [6, 10]
   cd-q: 20
   color-avatar: 0xC6CAC6
   duration-q: 15
+  weapon: claymore
 
 rosaria:
   color-avatar: 0
 
 sucrose:
-  backend-e: 1
   cd-e: 14.5 # 15
   cd-q: 20
   color-avatar: 0xD4E9CC
   duration-q: 6
+  weapon: catalyst
 
 tartaglia:
   cd-e: 1 # 6
   cd-q: 15
   color-avatar: 0xB9733A
   duration-e: 30
+  weapon: bow
 
 venti:
-  backend-e: 1.5
   cd-e: [6, 15]
   cd-q: 15
   color-avatar: 0x5D917E
   duration-q: 8
+  weapon: bow
 
 xiangling:
-  backend-e: 1
   cd-e: 12
   cd-q: 20
   color-avatar: 0x38487B
   duration-e: 7
   duration-q: 10
+  weapon: polearm
 
 xiao:
   cd-e: 10
   color-avatar: 0x39483E
+  weapon: polearm
 
 xingqiu:
-  backend-e: 1
   cd-e: 21
   cd-q: 20
   color-avatar: 0x488892
   duration-e: 15
   duration-q: 15
+  weapon: sword
 
 xinyan:
-  backend-e: 1
   cd-e: 18
   cd-q: 15
   color-avatar: 0x503B40
   duration-e: 12
   duration-q: 2
+  weapon: claymore
 
 Yanfei:
   color-avatar: 0
 
 zhongli:
-  backend-e: -1.5
   cd-e: [4, 12.5] # [4, 12]
   cd-q: 12
   color-avatar: 0x4B3525
   duration-e: 20.5 # 20
   duration-q: 3.6
+  weapon: polearm

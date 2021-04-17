@@ -25,8 +25,10 @@ const pack_ = async (): Promise<void> => {
   }
 
   await $remove_('./dist')
-  await $copy_('./data/config.ini', `./dist/Genshin_Impact_Script_${version}`)
-  await $copy_('./source/index.ahk', `./dist/Genshin_Impact_Script_${version}`)
+  await $copy_('./data/config.ini', `./dist/Genshin_Impact_Script_CN_${version}`)
+  await $copy_('./source/index.ahk', `./dist/Genshin_Impact_Script_CN_${version}`)
+  await $copy_('./data/config-en.ini', `./dist/Genshin_Impact_Script_EN_${version}`, 'config.ini')
+  await $copy_('./source/index.ahk', `./dist/Genshin_Impact_Script_EN_${version}`)
 }
 
 // export

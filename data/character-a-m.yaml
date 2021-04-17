@@ -1,4 +1,3 @@
-# backend-e
 # cd-e
 # cd-q
 # color-avatar
@@ -6,6 +5,7 @@
 # duration-q
 # tactic
 # type-e
+# weapon
 
 aether:
   color-avatar: 0
@@ -14,22 +14,22 @@ albedo:
   color-avatar: 0
 
 amber:
-  backend-e: 1
   cd-e: 15
   cd-q: 12
   color-avatar: 0x5C4C63
   duration-e: 8
   duration-q: 2
+  weapon: bow
 
 ayaka:
   color-avatar: 0
 
 barbara:
-  backend-e: 1
   cd-e: 32
   cd-q: 20
   color-avatar: 0xDED3BE
   duration-e: 15
+  weapon: catalyst
 
 beidou:
   cd-e: 7.5
@@ -37,69 +37,71 @@ beidou:
   color-avatar: 0x4C332E
   duration-q: 15
   type-e: 1
+  weapon: claymore
 
 bennett:
-  backend-e: 1
   cd-e: [4.5, 10] # [5, 10]
   cd-q: 15
   color-avatar: 0xFBF3CF
   duration-q: 12
+  weapon: sword
 
 chongyun:
-  backend-e: 1
   cd-e: 15
   cd-q: 12
   color-avatar: 0xCDEFDF
   duration-e: 10
+  weapon: claymore
 
 diluc:
   color-avatar: 0
 
 diona:
-  backend-e: -1
   cd-e: [6, 15]
   cd-q: 20
   color-avatar: 0xFED6CE
   duration-e: [4, 10]
   duration-q: 12
+  weapon: bow
 
 eula:
   color-avatar: 0
 
 fischl:
-  backend-e: 1
   cd-e: 25
   cd-q: 15
   color-avatar: 0xFFE3A9
   duration-e: 10
   type-e: 1
+  weapon: bow
 
 ganyu:
-  backend-e: 1
   cd-e: 10
   cd-q: 15
   color-avatar: 0xBDCCC5
   duration-e: 6
   duration-q: 15
+  weapon: bow
 
 hu_tao:
   cd-e: 16
   cd-q: 15
   color-avatar: 0x7B5B61
   duration-e: 9
+  weapon: polearm
 
 jean:
-  backend-e: 1
   cd-e: 6
   color-avatar: 0xEED6C0
   type-e: 1
+  weapon: sword
 
 kaeya:
-  backend-e: 1
   cd-e: 6
   cd-q: 15
   color-avatar: 0x394E64
   duration-q: 8
+  weapon: sword
 
 keqing:
   cd-e: 7.5
@@ -107,28 +109,29 @@ keqing:
   color-avatar: 0xBEB1C3
   duration-e: 5
   type-e: 1
+  weapon: sword
 
 klee:
-  backend-e: 1
   cd-e: 20
   cd-q: 15
   color-avatar: 0xBE3A0E
   duration-q: 10
+  weapon: catalyst
 
 lisa:
-  backend-e: 1
   cd-e: [1, 16]
   cd-q: 20
   color-avatar: 0xB6A69B
   duration-q: 15
+  weapon: catalyst
 
 lumine:
   color-avatar: 0
 
 mona:
-  backend-e: 1
   cd-e: 12
   cd-q: 15
   color-avatar: 0x5A5064
   duration-e: 6
   duration-q: 4.5
+  weapon: catalyst
