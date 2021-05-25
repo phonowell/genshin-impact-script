@@ -1,28 +1,13 @@
 state.isSprinting = false
-state.isSprintSwimming = false
+state.isSwimming = false
 timer.sprint = ''
 ts.sprint = 0
 
 # function
 
-checkSwimming = ->
-
-  if player.name == 'mona'
-    return true
-
-  start = client.point [90, 90]
-
-  end = [
-    client.width
-    client.height
-  ]
-
-  point = $.findColor 0xFFE92C, start, end
-  return point[0] * point[1] > 0
-
 sprint = ->
 
-  if checkSwimming()
+  if statusChecker.checkIsSwimming()
     stopSprint()
     startSprint()
     return
@@ -31,7 +16,7 @@ sprint = ->
 
 startSprint = ->
 
-  if Config.data.quickDialog and menu.checkVisibility()
+  if Config.data.quickDialog and !statusChecker.checkIsActive()
     $.press 'esc'
     return
 
@@ -45,8 +30,8 @@ startSprint = ->
   unless player.isMoving
     player.startMove 'w'
 
-  if checkSwimming()
-    state.isSprintSwimming = true
+  if statusChecker.checkIsSwimming()
+    state.isSwimming = true
     $.clearInterval timer.sprint
     timer.sprint = $.setInterval swim, 1e3
     return
@@ -66,16 +51,16 @@ stopSprint = ->
 
   state.isSprinting = false
 
-  if state.isSprintSwimming
+  if state.isSwimming
     $.click 'right:up'
-    state.isSprintSwimming = false
+    state.isSwimming = false
 
   $.clearTimeout timer.sprint
   player.stopMove 'w'
 
 swim = ->
 
-  if checkSwimming()
+  if statusChecker.checkIsSwimming()
     return
 
   stopSprint()

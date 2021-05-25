@@ -14,7 +14,7 @@ startToggle = (key) ->
 
   $.press key
 
-  if menu.checkVisibility()
+  unless statusChecker.checkIsActive()
     return
 
   member.toggle key
@@ -39,7 +39,7 @@ startToggle = (key) ->
 
 stopToggle = ->
 
-  if menu.checkVisibility()
+  unless statusChecker.checkIsActive()
     return
 
   {name} = player

@@ -45,8 +45,7 @@ class ClientX extends KeyBindingX
       @emit 'enter'
       return
 
-  checkActive: ->
-    return WinActive "ahk_exe #{Config.data.process}"
+  checkActive: -> return WinActive "ahk_exe #{Config.data.process}"
 
   point: (input) ->
 
@@ -78,8 +77,20 @@ class ClientX extends KeyBindingX
       unless @[key]
         @[key] = 0
 
-    unless @width + 100 < A_ScreenWidth
+    if @left == 0 and @top == 0 and @width == A_ScreenWidth and @height == A_ScreenHeight
       @isFullScreen = true
+
+    unless @isFullScreen
+      @width = @width - 6
+      @height = @height - 29
+
+    # console.log [
+    #   "left: #{@left}"
+    #   "top: #{@top}"
+    #   "width: #{@width}"
+    #   "height: #{@height}"
+    #   "isFullScreen: #{@isFullScreen}"
+    # ]
 
   suspend: (isSuspend) ->
 

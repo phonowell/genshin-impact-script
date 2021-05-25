@@ -3,8 +3,6 @@ import 'include/shell-ahk'
 
 $ = $
 
-$.on 'l-button', ->
-  $.click 'right:down'
-  $.setTimeout ->
-    $.click 'right:up'
-  , 1e3
+$.on 'f12', ->
+  $.beep()
+  $.setFixed()

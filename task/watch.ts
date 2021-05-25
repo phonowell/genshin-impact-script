@@ -1,59 +1,45 @@
 import c2a from 'coffee-ahk'
+import sleep from 'fire-keeper/sleep_'
 import watch from 'fire-keeper/watch'
 
 // function
 
 class Compiler {
 
-  delay = 5e3
-  interval = 1e4
+  delay = 1e3
+  interval = 5e3
   isBusy = false
-  list: string[] = []
+  list: Set<string> = new Set()
 
   constructor() {
-    setInterval(() => {
-      this.next()
-    }, this.interval)
+    setInterval(this.next.bind(this), this.interval)
   }
 
-  add(
-    path: string
-  ): void {
+  async next(): Promise<void> {
 
-    if (!this.list.includes(path))
-      this.list.push(path)
-  }
-
-  next(): void {
-
-    if (!this.list?.length) return
+    if (!this.list.size) return
     if (this.isBusy) return
 
     this.isBusy = true
 
-    c2a(this.list.shift() as string, {
+    const source = [...this.list][0]
+    this.list.delete(source)
+
+    await c2a(source, {
       salt: 'genshin',
     })
-      .catch(e => {
-        console.log(e.stack)
-      })
-      .finally(() => {
-        setTimeout(() => {
-          this.isBusy = false
-        }, this.delay)
+      .catch(e => console.error(e))
+      .finally(async () => {
+        await sleep(this.delay)
+        this.isBusy = false
       })
   }
 }
 
 const main = (): void => {
-
   process.on('uncaughtException', e => console.error(e))
-
   const compiler = new Compiler()
-
-  watch('./source/**/*.coffee', () => {
-    compiler.add('./source/index.coffee')
-  })
+  watch('./source/**/*.coffee', () => compiler.list.add('./source/index.coffee'))
 }
 
 // export

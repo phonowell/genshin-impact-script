@@ -6,11 +6,11 @@ plugins:
   - "@typescript-eslint"
 
 extends:
-  - eslint:recommended
   - "plugin:@typescript-eslint/recommended"
+  - eslint:recommended
+  - react-app
 
 rules:
-
   no-await-in-loop: 1
   no-extra-parens:
     - warn
@@ -75,7 +75,7 @@ rules:
   prefer-named-capture-group: 0
   prefer-promise-reject-errors: 2
   radix: 2
-  require-await: 0
+  require-await: 2
   require-unicode-regexp: 0
   vars-on-top: 0
   wrap-iife: 2

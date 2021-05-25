@@ -26,9 +26,9 @@ class PlayerX extends KeyBindingX
     # others
     @bindEvent 'pick', 'f', 'prevent'
     @bindEvent 'unhold', 'x', 'prevent'
-    @bindEvent 'view', 'm-button'
 
     # unknown
+    @bindEvent 'm-button', 'm-button'
     @bindEvent 'g', 'g'
     @bindEvent 'p', 'p'
     @bindEvent 'v', 'v'
@@ -75,8 +75,9 @@ class PlayerX extends KeyBindingX
     member.toggle key
     skillTimer.listQ[player.current] = $.now()
 
-    await $.sleep 1e3
-    menu.setVisibility false
+    $.setTimeout ->
+      statusChecker.setIsActive true
+    , statusChecker.interval
 
   useE: (isHolding = false) ->
 
@@ -98,8 +99,9 @@ class PlayerX extends KeyBindingX
     $.press 'q'
     skillTimer.listQ[player.current] = $.now()
 
-    await $.sleep 1e3
-    menu.setVisibility false
+    $.setTimeout ->
+      statusChecker.setIsActive true
+    , statusChecker.interval
 
 # execute
 player = new PlayerX()

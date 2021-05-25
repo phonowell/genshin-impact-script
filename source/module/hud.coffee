@@ -17,7 +17,7 @@ class HudX
 
     return [
       left
-      client.vh 4 + 9 * (n + 1)
+      client.vh 22 + 9 * (n - 1)
     ]
 
   hide: -> for n in [1, 2, 3, 4, 5]

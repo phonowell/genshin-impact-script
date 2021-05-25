@@ -5,8 +5,7 @@ import 'console'
 
 import 'client'
 import 'hud'
-
-import 'menu'
+import 'status-checking'
 
 import 'character'
 import 'member'

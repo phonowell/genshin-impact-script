@@ -12,11 +12,11 @@ pick = ->
 
 skip = ->
 
-  unless menu.checkVisibility()
+  if statusChecker.checkIsActive()
     return false
 
-  start = client.point [65, 48]
-  end = client.point [70, 78]
+  start = client.point [65, 40]
+  end = client.point [70, 80]
 
   point = ''
   for color in [0x806200, 0xFFFFFF]

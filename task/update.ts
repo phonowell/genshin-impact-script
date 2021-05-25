@@ -15,10 +15,10 @@ type Package = {
 
 // function
 
-const main_ = async (): Promise<void> => {
+const main = async (): Promise<void> => {
 
   const source = './package.json'
-  const pkg: Package = await $read_(source) as Package
+  const pkg = await $read_<Package>(source)
   const listCmd: string[] = []
 
   if (pkg.dependencies)
@@ -49,4 +49,4 @@ const main_ = async (): Promise<void> => {
 }
 
 // export
-export default main_
+export default main

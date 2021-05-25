@@ -6,12 +6,12 @@ import _compact from 'lodash/compact'
 
 // interface
 
-type FnAsync = () => Promise<unknown>
+type FnAsync = <T>() => Promise<T>
 
 // function
 
-const ask_ = async (
-  list: string[]
+const ask = async (
+  list: string[],
 ): Promise<string> => {
 
   const answer = await $prompt_({
@@ -21,11 +21,11 @@ const ask_ = async (
     type: 'auto',
   })
   if (!answer) return ''
-  if (!list.includes(answer)) return ask_(list)
+  if (!list.includes(answer)) return ask(list)
   return answer
 }
 
-const load_ = async (): Promise<string[]> => {
+const load = async (): Promise<string[]> => {
 
   const listSource = await $source_([
     './task/*.js',
@@ -33,7 +33,7 @@ const load_ = async (): Promise<string[]> => {
     '!*.d.ts',
   ])
 
-  const listResult = listSource.map((source) => {
+  const listResult = listSource.map(source => {
     const basename = $getBasename(source)
     return basename === 'alice'
       ? ''
@@ -43,18 +43,18 @@ const load_ = async (): Promise<string[]> => {
   return _compact(listResult)
 }
 
-const main_ = async (): Promise<void> => {
+const main = async (): Promise<void> => {
 
   const task = $argv()._[0]
     ? $argv()._[0].toString()
-    : await (async () => ask_(await load_()))()
+    : await ask(await load())
 
   if (!task) return
-  await run_(task)
+  await run(task)
 }
 
-const run_ = async (
-  task: string
+const run = async (
+  task: string,
 ): Promise<void> => {
 
   const [source] = await $source_([
@@ -62,9 +62,9 @@ const run_ = async (
     `./task/${task}.ts`,
   ])
 
-  const fn_: FnAsync = (await import(source)).default
-  await fn_()
+  const fn: FnAsync = (await import(source)).default
+  await fn()
 }
 
 // execute
-main_()
+main()

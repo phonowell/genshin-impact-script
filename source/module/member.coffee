@@ -53,12 +53,12 @@ class MemberX extends EmitterShellX
 
     start = client.point [
       90
-      9 * (n + 1)
+      20 + 9 * (n - 1)
     ]
 
     end = client.point [
       96
-      9 * (n + 2)
+      20 + 9 * n
     ]
 
     return [start, end]

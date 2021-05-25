@@ -11,7 +11,11 @@ aether:
   color-avatar: 0
 
 albedo:
-  color-avatar: 0
+  cd-e: 4
+  cd-q: 12
+  color-avatar: 0xD2C6AD
+  duration-e: 30
+  weapon: sword
 
 amber:
   cd-e: 15
@@ -20,9 +24,6 @@ amber:
   duration-e: 8
   duration-q: 2
   weapon: bow
-
-ayaka:
-  color-avatar: 0
 
 barbara:
   cd-e: 32
@@ -65,7 +66,12 @@ diona:
   weapon: bow
 
 eula:
-  color-avatar: 0
+  cd-e: [4, 10]
+  cd-q: 20
+  color-avatar: 0x97C7CF
+  duration-e: [18, 7]
+  duration-q: 7
+  weapon: claymore
 
 fischl:
   cd-e: 25
@@ -126,7 +132,8 @@ lisa:
   weapon: catalyst
 
 lumine:
-  color-avatar: 0
+  color-avatar: 0xE7DEBD
+  weapon: sword
 
 mona:
   cd-e: 12

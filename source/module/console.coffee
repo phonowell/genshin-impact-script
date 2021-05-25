@@ -51,8 +51,8 @@ class ConsoleX
   pickColor: ->
 
     color = $.getColor()
-
     [x, y] = $.getPosition()
+
     x1 = $.round (x * 100) / client.width
     y1 = $.round (y * 100) / client.height
 

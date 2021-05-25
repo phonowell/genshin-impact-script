@@ -21,7 +21,8 @@ class TacticX
 
       delay = 300
       {name} = player
-      switch Character.data[name].weapon
+      {weapon} = Character.data[name]
+      switch weapon
         when 'bow'
           delay = 1500
           if name == 'ganyu'
@@ -42,6 +43,7 @@ class TacticX
           return
 
         @delay 100, callback
+
       return
 
     $.click 'left'
@@ -97,9 +99,10 @@ class TacticX
       @delay 100, next
     map.tt = =>
       $.press 'r'
-      await $.sleep 50
-      $.press 'r'
-      @delay 50, next
+      $.setTimeout =>
+        $.press 'r'
+        @delay 50, next
+      , 50
 
     callback = map[item]
     unless callback
@@ -222,7 +225,7 @@ class TacticX
 
   validate: ->
 
-    if menu.checkVisibility()
+    unless statusChecker.checkIsActive()
       return false
 
     name = player.name

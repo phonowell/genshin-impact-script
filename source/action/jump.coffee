@@ -8,19 +8,19 @@ player
     player.jump()
     ts.jump = $.now()
 
-    unless Config.data.betterJump and !menu.checkVisibility()
+    unless Config.data.betterJump and statusChecker.checkIsActive()
       return
 
-    await $.sleep 350
-    player.jump()
-    ts.jump = $.now()
+    $.setTimeout ->
+      player.jump()
+      ts.jump = $.now()
+    , 350
 
   .on 'unhold:start', ->
 
     $.press 'x'
 
-    unless Config.data.betterJump and !menu.checkVisibility()
+    unless Config.data.betterJump and statusChecker.checkIsActive()
       return
 
-    await $.sleep 200
-    player.jump()
+    $.setTimeout player.jump, 50
