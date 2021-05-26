@@ -12,23 +12,23 @@ A script based on `AHK` that provides a few small features for Genshin Impact pl
 
 ### Fast pickup/skip dialogue
 
-Quickly pick up items/skip conversations when `f` key is pressed.
+Quickly pick up items/skip conversations when `F` key is pressed.
 
 ### Better running/jumping
 
-Use better running when long pressing `right click`. Automatically open wind glider when jumping.
+Use better running when long pressing `Right Click`. Automatically open wind glider when jumping.
 
 ### Skill timer
 
 Display the cooldown time and effect duration of `E` skills.
 
-### Logon action
+### Debut action
 
-Configurable action when switching characters with `number keys`.
+Configurable action when switching characters with `Number Keys`.
 
 ### Custom Tactic Module
 
-You can configure custom battle moves for each character independently, and long press `right click` to cycle through them automatically.
+You can configure custom battle moves for each character independently, and long press `Right Click` to cycle through them automatically.
 
 ### Process priority adjustment
 
@@ -56,7 +56,7 @@ Finally, go to the unzipped folder and double-click `index.ahk` in it (you will 
 
 ### Skill Timer
 
-Before using this function, you need to identify the characters by the following action: Press `f12` key with the right avatar visible.
+Before using this function, you need to identify the characters by the following action: Press `F12` key with the right avatar visible.
 
 After changing the team lineup, you need to re-identify them.
 
@@ -72,7 +72,7 @@ The following characters are not supported right now:
 
 Refer to the [configuration](./data/config-en.ini) for details.
 
-When finished editing, press `ctrl + f5` to take effect instantly.
+When finished editing, press `Ctrl + F5` to take effect instantly.
 
 ### Characters
 
@@ -102,8 +102,8 @@ The type of appearance. Can be one of the following values:
 
 ## Note
 
-- All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `left ctrl` to `right ctrl`
-- Use `right click` for sprinting, not `left shift`
+- All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
+- Use `Right Click` for sprinting, not `Left Shift`
 - The game should run in `16:9` resolution
 - Avoid discussing the script in public
 

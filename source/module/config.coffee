@@ -13,7 +13,6 @@ class ConfigX
 
     # feature
     for key in [
-      'betterElementalVision'
       'betterJump'
       'betterSprint'
       'easySkillTimer'
