@@ -38,7 +38,7 @@ class PlayerX extends KeyBindingX
     # menu
     for key in [
       'esc'
-      'b', 'c', 'j', 'm'
+      'b', 'c', 'j', 'l', 'm', 'o'
       'f1', 'f2', 'f3', 'f4', 'f5'
     ]
       @bindEvent "menu-#{key}", key

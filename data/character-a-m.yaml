@@ -8,7 +8,8 @@
 # weapon
 
 aether:
-  color-avatar: 0
+  color-avatar: 0xCC864B
+  weapon: sword
 
 albedo:
   cd-e: 4
@@ -55,7 +56,11 @@ chongyun:
   weapon: claymore
 
 diluc:
-  color-avatar: 0
+  cd-e: 10
+  cd-q: 12
+  color-avatar: 0xCF3226
+  duration-q: 8
+  weapon: claymore
 
 diona:
   cd-e: [6, 15]

@@ -29,7 +29,11 @@ rezor:
   weapon: claymore
 
 rosaria:
-  color-avatar: 0
+  cd-e: 6
+  cd-q: 15
+  color-avatar: 0x9A4171
+  duration-q: 8
+  weapon: polearm
 
 sucrose:
   cd-e: 14.5 # 15
@@ -81,8 +85,12 @@ xinyan:
   duration-q: 2
   weapon: claymore
 
-Yanfei:
-  color-avatar: 0
+yanfei:
+  cd-e: 9
+  cd-q: 20
+  color-avatar: 0xEFAE9E
+  duration-q: 15
+  weapon: catalyst
 
 zhongli:
   cd-e: [4, 12.5] # [4, 12]

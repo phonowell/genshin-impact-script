@@ -6,7 +6,7 @@ ts.checkIsSwimming = 0
 # function
 class StatusCheckerX
 
-  interval: 500
+  interval: 300
   isActive: false
   # isAiming: false
   isSwimming: false
@@ -18,12 +18,17 @@ class StatusCheckerX
       return @isActive
     ts.checkIsActive = now
 
-    isActive = @checkPoint [1, 16], [4, 22]
+    isMenu = @checkPoint [94, 1], [99, 8], 0xECE5D8
+    if isMenu
+      @isActive = false
+      return false
+
+    isActive = @checkPoint [1, 16], [4, 22], 0xFFFFFF
     if isActive
       @isActive = true
       return true
 
-    isActive = @checkPoint [95, 2], [98, 7]
+    isActive = @checkPoint [95, 2], [98, 7], 0xFFFFFF
     if isActive
       @isActive = true
       return true

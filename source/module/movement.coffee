@@ -24,47 +24,40 @@ class MovementX extends KeyBindingX
     $$.vt 'movement.check', key, 'string'
     $$.vt 'movement.check', action, 'string'
 
-    if action == 'down' and @isPressed[key]
-      return
-    else if action == 'up' and !@isPressed[key]
-      return
+    if action == 'down' then @checkDown key
+    else if action == 'up' then @checkUp key
 
-    count = @checkMove()
+  checkDown: (key) ->
+
+    $$.vt 'movement.check', key, 'string'
+
+    if @isPressed[key]
+      return
+    @isPressed[key] = true
+    count = @count + 1
 
     if count and !@count
       player.emit 'move:start'
-    else if !count and @count
-      player.emit 'move:end'
-
     @count = count
 
-  checkMove: ->
+    recorder.record "#{key}:down"
+    $.press "#{key}:down"
 
-    count = 0
+  checkUp: (key) ->
 
-    for key in ['w', 'a', 's', 'd']
+    $$.vt 'movement.check', key, 'string'
 
-      if $.getState key
+    unless @isPressed[key]
+      return
+    @isPressed[key] = false
+    count = @count - 1
 
-        count = count + 1
+    if !count and @count
+      player.emit 'move:end'
+    @count = count
 
-        if @isPressed[key]
-          continue
-        @isPressed[key] = true
-
-        recorder.record "#{key}:down"
-        $.press "#{key}:down"
-
-      else
-
-        unless @isPressed[key]
-          continue
-        @isPressed[key] = false
-
-        recorder.record "#{key}:up"
-        $.press "#{key}:up"
-
-    return count
+    recorder.record "#{key}:up"
+    $.press "#{key}:up"
 
 # execute
 movement = new MovementX()
