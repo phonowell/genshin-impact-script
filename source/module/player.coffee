@@ -56,7 +56,9 @@ class PlayerX extends KeyBindingX
     if movement.isPressed[key]
       return
 
-    $.press "#{key}:down"
+    $.setTimeout ->
+      $.press "#{key}:down"
+    , 30
 
   stopMove: (key) ->
 
