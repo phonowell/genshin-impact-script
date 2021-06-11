@@ -67,7 +67,7 @@ class StatusCheckerX
       return @isSwimming
     ts.checkIsSwimming = now
 
-    isSwimming = @checkPoint [95, 95], [99, 99], 0xFFE92C
+    isSwimming = @checkPoint [88, 95], [99, 99], 0xFFE92C
     if isSwimming
       @isSwimming = true
       return true

@@ -40,7 +40,7 @@ Press `F10` to record your action; press `F11` to replay.
 
 ## Usage
 
-**Note that since `0.0.15`, you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
+**Note that since `0.0.16`, you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
 ### Via `.exe`
 
@@ -50,7 +50,7 @@ Go to the unpacked folder and double-click `index.exe` in it (you will be prompt
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `AHK` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.15/Genshin_Impact_Script_EN_0.0.15.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.16/Genshin_Impact_Script_EN_0.0.16.zip) and unzip it.
 
 Finally, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 

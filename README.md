@@ -44,7 +44,7 @@
 
 ## 使用
 
-**注意，自`0.0.15`后，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
+**注意，自`0.0.16`后，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
 
 ### 使用`.exe`
 
@@ -54,7 +54,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.15/Genshin_Impact_Script_CN_0.0.15.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.16/Genshin_Impact_Script_CN_0.0.16.zip)并解压。
 
 最后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 

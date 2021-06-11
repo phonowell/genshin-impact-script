@@ -51,8 +51,11 @@ class RecorderX
       $.beep()
       return
 
-    [delay, key] = list[n]
+    [delay, key, position] = list[n]
     $.setTimeout =>
+      if ($.includes key, 'l-button') && position
+        point = client.point $.split position, ','
+        $.move point
       $.trigger key
       @current++
       @next list
@@ -74,7 +77,14 @@ class RecorderX
     delay = now - @ts
     @ts = now
 
-    $.push @list, {delay, key}
+    position = ''
+    if $.includes key, 'l-button'
+      [x, y] = $.getPosition()
+      x = $.round x * 100 / client.width
+      y = $.round y * 100 / client.height
+      position = $.join [x, y], ','
+
+    $.push @list, {delay, key, position}
 
   replay: ->
 
@@ -86,8 +96,8 @@ class RecorderX
       unless item
         continue
 
-      [delay, key] = $.split item, '|'
-      $.push list, [delay, key]
+      [delay, key, position] = $.split item, '|'
+      $.push list, [delay, key, position]
 
     $.setTimeout =>
       @log 'start playing'
@@ -102,7 +112,13 @@ class RecorderX
 
     result = ''
     for item in @list
-      result = "#{result}#{item.delay}|#{item.key}\n"
+      line = $.join [
+        item.delay
+        item.key
+        item.position
+      ], '|'
+      line = $.trim line, '|'
+      result = "#{result}#{line}\n"
     @file.save result
 
   start: ->
