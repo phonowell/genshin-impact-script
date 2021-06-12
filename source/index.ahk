@@ -1363,13 +1363,17 @@ global skillTimer := new SkillTimerX()
 ticker.on.Call("change", Func("genshin_95"))
 class RecorderX {
   current := 0
-  file := ""
+  file := {}
   isActive := false
   list := []
+  listHotkey := ["h", "i", "n", "t", "u", "y"]
   listIgnore := []
   ts := 0
   __New() {
-    this.file := $.file.Call("replay.txt")
+    this.file.replay := $.file.Call("replay.txt")
+    for __index_for__, key in this.listHotkey {
+      this.file[__ci_genshin__.Call(key)] := $.file.Call("replay-" . (key) . ".txt")
+    }
     client.on.Call("leave", this.stop)
     $.on.Call("f11", this.replay)
     $.on.Call("f10", Func("genshin_94").Bind(this))
@@ -1379,9 +1383,9 @@ class RecorderX {
   next := Func("genshin_91").Bind(this)
   record := Func("genshin_89").Bind(this)
   replay := Func("genshin_88").Bind(this)
-  save := Func("genshin_86").Bind(this)
-  start := Func("genshin_85").Bind(this)
-  stop := Func("genshin_84").Bind(this)
+  save := Func("genshin_87").Bind(this)
+  start := Func("genshin_86").Bind(this)
+  stop := Func("genshin_85").Bind(this)
 }
 global recorder := new RecorderX()
 class KeyBindingX extends EmitterShellX {
@@ -1391,8 +1395,8 @@ class KeyBindingX extends EmitterShellX {
     base.__New()
     client.on.Call("leave", this.resetKey)
   }
-  bindEvent := Func("genshin_83").Bind(this)
-  resetKey := Func("genshin_80").Bind(this)
+  bindEvent := Func("genshin_84").Bind(this)
+  resetKey := Func("genshin_81").Bind(this)
 }
 class PlayerX extends KeyBindingX {
   current := 0
@@ -1420,14 +1424,17 @@ class PlayerX extends KeyBindingX {
     for __index_for__, key in ["esc", "b", "c", "j", "l", "m", "o", "f1", "f2", "f3", "f4", "f5"] {
       this.bindEvent.Call("menu-" . (key) . "", key)
     }
+    for __index_for__, key in recorder.listHotkey {
+      this.bindEvent.Call("hotkey-" . (key) . "", key)
+    }
   }
-  jump := Func("genshin_79").Bind(this)
-  sprint := Func("genshin_78").Bind(this)
-  startMove := Func("genshin_77").Bind(this)
-  stopMove := Func("genshin_75").Bind(this)
-  toggleQ := Func("genshin_74").Bind(this)
-  useE := Func("genshin_72").Bind(this)
-  useQ := Func("genshin_70").Bind(this)
+  jump := Func("genshin_80").Bind(this)
+  sprint := Func("genshin_79").Bind(this)
+  startMove := Func("genshin_78").Bind(this)
+  stopMove := Func("genshin_76").Bind(this)
+  toggleQ := Func("genshin_75").Bind(this)
+  useE := Func("genshin_73").Bind(this)
+  useQ := Func("genshin_71").Bind(this)
 }
 global player := new PlayerX()
 class MovementX extends KeyBindingX {
@@ -1435,14 +1442,14 @@ class MovementX extends KeyBindingX {
   __New() {
     base.__New()
     for __index_for__, key in ["w", "a", "s", "d"] {
-      $.on.Call(key, Func("genshin_68").Bind(key, this))
-      $.on.Call("" . (key) . ":up", Func("genshin_67").Bind(key, this))
+      $.on.Call(key, Func("genshin_69").Bind(key, this))
+      $.on.Call("" . (key) . ":up", Func("genshin_68").Bind(key, this))
     }
-    player.on.Call("move:start", Func("genshin_66")).on.Call("move:end", Func("genshin_65"))
+    player.on.Call("move:start", Func("genshin_67")).on.Call("move:end", Func("genshin_66"))
   }
-  check := Func("genshin_64").Bind(this)
-  checkDown := Func("genshin_63").Bind(this)
-  checkUp := Func("genshin_62").Bind(this)
+  check := Func("genshin_65").Bind(this)
+  checkDown := Func("genshin_64").Bind(this)
+  checkUp := Func("genshin_63").Bind(this)
 }
 global movement := new MovementX()
 class TacticX {
@@ -1452,23 +1459,26 @@ class TacticX {
     player.on.Call("attack:start", this.start).on.Call("attack:end", this.stop)
     member.on.Call("change", this.reset)
   }
-  attack := Func("genshin_61").Bind(this)
-  delay := Func("genshin_58").Bind(this)
-  execute := Func("genshin_57").Bind(this)
-  get := Func("genshin_35").Bind(this)
-  jump := Func("genshin_34").Bind(this)
-  ongoing := Func("genshin_33").Bind(this)
-  onMoving := Func("genshin_32").Bind(this)
-  reset := Func("genshin_31").Bind(this)
-  sprint := Func("genshin_30").Bind(this)
-  start := Func("genshin_29").Bind(this)
-  stop := Func("genshin_28").Bind(this)
-  toggle := Func("genshin_27").Bind(this)
-  useE := Func("genshin_26").Bind(this)
-  validate := Func("genshin_25").Bind(this)
-  wait := Func("genshin_24").Bind(this)
+  attack := Func("genshin_62").Bind(this)
+  delay := Func("genshin_59").Bind(this)
+  execute := Func("genshin_58").Bind(this)
+  get := Func("genshin_36").Bind(this)
+  jump := Func("genshin_35").Bind(this)
+  ongoing := Func("genshin_34").Bind(this)
+  onMoving := Func("genshin_33").Bind(this)
+  reset := Func("genshin_32").Bind(this)
+  sprint := Func("genshin_31").Bind(this)
+  start := Func("genshin_30").Bind(this)
+  stop := Func("genshin_29").Bind(this)
+  toggle := Func("genshin_28").Bind(this)
+  useE := Func("genshin_27").Bind(this)
+  validate := Func("genshin_26").Bind(this)
+  wait := Func("genshin_25").Bind(this)
 }
 global tactic := new TacticX()
+for __index_for__, key in recorder.listHotkey {
+  player.on.Call("hotkey-" . (key) . ":start", Func("genshin_24").Bind(key))
+}
 ts.jump := 0
 player.on.Call("jump:start", Func("genshin_23")).on.Call("jump:end", Func("genshin_22")).on.Call("unhold:start", Func("genshin_20"))
 timer.pick := ""
@@ -1709,13 +1719,19 @@ genshin_23() {
   $.press.Call("space:down")
   ts.jump := $.now.Call()
 }
-genshin_24(this, time, callback) {
+genshin_24(key) {
+  if !(statusChecker.checkIsActive.Call()) {
+    return
+  }
+  recorder.replay.Call(key)
+}
+genshin_25(this, time, callback) {
   if !(($.type.Call(time)) == "number") {
     throw Exception("tactic.wait: invalid time " . (time) . "")
   }
   this.delay.Call(time, callback)
 }
-genshin_25(this) {
+genshin_26(this) {
   if !(statusChecker.checkIsActive.Call()) {
     return false
   }
@@ -1729,7 +1745,7 @@ genshin_25(this) {
   }
   return listTactic
 }
-genshin_26(this, isHolding, callback) {
+genshin_27(this, isHolding, callback) {
   $$.vt.Call("tactic.useE", callback, "function")
   if !(skillTimer.listCountDown[__ci_genshin__.Call(player.current)]) {
     player.useE.Call(isHolding)
@@ -1738,7 +1754,7 @@ genshin_26(this, isHolding, callback) {
   }
   this.delay.Call(50, callback)
 }
-genshin_27(this, n, callback) {
+genshin_28(this, n, callback) {
   $$.vt.Call("tactic.toggle", n, "number")
   $$.vt.Call("tactic.toggle", callback, "function")
   if !(this.isActive) {
@@ -1748,14 +1764,14 @@ genshin_27(this, n, callback) {
   member.toggle.Call(n)
   this.delay.Call(200, callback)
 }
-genshin_28(this) {
+genshin_29(this) {
   if (this.isActive) {
     this.reset.Call()
     return
   }
   $.click.Call("left:up")
 }
-genshin_29(this) {
+genshin_30(this) {
   if (this.isActive) {
     return
   }
@@ -1771,19 +1787,19 @@ genshin_29(this) {
   }
   this.execute.Call(listTactic, 0, 0)
 }
-genshin_30(this, callback) {
+genshin_31(this, callback) {
   $$.vt.Call("tactic.sprint", callback, "function")
   player.sprint.Call()
   this.delay.Call(100, callback)
 }
-genshin_31(this) {
+genshin_32(this) {
   $.clearTimeout.Call(timer.tacticDelay)
   if (this.isPressed["l-button"]) {
     $.click.Call("left:up")
   }
   this.isActive := false
 }
-genshin_32(this, cbA, cbB, isNot := false) {
+genshin_33(this, cbA, cbB, isNot := false) {
   $$.vt.Call("tactic.onMoving", cbA, "function")
   $$.vt.Call("tactic.onMoving", cbB, "function")
   if !(isNot) {
@@ -1800,7 +1816,7 @@ genshin_32(this, cbA, cbB, isNot := false) {
     }
   }
 }
-genshin_33(this, cbA, cbB, isNot := false) {
+genshin_34(this, cbA, cbB, isNot := false) {
   $$.vt.Call("tactic.ongoing", cbA, "function")
   $$.vt.Call("tactic.ongoing", cbB, "function")
   if !(isNot) {
@@ -1817,7 +1833,7 @@ genshin_33(this, cbA, cbB, isNot := false) {
     }
   }
 }
-genshin_34(this, callback) {
+genshin_35(this, callback) {
   $$.vt.Call("tactic.jump", callback, "function")
   player.jump.Call()
   if !(player.isMoving) {
@@ -1826,7 +1842,7 @@ genshin_34(this, callback) {
     this.delay.Call(550, callback)
   }
 }
-genshin_35(this, list, g := 0, i := 0) {
+genshin_36(this, list, g := 0, i := 0) {
   if (g >= $.length.Call(list)) {
     return false
   }
@@ -1836,74 +1852,74 @@ genshin_35(this, list, g := 0, i := 0) {
   }
   return group[__ci_genshin__.Call(i)]
 }
-genshin_36(item, next, this) {
+genshin_37(item, next, this) {
   this.wait.Call(item, next)
-}
-genshin_37(next, this) {
-  $.press.Call("r")
-  this.delay.Call(50, next)
 }
 genshin_38(next, this) {
   $.press.Call("r")
-  $.setTimeout.Call(Func("genshin_37").Bind(next, this), 50)
+  this.delay.Call(50, next)
 }
 genshin_39(next, this) {
   $.press.Call("r")
-  this.delay.Call(100, next)
+  $.setTimeout.Call(Func("genshin_38").Bind(next, this), 50)
 }
 genshin_40(next, this) {
-  this.sprint.Call(next)
+  $.press.Call("r")
+  this.delay.Call(100, next)
 }
 genshin_41(next, this) {
-  this.jump.Call(next)
+  this.sprint.Call(next)
 }
 genshin_42(next, this) {
-  this.useE.Call(true, next)
+  this.jump.Call(next)
 }
 genshin_43(next, this) {
+  this.useE.Call(true, next)
+}
+genshin_44(next, this) {
   $.press.Call("e")
   this.delay.Call(100, next)
 }
-genshin_44(next, this) {
-  this.useE.Call(false, Func("genshin_43").Bind(next, this))
-}
 genshin_45(next, this) {
-  this.useE.Call(false, next)
+  this.useE.Call(false, Func("genshin_44").Bind(next, this))
 }
 genshin_46(next, this) {
-  this.attack.Call(true, next)
+  this.useE.Call(false, next)
 }
 genshin_47(next, this) {
+  this.attack.Call(true, next)
+}
+genshin_48(next, this) {
   this.attack.Call(false, next)
 }
-genshin_48(listTactic, g, this) {
+genshin_49(listTactic, g, this) {
   this.execute.Call(listTactic, g + 1, 0)
 }
-genshin_49(next, listTactic, g, this) {
-  this.onMoving.Call(next, Func("genshin_48").Bind(listTactic, g, this))
+genshin_50(next, listTactic, g, this) {
+  this.onMoving.Call(next, Func("genshin_49").Bind(listTactic, g, this))
 }
-genshin_50(listTactic, g, this) {
+genshin_51(listTactic, g, this) {
   this.execute.Call(listTactic, g + 1, 0)
 }
-genshin_51(next, listTactic, g, this) {
-  this.ongoing.Call(next, Func("genshin_50").Bind(listTactic, g, this))
+genshin_52(next, listTactic, g, this) {
+  this.ongoing.Call(next, Func("genshin_51").Bind(listTactic, g, this))
 }
-genshin_52(listTactic, g, this) {
+genshin_53(listTactic, g, this) {
   this.execute.Call(listTactic, g + 1, 0)
 }
-genshin_53(next, listTactic, g, this) {
-  this.onMoving.Call(next, Func("genshin_52").Bind(listTactic, g, this), "not")
+genshin_54(next, listTactic, g, this) {
+  this.onMoving.Call(next, Func("genshin_53").Bind(listTactic, g, this), "not")
 }
-genshin_54(listTactic, g, this) {
+genshin_55(listTactic, g, this) {
   this.execute.Call(listTactic, g + 1, 0)
 }
-genshin_55(next, listTactic, g, this) {
-  this.ongoing.Call(next, Func("genshin_54").Bind(listTactic, g, this), "not")
+genshin_56(next, listTactic, g, this) {
+  this.ongoing.Call(next, Func("genshin_55").Bind(listTactic, g, this), "not")
 }
-genshin_56(listTactic, g, i, this) {
+genshin_57(listTactic, g, i, this) {
   this.execute.Call(listTactic, g, i + 1)
 }
-genshin_57(this, listTactic, g := 0, i := 0) {
+genshin_58(this, listTactic, g := 0, i := 0) {
   item := this.get.Call(listTactic, g, i)
   if !(item) {
     this.execute.Call(listTactic)
@@ -1912,28 +1928,28 @@ genshin_57(this, listTactic, g := 0, i := 0) {
   if !(item == $.toLowerCase.Call(item)) {
     item := "" . (item) . "~"
   }
-  next := Func("genshin_56").Bind(listTactic, g, i, this)
+  next := Func("genshin_57").Bind(listTactic, g, i, this)
   map := {}
-  map["!@e"] := Func("genshin_55").Bind(next, listTactic, g, this)
-  map["!@m"] := Func("genshin_53").Bind(next, listTactic, g, this)
-  map["@e"] := Func("genshin_51").Bind(next, listTactic, g, this)
-  map["@m"] := Func("genshin_49").Bind(next, listTactic, g, this)
-  map.a := Func("genshin_47").Bind(next, this)
-  map["A~"] := Func("genshin_46").Bind(next, this)
-  map.e := Func("genshin_45").Bind(next, this)
-  map.ee := Func("genshin_44").Bind(next, this)
-  map["E~"] := Func("genshin_42").Bind(next, this)
-  map.j := Func("genshin_41").Bind(next, this)
-  map.s := Func("genshin_40").Bind(next, this)
-  map.t := Func("genshin_39").Bind(next, this)
-  map.tt := Func("genshin_38").Bind(next, this)
+  map["!@e"] := Func("genshin_56").Bind(next, listTactic, g, this)
+  map["!@m"] := Func("genshin_54").Bind(next, listTactic, g, this)
+  map["@e"] := Func("genshin_52").Bind(next, listTactic, g, this)
+  map["@m"] := Func("genshin_50").Bind(next, listTactic, g, this)
+  map.a := Func("genshin_48").Bind(next, this)
+  map["A~"] := Func("genshin_47").Bind(next, this)
+  map.e := Func("genshin_46").Bind(next, this)
+  map.ee := Func("genshin_45").Bind(next, this)
+  map["E~"] := Func("genshin_43").Bind(next, this)
+  map.j := Func("genshin_42").Bind(next, this)
+  map.s := Func("genshin_41").Bind(next, this)
+  map.t := Func("genshin_40").Bind(next, this)
+  map.tt := Func("genshin_39").Bind(next, this)
   callback := map[__ci_genshin__.Call(item)]
   if !(callback) {
-    callback := Func("genshin_36").Bind(item, next, this)
+    callback := Func("genshin_37").Bind(item, next, this)
   }
   callback.Call()
 }
-genshin_58(this, time, callback) {
+genshin_59(this, time, callback) {
   $$.vt.Call("tactic.delay", time, "number")
   $$.vt.Call("tactic.delay", callback, "function")
   if !(this.isActive) {
@@ -1942,19 +1958,19 @@ genshin_58(this, time, callback) {
   $.clearTimeout.Call(timer.tacticDelay)
   timer.tacticDelay := $.setTimeout.Call(callback, time)
 }
-genshin_59(callback, this) {
+genshin_60(callback, this) {
   this.jump.Call(callback)
 }
-genshin_60(callback, this) {
+genshin_61(callback, this) {
   $.click.Call("left:up")
   this.isPressed["l-button"] := false
   if (player.isMoving && player.name == "klee") {
-    this.delay.Call(200, Func("genshin_59").Bind(callback, this))
+    this.delay.Call(200, Func("genshin_60").Bind(callback, this))
     return
   }
   this.delay.Call(100, callback)
 }
-genshin_61(this, isCharged, callback) {
+genshin_62(this, isCharged, callback) {
   $$.vt.Call("tactic.attack", callback, "function")
   if (isCharged) {
     $.click.Call("left:down")
@@ -1981,13 +1997,13 @@ genshin_61(this, isCharged, callback) {
         }
       }
     }
-    this.delay.Call(delay, Func("genshin_60").Bind(callback, this))
+    this.delay.Call(delay, Func("genshin_61").Bind(callback, this))
     return
   }
   $.click.Call("left")
   this.delay.Call(200, callback)
 }
-genshin_62(this, key) {
+genshin_63(this, key) {
   $$.vt.Call("movement.check", key, "string")
   if !(this.isPressed[__ci_genshin__.Call(key)]) {
     return
@@ -2001,7 +2017,7 @@ genshin_62(this, key) {
   recorder.record.Call("" . (key) . ":up")
   $.press.Call("" . (key) . ":up")
 }
-genshin_63(this, key) {
+genshin_64(this, key) {
   $$.vt.Call("movement.check", key, "string")
   if (this.isPressed[__ci_genshin__.Call(key)]) {
     return
@@ -2015,7 +2031,7 @@ genshin_63(this, key) {
   recorder.record.Call("" . (key) . ":down")
   $.press.Call("" . (key) . ":down")
 }
-genshin_64(this, key, action) {
+genshin_65(this, key, action) {
   $$.vt.Call("movement.check", key, "string")
   $$.vt.Call("movement.check", action, "string")
   if (action == "down") {
@@ -2024,37 +2040,37 @@ genshin_64(this, key, action) {
     this.checkUp.Call(key)
   }
 }
-genshin_65() {
+genshin_66() {
   if !(player.isMoving) {
     return
   }
   player.isMoving := false
 }
-genshin_66() {
+genshin_67() {
   if (player.isMoving) {
     return
   }
   player.isMoving := true
 }
-genshin_67(key, this) {
+genshin_68(key, this) {
   this.check.Call(key, "up")
 }
-genshin_68(key, this) {
+genshin_69(key, this) {
   this.check.Call(key, "down")
 }
-genshin_69() {
+genshin_70() {
   statusChecker.setIsActive.Call(true)
 }
-genshin_70(this) {
+genshin_71(this) {
   $.press.Call("q")
   skillTimer.listQ[__ci_genshin__.Call(player.current)] := $.now.Call()
-  $.setTimeout.Call(Func("genshin_69"), statusChecker.interval)
+  $.setTimeout.Call(Func("genshin_70"), statusChecker.interval)
 }
-genshin_71() {
+genshin_72() {
   $.press.Call("e:up")
   skillTimer.record.Call("end")
 }
-genshin_72(this, isHolding := false) {
+genshin_73(this, isHolding := false) {
   if !(isHolding) {
     $.press.Call("e")
     skillTimer.record.Call("start")
@@ -2063,43 +2079,43 @@ genshin_72(this, isHolding := false) {
   }
   $.press.Call("e:down")
   skillTimer.record.Call("start")
-  $.setTimeout.Call(Func("genshin_71"), 1000)
+  $.setTimeout.Call(Func("genshin_72"), 1000)
 }
-genshin_73() {
+genshin_74() {
   statusChecker.setIsActive.Call(true)
 }
-genshin_74(this, key) {
+genshin_75(this, key) {
   $$.vt.Call("player.toggleQ", key, "number")
   $.press.Call("alt + " . (key) . "")
   member.toggle.Call(key)
   skillTimer.listQ[__ci_genshin__.Call(player.current)] := $.now.Call()
-  $.setTimeout.Call(Func("genshin_73"), statusChecker.interval)
+  $.setTimeout.Call(Func("genshin_74"), statusChecker.interval)
 }
-genshin_75(this, key) {
+genshin_76(this, key) {
   $$.vt.Call("player.stopMove", key, "string")
   if (movement.isPressed[__ci_genshin__.Call(key)]) {
     return
   }
   $.press.Call("" . (key) . ":up")
 }
-genshin_76(key) {
+genshin_77(key) {
   $.press.Call("" . (key) . ":down")
 }
-genshin_77(this, key) {
+genshin_78(this, key) {
   $$.vt.Call("player.startMove", key, "string")
   if (movement.isPressed[__ci_genshin__.Call(key)]) {
     return
   }
-  $.setTimeout.Call(Func("genshin_76").Bind(key), 30)
+  $.setTimeout.Call(Func("genshin_77").Bind(key), 30)
 }
-genshin_78(this) {
+genshin_79(this) {
   $.click.Call("right")
   ts.sprint := $.now.Call()
 }
-genshin_79(this) {
+genshin_80(this) {
   $.press.Call("space")
 }
-genshin_80(this) {
+genshin_81(this) {
   for key, value in this.isPressed {
     if (this.isPrevented[__ci_genshin__.Call(key)]) {
       continue
@@ -2114,7 +2130,7 @@ genshin_80(this) {
   }
   return this
 }
-genshin_81(key, name, this) {
+genshin_82(key, name, this) {
   if !(this.isPressed[__ci_genshin__.Call(key)]) {
     return
   }
@@ -2125,7 +2141,7 @@ genshin_81(key, name, this) {
   }
   this.emit.Call("" . (name) . ":end", key)
 }
-genshin_82(key, name, this) {
+genshin_83(key, name, this) {
   if (this.isPressed[__ci_genshin__.Call(key)]) {
     return
   }
@@ -2136,17 +2152,17 @@ genshin_82(key, name, this) {
   }
   this.emit.Call("" . (name) . ":start", key)
 }
-genshin_83(this, name, key, prevent := false) {
+genshin_84(this, name, key, prevent := false) {
   $$.vt.Call("keyBinding.bindEvent", name, "string")
   $$.vt.Call("keyBinding.bindEvent", "number", "string")
   if (prevent) {
     this.isPrevented[__ci_genshin__.Call(key)] := true
   }
-  $.on.Call(key, Func("genshin_82").Bind(key, name, this))
-  $.on.Call("" . (key) . ":up", Func("genshin_81").Bind(key, name, this))
+  $.on.Call(key, Func("genshin_83").Bind(key, name, this))
+  $.on.Call("" . (key) . ":up", Func("genshin_82").Bind(key, name, this))
   return this
 }
-genshin_84(this) {
+genshin_85(this) {
   if !(this.isActive) {
     return
   }
@@ -2154,7 +2170,7 @@ genshin_84(this) {
   this.log.Call("end recording")
   $.beep.Call()
 }
-genshin_85(this) {
+genshin_86(this) {
   if (this.isActive) {
     return
   }
@@ -2164,7 +2180,7 @@ genshin_85(this) {
   this.log.Call("start recording")
   $.beep.Call()
 }
-genshin_86(this) {
+genshin_87(this) {
   if !($.length.Call(this.list)) {
     return
   }
@@ -2174,17 +2190,16 @@ genshin_86(this) {
     line := $.trim.Call(line, "|")
     result := "" . (result) . "" . (line) . "`n"
   }
-  this.file.save.Call(result)
+  this.file.replay.save.Call(result)
 }
-genshin_87(list, this) {
-  this.log.Call("start playing")
-  $.beep.Call()
-  this.next.Call(list)
-}
-genshin_88(this) {
+genshin_88(this, key := "replay") {
   list := []
   this.current := 0
-  for __index_for__, item in $.split.Call(this.file.load.Call(), "`n") {
+  content := this.file[__ci_genshin__.Call(key)].load.Call()
+  if !(content) {
+    return
+  }
+  for __index_for__, item in $.split.Call(content, "`n") {
     if !(item) {
       continue
     }
@@ -2194,7 +2209,9 @@ genshin_88(this) {
     position := __array__[3]
     $.push.Call(list, [delay, key, position])
   }
-  $.setTimeout.Call(Func("genshin_87").Bind(list, this), 500)
+  this.log.Call("start playing")
+  $.beep.Call()
+  this.next.Call(list)
 }
 genshin_89(this, key) {
   $$.vt.Call("record.record", key, "string")
@@ -2539,7 +2556,7 @@ genshin_117(this) {
     return this.isActive
   }
   ts.checkIsActive := now
-  isMenu := this.checkPoint.Call([94, 1], [99, 8], 0xECE5D8)
+  isMenu := this.checkPoint.Call([94, 1], [99, 8], 0x3B4255)
   if (isMenu) {
     this.isActive := false
     return false

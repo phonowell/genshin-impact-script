@@ -1,15 +1,18 @@
 class RecorderX
 
   current: 0
-  file: ''
+  file: {}
   isActive: false
   list: []
+  listHotkey: ['h', 'i', 'n', 't', 'u', 'y']
   listIgnore: []
   ts: 0
 
   constructor: ->
 
-    @file = $.file 'replay.txt'
+    @file.replay = $.file 'replay.txt'
+    for key in @listHotkey
+      @file[key] = $.file "replay-#{key}.txt"
 
     client.on 'leave', @stop
 
@@ -86,12 +89,16 @@ class RecorderX
 
     $.push @list, {delay, key, position}
 
-  replay: ->
+  replay: (key = 'replay') ->
 
     list = []
     @current = 0
 
-    for item in $.split @file.load(), '\n'
+    content = @file[key].load()
+    unless content
+      return
+
+    for item in $.split content, '\n'
 
       unless item
         continue
@@ -99,11 +106,9 @@ class RecorderX
       [delay, key, position] = $.split item, '|'
       $.push list, [delay, key, position]
 
-    $.setTimeout =>
-      @log 'start playing'
-      $.beep()
-      @next list
-    , 500
+    @log 'start playing'
+    $.beep()
+    @next list
 
   save: ->
 
@@ -119,7 +124,7 @@ class RecorderX
       ], '|'
       line = $.trim line, '|'
       result = "#{result}#{line}\n"
-    @file.save result
+    @file.replay.save result
 
   start: ->
 

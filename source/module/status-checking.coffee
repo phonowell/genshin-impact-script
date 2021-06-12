@@ -18,7 +18,7 @@ class StatusCheckerX
       return @isActive
     ts.checkIsActive = now
 
-    isMenu = @checkPoint [94, 1], [99, 8], 0xECE5D8
+    isMenu = @checkPoint [94, 1], [99, 8], 0x3B4255
     if isMenu
       @isActive = false
       return false

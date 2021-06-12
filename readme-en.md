@@ -28,7 +28,7 @@ Configurable action when switching characters with `Number Keys`.
 
 ### Custom Tactic Module
 
-You can configure custom battle moves for each character independently, and long press `Right Click` to cycle through them automatically.
+You can configure custom battle moves for each character independently, and long press `Left Click` to cycle through them automatically.
 
 ### Process priority adjustment
 
@@ -38,9 +38,13 @@ Set the process priority to the lowest when the game window is inactive.
 
 Press `F10` to record your action; press `F11` to replay.
 
+### Extended hotkeys
+
+The following hotkeys have been added: `H`, `I`, `N`, `T`, `U`, `Y`; their functions can be freely configured.
+
 ## Usage
 
-**Note that since `0.0.16`, you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
+**Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
 ### Via `.exe`
 
@@ -50,7 +54,7 @@ Go to the unpacked folder and double-click `index.exe` in it (you will be prompt
 
 First, go to [ahk official website](https://www.autohotkey.com/) and install `AHK` (1.33+, do not use v2 version).
 
-Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.16/Genshin_Impact_Script_EN_0.0.16.zip) and unzip it.
+Then, download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.17/Genshin_Impact_Script_EN_0.0.17.zip) and unzip it.
 
 Finally, go to the unzipped folder and double-click `index.ahk` in it (you will be prompted whether to apply administrator privileges, select Apply).
 
@@ -96,6 +100,14 @@ The type of appearance. Can be one of the following values:
 - `0` Off
 - `1` Uses the corresponding `E` skill depending on the length of time the number key is pressed
 - `2` Uses `E` skill (hold)
+
+### Extended hotkeys
+
+First, use the `Record/replay module` to record the action you want to use.
+
+Then, rename the replay file with the key suffix you want to bind it to (for example, when you want to bind the action to `T`, you need to rename `replay.txt` to `replay-t.txt`).
+
+After that, you can press the corresponding button to play the action in the game.
 
 ## Note
 

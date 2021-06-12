@@ -43,6 +43,10 @@ class PlayerX extends KeyBindingX
     ]
       @bindEvent "menu-#{key}", key
 
+    # custom hotkey
+    for key in recorder.listHotkey
+      @bindEvent "hotkey-#{key}", key
+
   jump: -> $.press 'space'
 
   sprint: ->
