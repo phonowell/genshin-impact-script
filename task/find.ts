@@ -1,6 +1,22 @@
 import $source_ from 'fire-keeper/source_'
 import $write_ from 'fire-keeper/write_'
 import { createCanvas, loadImage, NodeCanvasRenderingContext2D } from 'canvas'
+import _sortBy from 'lodash/sortBy'
+
+// interface
+
+type MapColor = {
+  [x: string]: number
+}
+
+// variable
+
+const listSource = [
+  'F:/0.png',
+  'F:/1.png',
+  'F:/2.png',
+  'F:/3.png',
+]
 
 // function
 
@@ -8,10 +24,10 @@ const formatColor = (
   input: string
 ): string => input.split(',').map(item => Number(item).toString(16).padStart(2, '0')).join('').toUpperCase()
 
-const getList = async (
+const getMap = async (
   ctx: NodeCanvasRenderingContext2D,
   path: string,
-): Promise<Set<string>> => {
+): Promise<MapColor> => {
 
   const [source] = await $source_(path)
   const img = await loadImage(source)
@@ -19,11 +35,12 @@ const getList = async (
   ctx.drawImage(img, 0, 0, width, height)
   const list = ctx.getImageData(0, 0, width, height).data
 
-  const result = new Set<string>()
+  const result: MapColor = {}
 
   for (let i = 0; i < list.length / 4; i++) {
     const n = i * 4
-    result.add(`${list[n]},${list[n + 1]},${list[n + 2]}`)
+    const color = `${list[n]},${list[n + 1]},${list[n + 2]}`
+    result[color] = (result[color] || 0) + 1
   }
 
   return result
@@ -33,12 +50,34 @@ const main = async () => {
   const canvas = createCanvas(100, 100)
   const ctx = canvas.getContext('2d')
 
-  const setA = await getList(ctx, 'F:/0.png')
-  const setB = await getList(ctx, 'F:/1.png')
+  let result: MapColor = {}
 
-  const setC = new Set<string>([...setA].filter(item => setB.has(item)))
+  for (const source of listSource) {
+    const map = await getMap(ctx, source)
+    if (source === listSource[0]) {
+      result = map
+      continue
+    }
+    const listKey = Object.keys(result)
+    if (!listKey.length) break
 
-  await $write_('./data/color.yaml', [...setC].map(formatColor).map(item => `- #${item}, 0x${item}`).join('\n'))
+    let res: MapColor = {}
+    listKey.forEach(key => {
+      if (map[key]) res[key] = result[key] + map[key]
+    })
+
+    result = res
+  }
+
+  const listResult = _sortBy(Object.keys(result).map(key => ({
+    color: formatColor(key),
+    count: result[key],
+  })), 'count')
+  listResult.reverse()
+
+  await $write_('./data/color.yaml', listResult.map(it => {
+    return `- #${it.color} / 0x${it.color}  / ${it.count} times`
+  }).join('\n'))
 }
 
 // export

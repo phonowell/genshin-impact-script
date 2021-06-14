@@ -29,7 +29,7 @@ amber:
 barbara:
   cd-e: 32
   cd-q: 20
-  color-avatar: 0xDED3BE
+  color-avatar: 0xDDD2BE
   duration-e: 15
   weapon: catalyst
 

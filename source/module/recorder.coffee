@@ -4,7 +4,7 @@ class RecorderX
   file: {}
   isActive: false
   list: []
-  listHotkey: ['h', 'i', 'n', 't', 'u', 'y']
+  listHotkey: ['h', 'i', 'n', 't', 'u']
   listIgnore: []
   ts: 0
 

@@ -18,23 +18,13 @@ class StatusCheckerX
       return @isActive
     ts.checkIsActive = now
 
-    isMenu = @checkPoint [94, 1], [99, 8], 0x3B4255
-    if isMenu
+    if @checkPoint [94, 1], [99, 8], 0x3B4255
       @isActive = false
-      return false
-
-    isActive = @checkPoint [1, 16], [4, 22], 0xFFFFFF
-    if isActive
+    else if @checkPoint [1, 16], [4, 22], 0xFFFFFF
       @isActive = true
-      return true
+    else @isActive = @checkPoint [95, 2], [98, 7], 0xFFFFFF
 
-    isActive = @checkPoint [95, 2], [98, 7], 0xFFFFFF
-    if isActive
-      @isActive = true
-      return true
-
-    @isActive = false
-    return false
+    return @isActive
 
   # checkIsAiming: ->
 
@@ -46,13 +36,8 @@ class StatusCheckerX
   #     return @isAiming
   #   ts.checkIsAiming = now
 
-  #   isAiming = @checkPoint [49, 49], [51, 51]
-  #   if isAiming
-  #     @isAiming = true
-  #     return true
-
-  #   @isAiming = false
-  #   return false
+  #   @isAiming = @checkPoint [49, 49], [51, 51]
+  #   return @isAiming
 
   checkIsSwimming = ->
 
@@ -67,13 +52,8 @@ class StatusCheckerX
       return @isSwimming
     ts.checkIsSwimming = now
 
-    isSwimming = @checkPoint [88, 95], [99, 99], 0xFFE92C
-    if isSwimming
-      @isSwimming = true
-      return true
-
-    @isSwimming = false
-    return false
+    @isSwimming = @checkPoint [88, 95], [99, 99], 0xFFE92C
+    return @isSwimming
 
   checkPoint: (start, end, color = 0xFFFFFF) ->
     [x, y] = $.findColor color, (client.point start), client.point end

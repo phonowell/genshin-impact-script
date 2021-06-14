@@ -1311,7 +1311,7 @@ class StatusCheckerX {
   setIsActive := Func("genshin_114").Bind(this)
 }
 global statusChecker := new StatusCheckerX()
-global __character_a_m__ := {aether: {"color-avatar": 13403723, weapon: "sword"}, albedo: {"cd-e": 4, "cd-q": 12, "color-avatar": 13813421, "duration-e": 30, weapon: "sword"}, amber: {"cd-e": 15, "cd-q": 12, "color-avatar": 6048867, "duration-e": 8, "duration-q": 2, weapon: "bow"}, barbara: {"cd-e": 32, "cd-q": 20, "color-avatar": 14603198, "duration-e": 15, weapon: "catalyst"}, beidou: {"cd-e": 7.5, "cd-q": 20, "color-avatar": 4993838, "duration-q": 15, "type-e": 1, weapon: "claymore"}, bennett: {"cd-e": [4.5, 10], "cd-q": 15, "color-avatar": 16511951, "duration-q": 12, weapon: "sword"}, chongyun: {"cd-e": 15, "cd-q": 12, "color-avatar": 13496287, "duration-e": 10, weapon: "claymore"}, diluc: {"cd-e": 10, "cd-q": 12, "color-avatar": 13578790, "duration-q": 8, weapon: "claymore"}, diona: {"cd-e": [6, 15], "cd-q": 20, "color-avatar": 16701134, "duration-e": [4, 10], "duration-q": 12, weapon: "bow"}, eula: {"cd-e": [4, 10], "cd-q": 20, "color-avatar": 9947087, "duration-e": [18, 7], "duration-q": 7, weapon: "claymore"}, fischl: {"cd-e": 25, "cd-q": 15, "color-avatar": 16769961, "duration-e": 10, "type-e": 1, weapon: "bow"}, ganyu: {"cd-e": 10, "cd-q": 15, "color-avatar": 12438725, "duration-e": 6, "duration-q": 15, weapon: "bow"}, hu_tao: {"cd-e": 16, "cd-q": 15, "color-avatar": 8084321, "duration-e": 9, weapon: "polearm"}, jean: {"cd-e": 6, "color-avatar": 15652544, "type-e": 1, weapon: "sword"}, kaeya: {"cd-e": 6, "cd-q": 15, "color-avatar": 3755620, "duration-q": 8, weapon: "sword"}, keqing: {"cd-e": 7.5, "cd-q": 12, "color-avatar": 12497347, "duration-e": 5, "type-e": 1, weapon: "sword"}, klee: {"cd-e": 20, "cd-q": 15, "color-avatar": 12466702, "duration-q": 10, weapon: "catalyst"}, lisa: {"cd-e": [1, 16], "cd-q": 20, "color-avatar": 11970203, "duration-q": 15, weapon: "catalyst"}, lumine: {"color-avatar": 15195837, weapon: "sword"}, mona: {"cd-e": 12, "cd-q": 15, "color-avatar": 5918820, "duration-e": 6, "duration-q": 4.5, weapon: "catalyst"}}
+global __character_a_m__ := {aether: {"color-avatar": 13403723, weapon: "sword"}, albedo: {"cd-e": 4, "cd-q": 12, "color-avatar": 13813421, "duration-e": 30, weapon: "sword"}, amber: {"cd-e": 15, "cd-q": 12, "color-avatar": 6048867, "duration-e": 8, "duration-q": 2, weapon: "bow"}, barbara: {"cd-e": 32, "cd-q": 20, "color-avatar": 14537406, "duration-e": 15, weapon: "catalyst"}, beidou: {"cd-e": 7.5, "cd-q": 20, "color-avatar": 4993838, "duration-q": 15, "type-e": 1, weapon: "claymore"}, bennett: {"cd-e": [4.5, 10], "cd-q": 15, "color-avatar": 16511951, "duration-q": 12, weapon: "sword"}, chongyun: {"cd-e": 15, "cd-q": 12, "color-avatar": 13496287, "duration-e": 10, weapon: "claymore"}, diluc: {"cd-e": 10, "cd-q": 12, "color-avatar": 13578790, "duration-q": 8, weapon: "claymore"}, diona: {"cd-e": [6, 15], "cd-q": 20, "color-avatar": 16701134, "duration-e": [4, 10], "duration-q": 12, weapon: "bow"}, eula: {"cd-e": [4, 10], "cd-q": 20, "color-avatar": 9947087, "duration-e": [18, 7], "duration-q": 7, weapon: "claymore"}, fischl: {"cd-e": 25, "cd-q": 15, "color-avatar": 16769961, "duration-e": 10, "type-e": 1, weapon: "bow"}, ganyu: {"cd-e": 10, "cd-q": 15, "color-avatar": 12438725, "duration-e": 6, "duration-q": 15, weapon: "bow"}, hu_tao: {"cd-e": 16, "cd-q": 15, "color-avatar": 8084321, "duration-e": 9, weapon: "polearm"}, jean: {"cd-e": 6, "color-avatar": 15652544, "type-e": 1, weapon: "sword"}, kaeya: {"cd-e": 6, "cd-q": 15, "color-avatar": 3755620, "duration-q": 8, weapon: "sword"}, keqing: {"cd-e": 7.5, "cd-q": 12, "color-avatar": 12497347, "duration-e": 5, "type-e": 1, weapon: "sword"}, klee: {"cd-e": 20, "cd-q": 15, "color-avatar": 12466702, "duration-q": 10, weapon: "catalyst"}, lisa: {"cd-e": [1, 16], "cd-q": 20, "color-avatar": 11970203, "duration-q": 15, weapon: "catalyst"}, lumine: {"color-avatar": 15195837, weapon: "sword"}, mona: {"cd-e": 12, "cd-q": 15, "color-avatar": 5918820, "duration-e": 6, "duration-q": 4.5, weapon: "catalyst"}}
 global __character_n_z__ := {ningguang: {"cd-e": 12, "cd-q": 12, "color-avatar": 16776696, "duration-e": 29, weapon: "catalyst"}, noelle: {"cd-e": 24, "cd-q": 15, "color-avatar": 14604498, "duration-e": 12, "duration-q": 15, weapon: "claymore"}, qiqi: {"cd-e": 30, "cd-q": 20, "color-avatar": 14801886, "duration-e": 15, "duration-q": 15, weapon: "sword"}, rezor: {"cd-e": [6, 10], "cd-q": 20, "color-avatar": 13028038, "duration-q": 15, weapon: "claymore"}, rosaria: {"cd-e": 6, "cd-q": 15, "color-avatar": 10109297, "duration-q": 8, weapon: "polearm"}, sucrose: {"cd-e": 14.5, "cd-q": 20, "color-avatar": 13953484, "duration-q": 6, weapon: "catalyst"}, tartaglia: {"cd-e": 1, "cd-q": 15, "color-avatar": 12153658, "duration-e": 30, weapon: "bow"}, venti: {"cd-e": [6, 15], "cd-q": 15, "color-avatar": 6132094, "duration-q": 8, weapon: "bow"}, xiangling: {"cd-e": 12, "cd-q": 20, "color-avatar": 3688571, "duration-e": 7, "duration-q": 10, weapon: "polearm"}, xiao: {"cd-e": 10, "color-avatar": 3754046, weapon: "polearm"}, xingqiu: {"cd-e": 21, "cd-q": 20, "color-avatar": 4753554, "duration-e": 15, "duration-q": 15, weapon: "sword"}, xinyan: {"cd-e": 18, "cd-q": 15, "color-avatar": 5258048, "duration-e": 12, "duration-q": 2, weapon: "claymore"}, yanfei: {"cd-e": 9, "cd-q": 20, "color-avatar": 15707806, "duration-q": 15, weapon: "catalyst"}, zhongli: {"cd-e": [4, 12.5], "cd-q": 12, "color-avatar": 4928805, "duration-e": 20.5, "duration-q": 3.6, weapon: "polearm"}}
 class CharacterX {
   data := {}
@@ -1366,7 +1366,7 @@ class RecorderX {
   file := {}
   isActive := false
   list := []
-  listHotkey := ["h", "i", "n", "t", "u", "y"]
+  listHotkey := ["h", "i", "n", "t", "u"]
   listIgnore := []
   ts := 0
   __New() {
@@ -2542,13 +2542,8 @@ genshin_116(this) {
     return this.isSwimming
   }
   ts.checkIsSwimming := now
-  isSwimming := this.checkPoint.Call([88, 95], [99, 99], 0xFFE92C)
-  if (isSwimming) {
-    this.isSwimming := true
-    return true
-  }
-  this.isSwimming := false
-  return false
+  this.isSwimming := this.checkPoint.Call([88, 95], [99, 99], 0xFFE92C)
+  return this.isSwimming
 }
 genshin_117(this) {
   now := $.now.Call()
@@ -2556,23 +2551,14 @@ genshin_117(this) {
     return this.isActive
   }
   ts.checkIsActive := now
-  isMenu := this.checkPoint.Call([94, 1], [99, 8], 0x3B4255)
-  if (isMenu) {
+  if (this.checkPoint.Call([94, 1], [99, 8], 0x3B4255)) {
     this.isActive := false
-    return false
-  }
-  isActive := this.checkPoint.Call([1, 16], [4, 22], 0xFFFFFF)
-  if (isActive) {
+  } else if (this.checkPoint.Call([1, 16], [4, 22], 0xFFFFFF)) {
     this.isActive := true
-    return true
+  } else {
+    this.isActive := this.checkPoint.Call([95, 2], [98, 7], 0xFFFFFF)
   }
-  isActive := this.checkPoint.Call([95, 2], [98, 7], 0xFFFFFF)
-  if (isActive) {
-    this.isActive := true
-    return true
-  }
-  this.isActive := false
-  return false
+  return this.isActive
 }
 genshin_118(this) {
   for __key_for__, timer in this.listTimer {

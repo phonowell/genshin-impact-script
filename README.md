@@ -44,7 +44,7 @@
 
 ### 扩展热键
 
-增加了如下热键：`H`, `I`, `N`, `T`, `U`, `Y`；可自由配置其功能
+增加了如下热键：`H`, `I`, `N`, `T`, `U`；可自由配置其功能
 
 ## 使用
 
@@ -58,7 +58,7 @@
 
 首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
 
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.17/Genshin_Impact_Script_CN_0.0.17.zip)并解压。
+然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.18/Genshin_Impact_Script_CN_0.0.18.zip)并解压。
 
 最后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
 
