@@ -1,21 +1,33 @@
-import __character_a_m__ from '../../data/character-a-m.yaml'
-import __character_n_z__ from '../../data/character-n-z.yaml'
+import __ag__ from '../../data/character/a-g.yaml'
+import __hn__ from '../../data/character/h-n.yaml'
+import __ot__ from '../../data/character/o-t.yaml'
+import __uz__ from '../../data/character/u-z.yaml'
 
 class CharacterX
 
   data: {}
 
-  constructor: -> for name, char of $.mixin __character_a_m__, __character_n_z__
-    @data[name] =
-      cdE: @getValueIntoArray char['cd-e']
-      cdQ: char['cd-q']
-      colorAvatar: char['color-avatar']
-      durationE: @getValueIntoArray char['duration-e']
-      durationQ: char['duration-q']
-      tactic: @getTactic Config.read "#{name}/tactic", 0
-      typeApr: Config.read "#{name}/type-apr", 0
-      typeE: char['type-e']
-      weapon: char.weapon
+  constructor: ->
+
+    data = {}
+    data = $.mixin data, __ag__
+    data = $.mixin data, __hn__
+    data = $.mixin data, __ot__
+    data = $.mixin data, __uz__
+
+    for name, char of data
+      @data[name] =
+        cdE: @getValueIntoArray char['cd-e']
+        cdQ: char['cd-q']
+        colorAvatar: char['color-avatar']
+        durationE: @getValueIntoArray char['duration-e']
+        durationQ: char['duration-q']
+        nameCN: char['name-cn']
+        nameEN: char['name-en']
+        tactic: @getTactic Config.read "#{name}/tactic", 0
+        typeApr: Config.read "#{name}/type-apr", 0
+        typeE: char['type-e']
+        weapon: char.weapon
 
   getValueIntoArray: (value) -> switch $.type value
     when 'array' then return value

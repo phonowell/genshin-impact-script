@@ -20,16 +20,10 @@ class MovementX extends KeyBindingX
         player.isMoving = false
 
   check: (key, action) ->
-
-    $$.vt 'movement.check', key, 'string'
-    $$.vt 'movement.check', action, 'string'
-
     if action == 'down' then @checkDown key
     else if action == 'up' then @checkUp key
 
   checkDown: (key) ->
-
-    $$.vt 'movement.check', key, 'string'
 
     if @isPressed[key]
       return
@@ -40,12 +34,9 @@ class MovementX extends KeyBindingX
       player.emit 'move:start'
     @count = count
 
-    recorder.record "#{key}:down"
     $.press "#{key}:down"
 
   checkUp: (key) ->
-
-    $$.vt 'movement.check', key, 'string'
 
     unless @isPressed[key]
       return
@@ -56,7 +47,6 @@ class MovementX extends KeyBindingX
       player.emit 'move:end'
     @count = count
 
-    recorder.record "#{key}:up"
     $.press "#{key}:up"
 
 # execute

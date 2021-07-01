@@ -1,59 +1,10 @@
-ningguang:
-  cd-e: 12
-  cd-q: 12
-  color-avatar: 0xFFFDF8
-  duration-e: 29
-  weapon: catalyst
-
-noelle:
-  cd-e: 24
-  cd-q: 15
-  color-avatar: 0xDED8D2
-  duration-e: 12
-  duration-q: 15
-  weapon: claymore
-
-qiqi:
-  cd-e: 30
-  cd-q: 20
-  color-avatar: 0xE1DBDE
-  duration-e: 15
-  duration-q: 15
-  weapon: sword
-
-rezor:
-  cd-e: [6, 10]
-  cd-q: 20
-  color-avatar: 0xC6CAC6
-  duration-q: 15
-  weapon: claymore
-
-rosaria:
-  cd-e: 6
-  cd-q: 15
-  color-avatar: 0x9A4171
-  duration-q: 8
-  weapon: polearm
-
-sucrose:
-  cd-e: 14.5 # 15
-  cd-q: 20
-  color-avatar: 0xD4E9CC
-  duration-q: 6
-  weapon: catalyst
-
-tartaglia:
-  cd-e: 1 # 6
-  cd-q: 15
-  color-avatar: 0xB9733A
-  duration-e: 30
-  weapon: bow
-
 venti:
   cd-e: [6, 15]
   cd-q: 15
   color-avatar: 0x5D917E
   duration-q: 8
+  name-cn: 温迪
+  name-en: Venti
   weapon: bow
 
 xiangling:
@@ -62,11 +13,15 @@ xiangling:
   color-avatar: 0x38487B
   duration-e: 7
   duration-q: 10
+  name-cn: 香菱
+  name-en: Xiangling
   weapon: polearm
 
 xiao:
   cd-e: 10
   color-avatar: 0x39483E
+  name-cn: 魈
+  name-en: Xiao
   weapon: polearm
 
 xingqiu:
@@ -75,6 +30,8 @@ xingqiu:
   color-avatar: 0x488892
   duration-e: 15
   duration-q: 15
+  name-cn: 行秋
+  name-en: Xingqiu
   weapon: sword
 
 xinyan:
@@ -83,6 +40,8 @@ xinyan:
   color-avatar: 0x503B40
   duration-e: 12
   duration-q: 2
+  name-cn: 辛焱
+  name-en: Xinyan
   weapon: claymore
 
 yanfei:
@@ -90,6 +49,8 @@ yanfei:
   cd-q: 20
   color-avatar: 0xEFAE9E
   duration-q: 15
+  name-cn: 烟绯
+  name-en: Yanfei
   weapon: catalyst
 
 zhongli:
@@ -98,4 +59,6 @@ zhongli:
   color-avatar: 0x4B3525
   duration-e: 20.5 # 20
   duration-q: 3.6
+  name-cn: 钟离
+  name-en: Zhongli
   weapon: polearm

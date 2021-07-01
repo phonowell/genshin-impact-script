@@ -1,0 +1,88 @@
+hu_tao:
+  cd-e: 16
+  cd-q: 15
+  color-avatar: 0x7B5B61
+  duration-e: 9
+  name-cn: 胡桃
+  name-en: Hu Tao
+  weapon: polearm
+
+jean:
+  cd-e: 6
+  color-avatar: 0xEED6C0
+  name-cn: 琴
+  name-en: Jean
+  type-e: 1
+  weapon: sword
+
+kaeya:
+  cd-e: 6
+  cd-q: 15
+  color-avatar: 0x394E64
+  duration-q: 8
+  name-cn: 凯亚
+  name-en: Kaeya
+  weapon: sword
+
+keqing:
+  cd-e: 7.5
+  cd-q: 12
+  color-avatar: 0xBEB1C3
+  duration-e: 5
+  name-cn: 刻晴
+  name-en: Keqing
+  type-e: 1
+  weapon: sword
+
+klee:
+  cd-e: 20
+  cd-q: 15
+  color-avatar: 0xBE3A0E
+  duration-q: 10
+  name-cn: 可莉
+  name-en: Klee
+  weapon: catalyst
+
+lisa:
+  cd-e: [1, 16]
+  cd-q: 20
+  color-avatar: 0xB6A69B
+  duration-q: 15
+  name-cn: 丽莎
+  name-en: Lisa
+  weapon: catalyst
+
+lumine:
+  color-avatar: 0xE7DEBD
+  name-cn: 荧
+  name-en: Lumine
+  weapon: sword
+
+mona:
+  cd-e: 12
+  cd-q: 15
+  color-avatar: 0x5A5064
+  duration-e: 6
+  duration-q: 4.5
+  name-cn: 莫娜
+  name-en: Mona
+  weapon: catalyst
+
+ningguang:
+  cd-e: 12
+  cd-q: 12
+  color-avatar: 0xFFFDF8
+  duration-e: 29
+  name-cn: 凝光
+  name-en: Ningguang
+  weapon: catalyst
+
+noelle:
+  cd-e: 24
+  cd-q: 15
+  color-avatar: 0xDED8D2
+  duration-e: 12
+  duration-q: 15
+  name-cn: 诺艾尔
+  name-en: Noelle
+  weapon: claymore

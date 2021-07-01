@@ -5,12 +5,9 @@ class KeyBindingX extends EmitterShellX
 
   constructor: ->
     super()
-    client.on 'leave', @resetKey
+    client.on 'pause', @resetKey
 
   bindEvent: (name, key, prevent = false) ->
-
-    $$.vt 'keyBinding.bindEvent', name, 'string'
-    $$.vt 'keyBinding.bindEvent', 'number', 'string'
 
     if prevent
       @isPrevented[key] = true
@@ -21,7 +18,6 @@ class KeyBindingX extends EmitterShellX
         return
       @isPressed[key] = true
 
-      recorder.record "#{key}:down"
       unless @isPrevented[key]
         $.press "#{key}:down"
 
@@ -33,7 +29,6 @@ class KeyBindingX extends EmitterShellX
         return
       @isPressed[key] = false
 
-      recorder.record "#{key}:up"
       unless @isPrevented[key]
         $.press "#{key}:up"
 

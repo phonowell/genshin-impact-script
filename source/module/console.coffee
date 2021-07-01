@@ -9,11 +9,11 @@ class ConsoleX
     unless Config.data.isDebug
       return
 
-    client.on 'leave', @hide
-
-    ticker.on 'change', (tick) =>
-      unless $.mod tick, 500
-        @update()
+    client
+      .on 'pause', @hide
+      .on 'tick', (tick) =>
+        unless $.mod tick, 500
+          @update()
 
     $.on 'alt + f9', =>
       $.beep()

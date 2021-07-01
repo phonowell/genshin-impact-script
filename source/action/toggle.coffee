@@ -10,8 +10,6 @@ getToggleDelay = ->
 
 startToggle = (key) ->
 
-  $$.vt 'startToggle', key, 'number'
-
   $.press key
 
   unless statusChecker.checkIsActive()

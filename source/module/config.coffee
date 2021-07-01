@@ -23,8 +23,6 @@ class ConfigX
 
   read: (key, defaultValue = '') ->
 
-    $$.vt 'config.read', key, 'string'
-
     [__section__, __key__] = $.split key, '/'
     `IniRead, __result__, % this.source, % __section__, % __key__, % defaultValue`
     return __result__

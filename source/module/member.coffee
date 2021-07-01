@@ -17,8 +17,6 @@ class MemberX extends EmitterShellX
 
   checkCharacterByPosition: (n) ->
 
-    $$.vt 'member.checkCharacterByPosition', n, 'number'
-
     [pointStart, pointEnd] = @getRange n
 
     for name, char of Character.data
@@ -39,8 +37,6 @@ class MemberX extends EmitterShellX
 
   getIndexBy: (name) ->
 
-    $$.vt 'member.getIndexBy', name, 'string'
-
     unless @has name
       return 0
     for n in [1, 2, 3, 4]
@@ -48,8 +44,6 @@ class MemberX extends EmitterShellX
         return n
 
   getRange: (n) ->
-
-    $$.vt 'member.getRange', n, 'number'
 
     start = client.point [
       90
@@ -63,9 +57,7 @@ class MemberX extends EmitterShellX
 
     return [start, end]
 
-  has: (name) ->
-    $$.vt 'client.has', name, 'string'
-    return $.includes @list, name
+  has: (name) -> return $.includes @list, name
 
   scan: ->
 
@@ -80,8 +72,6 @@ class MemberX extends EmitterShellX
 
   toggle: (n) ->
 
-    $$.vt 'member.toggle', n, 'number'
-
     unless n
       return
 
@@ -92,9 +82,7 @@ class MemberX extends EmitterShellX
     if @has 'tartaglia'
       skillTimer.endTartaglia()
 
-  toggleBy: (name) ->
-    $$.vt 'client.toggleBy', name, 'string'
-    @toggle @getIndexBy name
+  toggleBy: (name) -> @toggle @getIndexBy name
 
 # execute
 member = new MemberX()

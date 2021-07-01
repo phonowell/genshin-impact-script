@@ -16,10 +16,6 @@ sprint = ->
 
 startSprint = ->
 
-  if Config.data.quickDialog and !statusChecker.checkIsActive()
-    $.press 'esc'
-    return
-
   $.click 'right:down'
 
   unless Config.data.betterSprint

@@ -3,13 +3,9 @@ class HudX
   lifetime: 5e3
   listTimer: {}
 
-  constructor: ->
-
-    client.on 'leave', @hide
+  constructor: -> client.on 'pause', @hide
 
   getPosition: (n) ->
-
-    $$.vt 'hud.getPosition', n, 'number'
 
     if client.isFullScreen
       left = client.vw 80
@@ -24,9 +20,6 @@ class HudX
     @render n, ''
 
   render: (n, msg) ->
-
-    $$.vt 'hud.render', n, 'number'
-    $$.vt 'hud.render', msg, 'string'
 
     $.clearTimeout @listTimer[n]
     @listTimer[n] = $.setTimeout =>

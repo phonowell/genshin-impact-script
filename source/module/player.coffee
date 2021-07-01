@@ -43,10 +43,6 @@ class PlayerX extends KeyBindingX
     ]
       @bindEvent "menu-#{key}", key
 
-    # custom hotkey
-    for key in recorder.listHotkey
-      @bindEvent "hotkey-#{key}", key
-
   jump: -> $.press 'space'
 
   sprint: ->
@@ -54,8 +50,6 @@ class PlayerX extends KeyBindingX
     ts.sprint = $.now()
 
   startMove: (key) ->
-
-    $$.vt 'player.startMove', key, 'string'
 
     if movement.isPressed[key]
       return
@@ -65,17 +59,11 @@ class PlayerX extends KeyBindingX
     , 30
 
   stopMove: (key) ->
-
-    $$.vt 'player.stopMove', key, 'string'
-
     if movement.isPressed[key]
       return
-
     $.press "#{key}:up"
 
   toggleQ: (key) ->
-
-    $$.vt 'player.toggleQ', key, 'number'
 
     $.press "alt + #{key}"
     member.toggle key

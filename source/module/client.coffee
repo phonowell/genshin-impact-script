@@ -1,4 +1,4 @@
-class ClientX extends KeyBindingX
+class ClientX extends EmitterShellX
 
   height: 0
   isFullScreen: false
@@ -9,13 +9,11 @@ class ClientX extends KeyBindingX
 
   constructor: ->
     super()
+
+    $.setInterval @tick, 200
+
+    @on 'resume', => $.setTimeout @setSize, 1e3
     @setSize()
-
-    ticker.on 'change', (tick) =>
-      unless $.mod tick, 200
-        @check()
-
-    @on 'enter', => $.setTimeout @setSize, 1e3
 
     $.on 'alt + f4', =>
       $.beep()
@@ -31,27 +29,9 @@ class ClientX extends KeyBindingX
       $.press 'alt + enter'
       $.setTimeout @setSize, 1e3
 
-  check: ->
+  check: -> return WinActive "ahk_exe #{Config.data.process}"
 
-    if !@isSuspend and !@checkActive()
-      @setPriority 'low'
-      @suspend true
-      @emit 'leave'
-      return
-
-    if @isSuspend and @checkActive()
-      @setPriority 'normal'
-      @suspend false
-      @emit 'enter'
-      return
-
-  checkActive: -> return WinActive "ahk_exe #{Config.data.process}"
-
-  point: (input) ->
-
-    $$.vt 'client.point', input, 'array'
-
-    return [
+  point: (input) -> return [
       @vw input[0]
       @vh input[1]
     ]
@@ -84,14 +64,6 @@ class ClientX extends KeyBindingX
       @width = @width - 6
       @height = @height - 29
 
-    # console.log [
-    #   "left: #{@left}"
-    #   "top: #{@top}"
-    #   "width: #{@width}"
-    #   "height: #{@height}"
-    #   "isFullScreen: #{@isFullScreen}"
-    # ]
-
   suspend: (isSuspend) ->
 
     if isSuspend
@@ -107,17 +79,25 @@ class ClientX extends KeyBindingX
       $.suspend false
       return
 
-  setPriority: (level) ->
-    $$.vt 'client.setPriority', level, 'string'
-    `Process, Priority, % Config.data.process, % level`
+  setPriority: (level) -> `Process, Priority, % Config.data.process, % level`
 
-  vh: (n) ->
-    $$.vt 'client.vh', n, 'number'
-    return $.round @height * n * 0.01
+  tick: ->
+    unless @check()
+      unless @isSuspend
+        @setPriority 'low'
+        @suspend true
+        @emit 'pause'
+        return
+    else
+      if @isSuspend
+        @setPriority 'normal'
+        @suspend false
+        @emit 'resume'
+        return
+      @emit 'tick'
 
-  vw: (n) ->
-    $$.vt 'client.vw', n, 'number'
-    return $.round @width * n * 0.01
+  vh: (n) -> return $.round @height * n * 0.01
+  vw: (n) -> return $.round @width * n * 0.01
 
 # execute
 client = new ClientX()

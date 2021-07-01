@@ -13,8 +13,6 @@ class TacticX
 
   attack: (isCharged, callback) ->
 
-    $$.vt 'tactic.attack', callback, 'function'
-
     if isCharged
       $.click 'left:down'
       @isPressed['l-button'] = true
@@ -50,9 +48,6 @@ class TacticX
     @delay 200, callback
 
   delay: (time, callback) ->
-
-    $$.vt 'tactic.delay', time, 'number'
-    $$.vt 'tactic.delay', callback, 'function'
 
     unless @isActive
       return
@@ -122,18 +117,12 @@ class TacticX
     return group[i]
 
   jump: (callback) ->
-
-    $$.vt 'tactic.jump', callback, 'function'
-
     player.jump()
     unless player.isMoving
       @delay 450, callback
     else @delay 550, callback
 
   ongoing: (cbA, cbB, isNot = false) ->
-
-    $$.vt 'tactic.ongoing', cbA, 'function'
-    $$.vt 'tactic.ongoing', cbB, 'function'
 
     unless isNot
       if skillTimer.listDuration[player.current]
@@ -145,9 +134,6 @@ class TacticX
       else @delay 50, cbA
 
   onMoving: (cbA, cbB, isNot = false) ->
-
-    $$.vt 'tactic.onMoving', cbA, 'function'
-    $$.vt 'tactic.onMoving', cbB, 'function'
 
     unless isNot
       if player.isMoving
@@ -168,9 +154,6 @@ class TacticX
     @isActive = false
 
   sprint: (callback) ->
-
-    $$.vt 'tactic.sprint', callback, 'function'
-
     player.sprint()
     @delay 100, callback
 
@@ -202,9 +185,6 @@ class TacticX
 
   toggle: (n, callback) ->
 
-    $$.vt 'tactic.toggle', n, 'number'
-    $$.vt 'tactic.toggle', callback, 'function'
-
     unless @isActive
       return
 
@@ -213,8 +193,6 @@ class TacticX
     @delay 200, callback
 
   useE: (isHolding, callback) ->
-
-    $$.vt 'tactic.useE', callback, 'function'
 
     unless skillTimer.listCountDown[player.current]
       player.useE isHolding
