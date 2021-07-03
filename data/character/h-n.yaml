@@ -15,6 +15,15 @@ jean:
   type-e: 1
   weapon: sword
 
+kaedehara:
+  cd-e: [6, 9]
+  cd-q: 15
+  color-avatar: 0xE9DDD7
+  duration-q: 8
+  name-cn: 枫原万叶
+  name-en: Kaedehara
+  weapon: sword
+
 kaeya:
   cd-e: 6
   cd-q: 15

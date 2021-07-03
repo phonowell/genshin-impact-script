@@ -12,7 +12,7 @@ pick = ->
 
 skip = ->
 
-  if statusChecker.checkIsActive()
+  if checker.isActive
     return false
 
   start = client.point [65, 40]
@@ -25,8 +25,7 @@ skip = ->
       point = [x, y]
       break
 
-  unless point
-    return false
+  unless point then return false
 
   $.move point
   $.click()
@@ -43,10 +42,7 @@ startPick = ->
   timer.pick = $.setInterval pick, 100
 
 stopPick = ->
-
-  unless Config.data.fastPickup
-    return
-
+  unless Config.data.fastPickup then return
   $.clearInterval timer.pick
 
 # binding

@@ -15,7 +15,7 @@ class Compiler {
     setInterval(this.next.bind(this), this.interval)
   }
 
-  async next(): Promise<void> {
+  async next() {
 
     if (!this.list.size) return
     if (this.isBusy) return
@@ -36,7 +36,7 @@ class Compiler {
   }
 }
 
-const main = (): void => {
+const main = () => {
   process.on('uncaughtException', e => console.error(e))
   const compiler = new Compiler()
   watch('./source/**/*.coffee', () => compiler.list.add('./source/index.coffee'))

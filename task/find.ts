@@ -14,8 +14,6 @@ type MapColor = {
 const listSource = [
   'F:/0.png',
   'F:/1.png',
-  'F:/2.png',
-  'F:/3.png',
 ]
 
 // function

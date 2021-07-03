@@ -4,6 +4,7 @@ ts.toggle = 0
 
 class MemberX extends EmitterShellX
 
+  isBusy: false
   list: ['']
 
   constructor: ->
@@ -21,24 +22,18 @@ class MemberX extends EmitterShellX
 
     for name, char of Character.data
 
-      if @has name
-        continue
-
-      unless char.colorAvatar
-        continue
+      if @has name then continue
+      unless char.colorAvatar then continue
 
       point = $.findColor char.colorAvatar, pointStart, pointEnd
-      unless point[0] * point[1] > 0
-        continue
+      unless point[0] * point[1] > 0 then continue
 
       return name
 
     return ''
 
   getIndexBy: (name) ->
-
-    unless @has name
-      return 0
+    unless @has name then return 0
     for n in [1, 2, 3, 4]
       if @list[n] == name
         return n
@@ -61,26 +56,35 @@ class MemberX extends EmitterShellX
 
   scan: ->
 
+    if @isBusy then return
+    @isBusy = true
+
     @list = ['']
+    skillTimer.reset()
+    hud.reset()
 
     for n in [1, 2, 3, 4]
+
       name = @checkCharacterByPosition n
       $.push @list, name
-      hud.render n, name
+
+      char = Character.data[name]
+      if Config.data.region == 'en'
+        hud.render n, char.nameEN
+      else hud.render n, char.nameCN
 
     @emit 'change'
+    @isBusy = false
 
   toggle: (n) ->
 
-    unless n
-      return
+    unless n then return
 
     player.current = n
     player.name = @list[n]
     ts.toggle = $.now()
 
-    if @has 'tartaglia'
-      skillTimer.endTartaglia()
+    if @has 'tartaglia' then skillTimer.endTartaglia()
 
   toggleBy: (name) -> @toggle @getIndexBy name
 

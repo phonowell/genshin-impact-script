@@ -12,5 +12,24 @@ state = {}
 timer = {}
 ts = {}
 
-import 'module'
+# import
+
+import 'config'
+import 'client'
+
+import 'console'
+import 'hud'
+import 'checking'
+
+import 'character'
+import 'member'
+import 'skill-timer'
+
+import 'key-binding'
+import 'player'
+import 'movement'
+import 'menu'
+
+import 'tactic'
+
 import 'action/*'

@@ -9,12 +9,14 @@ class ConfigX
     @data.isDebug = @read 'debug/debug', 0
 
     # region
-    @data.process = @read 'region/process', 'YuanShen.exe'
+    @data.region = @read 'region/region', 'en'
+    if @data.region == 'en'
+      @data.process = 'GenshinImpact.exe'
+    else @data.process = 'YuanShen.exe'
 
     # feature
     for key in [
       'betterJump'
-      'betterSprint'
       'easySkillTimer'
       'fastPickup'
       'quickDialog'
@@ -22,10 +24,9 @@ class ConfigX
       @data[key] = @read "feature/enable#{key}", 1
 
   read: (key, defaultValue = '') ->
-
     [__section__, __key__] = $.split key, '/'
     `IniRead, __result__, % this.source, % __section__, % __key__, % defaultValue`
-    return __result__
+    return $.toLowerCase __result__
 
 # execute
 Config = new ConfigX()

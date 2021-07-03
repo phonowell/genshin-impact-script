@@ -6,8 +6,8 @@ class SkillTimerX
   listRecord: {}
 
   constructor: ->
+    client.on 'tick', @check
     @reset()
-    member.on 'change', @reset
 
   check: ->
 
@@ -138,7 +138,3 @@ class SkillTimerX
 # execute
 
 skillTimer = new SkillTimerX()
-
-client.on 'tick', (tick) ->
-  unless $.mod tick, 200
-    skillTimer.check()

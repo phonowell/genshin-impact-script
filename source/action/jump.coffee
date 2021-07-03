@@ -2,7 +2,7 @@ ts.jump = 0
 
 # binding
 
-player
+movement
   .on 'jump:start', ->
     $.press 'space:down'
     ts.jump = $.now()
@@ -13,14 +13,14 @@ player
     diff = $.now() - ts.jump
     ts.jump = $.now()
 
-    unless Config.data.betterJump and statusChecker.checkIsActive()
+    unless Config.data.betterJump and checker.isActive
       return
 
     unless diff < 350
       return
 
     $.setTimeout ->
-      player.jump()
+      movement.jump()
       ts.jump = $.now()
     , 350 - diff
 
@@ -28,7 +28,7 @@ player
 
     $.press 'x'
 
-    unless Config.data.betterJump and statusChecker.checkIsActive()
+    unless Config.data.betterJump and checker.isActive
       return
 
-    $.setTimeout player.jump, 50
+    $.setTimeout movement.jump, 50

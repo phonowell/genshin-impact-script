@@ -1,7 +1,6 @@
 class PlayerX extends KeyBindingX
 
   current: 0
-  isMoving: false
   name: ''
 
   constructor: ->
@@ -19,10 +18,6 @@ class PlayerX extends KeyBindingX
     @bindEvent 'use-e', 'e'
     @bindEvent 'use-q', 'q', 'prevent'
 
-    # run & jump
-    @bindEvent 'jump', 'space', 'prevent'
-    @bindEvent 'sprint', 'r-button', 'prevent'
-
     # others
     @bindEvent 'pick', 'f', 'prevent'
     @bindEvent 'unhold', 'x', 'prevent'
@@ -35,43 +30,10 @@ class PlayerX extends KeyBindingX
     @bindEvent 'y', 'y'
     @bindEvent 'z', 'z'
 
-    # menu
-    for key in [
-      'esc'
-      'b', 'c', 'j', 'l', 'm', 'o'
-      'f1', 'f2', 'f3', 'f4', 'f5'
-    ]
-      @bindEvent "menu-#{key}", key
-
-  jump: -> $.press 'space'
-
-  sprint: ->
-    $.click 'right'
-    ts.sprint = $.now()
-
-  startMove: (key) ->
-
-    if movement.isPressed[key]
-      return
-
-    $.setTimeout ->
-      $.press "#{key}:down"
-    , 30
-
-  stopMove: (key) ->
-    if movement.isPressed[key]
-      return
-    $.press "#{key}:up"
-
   toggleQ: (key) ->
-
     $.press "alt + #{key}"
     member.toggle key
     skillTimer.listQ[player.current] = $.now()
-
-    $.setTimeout ->
-      statusChecker.setIsActive true
-    , statusChecker.interval
 
   useE: (isHolding = false) ->
 
@@ -89,13 +51,8 @@ class PlayerX extends KeyBindingX
     , 1e3
 
   useQ: ->
-
     $.press 'q'
     skillTimer.listQ[player.current] = $.now()
-
-    $.setTimeout ->
-      statusChecker.setIsActive true
-    , statusChecker.interval
 
 # execute
 player = new PlayerX()

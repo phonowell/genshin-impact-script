@@ -1,23 +1,28 @@
 class MovementX extends KeyBindingX
 
   count: 0
+  isMoving: false
 
   constructor: ->
     super()
 
+    # move
     for key in ['w', 'a', 's', 'd']
       $.on key, => @check key, 'down'
       $.on "#{key}:up", => @check key, 'up'
 
-    player
-      .on 'move:start', ->
-        if player.isMoving
-          return
-        player.isMoving = true
-      .on 'move:end', ->
-        unless player.isMoving
-          return
-        player.isMoving = false
+    # run & jump
+    @bindEvent 'jump', 'space', 'prevent'
+    @bindEvent 'sprint', 'r-button'
+
+    # binding
+
+    @on 'move:start', =>
+      if @isMoving then return
+      @isMoving = true
+    @on 'move:end', =>
+      unless @isMoving then return
+      @isMoving = false
 
   check: (key, action) ->
     if action == 'down' then @checkDown key
@@ -31,7 +36,7 @@ class MovementX extends KeyBindingX
     count = @count + 1
 
     if count and !@count
-      player.emit 'move:start'
+      @emit 'move:start'
     @count = count
 
     $.press "#{key}:down"
@@ -44,10 +49,16 @@ class MovementX extends KeyBindingX
     count = @count - 1
 
     if !count and @count
-      player.emit 'move:end'
+      @emit 'move:end'
     @count = count
 
     $.press "#{key}:up"
+
+  jump: ->
+    $.press 'space'
+    ts.jump = $now()
+
+  sprint: -> $.click 'right'
 
 # execute
 movement = new MovementX()

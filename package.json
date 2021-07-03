@@ -4,7 +4,6 @@
     "url": "https://github.com/phonowell/genshin-impact-script/issues"
   },
   "dependencies": {
-    "canvas": "^2.8.0",
     "coffee-ahk": "^0.0.37",
     "fire-keeper": "^0.0.191",
     "js-shim.ahk": "^0.0.5",
@@ -15,7 +14,7 @@
   "description": "",
   "devDependencies": {
     "@types/lodash": "^4.14.170",
-    "@types/node": "^15.12.5",
+    "@types/node": "^15.14.0",
     "@types/yargs": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",

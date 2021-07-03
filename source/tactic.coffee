@@ -36,7 +36,7 @@ class TacticX
         $.click 'left:up'
         @isPressed['l-button'] = false
 
-        if player.isMoving and player.name == 'klee'
+        if movement.isMoving and player.name == 'klee'
           @delay 200, => @jump callback
           return
 
@@ -48,10 +48,7 @@ class TacticX
     @delay 200, callback
 
   delay: (time, callback) ->
-
-    unless @isActive
-      return
-
+    unless @isActive then return
     $.clearTimeout timer.tacticDelay
     timer.tacticDelay = $.setTimeout callback, time
 
@@ -106,19 +103,14 @@ class TacticX
     callback()
 
   get: (list, g = 0, i = 0) ->
-
-    if g >= $.length list
-      return false
+    if g >= $.length list then return false
     group = list[g]
-
-    if i >= $.length group
-      return false
-
+    if i >= $.length group then return false
     return group[i]
 
   jump: (callback) ->
-    player.jump()
-    unless player.isMoving
+    movement.jump()
+    unless movement.isMoving
       @delay 450, callback
     else @delay 550, callback
 
@@ -136,11 +128,11 @@ class TacticX
   onMoving: (cbA, cbB, isNot = false) ->
 
     unless isNot
-      if player.isMoving
+      if movement.isMoving
         @delay 50, cbA
       else @delay 50, cbB
     else
-      if player.isMoving
+      if movement.isMoving
         @delay 50, cbB
       else @delay 50, cbA
 
@@ -154,7 +146,7 @@ class TacticX
     @isActive = false
 
   sprint: (callback) ->
-    player.sprint()
+    movement.sprint()
     @delay 100, callback
 
   start: ->
@@ -203,7 +195,7 @@ class TacticX
 
   validate: ->
 
-    unless statusChecker.checkIsActive()
+    unless checker.isActive
       return false
 
     name = player.name
@@ -216,10 +208,7 @@ class TacticX
 
     return listTactic
 
-  wait: (time, callback) ->
-    unless ($.type time) == 'number'
-      throw new Error "tactic.wait: invalid time #{time}"
-    @delay time, callback
+  wait: (time, callback) -> @delay time, callback
 
 # execute
 tactic = new TacticX()

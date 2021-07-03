@@ -6,14 +6,11 @@ class ConsoleX
 
   constructor: ->
 
-    unless Config.data.isDebug
-      return
+    unless Config.data.isDebug then return
 
     client
       .on 'pause', @hide
-      .on 'tick', (tick) =>
-        unless $.mod tick, 500
-          @update()
+      .on 'tick', @update
 
     $.on 'alt + f9', =>
       $.beep()

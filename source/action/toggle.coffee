@@ -1,18 +1,12 @@
-state.toggleDelay = 150
+state.toggleDelay = 200
 
 # function
-
-getToggleDelay = ->
-  delay = 500 - ($.now() - ts.sprint)
-  if delay < 150
-    delay = 150
-  return delay
 
 startToggle = (key) ->
 
   $.press key
 
-  unless statusChecker.checkIsActive()
+  unless checker.isActive
     return
 
   member.toggle key
@@ -20,8 +14,6 @@ startToggle = (key) ->
   {name} = player
   unless name
     return
-
-  state.toggleDelay = getToggleDelay()
 
   {typeApr} = Character.data[name]
   unless typeApr
@@ -37,7 +29,7 @@ startToggle = (key) ->
 
 stopToggle = ->
 
-  unless statusChecker.checkIsActive()
+  unless checker.isActive
     return
 
   {name} = player
