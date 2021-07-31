@@ -1,35 +1,42 @@
-import $copy_ from 'fire-keeper/copy_'
-import $read_ from 'fire-keeper/read_'
-import $remove_ from 'fire-keeper/remove_'
+import $ from 'fire-keeper'
 import c2a from 'coffee-ahk'
 
 // function
 
-const compile_ = async (): Promise<void> => {
+const clean = () => $.remove_('./dist')
 
-  await c2a('./source/index.coffee', {
-    salt: 'genshin',
-  })
+const compile = () => c2a('./source/index.coffee', { salt: 'genshin' })
+
+const main = async (): Promise<void> => {
+  await compile()
+  await clean()
+  await pack()
 }
 
-const main_ = async (): Promise<void> => {
+const pack = async (): Promise<void> => {
 
-  await compile_()
-  await pack_()
-}
+  const { version } = await $.read_<{ version: string }>('./package.json')
 
-const pack_ = async (): Promise<void> => {
+  const buffer = await $.read_<Buffer>('./source/index.ahk')
+  const dirCN = `./dist/Genshin_Impact_Script_CN_${version}`
+  const dirEN = `./dist/Genshin_Impact_Script_EN_${version}`
 
-  const { version } = await $read_('./package.json') as {
-    version: string
-  }
+  await $.write_('./dist/start.ahk', buffer)
 
-  await $remove_('./dist')
-  await $copy_('./data/config.ini', `./dist/Genshin_Impact_Script_CN_${version}`)
-  await $copy_('./source/index.ahk', `./dist/Genshin_Impact_Script_CN_${version}`)
-  await $copy_('./data/config-en.ini', `./dist/Genshin_Impact_Script_EN_${version}`, 'config.ini')
-  await $copy_('./source/index.ahk', `./dist/Genshin_Impact_Script_EN_${version}`)
+  await $.copy_([
+    './data/config.ini',
+    './data/readme.url',
+    './source/off.ico',
+    './source/on.ico',
+  ], dirCN)
+
+  await $.copy_('./data/config-en.ini', dirEN, 'config.ini')
+  await $.copy_([
+    './data/readme.url',
+    './source/off.ico',
+    './source/on.ico',
+], dirEN)
 }
 
 // export
-export default main_
+export default main

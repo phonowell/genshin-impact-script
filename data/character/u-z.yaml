@@ -1,7 +1,7 @@
 venti:
   cd-e: [6, 15]
   cd-q: 15
-  color-avatar: 0x5D917E
+  color: 0x5D917E
   duration-q: 8
   name-cn: 温迪
   name-en: Venti
@@ -10,7 +10,7 @@ venti:
 xiangling:
   cd-e: 12
   cd-q: 20
-  color-avatar: 0x38487B
+  color: 0x38487B
   duration-e: 7
   duration-q: 10
   name-cn: 香菱
@@ -19,7 +19,7 @@ xiangling:
 
 xiao:
   cd-e: 10
-  color-avatar: 0x39483E
+  color: 0x39483E
   name-cn: 魈
   name-en: Xiao
   weapon: polearm
@@ -27,7 +27,7 @@ xiao:
 xingqiu:
   cd-e: 21
   cd-q: 20
-  color-avatar: 0x488892
+  color: 0x488892
   duration-e: 15
   duration-q: 15
   name-cn: 行秋
@@ -37,7 +37,7 @@ xingqiu:
 xinyan:
   cd-e: 18
   cd-q: 15
-  color-avatar: 0x503B40
+  color: 0x503B40
   duration-e: 12
   duration-q: 2
   name-cn: 辛焱
@@ -47,16 +47,26 @@ xinyan:
 yanfei:
   cd-e: 9
   cd-q: 20
-  color-avatar: 0xEFAE9E
+  color: 0xEFAE9E
   duration-q: 15
   name-cn: 烟绯
   name-en: Yanfei
   weapon: catalyst
 
+yoimiya:
+  cd-e: 18
+  cd-q: 15
+  color: 0xF7CFAF
+  duration-e: 10
+  duration-q: 10
+  name-cn: 宵宫
+  name-en: Yoimiya
+  weapon: bow
+
 zhongli:
   cd-e: [4, 12.5] # [4, 12]
   cd-q: 12
-  color-avatar: 0x4B3525
+  color: 0x4B3525
   duration-e: 20.5 # 20
   duration-q: 3.6
   name-cn: 钟离

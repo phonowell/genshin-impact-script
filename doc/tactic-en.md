@@ -2,7 +2,7 @@
 
 The Tactics module allows to set up custom combat loops for each character independently.
 
-This module is used by setting `tactic` in `config.ini`. Also, it replaces the previous `type-cbt`.
+This module is used by setting `on-long-press` in `config.ini`.
 
 ## Quick start
 
@@ -10,24 +10,24 @@ First, look at a few examples:
 
 ```ini
 [fischl]
-tactic = a, 100, a, 100, t, t
+on-long-press = a, 100, a, 100, t, t
 
 [hu_tao]
-tactic = @e, A, 150, j; a, e
+on-long-press = @e, a~, 150, j; a, e
 
 [klee]
-tactic = a, A
+on-long-press = a, a~
 
 [zhongli]
-tactic = a, E
+on-long-press = a, e~
 ```
 
 The tactic module consists of the following units:
 
 - `@e` E skill effective phase
 - `@m` Moving
-- `a`/`A` Normal attack/Charged attack
-- `e`/`E` E skill (tap/hold)
+- `a`/`a~` Normal attack/Charged attack
+- `e`/`e~` E skill (tap/hold)
 - `ee` Continuous use of E skill
 - `j` Jump
 - `s` Sprint
@@ -61,37 +61,37 @@ The remaining two examples are both relatively simple: Klee will use a cycle of 
 
 ```ini
 [amber]
-tactic = A, 150
+on-long-press = a~, 150
 
 [beidou]
-tactic = @m; a
+on-long-press = @m; a
 
 [fischl]
-tactic = a, 50, a, @m, tt; t, t
+on-long-press = a, 50, a, @m, tt; t, t
 
 [ganyu]
-tactic = A, 150
+on-long-press = a~, 150
 
 [hu_tao]
-tactic = @e, A, 150, j, 50; a, e, @e, 250
+on-long-press = @e, a~, 150, j, 50; a, e, @e, 250
 
 [keqing]
-tactic = a, ee, A
+on-long-press = a, ee, a~
 
 [klee]
-tactic = a, A
+on-long-press = a, a~
 
 [ningguang]
-tactic = a, 700, a, 400, A, 500, e
+on-long-press = a, 700, a, 400, a~, 500, e
 
 [zhongli]
-tactic = a, E
+on-long-press = a, e~
 ```
 
 The above tactics do not mean they are the optimal solution, if you have a better tactic, feel free to suggest it in the `issue`.
 
-For most characters, the following settings would also be useful.
+For most characters, the following settings would also be useful:
 
 ```ini
-tactic = a, e
+on-long-press = a, e
 ```

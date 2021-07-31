@@ -19,17 +19,20 @@ import 'client'
 
 import 'console'
 import 'hud'
-import 'checking'
+import 'scene'
 
 import 'character'
-import 'member'
+import 'party'
 import 'skill-timer'
 
 import 'key-binding'
 import 'player'
 import 'movement'
-import 'menu'
 
+import 'picker'
 import 'tactic'
+
+# import 'follower'
+import 'toolkit'
 
 import 'action/*'

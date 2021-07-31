@@ -10,10 +10,25 @@ class ClientX extends EmitterShellX
   constructor: ->
     super()
 
-    $.setInterval @tick, 200
+    interval = 200
+    if Config.data.performance == 'low' then interval = 500
+    else if Config.data.performance == 'high' then interval = 100
+    $.setInterval @tick, interval
 
-    @on 'resume', => $.setTimeout @setSize, 1e3
+    @on 'pause', =>
+      `Menu, Tray, Icon, off.ico`
+      @setPriority 'low'
+      @suspend true
+
+    @on 'resume', =>
+      `Menu, Tray, Icon, on.ico`
+      @setPriority 'normal'
+      @suspend false
+      $.setTimeout @setSize, 1e3
+
+    `Menu, Tray, Icon, on.ico,, 1`
     @setSize()
+    $.setTimeout @report, 1e3
 
     $.on 'alt + f4', =>
       $.beep()
@@ -35,6 +50,13 @@ class ClientX extends EmitterShellX
       @vw input[0]
       @vh input[1]
     ]
+
+  report: -> console.log [
+    "Client: is-fullscreen - #{@isFullScreen}"
+    "Client: performance - #{Config.data.performance}"
+    "Client: position - #{@left}, #{@top}"
+    "Client: size - #{@width}, #{@height}"
+  ]
 
   reset: ->
     @setPriority 'normal'
@@ -82,19 +104,16 @@ class ClientX extends EmitterShellX
   setPriority: (level) -> `Process, Priority, % Config.data.process, % level`
 
   tick: ->
+
     unless @check()
-      unless @isSuspend
-        @setPriority 'low'
-        @suspend true
-        @emit 'pause'
-        return
-    else
-      if @isSuspend
-        @setPriority 'normal'
-        @suspend false
-        @emit 'resume'
-        return
-      @emit 'tick'
+      unless @isSuspend then @emit 'pause'
+      return
+
+    if @isSuspend
+      @emit 'resume'
+      return
+
+    @emit 'tick'
 
   vh: (n) -> return $.round @height * n * 0.01
   vw: (n) -> return $.round @width * n * 0.01

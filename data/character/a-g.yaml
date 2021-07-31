@@ -1,14 +1,16 @@
 # cd-e
 # cd-q
-# color-avatar
-# duration-e
-# duration-q
-# tactic
-# type-e
+# color
+# duration-e?
+# duration-q?
+# name-cn
+# name-en
+# preswing-e?
+# type-e?
 # weapon
 
 aether:
-  color-avatar: 0xCC864B
+  color: 0xCC864B
   name-cn: 空
   name-en: Aether
   weapon: sword
@@ -16,7 +18,7 @@ aether:
 albedo:
   cd-e: 4
   cd-q: 12
-  color-avatar: 0xD2C6AD
+  color: 0xD2C6AD
   duration-e: 30
   name-cn: 阿贝多
   name-en: Albedo
@@ -25,7 +27,7 @@ albedo:
 amber:
   cd-e: 15
   cd-q: 12
-  color-avatar: 0x5C4C63
+  color: 0x5C4C63
   duration-e: 8
   duration-q: 2
   name-cn: 安柏
@@ -35,7 +37,7 @@ amber:
 barbara:
   cd-e: 32
   cd-q: 20
-  color-avatar: 0xDDD2BE
+  color: 0xDDD2BE
   duration-e: 15
   name-cn: 芭芭拉
   name-en: Barbara
@@ -44,7 +46,7 @@ barbara:
 beidou:
   cd-e: 7.5
   cd-q: 20
-  color-avatar: 0x4C332E
+  color: 0x4C332E
   duration-q: 15
   name-cn: 北斗
   name-en: Beidou
@@ -54,7 +56,7 @@ beidou:
 bennett:
   cd-e: [4.5, 10] # [5, 10]
   cd-q: 15
-  color-avatar: 0xFBF3CF
+  color: 0xFBF3CF
   duration-q: 12
   name-cn: 班尼特
   name-en: Bennett
@@ -63,7 +65,7 @@ bennett:
 chongyun:
   cd-e: 15
   cd-q: 12
-  color-avatar: 0xCDEFDF
+  color: 0xCDEFDF
   duration-e: 10
   name-cn: 重云
   name-en: Chongyun
@@ -72,7 +74,7 @@ chongyun:
 diluc:
   cd-e: 10
   cd-q: 12
-  color-avatar: 0xCF3226
+  color: 0xCF3226
   duration-q: 8
   name-cn: 迪卢克
   name-en: Diluc
@@ -81,7 +83,7 @@ diluc:
 diona:
   cd-e: [6, 15]
   cd-q: 20
-  color-avatar: 0xFED6CE
+  color: 0xFED6CE
   duration-e: [4, 10]
   duration-q: 12
   name-cn: 迪奥娜
@@ -91,7 +93,7 @@ diona:
 eula:
   cd-e: [4, 10]
   cd-q: 20
-  color-avatar: 0x97C7CF
+  color: 0x97C7CF
   duration-e: [18, 7]
   duration-q: 7
   name-cn: 优菈
@@ -101,7 +103,7 @@ eula:
 fischl:
   cd-e: 25
   cd-q: 15
-  color-avatar: 0xFFE3A9
+  color: 0xFFE3A9
   duration-e: 10
   name-cn: 菲谢尔
   name-en: Fischl
@@ -111,7 +113,7 @@ fischl:
 ganyu:
   cd-e: 10
   cd-q: 15
-  color-avatar: 0xBDCCC5
+  color: 0xBDCCC5
   duration-e: 6
   duration-q: 15
   name-cn: 甘雨

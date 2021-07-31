@@ -1,18 +1,14 @@
 class PlayerX extends KeyBindingX
 
-  current: 0
-  name: ''
-
   constructor: ->
     super()
 
-    # toggle
+    # switch
     for key in [1, 2, 3, 4]
-      @bindEvent 'toggle', key, 'prevent'
+      @bindEvent 'switch', key, 'prevent'
 
     # attack
     @bindEvent 'attack', 'l-button', 'prevent'
-    @bindEvent 'toggle-aim', 'r'
 
     # use skill
     @bindEvent 'use-e', 'e'
@@ -22,37 +18,26 @@ class PlayerX extends KeyBindingX
     @bindEvent 'pick', 'f', 'prevent'
     @bindEvent 'unhold', 'x', 'prevent'
 
-    # unknown
-    @bindEvent 'm-button', 'm-button'
-    @bindEvent 'g', 'g'
-    @bindEvent 'p', 'p'
-    @bindEvent 'v', 'v'
-    @bindEvent 'y', 'y'
-    @bindEvent 'z', 'z'
-
-  toggleQ: (key) ->
+  switchQ: (key) ->
     $.press "alt + #{key}"
-    member.toggle key
-    skillTimer.listQ[player.current] = $.now()
+    party.switchTo key
+    skillTimer.listQ[party.current] = $.now()
 
   useE: (isHolding = false) ->
 
-    unless isHolding
-      $.press 'e'
-      skillTimer.record 'start'
-      skillTimer.record 'end'
-      return
+    delay = 50
+    if isHolding then delay = 1e3
 
     $.press 'e:down'
     skillTimer.record 'start'
     $.setTimeout ->
       $.press 'e:up'
       skillTimer.record 'end'
-    , 1e3
+    , delay
 
   useQ: ->
     $.press 'q'
-    skillTimer.listQ[player.current] = $.now()
+    skillTimer.listQ[party.current] = $.now()
 
 # execute
 player = new PlayerX()

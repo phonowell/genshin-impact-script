@@ -56,7 +56,7 @@ class MovementX extends KeyBindingX
 
   jump: ->
     $.press 'space'
-    ts.jump = $now()
+    ts.jump = $.now()
 
   sprint: -> $.click 'right'
 

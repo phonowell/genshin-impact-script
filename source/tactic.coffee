@@ -9,7 +9,12 @@ class TacticX
       .on 'attack:start', @start
       .on 'attack:end', @stop
 
-    member.on 'change', @reset
+    party
+      .on 'change', @reset
+      .on 'switch', =>
+        unless @isActive then return
+        @stop()
+        @start()
 
   attack: (isCharged, callback) ->
 
@@ -18,7 +23,7 @@ class TacticX
       @isPressed['l-button'] = true
 
       delay = 300
-      {name} = player
+      name = party.name
       {weapon} = Character.data[name]
       switch weapon
         when 'bow'
@@ -36,7 +41,7 @@ class TacticX
         $.click 'left:up'
         @isPressed['l-button'] = false
 
-        if movement.isMoving and player.name == 'klee'
+        if movement.isMoving and party.name == 'klee'
           @delay 200, => @jump callback
           return
 
@@ -58,8 +63,8 @@ class TacticX
     unless item
       @execute listTactic
       return
-    unless item == $.toLowerCase item
-      item = "#{item}~"
+    # unless item == $.toLowerCase item
+    #   item = "#{item}~"
 
     next = => @execute listTactic, g, i + 1
 
@@ -75,13 +80,13 @@ class TacticX
     map['@m'] = => @onMoving next, => @execute listTactic, g + 1, 0
 
     map.a = => @attack false, next
-    map['A~'] = => @attack true, next
+    map['a~'] = => @attack true, next
 
     map.e = => @useE false, next
     map.ee = => @useE false, =>
       $.press 'e'
       @delay 100, next
-    map['E~'] = => @useE true, next
+    map['e~'] = => @useE true, next
 
     map.j = => @jump next
     map.s = => @sprint next
@@ -96,11 +101,12 @@ class TacticX
         @delay 50, next
       , 50
 
+    # console.log "Tactic: #{item}"
     callback = map[item]
-    unless callback
-      callback = => @wait item, next
+    if !callback and ($.type item) == 'number'
+      callback = => @delay item, next
 
-    callback()
+    if callback then callback()
 
   get: (list, g = 0, i = 0) ->
     if g >= $.length list then return false
@@ -117,11 +123,11 @@ class TacticX
   ongoing: (cbA, cbB, isNot = false) ->
 
     unless isNot
-      if skillTimer.listDuration[player.current]
+      if skillTimer.listDuration[party.current]
         @delay 50, cbA
       else @delay 50, cbB
     else
-      if skillTimer.listDuration[player.current]
+      if skillTimer.listDuration[party.current]
         @delay 50, cbB
       else @delay 50, cbA
 
@@ -151,8 +157,7 @@ class TacticX
 
   start: ->
 
-    if @isActive
-      return
+    if @isActive then return
 
     listTactic = @validate()
     unless listTactic
@@ -161,7 +166,7 @@ class TacticX
 
     @isActive = true
 
-    wait = 1e3 - ($.now() - ts.toggle)
+    wait = 1e3 - ($.now() - party.tsSwitch)
     if wait < 200
       wait = 200
 
@@ -175,18 +180,18 @@ class TacticX
 
     $.click 'left:up'
 
-  toggle: (n, callback) ->
+  switchTo: (n, callback) ->
 
     unless @isActive
       return
 
     $.press n
-    member.toggle n
+    party.switchTo n
     @delay 200, callback
 
   useE: (isHolding, callback) ->
 
-    unless skillTimer.listCountDown[player.current]
+    unless skillTimer.listCountDown[party.current]
       player.useE isHolding
       @delay 100, callback
       return
@@ -195,20 +200,15 @@ class TacticX
 
   validate: ->
 
-    unless checker.isActive
-      return false
+    unless Scene.name == 'normal' then return false
 
-    name = player.name
-    unless name
-      return false
+    {name} = party
+    unless name then return false
 
-    listTactic = Character.data[name].tactic
-    unless listTactic
-      return false
+    listTactic = Character.data[name].onLongPress
+    unless listTactic then return false
 
     return listTactic
-
-  wait: (time, callback) -> @delay time, callback
 
 # execute
 tactic = new TacticX()

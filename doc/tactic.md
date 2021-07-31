@@ -2,7 +2,7 @@
 
 动作模组可以为每个角色独立设置自定义的战斗循环。
 
-通过在`config.ini`中设置`tactic`来使用这一模组。同时，它取代了之前的`type-cbt`。
+通过在`config.ini`中设置`on-long-press`来使用这一模组。
 
 ## 快速开始
 
@@ -10,24 +10,24 @@
 
 ```ini
 [fischl]
-tactic = a, 100, a, 100, t, t
+on-long-press = a, 100, a, 100, t, t
 
 [hu_tao]
-tactic = @e, A, 150, j; a, e
+on-long-press = @e, a~, 150, j; a, e
 
 [klee]
-tactic = a, A
+on-long-press = a, a~
 
 [zhongli]
-tactic = a, E
+on-long-press = a, e~
 ```
 
 动作模组由如下的单元构成：
 
 - `@e` 元素战技生效阶段
 - `@m` 角色移动
-- `a`/`A` 普通攻击/蓄力攻击
-- `e`/`E` 点按/长按元素战技
+- `a`/`a~` 普通攻击/蓄力攻击
+- `e`/`e~` 点按/长按元素战技
 - `ee` 连续使用元素战技
 - `j` 跳跃
 - `s` 冲刺
@@ -61,31 +61,31 @@ tactic = a, E
 
 ```ini
 [amber]
-tactic = A, 150
+on-long-press = a~, 150
 
 [beidou]
-tactic = @m; a
+on-long-press = @m; a
 
 [fischl]
-tactic = a, 50, a, @m, tt; t, t
+on-long-press = a, 50, a, @m, tt; t, t
 
 [ganyu]
-tactic = A, 150
+on-long-press = a~, 150
 
 [hu_tao]
-tactic = @e, A, 150, j, 50; a, e, @e, 250
+on-long-press = @e, a~, 150, j, 50; a, e, @e, 250
 
 [keqing]
-tactic = a, ee, A
+on-long-press = a, ee, a~
 
 [klee]
-tactic = a, A
+on-long-press = a, a~
 
 [ningguang]
-tactic = a, 700, a, 400, A, 500, e
+on-long-press = a, 700, a, 400, a~, 500, e
 
 [zhongli]
-tactic = a, E
+on-long-press = a, e~
 ```
 
 上述动作并不代表它们是最优解，如果你有更好的循环，欢迎在`issue`中提出。
@@ -93,5 +93,5 @@ tactic = a, E
 对于大部分角色来说，以下设置也会很有用：
 
 ```ini
-tactic = a, e
+on-long-press = a, e
 ```

@@ -1,8 +1,10 @@
 class ConsoleX
 
-  lifetime: 5e3
-  list: []
-  tsClean: 0
+  intervalCheck: 2e3
+  isChanged: false
+  lifetime: 10e3
+  listContent: []
+  tsCheck: 0
 
   constructor: ->
 
@@ -10,27 +12,17 @@ class ConsoleX
 
     client
       .on 'pause', @hide
-      .on 'tick', @update
+      .on 'tick', @check
 
-    $.on 'alt + f9', =>
-      $.beep()
-      @pickColor()
-
-  clean: ->
+  check: ->
 
     now = $.now()
-    unless now - @tsClean >= 1e3
-      return
-    @tsClean = now
+    unless now - @tsCheck >= @intervalCheck then return
+    @tsCheck = now
 
-    listResult = []
-
-    for item in @list
-      if now >= item[0]
-        continue
-      $.push listResult, item
-
-    @list = listResult
+    len = $.length @listContent
+    @listContent = $.filter @listContent, (item) -> return item[0] >= now
+    if len != $.length @listContent then @update()
 
   hide: -> `ToolTip, , 0, 0, 20`
 
@@ -40,38 +32,19 @@ class ConsoleX
 
     if ($.type input) == 'array'
       for msg in input
-        $.push @list, [tsOutdate, msg]
-    else $.push @list, [tsOutdate, input]
+        $.push @listContent, [tsOutdate, msg]
+    else $.push @listContent, [tsOutdate, input]
 
+    @update()
     return input
 
-  pickColor: ->
-
-    color = $.getColor()
-    [x, y] = $.getPosition()
-
-    x1 = $.round (x * 100) / client.width
-    y1 = $.round (y * 100) / client.height
-
-    @log "#{x1}, #{y1} / #{color}"
-    ClipBoard = color
-
-  render: ->
-
-    text = ''
-    for item in @list
-      text = "#{text}\n#{item[1]}"
-    text = $.trim text, ' \n'
-
-    `ToolTip, % text, 0, 0, 20`
-
   update: ->
-
-    if client.isSuspend
-      return
-
-    @clean()
-    @render()
+    list = $.map @listContent, (item) -> return item[1]
+    text = $.join list, '\n'
+    text = $.trim text, ' \n'
+    left = 0 - client.left
+    top = client.height * 0.5
+    `ToolTip, % text, % left, % top, 20`
 
 # execute
 console = new ConsoleX()

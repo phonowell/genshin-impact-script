@@ -1,7 +1,7 @@
 hu_tao:
   cd-e: 16
   cd-q: 15
-  color-avatar: 0x7B5B61
+  color: 0x7B5B61
   duration-e: 9
   name-cn: 胡桃
   name-en: Hu Tao
@@ -9,7 +9,7 @@ hu_tao:
 
 jean:
   cd-e: 6
-  color-avatar: 0xEED6C0
+  color: 0xEED6C0
   name-cn: 琴
   name-en: Jean
   type-e: 1
@@ -18,7 +18,7 @@ jean:
 kaedehara:
   cd-e: [6, 9]
   cd-q: 15
-  color-avatar: 0xE9DDD7
+  color: 0xE9DDD7
   duration-q: 8
   name-cn: 枫原万叶
   name-en: Kaedehara
@@ -27,16 +27,25 @@ kaedehara:
 kaeya:
   cd-e: 6
   cd-q: 15
-  color-avatar: 0x394E64
+  color: 0x394E64
   duration-q: 8
   name-cn: 凯亚
   name-en: Kaeya
   weapon: sword
 
+kamisato:
+  cd-e: 10
+  cd-q: 20
+  color: 0xA3A7C1
+  duration-q: 5
+  name-cn: 神里绫华
+  name-en: Kamisato
+  weapon: sword
+
 keqing:
   cd-e: 7.5
   cd-q: 12
-  color-avatar: 0xBEB1C3
+  color: 0xBEB1C3
   duration-e: 5
   name-cn: 刻晴
   name-en: Keqing
@@ -46,7 +55,7 @@ keqing:
 klee:
   cd-e: 20
   cd-q: 15
-  color-avatar: 0xBE3A0E
+  color: 0xBE3A0E
   duration-q: 10
   name-cn: 可莉
   name-en: Klee
@@ -55,14 +64,14 @@ klee:
 lisa:
   cd-e: [1, 16]
   cd-q: 20
-  color-avatar: 0xB6A69B
+  color: 0xB6A69B
   duration-q: 15
   name-cn: 丽莎
   name-en: Lisa
   weapon: catalyst
 
 lumine:
-  color-avatar: 0xE7DEBD
+  color: 0xE7DEBD
   name-cn: 荧
   name-en: Lumine
   weapon: sword
@@ -70,7 +79,7 @@ lumine:
 mona:
   cd-e: 12
   cd-q: 15
-  color-avatar: 0x5A5064
+  color: 0x5A5064
   duration-e: 6
   duration-q: 4.5
   name-cn: 莫娜
@@ -80,7 +89,7 @@ mona:
 ningguang:
   cd-e: 12
   cd-q: 12
-  color-avatar: 0xFFFDF8
+  color: 0xFFFDF8
   duration-e: 29
   name-cn: 凝光
   name-en: Ningguang
@@ -89,7 +98,7 @@ ningguang:
 noelle:
   cd-e: 24
   cd-q: 15
-  color-avatar: 0xDED8D2
+  color: 0xDED8D2
   duration-e: 12
   duration-q: 15
   name-cn: 诺艾尔

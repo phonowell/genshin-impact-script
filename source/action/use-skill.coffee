@@ -6,4 +6,4 @@ player
   .on 'use-q:start', player.useQ
 
 for key in [1, 2, 3, 4]
-  $.on "alt + #{key}", -> player.toggleQ key
+  $.on "alt + #{key}", -> player.switchQ key

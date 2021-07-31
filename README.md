@@ -18,10 +18,6 @@
 
 按下`F`键时快速拾取物品/跳过对话。
 
-### 更合理的快跑与跳跃
-
-长按`右键`时，使用优化过的动作快跑。在起跳时自动打开风之翼。
-
 ### 技能计时器
 
 可显示元素战技的冷却时间及效果持续时间。
@@ -38,29 +34,13 @@
 
 当游戏窗口处于非活动状态时，将进程优先级设为最低。
 
-### 录制/重播动作
-
-按下`F10`录制动作；按下`F11`重播
-
-### 扩展热键
-
-增加了如下热键：`H`, `I`, `N`, `T`, `U`；可自由配置其功能
-
 ## 使用
 
 **注意，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
 
-### 使用`.exe`
+下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.19/Genshin_Impact_Script_CN_0.0.19.zip)并解压。
 
-进入解压文件夹双击其中的`index.exe`即可（会提示是否应用管理员权限，选择应用）。
-
-### 使用`.ahk`
-
-首先，前往[ahk官网](https://www.autohotkey.com/)安装`ahk`（1.33+，请勿使用v2版本）。
-
-然后，下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.18/Genshin_Impact_Script_CN_0.0.18.zip)并解压。
-
-最后，进入解压文件夹并双击其中的`index.ahk`即可（会提示是否应用管理员权限，选择应用）。
+进入解压文件夹双击其中的`start.exe`即可（会提示是否应用管理员权限，选择应用）。
 
 ### 技能计时器
 
@@ -87,31 +67,23 @@
 
 ```ini
 [klee]
-tactic = a, A
+on-long-press = a, a~
 
 [zhongli]
-type-apr = 2
+on-switch = 2
 ```
 
-#### tactic
+#### on-long-press
 
 自定义的动作模组。详情请点击[这里](./doc/tactic.md)。
 
-#### type-apr
+#### on-switch
 
 登场方式。可为以下数值之一：
 
 - `0` 关闭
 - `1` 依据登场按下数字键的时长，使用对应的元素战技
 - `2` 登场时使用角色的元素战技（长按）
-
-### 扩展热键
-
-首先，使用`录制功能`录制想要使用的动作。
-
-然后，将该动作的录像文件添加上想要绑定的按键后缀（举例，当想将动作绑定至`T`时，需要将`replay.txt`改名为`replay-t.txt`）。
-
-之后，就可以在游戏内按下对应按键播放动作了。
 
 ## 注意
 
