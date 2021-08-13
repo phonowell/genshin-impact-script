@@ -66,7 +66,7 @@ For Example:
 on-long-press = a, a~
 
 [zhongli]
-on-switch = 2
+on-switch = e~
 ```
 
 #### on-long-press
@@ -77,9 +77,8 @@ Customized tactic module. For details, click [here](./doc/tactic-en.md).
 
 The type of appearance. Can be one of the following values:
 
-- `0` Off
-- `1` Uses the corresponding `E` skill depending on the length of time the number key is pressed
-- `2` Uses `E` skill (hold)
+- `e` Uses the corresponding `E` skill depending on the length of time the number key is pressed
+- `e~` Uses `E` skill (hold)
 
 ## Note
 
@@ -87,6 +86,10 @@ The type of appearance. Can be one of the following values:
 - Use `Right Click` for sprinting, not `Left Shift`
 - The game should run in `16:9` resolution
 - Avoid discussing the script in public
+
+## FAQ
+
+Click [here](./doc/faq-en.md).
 
 ## Disclaimers
 

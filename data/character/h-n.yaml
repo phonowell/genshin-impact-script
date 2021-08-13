@@ -5,6 +5,7 @@ hu_tao:
   duration-e: 9
   name-cn: 胡桃
   name-en: Hu Tao
+  star: 5
   weapon: polearm
 
 jean:
@@ -12,6 +13,7 @@ jean:
   color: 0xEED6C0
   name-cn: 琴
   name-en: Jean
+  star: 5
   type-e: 1
   weapon: sword
 
@@ -22,6 +24,7 @@ kaedehara:
   duration-q: 8
   name-cn: 枫原万叶
   name-en: Kaedehara
+  star: 5
   weapon: sword
 
 kaeya:
@@ -31,6 +34,7 @@ kaeya:
   duration-q: 8
   name-cn: 凯亚
   name-en: Kaeya
+  star: 4
   weapon: sword
 
 kamisato:
@@ -40,6 +44,7 @@ kamisato:
   duration-q: 5
   name-cn: 神里绫华
   name-en: Kamisato
+  star: 5
   weapon: sword
 
 keqing:
@@ -49,6 +54,7 @@ keqing:
   duration-e: 5
   name-cn: 刻晴
   name-en: Keqing
+  star: 5
   type-e: 1
   weapon: sword
 
@@ -59,6 +65,7 @@ klee:
   duration-q: 10
   name-cn: 可莉
   name-en: Klee
+  star: 5
   weapon: catalyst
 
 lisa:
@@ -68,12 +75,14 @@ lisa:
   duration-q: 15
   name-cn: 丽莎
   name-en: Lisa
+  star: 4
   weapon: catalyst
 
 lumine:
   color: 0xE7DEBD
   name-cn: 荧
   name-en: Lumine
+  star: 4
   weapon: sword
 
 mona:
@@ -84,6 +93,7 @@ mona:
   duration-q: 4.5
   name-cn: 莫娜
   name-en: Mona
+  star: 5
   weapon: catalyst
 
 ningguang:
@@ -93,6 +103,7 @@ ningguang:
   duration-e: 29
   name-cn: 凝光
   name-en: Ningguang
+  star: 4
   weapon: catalyst
 
 noelle:
@@ -103,4 +114,5 @@ noelle:
   duration-q: 15
   name-cn: 诺艾尔
   name-en: Noelle
+  star: 4
   weapon: claymore

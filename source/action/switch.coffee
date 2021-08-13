@@ -5,7 +5,7 @@ state.isPressedSwitch = false
 
 onSwitchEnd = (onSwitch) ->
 
-  if onSwitch == 2
+  if onSwitch == 'e~'
     player.useE 'holding'
     return
 
@@ -20,14 +20,14 @@ onSwitchEnd = (onSwitch) ->
 
 player.on 'switch:start', (key) ->
   $.press key
-  unless Scene.name == 'normal' then return 0
+  unless Scene.name == 'normal' then return
   party.switchTo key
   state.isFiredSwitch = false
   state.isPressedSwitch = false
 
 player.on 'switch:end', ->
 
-  unless Scene.name == 'normal' then return 0
+  unless Scene.name == 'normal' then return
 
   if state.isFiredSwitch
     {name} = party
@@ -51,7 +51,7 @@ party.on 'switch', ->
     return
   state.isFiredSwitch = true
 
-  unless onSwitch == 1 then return
+  unless onSwitch == 'e' then return
 
   state.isPressedSwitch = true
   $.press 'e:down'

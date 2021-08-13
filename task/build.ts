@@ -3,7 +3,7 @@ import c2a from 'coffee-ahk'
 
 // function
 
-const clean = () => $.remove_('./dist')
+const clean = () => $.remove('./dist')
 
 const compile = () => c2a('./source/index.coffee', { salt: 'genshin' })
 
@@ -15,23 +15,23 @@ const main = async (): Promise<void> => {
 
 const pack = async (): Promise<void> => {
 
-  const { version } = await $.read_<{ version: string }>('./package.json')
+  const { version } = await $.read<{ version: string }>('./package.json')
 
-  const buffer = await $.read_<Buffer>('./source/index.ahk')
+  const buffer = await $.read<Buffer>('./source/index.ahk')
   const dirCN = `./dist/Genshin_Impact_Script_CN_${version}`
   const dirEN = `./dist/Genshin_Impact_Script_EN_${version}`
 
-  await $.write_('./dist/start.ahk', buffer)
+  await $.write('./dist/start.ahk', buffer)
 
-  await $.copy_([
+  await $.copy([
     './data/config.ini',
     './data/readme.url',
     './source/off.ico',
     './source/on.ico',
   ], dirCN)
 
-  await $.copy_('./data/config-en.ini', dirEN, 'config.ini')
-  await $.copy_([
+  await $.copy('./data/config-en.ini', dirEN, 'config.ini')
+  await $.copy([
     './data/readme.url',
     './source/off.ico',
     './source/on.ico',

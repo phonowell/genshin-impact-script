@@ -7,21 +7,41 @@ class CharacterX
 
   data: {}
 
-  constructor: -> for name, char of $.mixin {}, __ag__, __hn__, __ot__, __uz__
-    @data[name] =
-      cdE: @getValueIntoArray char['cd-e']
-      cdQ: char['cd-q']
-      color: char['color']
-      durationE: @getValueIntoArray char['duration-e']
-      durationQ: char['duration-q']
-      nameCN: char['name-cn']
-      nameEN: char['name-en']
-      onLongPress: @getOnLongPress Config.read "#{name}/on-long-press", 0
-      onSwitch: Config.read "#{name}/on-switch", 0
-      typeE: char['type-e']
-      weapon: char.weapon
+  constructor: ->
 
-  getOnLongPress: (value) ->
+    for key, char of $.mixin {}, __ag__, __hn__, __ot__, __uz__
+
+      @data[key] =
+        cdE: @padArray @makeValueIntoArray char['cd-e']
+        cdQ: char['cd-q']
+        color: @makeValueIntoArray char['color']
+        durationE: @padArray @makeValueIntoArray char['duration-e']
+        durationQ: char['duration-q']
+        nameCN: char['name-cn']
+        nameEN: char['name-en']
+        typeE: char['type-e']
+        weapon: char.weapon
+
+      @data[key].onLongPress = @makeOnLongPress @pickMulti key, 'on-long-press'
+      @data[key].onSwitch = @pickMulti key, 'on-switch'
+
+  padArray: (list) ->
+    if ($.length list) == 2 then return list
+    $.push list, list[0]
+    return list
+
+  pickMulti: (key, name) ->
+
+    value = Config.read "#{key}/#{name}", 0
+    if value then return value
+
+    # value = Config.read "#{@data[key].nameCN}/#{name}", 0
+    # if value then return value
+
+    value = Config.read "#{$.toLowerCase @data[key].nameEN}/#{name}", 0
+    return value
+
+  makeOnLongPress: (value) ->
 
     unless value then return 0
 
@@ -36,10 +56,10 @@ class CharacterX
 
     return listAll
 
-  getValueIntoArray: (value) -> switch $.type value
+  makeValueIntoArray: (value) -> switch $.type value
     when 'array' then return value
-    when 'number' then return [value, value]
-    else return [0, 0]
+    when 'number' then return [value]
+    else return [0]
 
 # execute
 Character = new CharacterX()

@@ -16,7 +16,6 @@ class PlayerX extends KeyBindingX
 
     # others
     @bindEvent 'pick', 'f', 'prevent'
-    @bindEvent 'unhold', 'x', 'prevent'
 
   switchQ: (key) ->
     $.press "alt + #{key}"

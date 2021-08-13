@@ -34,7 +34,7 @@ class SkillTimerX
       [x, y] = $.findColor 0xFFFFFF, start, end
       if x * y > 0 then return
 
-      console.log 'Skill-timer: invalid record'
+      console.log 'skill-timer: invalid record'
 
       @listCountDown[current] = 1
       @listDuration[current] = 1
@@ -162,7 +162,7 @@ class SkillTimerX
         return
 
       if n == party.current
-        $.push listMessage, '@'
+        $.push listMessage, '💬'
 
       @render n, $.join listMessage, ' '
 

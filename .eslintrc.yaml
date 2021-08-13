@@ -71,7 +71,7 @@ rules:
   no-useless-concat: 2
   no-useless-return: 2
   no-void: 2
-  no-warning-comments: 2
+  no-warning-comments: 1
   prefer-named-capture-group: 0
   prefer-promise-reject-errors: 2
   radix: 2
@@ -103,7 +103,7 @@ rules:
   array-element-newline: 0
   block-spacing: 2
   brace-style: 2
-  camelcase: 1
+  camelcase: 0
   capitalized-comments: 0
   comma-dangle:
     - warn

@@ -25,6 +25,7 @@ on-long-press = a, e~
 The tactic module consists of the following units:
 
 - `@e` E skill effective phase
+- `@e?` E skill is ready
 - `@m` Moving
 - `a`/`a~` Normal attack/Charged attack
 - `e`/`e~` E skill (tap/hold)
@@ -63,26 +64,26 @@ The remaining two examples are both relatively simple: Klee will use a cycle of 
 [amber]
 on-long-press = a~, 150
 
-[beidou]
-on-long-press = @m; a
-
 [fischl]
-on-long-press = a, 50, a, @m, tt; t, t
+on-long-press = @m, a, 100, a, tt; a, a~
 
 [ganyu]
-on-long-press = a~, 150
+on-long-press = a~, a
 
 [hu_tao]
-on-long-press = @e, a~, 150, j, 50; a, e, @e, 250
+on-long-press = !@e, a, e, @e, 300; a~, 150, j, 50
 
 [keqing]
-on-long-press = a, ee, a~
+on-long-press = a, ee
 
 [klee]
 on-long-press = a, a~
 
 [ningguang]
 on-long-press = a, 700, a, 400, a~, 500, e
+
+[venti]
+on-long-press = @m, a, 100, a, tt; a, a~
 
 [zhongli]
 on-long-press = a, e~

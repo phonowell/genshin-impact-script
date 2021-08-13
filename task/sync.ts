@@ -1,12 +1,12 @@
-import $copy_ from 'fire-keeper/copy_'
+import $copy from 'fire-keeper/copy'
 import $getName from 'fire-keeper/getName'
 import $info from 'fire-keeper/info'
-import $isExisted_ from 'fire-keeper/isExisted_'
-import $isSame_ from 'fire-keeper/isSame_'
-import $prompt_ from 'fire-keeper/prompt_'
-import $read_ from 'fire-keeper/read_'
-import $source_ from 'fire-keeper/source_'
-import $stat_ from 'fire-keeper/stat_'
+import $isExisted from 'fire-keeper/isExisted'
+import $isSame from 'fire-keeper/isSame'
+import $prompt from 'fire-keeper/prompt'
+import $read from 'fire-keeper/read'
+import $source from 'fire-keeper/source'
+import $stat from 'fire-keeper/stat'
 import _uniq from 'lodash/uniq'
 
 // interface
@@ -24,19 +24,19 @@ const ask = async (
 ): Promise<string> => {
 
   const isExisted = [
-    await $isExisted_(source),
-    await $isExisted_(target),
+    await $isExisted(source),
+    await $isExisted(target),
   ]
 
   const mtime: [number, number] = [0, 0]
   if (isExisted[0]) {
-    const stat = await $stat_(source)
+    const stat = await $stat(source)
     mtime[0] = stat
       ? stat.mtimeMs
       : 0
   }
   if (isExisted[1]) {
-    const stat = await $stat_(target)
+    const stat = await $stat(target)
     mtime[1] = stat
       ? stat.mtimeMs
       : 0
@@ -79,7 +79,7 @@ const ask = async (
     value: 'skip',
   })
 
-  return $prompt_({
+  return $prompt({
     default: indexDefault,
     list: choice,
     message: 'and you decide to...',
@@ -90,11 +90,8 @@ const ask = async (
 const load = async (): Promise<string[]> => {
 
   $info().pause()
-  const listData = await Promise.all<string[]>(
-    (await $source_('./data/sync/**/*.yaml')).map(
-      source => $read_(source),
-    ),
-  )
+  const listSource = await $source('./data/sync/**/*.yaml')
+  const listData = (await Promise.all<string[]>(listSource.map(source => $read(source))))
   $info().resume()
 
   let result: string[] = []
@@ -115,13 +112,12 @@ const main = async (): Promise<void> => {
   // diff
   for (const line of data) {
 
-    const _list = line.split('@')
-    const [path, extra] = [_list[0], _list[1] || '']
+    const [path, extra] = line.split('@')
 
-    const _list2 = extra.split('/')
+    const list = (extra || '').split('/')
     const [namespace, version] = [
-      _list2[0] || 'default',
-      _list2[1] || 'latest',
+      list[0] || 'default',
+      list[1] || 'latest',
     ]
 
     const source = `./${path}`
@@ -130,7 +126,7 @@ const main = async (): Promise<void> => {
     target = `${dirname}/${basename}-${namespace}-${version}${extname}`
 
     // eslint-disable-next-line no-await-in-loop
-    if (await $isSame_([source, target])) continue
+    if (await $isSame([source, target])) continue
 
     $info(`'${source}' is different from '${target}'`)
 
@@ -151,12 +147,12 @@ const overwrite = async (
 
   if (value === 'export') {
     const { dirname, filename } = $getName(target)
-    await $copy_(source, dirname, filename)
+    await $copy(source, dirname, filename)
   }
 
   if (value === 'import') {
     const { dirname, filename } = $getName(source)
-    await $copy_(target, dirname, filename)
+    await $copy(target, dirname, filename)
   }
 }
 

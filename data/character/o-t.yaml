@@ -6,7 +6,14 @@ qiqi:
   duration-q: 15
   name-cn: 七七
   name-en: Qiqi
+  star: 5
   weapon: sword
+
+# reiden:
+#   name-cn: 雷电
+#   name-en: Reiden
+#   star: 5
+#   weapon: polearm
 
 rezor:
   cd-e: [6, 10]
@@ -15,6 +22,7 @@ rezor:
   duration-q: 15
   name-cn: 雷泽
   name-en: Rezor
+  star: 4
   weapon: claymore
 
 rosaria:
@@ -24,7 +32,19 @@ rosaria:
   duration-q: 8
   name-cn: 罗莎莉亚
   name-en: Rosaria
+  star: 4
   weapon: polearm
+
+sayu:
+  cd-e: 6 # 11
+  cd-q: 20
+  color: 0xFFF5CD
+  duration-e: 10
+  duration-q: 12
+  name-cn: 早柚
+  name-en: Sayu
+  star: 4
+  weapon: claymore
 
 sucrose:
   cd-e: 14.5 # 15
@@ -33,6 +53,7 @@ sucrose:
   duration-q: 6
   name-cn: 砂糖
   name-en: Sucrose
+  star: 4
   weapon: catalyst
 
 tartaglia:
@@ -42,4 +63,5 @@ tartaglia:
   duration-e: 30
   name-cn: 达达利亚
   name-en: Tartaglia
+  star: 5
   weapon: bow

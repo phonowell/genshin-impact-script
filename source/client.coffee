@@ -27,6 +27,8 @@ class ClientX extends EmitterShellX
       $.setTimeout @setSize, 1e3
 
     `Menu, Tray, Icon, on.ico,, 1`
+    @setPriority 'normal'
+
     @setSize()
     $.setTimeout @report, 1e3
 
@@ -52,10 +54,10 @@ class ClientX extends EmitterShellX
     ]
 
   report: -> console.log [
-    "Client: is-fullscreen - #{@isFullScreen}"
-    "Client: performance - #{Config.data.performance}"
-    "Client: position - #{@left}, #{@top}"
-    "Client: size - #{@width}, #{@height}"
+    "client/is-fullscreen: #{@isFullScreen}"
+    "client/performance: #{Config.data.performance}"
+    "client/position: #{@left}, #{@top}"
+    "client/size: #{@width}, #{@height}"
   ]
 
   reset: ->

@@ -1,5 +1,5 @@
-import $source_ from 'fire-keeper/source_'
-import $write_ from 'fire-keeper/write_'
+import $source from 'fire-keeper/source'
+import $write from 'fire-keeper/write'
 import { createCanvas, loadImage, NodeCanvasRenderingContext2D } from 'canvas'
 import _sortBy from 'lodash/sortBy'
 
@@ -14,6 +14,8 @@ type MapColor = {
 const listSource = [
   'F:/0.png',
   'F:/1.png',
+  // 'F:/2.png',
+  // 'F:/3.png',
 ]
 
 // function
@@ -27,7 +29,7 @@ const getMap = async (
   path: string,
 ): Promise<MapColor> => {
 
-  const [source] = await $source_(path)
+  const [source] = await $source(path)
   const img = await loadImage(source)
   const { width, height } = img
   ctx.drawImage(img, 0, 0, width, height)
@@ -73,7 +75,7 @@ const main = async () => {
   })), 'count')
   listResult.reverse()
 
-  await $write_('./data/color.yaml', listResult.map(it => {
+  await $write('./data/color.yaml', listResult.map(it => {
     return `- #${it.color} / 0x${it.color}  / ${it.count} times`
   }).join('\n'))
 }

@@ -11,10 +11,7 @@ class PartyX extends EmitterShellX
   constructor: ->
     super()
 
-    @on 'change', =>
-      console.log "Party: #{$.join ($.tail @listMember), ', '}"
-      $.press 1
-      @switchTo 1
+    @on 'change', => console.log "party: #{$.join ($.tail @listMember), ', '}"
 
     @on 'switch', (n) =>
 
@@ -23,7 +20,7 @@ class PartyX extends EmitterShellX
       nameOld = @listMember[@current]
       unless nameNew then nameNew = 'unknown'
       unless nameOld then nameOld = 'unknown'
-      console.log "Party: [#{@current}]#{nameOld} -> [#{n}]#{nameNew}"
+      console.log "party: [#{@current}]#{nameOld} -> [#{n}]#{nameNew}"
 
       @current = n
       @name = nameNew
@@ -34,6 +31,11 @@ class PartyX extends EmitterShellX
 
     $.on 'f12', @scan
 
+  checkCurrent: (n) ->
+    [start, end] = @makeRange n, 'narrow'
+    [x, y] = $.findColor 0x323232, start, end
+    return !(x * y > 0)
+
   checkCurrentAs: (n, callback) ->
 
     name = @listMember[n]
@@ -43,9 +45,7 @@ class PartyX extends EmitterShellX
 
     $.clearTimeout timer.checkCurrentFromParty
     timer.checkCurrentFromParty = $.setTimeout =>
-      [pointA, pointB] = @makeRange n, 'narrow'
-      point = $.findColor 0x323232, pointA, pointB
-      if point[0] * point[1] > 0
+      unless @checkCurrent n
         $.beep()
         return
       if callback then callback()
@@ -59,17 +59,19 @@ class PartyX extends EmitterShellX
 
   getNameViaPosition: (n) ->
 
-    [pointA, pointB] = @makeRange n
+    [start, end] = @makeRange n
 
     for name, char of Character.data
 
       if @has name then continue
       unless char.color then continue
 
-      point = $.findColor char.color, pointA, pointB
-      unless point[0] * point[1] > 0 then continue
+      for color in char.color
 
-      return name
+        [x, y] = $.findColor color, start, end
+        unless x * y > 0 then continue
+
+        return name
 
     return ''
 
@@ -92,10 +94,15 @@ class PartyX extends EmitterShellX
       $.beep()
       return
 
-    if @isBusy then return
+    if @isBusy
+      $.beep()
+      return
     @isBusy = true
 
+    @current = 0
     @listMember = ['']
+    @name = ''
+
     skillTimer.reset()
     hud.reset()
 
@@ -105,12 +112,24 @@ class PartyX extends EmitterShellX
       $.push @listMember, name
 
       char = Character.data[name]
-      if Config.data.region == 'en'
-        hud.render n, char.nameEN
-      else hud.render n, char.nameCN
+      nameOutput = char.nameEN
+      if Config.data.region == 'cn'
+        nameOutput = char.nameCN
+
+      if !@current and @checkCurrent n
+        @current = n
+        @name = name
+        nameOutput = "#{nameOutput} 💬"
+
+      hud.render n, nameOutput
 
     @emit 'change'
-    @isBusy = false
+
+    unless @current
+      $.press 1
+      @switchTo 1
+
+    $.setTimeout (=> @isBusy = false), 200
 
   switchTo: (n) ->
     unless n then return

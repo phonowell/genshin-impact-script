@@ -10,7 +10,7 @@ class ConfigX
     @data.autoPickup = @read 'debug/enable-auto-pickup', 0
 
     # basic
-    @data.performance = @read  'basic/performance', 'medium'
+    @data.performance = @read 'basic/performance', 'medium'
     @data.region = @read 'basic/region', 'en'
     if @data.region == 'en'
       @data.process = 'GenshinImpact.exe'

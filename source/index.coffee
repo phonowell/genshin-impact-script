@@ -33,6 +33,6 @@ import 'picker'
 import 'tactic'
 
 # import 'follower'
-import 'toolkit'
+import 'color-picker'
 
 import 'action/*'

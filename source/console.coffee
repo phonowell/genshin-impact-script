@@ -14,6 +14,26 @@ class ConsoleX
       .on 'pause', @hide
       .on 'tick', @check
 
+  add: (msg) ->
+
+    id = ''
+    if $.includes msg, ':'
+      [id] = $.split msg, ':'
+
+    tsOutdate = $.now() + @lifetime
+
+    unless id then $.push @listContent, [tsOutdate, msg, id]
+
+    hasId = false
+    for item, i in @listContent
+      unless id == item[2] then continue
+      hasId = true
+      @listContent[i] = [tsOutdate, msg, id]
+      break
+
+    if hasId then return
+    $.push @listContent, [tsOutdate, msg, id]
+
   check: ->
 
     now = $.now()
@@ -28,12 +48,10 @@ class ConsoleX
 
   log: (input) ->
 
-    tsOutdate = $.now() + @lifetime
-
     if ($.type input) == 'array'
       for msg in input
-        $.push @listContent, [tsOutdate, msg]
-    else $.push @listContent, [tsOutdate, input]
+        @add msg
+    else @add input
 
     @update()
     return input

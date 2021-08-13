@@ -25,6 +25,7 @@ on-long-press = a, e~
 动作模组由如下的单元构成：
 
 - `@e` 元素战技生效阶段
+- `@e?` 元素战技就绪
 - `@m` 角色移动
 - `a`/`a~` 普通攻击/蓄力攻击
 - `e`/`e~` 点按/长按元素战技
@@ -63,26 +64,26 @@ on-long-press = a, e~
 [amber]
 on-long-press = a~, 150
 
-[beidou]
-on-long-press = @m; a
-
 [fischl]
-on-long-press = a, 50, a, @m, tt; t, t
+on-long-press = @m, a, 100, a, tt; a, a~
 
 [ganyu]
-on-long-press = a~, 150
+on-long-press = a~, a
 
 [hu_tao]
-on-long-press = @e, a~, 150, j, 50; a, e, @e, 250
+on-long-press = !@e, a, e, @e, 300; a~, 150, j, 50
 
 [keqing]
-on-long-press = a, ee, a~
+on-long-press = a, ee
 
 [klee]
 on-long-press = a, a~
 
 [ningguang]
 on-long-press = a, 700, a, 400, a~, 500, e
+
+[venti]
+on-long-press = @m, a, 100, a, tt; a, a~
 
 [zhongli]
 on-long-press = a, e~

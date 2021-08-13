@@ -6,6 +6,7 @@
 # name-cn
 # name-en
 # preswing-e?
+# star
 # type-e?
 # weapon
 
@@ -13,6 +14,7 @@ aether:
   color: 0xCC864B
   name-cn: 空
   name-en: Aether
+  star: 4
   weapon: sword
 
 albedo:
@@ -22,6 +24,7 @@ albedo:
   duration-e: 30
   name-cn: 阿贝多
   name-en: Albedo
+  star: 5
   weapon: sword
 
 amber:
@@ -32,15 +35,17 @@ amber:
   duration-q: 2
   name-cn: 安柏
   name-en: Amber
+  star: 4
   weapon: bow
 
 barbara:
   cd-e: 32
   cd-q: 20
-  color: 0xDDD2BE
+  color: [0xDED3BE, 0xDDD1C0]
   duration-e: 15
   name-cn: 芭芭拉
   name-en: Barbara
+  star: 5
   weapon: catalyst
 
 beidou:
@@ -50,6 +55,7 @@ beidou:
   duration-q: 15
   name-cn: 北斗
   name-en: Beidou
+  star: 4
   type-e: 1
   weapon: claymore
 
@@ -60,6 +66,7 @@ bennett:
   duration-q: 12
   name-cn: 班尼特
   name-en: Bennett
+  star: 4
   weapon: sword
 
 chongyun:
@@ -69,6 +76,7 @@ chongyun:
   duration-e: 10
   name-cn: 重云
   name-en: Chongyun
+  star: 4
   weapon: claymore
 
 diluc:
@@ -78,6 +86,7 @@ diluc:
   duration-q: 8
   name-cn: 迪卢克
   name-en: Diluc
+  star: 5
   weapon: claymore
 
 diona:
@@ -88,6 +97,7 @@ diona:
   duration-q: 12
   name-cn: 迪奥娜
   name-en: Diona
+  star: 4
   weapon: bow
 
 eula:
@@ -98,6 +108,7 @@ eula:
   duration-q: 7
   name-cn: 优菈
   name-en: Eula
+  star: 5
   weapon: claymore
 
 fischl:
@@ -107,6 +118,7 @@ fischl:
   duration-e: 10
   name-cn: 菲谢尔
   name-en: Fischl
+  star: 4
   type-e: 1
   weapon: bow
 
@@ -118,4 +130,5 @@ ganyu:
   duration-q: 15
   name-cn: 甘雨
   name-en: Ganyu
+  star: 5
   weapon: bow

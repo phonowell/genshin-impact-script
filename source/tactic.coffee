@@ -1,4 +1,23 @@
+# !@e - not at e duration
+# !@e? - e is not ready
+# !@m - not at movement
+# @e - at e-duration
+# @e? - e is ready
+# @m - at movement
+# a - attack
+# a~ - charged attack
+# e - use e
+# ee - use e twice
+# e~ - holding e
+# j - jump
+# s - sprint
+# t - aim
+# tt - aim twice
+
 class TacticX
+
+  intervalCheck: 50
+  intervalExecute: 100
 
   isActive: false
   isPressed: {}
@@ -15,6 +34,43 @@ class TacticX
         unless @isActive then return
         @stop()
         @start()
+
+  aim: (callback) ->
+    $.press 'r'
+    @delay @intervalExecute, callback
+
+  aimTwice: (callback) ->
+    $.press 'r'
+    @delay @intervalExecute, =>
+      $.press 'r'
+      @delay @intervalExecute, callback
+
+  atDuration: (cbA, cbB, isNot = false) ->
+
+    cb = [cbA, cbB]
+    if isNot then cb = [cbB, cbA]
+
+    if skillTimer.listDuration[party.current]
+      @delay @intervalCheck, cb[0]
+    else @delay @intervalCheck, cb[1]
+
+  atMovement: (cbA, cbB, isNot = false) ->
+
+    cb = [cbA, cbB]
+    if isNot then cb = [cbB, cbA]
+
+    if movement.isMoving
+      @delay @intervalCheck, cb[0]
+    else @delay @intervalCheck, cb[1]
+
+  atReady: (cbA, cbB, isNot = false) ->
+
+    cb = [cbA, cbB]
+    if isNot then cb = [cbB, cbA]
+
+    unless skillTimer.listCountDown[party.current]
+      @delay @intervalCheck, cb[0]
+    else @delay @intervalCheck, cb[1]
 
   attack: (isCharged, callback) ->
 
@@ -45,7 +101,7 @@ class TacticX
           @delay 200, => @jump callback
           return
 
-        @delay 100, callback
+        @delay @intervalExecute, callback
 
       return
 
@@ -63,45 +119,28 @@ class TacticX
     unless item
       @execute listTactic
       return
-    # unless item == $.toLowerCase item
-    #   item = "#{item}~"
 
     next = => @execute listTactic, g, i + 1
+    nextGroup = => @execute listTactic, g + 1, 0
 
-    map = {}
+    map =
+      '!@e': => @atDuration next, nextGroup, 'not'
+      '!@e?': => @atReady next, nextGroup, 'not'
+      '!@m': => @atMovement next, nextGroup, 'not'
+      '@e': => @atDuration next, nextGroup, 0
+      '@e?': => @atReady next, nextGroup, 0
+      '@m': => @atMovement next, nextGroup, 0
+      'a': => @attack false, next
+      'a~': => @attack true, next
+      'e': => @useE false, next
+      'ee': => @useEE next
+      'e~': => @useE true, next
+      'j': => @jump next
+      's': => @sprint next
+      't': => @aim next
+      'tt': => @aimTwice next
 
-    map['!@e'] = => @ongoing next, =>
-      @execute listTactic, g + 1, 0
-    , 'not'
-    map['!@m'] = => @onMoving next, =>
-      @execute listTactic, g + 1, 0
-    , 'not'
-    map['@e'] = => @ongoing next, => @execute listTactic, g + 1, 0
-    map['@m'] = => @onMoving next, => @execute listTactic, g + 1, 0
-
-    map.a = => @attack false, next
-    map['a~'] = => @attack true, next
-
-    map.e = => @useE false, next
-    map.ee = => @useE false, =>
-      $.press 'e'
-      @delay 100, next
-    map['e~'] = => @useE true, next
-
-    map.j = => @jump next
-    map.s = => @sprint next
-
-    map.t = =>
-      $.press 'r'
-      @delay 100, next
-    map.tt = =>
-      $.press 'r'
-      $.setTimeout =>
-        $.press 'r'
-        @delay 50, next
-      , 50
-
-    # console.log "Tactic: #{item}"
+    # console.log "tactic: #{item}"
     callback = map[item]
     if !callback and ($.type item) == 'number'
       callback = => @delay item, next
@@ -120,28 +159,6 @@ class TacticX
       @delay 450, callback
     else @delay 550, callback
 
-  ongoing: (cbA, cbB, isNot = false) ->
-
-    unless isNot
-      if skillTimer.listDuration[party.current]
-        @delay 50, cbA
-      else @delay 50, cbB
-    else
-      if skillTimer.listDuration[party.current]
-        @delay 50, cbB
-      else @delay 50, cbA
-
-  onMoving: (cbA, cbB, isNot = false) ->
-
-    unless isNot
-      if movement.isMoving
-        @delay 50, cbA
-      else @delay 50, cbB
-    else
-      if movement.isMoving
-        @delay 50, cbB
-      else @delay 50, cbA
-
   reset: ->
 
     $.clearTimeout timer.tacticDelay
@@ -153,7 +170,7 @@ class TacticX
 
   sprint: (callback) ->
     movement.sprint()
-    @delay 100, callback
+    @delay @intervalExecute, callback
 
   start: ->
 
@@ -180,23 +197,25 @@ class TacticX
 
     $.click 'left:up'
 
-  switchTo: (n, callback) ->
-
-    unless @isActive
-      return
-
-    $.press n
-    party.switchTo n
-    @delay 200, callback
-
   useE: (isHolding, callback) ->
 
-    unless skillTimer.listCountDown[party.current]
-      player.useE isHolding
-      @delay 100, callback
+    if skillTimer.listCountDown[party.current]
+      @delay @intervalCheck, callback
       return
 
-    @delay 50, callback
+    player.useE isHolding
+    @delay @intervalExecute, callback
+
+  useEE: (callback) ->
+
+    if skillTimer.listCountDown[party.current]
+      @delay @intervalCheck, callback
+      return
+
+    player.useE()
+    @delay 600, =>
+      player.useE()
+      @delay @intervalExecute, callback
 
   validate: ->
 

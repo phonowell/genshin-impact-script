@@ -1,6 +1,6 @@
 import c2a from 'coffee-ahk'
-import sleep from 'fire-keeper/sleep_'
-import watch from 'fire-keeper/watch'
+import $sleep from 'fire-keeper/sleep'
+import $watch from 'fire-keeper/watch'
 
 // function
 
@@ -30,7 +30,7 @@ class Compiler {
     })
       .catch(e => console.error(e))
       .finally(async () => {
-        await sleep(this.delay)
+        await $sleep(this.delay)
         this.isBusy = false
       })
   }
@@ -39,7 +39,7 @@ class Compiler {
 const main = () => {
   process.on('uncaughtException', e => console.error(e))
   const compiler = new Compiler()
-  watch('./source/**/*.coffee', () => compiler.list.add('./source/index.coffee'))
+  $watch('./source/**/*.coffee', () => compiler.list.add('./source/index.coffee'))
 }
 
 // export

@@ -21,11 +21,11 @@ const saveMd = async (
 
   for (const source of listSource) {
     // eslint-disable-next-line no-await-in-loop
-    const content = await $.read_(source) as string
+    const content = await $.read<string>(source)
     const cont = content
       .replace(/\d+\.\d+\.\d+/g, version)
     // eslint-disable-next-line no-await-in-loop
-    await $.write_(source, cont)
+    await $.write(source, cont)
   }
 }
 
@@ -35,9 +35,9 @@ const savePkg = async (): Promise<string> => {
     version: string
   }
 
-  const pkg = await $.read_('./package.json') as Pkg
+  const pkg = await $.read<Pkg>('./package.json')
 
-  const version = await $.prompt_({
+  const version = await $.prompt({
     default: pkg.version,
     message: 'input version',
     type: 'text',
@@ -46,7 +46,7 @@ const savePkg = async (): Promise<string> => {
   if (version.split('.').length !== 3) return ''
   pkg.version = version
 
-  await $.write_('./package.json', pkg)
+  await $.write('./package.json', pkg)
   return version
 }
 

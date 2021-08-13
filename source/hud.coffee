@@ -2,12 +2,14 @@ class HudX
 
   lifetime: 5e3
   map: {}
+  mapLast: {}
 
   constructor: ->
     client.on 'tick', @update
     client.on 'pause', @hideAll
 
   hide: (n) ->
+    @mapLast[n] = ''
     id = n + 1
     `ToolTip,, 0, 0, % id`
 
@@ -32,7 +34,8 @@ class HudX
 
   reset: ->
     @map = {}
-    @hide()
+    @mapLast = {}
+    @hideAll()
 
   update: ->
 
@@ -52,9 +55,17 @@ class HudX
         @hide n
         continue
 
+      if msg == @mapLast[n]
+        continue
+      @mapLast[n] = msg
+
       [x, y] = @makePosition n
       id = n + 1
       `ToolTip, % msg, % x, % y, % id`
+
+    if Config.data.isDebug
+      cost = $.now() - now
+      if cost >= 20 then console.log "hud/cost: #{$.now() - now} ms"
 
 # execute
 hud = new HudX()

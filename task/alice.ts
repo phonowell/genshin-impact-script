@@ -1,7 +1,7 @@
 import $argv from 'fire-keeper/argv'
 import $getBasename from 'fire-keeper/getBasename'
-import $prompt_ from 'fire-keeper/prompt_'
-import $source_ from 'fire-keeper/source_'
+import $prompt from 'fire-keeper/prompt'
+import $source from 'fire-keeper/source'
 import _compact from 'lodash/compact'
 
 // interface
@@ -14,7 +14,7 @@ const ask = async (
   list: string[],
 ): Promise<string> => {
 
-  const answer = await $prompt_({
+  const answer = await $prompt({
     id: 'default-task',
     list,
     message: 'select a task',
@@ -27,7 +27,7 @@ const ask = async (
 
 const load = async (): Promise<string[]> => {
 
-  const listSource = await $source_([
+  const listSource = await $source([
     './task/*.js',
     './task/*.ts',
     '!*.d.ts',
@@ -57,7 +57,7 @@ const run = async (
   task: string,
 ): Promise<void> => {
 
-  const [source] = await $source_([
+  const [source] = await $source([
     `./task/${task}.js`,
     `./task/${task}.ts`,
   ])

@@ -1,3 +1,4 @@
+timer.unhold = 0
 ts.jump = 0
 
 # binding
@@ -9,8 +10,10 @@ movement.on 'jump:start', ->
 movement.on 'jump:end', ->
 
   $.press 'space:up'
-  diff = $.now() - ts.jump
-  ts.jump = $.now()
+
+  now = $.now()
+  diff = now - ts.jump
+  ts.jump = now
 
   unless Config.data.betterJump and Scene.name == 'normal'
     return
@@ -22,11 +25,9 @@ movement.on 'jump:end', ->
     ts.jump = $.now()
   , 350 - diff
 
-player.on 'unhold:start', ->
-
+movement.on 'unhold:start', ->
   $.press 'x'
+  $.clearTimeout timer.unhold
+  timer.unhold = $.setTimeout movement.jump, 200
 
-  unless Config.data.betterJump and Scene.name == 'normal'
-    return
-
-  $.setTimeout movement.jump, 50
+movement.on 'unhold:end', -> $.clearTimeout timer.unhold

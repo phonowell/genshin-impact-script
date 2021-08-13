@@ -6,4 +6,10 @@ player
   .on 'use-q:start', player.useQ
 
 for key in [1, 2, 3, 4]
-  $.on "alt + #{key}", -> player.switchQ key
+  $.on "alt + #{key}", ->
+
+    if key == party.current
+      player.useQ()
+      return
+
+    player.switchQ key

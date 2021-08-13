@@ -5,6 +5,7 @@ venti:
   duration-q: 8
   name-cn: 温迪
   name-en: Venti
+  star: 5
   weapon: bow
 
 xiangling:
@@ -15,6 +16,7 @@ xiangling:
   duration-q: 10
   name-cn: 香菱
   name-en: Xiangling
+  star: 4
   weapon: polearm
 
 xiao:
@@ -22,6 +24,7 @@ xiao:
   color: 0x39483E
   name-cn: 魈
   name-en: Xiao
+  star: 5
   weapon: polearm
 
 xingqiu:
@@ -32,6 +35,7 @@ xingqiu:
   duration-q: 15
   name-cn: 行秋
   name-en: Xingqiu
+  star: 4
   weapon: sword
 
 xinyan:
@@ -42,6 +46,7 @@ xinyan:
   duration-q: 2
   name-cn: 辛焱
   name-en: Xinyan
+  star: 4
   weapon: claymore
 
 yanfei:
@@ -51,6 +56,7 @@ yanfei:
   duration-q: 15
   name-cn: 烟绯
   name-en: Yanfei
+  star: 4
   weapon: catalyst
 
 yoimiya:
@@ -61,6 +67,7 @@ yoimiya:
   duration-q: 10
   name-cn: 宵宫
   name-en: Yoimiya
+  star: 5
   weapon: bow
 
 zhongli:
@@ -71,4 +78,5 @@ zhongli:
   duration-q: 3.6
   name-cn: 钟离
   name-en: Zhongli
+  star: 5
   weapon: polearm
