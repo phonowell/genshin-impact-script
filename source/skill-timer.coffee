@@ -15,6 +15,9 @@ class SkillTimerX
 
   check: ->
 
+    if Config.data.performance == 'low'
+      return
+
     $.clearTimeout timer.checkFromSkillTimer
 
     {current, name} = party

@@ -17,13 +17,13 @@ jean:
   type-e: 1
   weapon: sword
 
-kaedehara:
+kaedehara_kazuha:
   cd-e: [6, 9]
   cd-q: 15
   color: 0xE9DDD7
   duration-q: 8
   name-cn: 枫原万叶
-  name-en: Kaedehara
+  name-en: Kaedehara Kazuha
   star: 5
   weapon: sword
 
@@ -37,13 +37,13 @@ kaeya:
   star: 4
   weapon: sword
 
-kamisato:
+kamisato_ayaka:
   cd-e: 10
   cd-q: 20
   color: 0xA3A7C1
   duration-q: 5
   name-cn: 神里绫华
-  name-en: Kamisato
+  name-en: Kamisato Ayaka
   star: 5
   weapon: sword
 
@@ -67,6 +67,16 @@ klee:
   name-en: Klee
   star: 5
   weapon: catalyst
+
+kujou_sara:
+  cd-e: 10
+  cd-q: 20
+  color: 0x343069
+  duration-e: 6
+  name-cn: 九条裟罗
+  name-en: Kujou Sara
+  star: 4
+  weapon: bow
 
 lisa:
   cd-e: [1, 16]

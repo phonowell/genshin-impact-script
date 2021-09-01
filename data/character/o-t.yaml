@@ -9,11 +9,16 @@ qiqi:
   star: 5
   weapon: sword
 
-# reiden:
-#   name-cn: 雷电
-#   name-en: Reiden
-#   star: 5
-#   weapon: polearm
+raiden_shogun:
+  cd-e: 10
+  cd-q: 18
+  color: 0x2A2369
+  duration-e: 25
+  duration-q: 7
+  name-cn: 雷电将军
+  name-en: Raiden Shogun
+  star: 5
+  weapon: polearm
 
 rezor:
   cd-e: [6, 10]

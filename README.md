@@ -38,7 +38,7 @@
 
 **注意，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
 
-下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.19/Genshin_Impact_Script_CN_0.0.19.zip)并解压。
+下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.21/Genshin_Impact_Script_CN_0.0.21.zip)并解压。
 
 进入解压文件夹双击其中的`start.exe`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -93,7 +93,7 @@ on-switch = e~
 
 ## 常见问题
 
-点击[这里](./doc/faq.md)。
+点击[这里](./doc/qa.md)。
 
 ## 免责声明
 

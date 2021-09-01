@@ -38,18 +38,27 @@ class PartyX extends EmitterShellX
 
   checkCurrentAs: (n, callback) ->
 
-    name = @listMember[n]
-    unless name
-      if callback then callback()
+    $.clearTimeout timer.checkCurrentFromParty
+    delay = 200
+
+    if Config.data.performance == 'low'
+      timer.checkCurrentFromParty = $.setTimeout callback, delay
       return
 
-    $.clearTimeout timer.checkCurrentFromParty
+    name = @listMember[n]
+    unless name
+      timer.checkCurrentFromParty = $.setTimeout callback, delay
+      return
+
+    if Config.data.performance == 'medium'
+      delay = 300
+
     timer.checkCurrentFromParty = $.setTimeout =>
       unless @checkCurrent n
         $.beep()
         return
       if callback then callback()
-    , 200
+    , delay
 
   getIndexBy: (name) ->
     unless @has name then return 0

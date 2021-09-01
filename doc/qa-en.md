@@ -23,7 +23,7 @@ Change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the se
 
 ## Can't unfold Wind Wings
 
-Long press `x`
+Long press `space`
 
 ## Stuck a lot when dodging
 
