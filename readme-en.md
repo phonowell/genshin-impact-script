@@ -22,9 +22,13 @@ Display the cooldown time and effect duration of `E` skills.
 
 Configurable action when switching characters with `Number Keys`.
 
-### Custom Tactic Module
+### Tactic module
 
 You can configure custom battle moves for each character independently, and long press `Left Click` to cycle through them automatically.
+
+### Fishing mode
+
+Auto hook, press `F11` to enter and exit this mode.
 
 ### Process priority adjustment
 
@@ -34,7 +38,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 **Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
-Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.21/Genshin_Impact_Script_EN_0.0.21.zip) and unzip it.
+Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.22/Genshin_Impact_Script_EN_0.0.22.zip) and unzip it.
 
 Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select Apply).
 

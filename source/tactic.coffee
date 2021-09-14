@@ -50,7 +50,7 @@ class TacticX
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
 
-    if skillTimer.listDuration[party.current]
+    if SkillTimer.listDuration[Party.current]
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
@@ -68,7 +68,7 @@ class TacticX
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
 
-    unless skillTimer.listCountDown[party.current]
+    unless SkillTimer.listCountDown[Party.current]
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
@@ -79,7 +79,7 @@ class TacticX
       @isPressed['l-button'] = true
 
       delay = 300
-      name = party.name
+      name = Party.name
       {weapon} = Character.data[name]
       switch weapon
         when 'bow'
@@ -97,7 +97,7 @@ class TacticX
         $.click 'left:up'
         @isPressed['l-button'] = false
 
-        if movement.isMoving and party.name == 'klee'
+        if movement.isMoving and Party.name == 'klee'
           @delay 200, => @jump callback
           return
 
@@ -183,7 +183,7 @@ class TacticX
 
     @isActive = true
 
-    wait = 1e3 - ($.now() - party.tsSwitch)
+    wait = 1e3 - ($.now() - Party.tsSwitch)
     if wait < 200
       wait = 200
 
@@ -199,22 +199,22 @@ class TacticX
 
   useE: (isHolding, callback) ->
 
-    if skillTimer.listCountDown[party.current]
+    if SkillTimer.listCountDown[Party.current]
       @delay @intervalCheck, callback
       return
 
-    player.useE isHolding
+    Player.useE isHolding
     @delay @intervalExecute, callback
 
   useEE: (callback) ->
 
-    if skillTimer.listCountDown[party.current]
+    if SkillTimer.listCountDown[Party.current]
       @delay @intervalCheck, callback
       return
 
-    player.useE()
+    Player.useE()
     @delay 600, =>
-      player.useE()
+      Player.useE()
       @delay @intervalExecute, callback
 
   validate: ->
@@ -230,4 +230,4 @@ class TacticX
     return listTactic
 
 # execute
-tactic = new TacticX()
+Tactic = new TacticX()

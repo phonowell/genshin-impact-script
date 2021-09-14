@@ -30,6 +30,10 @@
 
 可为每个角色独立配置自定义的战斗动作，长按`左键`即可自动循环。
 
+### 钓鱼模式
+
+自动钩，按下`F11`进入退出该模式。
+
 ### 进程优先级调整
 
 当游戏窗口处于非活动状态时，将进程优先级设为最低。
@@ -38,7 +42,7 @@
 
 **注意，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
 
-下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.21/Genshin_Impact_Script_CN_0.0.21.zip)并解压。
+下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.22/Genshin_Impact_Script_CN_0.0.22.zip)并解压。
 
 进入解压文件夹双击其中的`start.exe`即可（会提示是否应用管理员权限，选择应用）。
 

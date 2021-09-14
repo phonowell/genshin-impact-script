@@ -34,5 +34,6 @@ import 'tactic'
 
 # import 'follower'
 import 'color-picker'
+import 'fishing'
 
 import 'action/*'

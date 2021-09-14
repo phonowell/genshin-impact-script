@@ -46,7 +46,7 @@ class SkillTimerX
 
   endTartaglia: ->
 
-    n = party.getIndexBy 'tartaglia'
+    n = Party.getIndexBy 'tartaglia'
 
     unless @listDuration[n] then return false
 
@@ -59,7 +59,7 @@ class SkillTimerX
 
   hide: (n) ->
     unless Config.data.skillTimer then return
-    hud.render n, ''
+    Hud.render n, ''
 
   makeDiff: (n) ->
     if ($.abs n) > 1e3 then return "#{$.floor n * 0.001}s"
@@ -129,7 +129,7 @@ class SkillTimerX
 
   render: (n, message) ->
     unless Config.data.skillTimer then return
-    hud.render n, message
+    Hud.render n, message
 
   reset: -> for n in [1, 2, 3, 4]
     @listCountDown[n] = 0
@@ -164,11 +164,11 @@ class SkillTimerX
         @hide n
         return
 
-      if n == party.current
+      if n == Party.current
         $.push listMessage, '💬'
 
       @render n, $.join listMessage, ' '
 
 # execute
 
-skillTimer = new SkillTimerX()
+SkillTimer = new SkillTimerX()

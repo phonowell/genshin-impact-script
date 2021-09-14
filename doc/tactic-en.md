@@ -1,6 +1,6 @@
-# Tactics
+# Tactic
 
-The Tactics module allows to set up custom combat loops for each character independently.
+The tactic module allows to set up custom combat loops for each character independently.
 
 This module is used by setting `on-long-press` in `config.ini`.
 

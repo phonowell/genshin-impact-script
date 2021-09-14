@@ -19,8 +19,8 @@ class PlayerX extends KeyBindingX
 
   switchQ: (key) ->
     $.press "alt + #{key}"
-    party.switchTo key
-    skillTimer.listQ[party.current] = $.now()
+    Party.switchTo key
+    SkillTimer.listQ[Party.current] = $.now()
 
   useE: (isHolding = false) ->
 
@@ -28,15 +28,15 @@ class PlayerX extends KeyBindingX
     if isHolding then delay = 1e3
 
     $.press 'e:down'
-    skillTimer.record 'start'
+    SkillTimer.record 'start'
     $.setTimeout ->
       $.press 'e:up'
-      skillTimer.record 'end'
+      SkillTimer.record 'end'
     , delay
 
   useQ: ->
     $.press 'q'
-    skillTimer.listQ[party.current] = $.now()
+    SkillTimer.listQ[Party.current] = $.now()
 
 # execute
-player = new PlayerX()
+Player = new PlayerX()

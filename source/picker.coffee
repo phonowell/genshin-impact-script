@@ -11,12 +11,12 @@ class PickerX
     if Config.data.quickEvent then client.on 'tick', @pick
     if Config.data.autoPickup then client.on 'tick', @detect
 
-    player.on 'pick:start', =>
+    Player.on 'pick:start', =>
       $.press 'f'
       unless Config.data.fastPickup then return
       @isPicking = true
 
-    player.on 'pick:end', => @isPicking = false
+    Player.on 'pick:end', => @isPicking = false
 
   detect: ->
 
@@ -83,4 +83,4 @@ class PickerX
     return true
 
 # execute
-picker = new PickerX()
+Picker = new PickerX()

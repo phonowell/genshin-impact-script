@@ -2,6 +2,7 @@
 ### interface
 event
 half-menu
+fishing
 loading
 menu
 normal
@@ -52,6 +53,8 @@ class SceneX extends EmitterShellX
     return 500
 
   update: ->
+
+    if @name == 'fishing' then return
 
     now = $.now()
     unless now - @tsUpdate >= @makeInterval()

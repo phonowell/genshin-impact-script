@@ -6,26 +6,26 @@ state.isPressedSwitch = false
 onSwitchEnd = (onSwitch) ->
 
   if onSwitch == 'e~'
-    player.useE 'holding'
+    Player.useE 'holding'
     return
 
   unless state.isPressedSwitch
-    player.useE()
+    Player.useE()
     return
 
   $.press 'e:up'
-  skillTimer.record 'end'
+  SkillTimer.record 'end'
 
 # binding
 
-player.on 'switch:start', (key) ->
+Player.on 'switch:start', (key) ->
   $.press key
   unless Scene.name == 'normal' then return
-  party.switchTo key
+  Party.switchTo key
   state.isFiredSwitch = false
   state.isPressedSwitch = false
 
-player.on 'switch:end', ->
+Player.on 'switch:end', ->
 
   unless Scene.name == 'normal' then return
 
@@ -36,7 +36,7 @@ player.on 'switch:end', ->
     return
   state.isFiredSwitch = true
 
-party.on 'switch', ->
+Party.on 'switch', ->
 
   unless Scene.name == 'normal' then return
 
@@ -55,4 +55,4 @@ party.on 'switch', ->
 
   state.isPressedSwitch = true
   $.press 'e:down'
-  skillTimer.record 'start'
+  SkillTimer.record 'start'

@@ -39,7 +39,7 @@ class HudX
 
   update: ->
 
-    unless Scene.name == 'normal' then return
+    unless $.includes ['fishing', 'normal'], Scene.name then return
 
     now = $.now()
 
@@ -68,4 +68,4 @@ class HudX
       if cost >= 20 then console.log "hud/cost: #{$.now() - now} ms"
 
 # execute
-hud = new HudX()
+Hud = new HudX()

@@ -27,7 +27,7 @@ class PartyX extends EmitterShellX
       @tsSwitch = $.now()
 
       if nameOld == 'tartaglia' and nameNew != 'tartaglia'
-        skillTimer.endTartaglia()
+        SkillTimer.endTartaglia()
 
     $.on 'f12', @scan
 
@@ -112,8 +112,8 @@ class PartyX extends EmitterShellX
     @listMember = ['']
     @name = ''
 
-    skillTimer.reset()
-    hud.reset()
+    SkillTimer.reset()
+    Hud.reset()
 
     for n in [1, 2, 3, 4]
 
@@ -130,7 +130,7 @@ class PartyX extends EmitterShellX
         @name = name
         nameOutput = "#{nameOutput} 💬"
 
-      hud.render n, nameOutput
+      Hud.render n, nameOutput
 
     @emit 'change'
 
@@ -147,4 +147,4 @@ class PartyX extends EmitterShellX
   switchBy: (name) -> @switchTo @getIndexBy name
 
 # execute
-party = new PartyX()
+Party = new PartyX()
