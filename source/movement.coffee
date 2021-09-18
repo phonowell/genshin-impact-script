@@ -60,4 +60,4 @@ class MovementX extends KeyBindingX
   sprint: -> $.click 'right'
 
 # execute
-movement = new MovementX()
+Movement = new MovementX()

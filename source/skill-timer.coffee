@@ -10,7 +10,7 @@ class SkillTimerX
   listRecord: {}
 
   constructor: ->
-    client.on 'tick', @update
+    Client.on 'tick', @update
     @reset()
 
   check: ->
@@ -20,19 +20,19 @@ class SkillTimerX
 
     $.clearTimeout timer.checkFromSkillTimer
 
-    {current, name} = party
+    {current, name} = Party
     {typeE} = Character.data[name]
 
     if typeE == 1 then return
 
     timer.checkFromSkillTimer = $.setTimeout =>
 
-      start = client.point [86, 90]
-      end = client.point [90, 93]
+      start = Client.point [86, 90]
+      end = Client.point [90, 93]
 
       if name == 'mona' || name == 'kamisato'
-        start = client.point [81, 90]
-        end = client.point [85, 93]
+        start = Client.point [81, 90]
+        end = Client.point [85, 93]
 
       [x, y] = $.findColor 0xFFFFFF, start, end
       if x * y > 0 then return
@@ -67,7 +67,7 @@ class SkillTimerX
 
   record: (step) ->
 
-    {current, name} = party
+    {current, name} = Party
 
     unless name then return
 
@@ -90,7 +90,7 @@ class SkillTimerX
 
   recordEnd: (now) ->
 
-    {current, name} = party
+    {current, name} = Party
     {cdE, durationE, typeE} = Character.data[name]
 
     unless @listRecord[current] then return
@@ -119,7 +119,7 @@ class SkillTimerX
 
   recordStart: (now) ->
 
-    {current, name} = party
+    {current, name} = Party
     {cdE} = Character.data[name]
 
     if @listRecord[current]

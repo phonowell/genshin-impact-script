@@ -30,7 +30,7 @@ Player.on 'switch:end', ->
   unless Scene.name == 'normal' then return
 
   if state.isFiredSwitch
-    {name} = party
+    {name} = Party
     {onSwitch} = Character.data[name]
     onSwitchEnd onSwitch
     return
@@ -40,7 +40,7 @@ Party.on 'switch', ->
 
   unless Scene.name == 'normal' then return
 
-  {name} = party
+  {name} = Party
   unless name then return
 
   {onSwitch} = Character.data[name]

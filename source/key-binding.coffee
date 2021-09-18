@@ -5,7 +5,7 @@ class KeyBindingX extends EmitterShellX
 
   constructor: ->
     super()
-    client.on 'pause', @resetKey
+    Client.on 'pause', @resetKey
 
   bindEvent: (name, key, prevent = false) ->
 

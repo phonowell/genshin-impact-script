@@ -1,6 +1,6 @@
 # binding
 
-player
+Player
   .on 'use-e:start', -> SkillTimer.record 'start'
   .on 'use-e:end', -> SkillTimer.record 'end'
   .on 'use-q:start', Player.useQ

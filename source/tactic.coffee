@@ -24,11 +24,11 @@ class TacticX
 
   constructor: ->
 
-    player
+    Player
       .on 'attack:start', @start
       .on 'attack:end', @stop
 
-    party
+    Party
       .on 'change', @reset
       .on 'switch', =>
         unless @isActive then return
@@ -59,7 +59,7 @@ class TacticX
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
 
-    if movement.isMoving
+    if Movement.isMoving
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
@@ -97,7 +97,7 @@ class TacticX
         $.click 'left:up'
         @isPressed['l-button'] = false
 
-        if movement.isMoving and Party.name == 'klee'
+        if Movement.isMoving and Party.name == 'klee'
           @delay 200, => @jump callback
           return
 
@@ -154,8 +154,8 @@ class TacticX
     return group[i]
 
   jump: (callback) ->
-    movement.jump()
-    unless movement.isMoving
+    Movement.jump()
+    unless Movement.isMoving
       @delay 450, callback
     else @delay 550, callback
 
@@ -169,7 +169,7 @@ class TacticX
     @isActive = false
 
   sprint: (callback) ->
-    movement.sprint()
+    Movement.sprint()
     @delay @intervalExecute, callback
 
   start: ->
@@ -221,7 +221,7 @@ class TacticX
 
     unless Scene.name == 'normal' then return false
 
-    {name} = party
+    {name} = Party
     unless name then return false
 
     listTactic = Character.data[name].onLongPress

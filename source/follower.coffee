@@ -7,7 +7,7 @@ class FollowerX
   tsCheck: 0
 
   constructor: ->
-    client.on 'tick', @check
+    Client.on 'tick', @check
 
   check: ->
 
@@ -25,13 +25,13 @@ class FollowerX
 
   detect: ->
 
-    start = client.point [3, 2]
-    end = client.point [14, 21]
+    start = Client.point [3, 2]
+    end = Client.point [14, 21]
 
     [x, y] = $.findColor 0x408000, start, end
     unless x * y > 0 then return false
 
-    [x0, y0] = client.point [8.5, 11.5]
+    [x0, y0] = Client.point [8.5, 11.5]
 
     diff = y - y0
     unless diff > 0 then return false

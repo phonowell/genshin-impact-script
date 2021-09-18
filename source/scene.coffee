@@ -23,7 +23,7 @@ class SceneX extends EmitterShellX
   constructor: ->
     super()
 
-    client.on 'tick', @update
+    Client.on 'tick', @update
 
     @on 'change', =>
       console.log "scene: #{@name}"
@@ -43,7 +43,7 @@ class SceneX extends EmitterShellX
     return 'unknown'
 
   checkPoint: (start, end, color) ->
-    [x, y] = $.findColor color, (client.point start), client.point end
+    [x, y] = $.findColor color, (Client.point start), Client.point end
     return x * y > 0
 
   makeInterval: ->

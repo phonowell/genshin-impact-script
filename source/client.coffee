@@ -121,4 +121,4 @@ class ClientX extends EmitterShellX
   vw: (n) -> return $.round @width * n * 0.01
 
 # execute
-client = new ClientX()
+Client = new ClientX()

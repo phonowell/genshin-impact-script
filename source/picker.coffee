@@ -8,8 +8,8 @@ class PickerX
 
   constructor: ->
 
-    if Config.data.quickEvent then client.on 'tick', @pick
-    if Config.data.autoPickup then client.on 'tick', @detect
+    if Config.data.quickEvent then Client.on 'tick', @pick
+    if Config.data.autoPickup then Client.on 'tick', @detect
 
     Player.on 'pick:start', =>
       $.press 'f'
@@ -36,11 +36,11 @@ class PickerX
       return
 
     start = [
-      client.vw 61
+      Client.vw 61
       y - 1
     ]
     end = [
-      client.vw 63
+      Client.vw 63
       y + 1
     ]
     [x, y] = $.findColor 0xFFFFFF, start, end
@@ -53,7 +53,7 @@ class PickerX
     $.click 'wheel-down'
 
   find: (start, end, color = 0xFFFFFF) ->
-    [x, y] = $.findColor color, (client.point start), client.point end
+    [x, y] = $.findColor color, (Client.point start), Client.point end
     return [x, y]
 
   pick: ->

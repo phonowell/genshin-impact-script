@@ -10,7 +10,7 @@ class ConsoleX
 
     unless Config.data.isDebug then return
 
-    client
+    Client
       .on 'pause', @hide
       .on 'tick', @check
 
@@ -60,8 +60,8 @@ class ConsoleX
     list = $.map @listContent, (item) -> return item[1]
     text = $.join list, '\n'
     text = $.trim text, ' \n'
-    left = 0 - client.left
-    top = client.height * 0.5
+    left = 0 - Client.left
+    top = Client.height * 0.5
     `ToolTip, % text, % left, % top, 20`
 
 # execute

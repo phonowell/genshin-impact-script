@@ -89,12 +89,12 @@ class PartyX extends EmitterShellX
   makeRange: (n, isNarrow = false) ->
 
     if isNarrow
-      start = client.point [96, 20 + 9 * (n - 1)]
-      end = client.point [99, 20 + 9 * n]
+      start = Client.point [96, 20 + 9 * (n - 1)]
+      end = Client.point [99, 20 + 9 * n]
       return [start, end]
 
-    start = client.point [90, 20 + 9 * (n - 1)]
-    end = client.point [96, 20 + 9 * n]
+    start = Client.point [90, 20 + 9 * (n - 1)]
+    end = Client.point [96, 20 + 9 * n]
     return [start, end]
 
   scan: ->

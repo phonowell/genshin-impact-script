@@ -14,8 +14,8 @@ class ColorPickerX
     color = $.getColor()
     [x, y] = $.getPosition()
 
-    x1 = $.round (x * 100) / client.width
-    y1 = $.round (y * 100) / client.height
+    x1 = $.round (x * 100) / Client.width
+    y1 = $.round (y * 100) / Client.height
 
     console.log "color-picker: #{x1}, #{y1} / #{color}"
     ClipBoard = color

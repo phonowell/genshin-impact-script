@@ -1,6 +1,7 @@
 class FishingX
 
   isActive: false
+  isPulling: false
 
   constructor: ->
     $.on 'f11', @toggle
@@ -17,6 +18,10 @@ class FishingX
     return true
 
   checkShape: ->
+
+    # 0, return
+    # 1, return
+    # 2, pull
 
     color = 0xFFFFC0
     start = Client.point [35, 8]
@@ -42,24 +47,46 @@ class FishingX
 
     return true
 
+  delay: (time, callback) ->
+    $.clearTimeout timer.delayFishing
+    timer.delayFishing = $.setTimeout callback, time
+
   findColor: (color, start, end) ->
     [x, y] = $.findColor color, start, end
     if x * y > 0 then return [x, y]
     return false
 
-  pull: ->
-    $.press 'l-button:down'
-    $.setTimeout ->
-      $.press 'l-button:up'
-    , 50
+  next: ->
 
-  start: -> $.press 'l-button'
+    @isPulling = false
+
+    @delay 2e3, =>
+      $.press 'l-button'
+      @delay 1e3, @start
+
+  notice: ->
+    $.beep()
+    @delay 500, =>
+      $.beep()
+      @delay 500, $.beep
+
+  pull: ->
+    @isPulling = true
+    $.press 'l-button:down'
+    @delay 50, -> $.press 'l-button:up'
+
+  start: ->
+    $.clearTimeout timer.noticeFishing
+    timer.noticeFishing = $.setTimeout @notice, 60e3
+    $.press 'l-button'
 
   toggle: ->
 
     @isActive = !@isActive
 
     $.clearInterval timer.fishing
+    $.clearTimeout timer.delayFishing
+    $.clearTimeout timer.noticeFishing
 
     if @isActive
       Scene.name = 'fishing'
@@ -78,6 +105,11 @@ class FishingX
     shape = @checkShape()
 
     unless shape
+
+      if @isPulling
+        @next()
+        return
+
       unless @checkStart() then return
       @start()
       return

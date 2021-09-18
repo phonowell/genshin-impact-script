@@ -5,8 +5,8 @@ class HudX
   mapLast: {}
 
   constructor: ->
-    client.on 'tick', @update
-    client.on 'pause', @hideAll
+    Client.on 'tick', @update
+    Client.on 'pause', @hideAll
 
   hide: (n) ->
     @mapLast[n] = ''
@@ -18,13 +18,13 @@ class HudX
 
   makePosition: (n) ->
 
-    if client.isFullScreen
-      left = client.vw 80
-    else left = client.width
+    if Client.isFullScreen
+      left = Client.vw 80
+    else left = Client.width
 
     return [
       left
-      client.vh 22 + 9 * (n - 1)
+      Client.vh 22 + 9 * (n - 1)
     ]
 
   render: (n, msg) -> @map[n] = [

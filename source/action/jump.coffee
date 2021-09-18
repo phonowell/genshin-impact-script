@@ -3,11 +3,11 @@ ts.jump = 0
 
 # binding
 
-movement.on 'jump:start', ->
+Movement.on 'jump:start', ->
   $.press 'space:down'
   ts.jump = $.now()
 
-movement.on 'jump:end', ->
+Movement.on 'jump:end', ->
 
   $.press 'space:up'
 
@@ -21,13 +21,13 @@ movement.on 'jump:end', ->
   unless diff < 350 then return
 
   $.setTimeout ->
-    movement.jump()
+    Movement.jump()
     ts.jump = $.now()
   , 350 - diff
 
-movement.on 'unhold:start', ->
+Movement.on 'unhold:start', ->
   $.press 'x'
   $.clearTimeout timer.unhold
-  timer.unhold = $.setTimeout movement.jump, 200
+  timer.unhold = $.setTimeout Movement.jump, 200
 
-movement.on 'unhold:end', -> $.clearTimeout timer.unhold
+Movement.on 'unhold:end', -> $.clearTimeout timer.unhold
