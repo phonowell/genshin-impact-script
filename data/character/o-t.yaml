@@ -40,6 +40,17 @@ rosaria:
   star: 4
   weapon: polearm
 
+sangonomiya_kokomi:
+  cd-e: 20
+  cd-q: 18
+  color: 0xEDA0A0
+  duration-e: 12
+  duration-q: 10
+  name-cn: 珊瑚宫心海
+  name-en: Sangonomiya Kokomi
+  star: 5
+  weapon: catalyst
+
 sayu:
   cd-e: 6 # 11
   cd-q: 20
@@ -54,7 +65,7 @@ sayu:
 sucrose:
   cd-e: 14.5 # 15
   cd-q: 20
-  color: 0xD4E9CC
+  color: 0xDBECD6
   duration-q: 6
   name-cn: 砂糖
   name-en: Sucrose

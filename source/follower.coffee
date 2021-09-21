@@ -40,15 +40,12 @@ class FollowerX
 
   move: ->
     $.press 's:down'
-    $.setTimeout ->
+    Client.delay '~', 200, ->
       $.press 'space'
-      $.setTimeout ->
+      Client.delay '~', 200, ->
         $.press 'space'
-        $.setTimeout ->
+        Client.delay '~', 400, ->
           $.press 's:up'
-        , 400
-      , 200
-    , 200
 
   rotate: ->
     $.press 'x'

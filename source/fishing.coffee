@@ -47,10 +47,6 @@ class FishingX
 
     return true
 
-  delay: (time, callback) ->
-    $.clearTimeout timer.delayFishing
-    timer.delayFishing = $.setTimeout callback, time
-
   findColor: (color, start, end) ->
     [x, y] = $.findColor color, start, end
     if x * y > 0 then return [x, y]
@@ -60,24 +56,23 @@ class FishingX
 
     @isPulling = false
 
-    @delay 2e3, =>
+    Client.delay '~fishing', 2e3, =>
       $.press 'l-button'
-      @delay 1e3, @start
+      Client.delay '~fishing', 1e3, @start
 
   notice: ->
     $.beep()
-    @delay 500, =>
+    Client.delay '~fishing', 500, ->
       $.beep()
-      @delay 500, $.beep
+      Client.delay '~fishing', 500, $.beep
 
   pull: ->
     @isPulling = true
     $.press 'l-button:down'
-    @delay 50, -> $.press 'l-button:up'
+    Client.delay '~', 50, -> $.press 'l-button:up'
 
   start: ->
-    $.clearTimeout timer.noticeFishing
-    timer.noticeFishing = $.setTimeout @notice, 60e3
+    Client.delay 'fishing/notice', 60e3, @notice
     $.press 'l-button'
 
   toggle: ->
@@ -85,8 +80,8 @@ class FishingX
     @isActive = !@isActive
 
     $.clearInterval timer.fishing
-    $.clearTimeout timer.delayFishing
-    $.clearTimeout timer.noticeFishing
+    Client.delay '~fishing'
+    Client.delay 'fishing/notice'
 
     if @isActive
       Scene.name = 'fishing'

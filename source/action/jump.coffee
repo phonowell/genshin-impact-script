@@ -1,4 +1,3 @@
-timer.unhold = 0
 ts.jump = 0
 
 # binding
@@ -20,14 +19,12 @@ Movement.on 'jump:end', ->
 
   unless diff < 350 then return
 
-  $.setTimeout ->
+  Client.delay '~jump', 350 - diff, ->
     Movement.jump()
     ts.jump = $.now()
-  , 350 - diff
 
 Movement.on 'unhold:start', ->
   $.press 'x'
-  $.clearTimeout timer.unhold
-  timer.unhold = $.setTimeout Movement.jump, 200
+  Client.delay '~jump', 200, Movement.jump
 
-Movement.on 'unhold:end', -> $.clearTimeout timer.unhold
+Movement.on 'unhold:end', -> Client.delay '~jump'

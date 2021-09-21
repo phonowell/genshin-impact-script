@@ -110,8 +110,7 @@ class TacticX
 
   delay: (time, callback) ->
     unless @isActive then return
-    $.clearTimeout timer.tacticDelay
-    timer.tacticDelay = $.setTimeout callback, time
+    Client.delay '~tactic', time, callback
 
   execute: (listTactic, g = 0, i = 0) ->
 
@@ -161,7 +160,7 @@ class TacticX
 
   reset: ->
 
-    $.clearTimeout timer.tacticDelay
+    Client.delay '~tactic'
 
     if @isPressed['l-button']
       $.click 'left:up'

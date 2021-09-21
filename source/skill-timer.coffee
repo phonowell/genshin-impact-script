@@ -1,5 +1,3 @@
-timer.checkFromSkillTimer = 0
-
 # function
 
 class SkillTimerX
@@ -18,14 +16,14 @@ class SkillTimerX
     if Config.data.performance == 'low'
       return
 
-    $.clearTimeout timer.checkFromSkillTimer
+    Client.delay 'skill-timer'
 
     {current, name} = Party
     {typeE} = Character.data[name]
 
     if typeE == 1 then return
 
-    timer.checkFromSkillTimer = $.setTimeout =>
+    Client.delay 'skill-timer', 500, =>
 
       start = Client.point [86, 90]
       end = Client.point [90, 93]
@@ -41,8 +39,6 @@ class SkillTimerX
 
       @listCountDown[current] = 1
       @listDuration[current] = 1
-
-    , 500
 
   endTartaglia: ->
 

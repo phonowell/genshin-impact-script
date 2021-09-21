@@ -29,10 +29,9 @@ class PlayerX extends KeyBindingX
 
     $.press 'e:down'
     SkillTimer.record 'start'
-    $.setTimeout ->
+    Client.delay '~player', delay, ->
       $.press 'e:up'
       SkillTimer.record 'end'
-    , delay
 
   useQ: ->
     $.press 'q'

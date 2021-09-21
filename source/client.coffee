@@ -24,13 +24,13 @@ class ClientX extends EmitterShellX
       `Menu, Tray, Icon, on.ico`
       @setPriority 'normal'
       @suspend false
-      $.setTimeout @setSize, 1e3
+      Client.delay 1e3, @setSize
 
     `Menu, Tray, Icon, on.ico,, 1`
     @setPriority 'normal'
 
     @setSize()
-    $.setTimeout @report, 1e3
+    Client.delay 1e3, @report
 
     $.on 'alt + f4', =>
       $.beep()
@@ -44,9 +44,27 @@ class ClientX extends EmitterShellX
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
-      $.setTimeout @setSize, 1e3
+      Client.delay 1e3, @setSize
 
   check: -> return WinActive "ahk_exe #{Config.data.process}"
+
+  delay: (args...) -> # id, time, callback
+
+    len = $.length args
+    if len == 1 then [id, time, callback] = [args[0], 0, 0]
+    else if len == 2 then [id, time, callback] = ['', args[0], args[1]]
+    else [id, time, callback] = args
+
+    hasId = id and id != '~'
+
+    if hasId and timer[id] then $.clearTimeout timer[id]
+    unless time then return
+
+    delay = time
+    if id[0] == '~' then delay = delay * (1 + $.random() * 0.2) # 100% ~ 120%
+
+    result = $.setTimeout callback, delay
+    if hasId then timer[id] = result
 
   point: (input) -> return [
       @vw input[0]
