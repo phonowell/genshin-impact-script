@@ -1,3 +1,9 @@
+### interface
+type Fn = () => unknown
+type Position = 1 | 2 | 3 | 4
+type Range = [[number, number], [number, number]]
+###
+
 # function
 
 class PartyX extends EmitterShellX
@@ -7,6 +13,8 @@ class PartyX extends EmitterShellX
   listMember: ['']
   name: ''
   tsSwitch: 0
+
+  # ---
 
   constructor: ->
     super()
@@ -31,11 +39,13 @@ class PartyX extends EmitterShellX
 
     $.on 'f12', @scan
 
+  # checkCurrent(n: Position): boolean
   checkCurrent: (n) ->
     [start, end] = @makeRange n, 'narrow'
     [x, y] = $.findColor 0x323232, start, end
     return !(x * y > 0)
 
+  # checkCurrentAs(n: Position, callback: Fn): void
   checkCurrentAs: (n, callback) ->
 
     Client.delay 'party/check'
@@ -59,12 +69,14 @@ class PartyX extends EmitterShellX
         return
       if callback then callback()
 
+  # getIndexBy(name: string): Position
   getIndexBy: (name) ->
     unless @has name then return 0
     for n in [1, 2, 3, 4]
       if @listMember[n] == name
         return n
 
+  # getNameViaPosition(n: Position): string
   getNameViaPosition: (n) ->
 
     [start, end] = @makeRange n
@@ -83,8 +95,10 @@ class PartyX extends EmitterShellX
 
     return ''
 
+  # has(name: string): boolean
   has: (name) -> return $.includes @listMember, name
 
+  # makeRange(n: Position, isNarrow: boolean = false): Range
   makeRange: (n, isNarrow = false) ->
 
     if isNarrow
@@ -96,6 +110,7 @@ class PartyX extends EmitterShellX
     end = Client.point [96, 20 + 9 * n]
     return [start, end]
 
+  # scan(): void
   scan: ->
 
     if Scene.name != 'normal' or Scene.isMulti
@@ -139,10 +154,12 @@ class PartyX extends EmitterShellX
 
     Client.delay 200, => @isBusy = false
 
+  # switchTo(n: Position): void
   switchTo: (n) ->
     unless n then return
     @checkCurrentAs n, => @emit 'switch', n, @current
 
+  # switchBy(name: string): void
   switchBy: (name) -> @switchTo @getIndexBy name
 
 # execute

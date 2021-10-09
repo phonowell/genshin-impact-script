@@ -17,6 +17,8 @@ ts = {}
 import 'config'
 import 'client'
 
+import 'point'
+
 import 'console'
 import 'hud'
 import 'scene'
@@ -35,5 +37,6 @@ import 'tactic'
 # import 'follower'
 import 'color-picker'
 import 'fishing'
+# import 'item-user'
 
 import 'action/*'

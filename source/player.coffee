@@ -1,3 +1,8 @@
+### interface
+type Key = string
+###
+
+# function
 class PlayerX extends KeyBindingX
 
   constructor: ->
@@ -17,11 +22,13 @@ class PlayerX extends KeyBindingX
     # others
     @bindEvent 'pick', 'f', 'prevent'
 
+  # switchQ(key: Key): void
   switchQ: (key) ->
     $.press "alt + #{key}"
     Party.switchTo key
     SkillTimer.listQ[Party.current] = $.now()
 
+  # useE(isHolding: boolean = false): void
   useE: (isHolding = false) ->
 
     delay = 50
@@ -33,6 +40,7 @@ class PlayerX extends KeyBindingX
       $.press 'e:up'
       SkillTimer.record 'end'
 
+  # useQ(): void
   useQ: ->
     $.press 'q'
     SkillTimer.listQ[Party.current] = $.now()

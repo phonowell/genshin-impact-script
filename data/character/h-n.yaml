@@ -10,7 +10,7 @@ hu_tao:
 
 jean:
   cd-e: 6
-  color: 0xC0875F
+  color: [0xC0875F, 0xE8D1BC]
   name-cn: 琴
   name-en: Jean
   star: 5
@@ -20,7 +20,7 @@ jean:
 kaedehara_kazuha:
   cd-e: [6, 9]
   cd-q: 15
-  color: 0xE9DDD7
+  color: 0xE9DED9
   duration-q: 8
   name-cn: 枫原万叶
   name-en: Kaedehara Kazuha

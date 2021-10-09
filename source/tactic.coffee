@@ -10,9 +10,16 @@
 # ee - use e twice
 # e~ - holding e
 # j - jump
+# q - use q
 # s - sprint
 # t - aim
 # tt - aim twice
+
+### interface
+type Fn = () => unknown
+###
+
+# function
 
 class TacticX
 
@@ -21,6 +28,8 @@ class TacticX
 
   isActive: false
   isPressed: {}
+
+  # ---
 
   constructor: ->
 
@@ -35,16 +44,19 @@ class TacticX
         @stop()
         @start()
 
+  # aim(callback: Fn): void
   aim: (callback) ->
     $.press 'r'
     @delay @intervalExecute, callback
 
+  # aimTwice(callback: Fn): void
   aimTwice: (callback) ->
     $.press 'r'
     @delay @intervalExecute, =>
       $.press 'r'
       @delay @intervalExecute, callback
 
+  # atDuration(cbA: Fn, cbB: Fn, isNot: boolean = false): void
   atDuration: (cbA, cbB, isNot = false) ->
 
     cb = [cbA, cbB]
@@ -54,6 +66,7 @@ class TacticX
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
+  # atMovement: (cbA: Fn, cbB: Fn, isNot: boolean = false): void
   atMovement: (cbA, cbB, isNot = false) ->
 
     cb = [cbA, cbB]
@@ -63,6 +76,7 @@ class TacticX
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
+  # atReady(cbA: Fn, cb: Fn, isNot: boolean = false): void
   atReady: (cbA, cbB, isNot = false) ->
 
     cb = [cbA, cbB]
@@ -72,6 +86,7 @@ class TacticX
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
+  # attack(isCharged: boolean, callback: Fn): void
   attack: (isCharged, callback) ->
 
     if isCharged
@@ -84,14 +99,12 @@ class TacticX
       switch weapon
         when 'bow'
           delay = 1500
-          if name == 'ganyu'
-            delay = 1800
-          if name == 'tartaglia'
-            delay = 300
+          if name == 'ganyu' then delay = 1800
+          if name == 'tartaglia' then delay = 300
+          if name == 'yoimiya' then delay = 2600
         when 'sword'
           delay = 400
-          if name == 'xingqiu'
-            delay = 600
+          if name == 'xingqiu' then delay = 600
 
       @delay delay, =>
         $.click 'left:up'
@@ -108,10 +121,12 @@ class TacticX
     $.click 'left'
     @delay 200, callback
 
+  # delay(time: number, callback: Fn): void
   delay: (time, callback) ->
     unless @isActive then return
     Client.delay '~tactic', time, callback
 
+  # execute(listTactic: string[], g: number = 0, i: number = 0): void
   execute: (listTactic, g = 0, i = 0) ->
 
     item = @get listTactic, g, i
@@ -135,6 +150,7 @@ class TacticX
       'ee': => @useEE next
       'e~': => @useE true, next
       'j': => @jump next
+      'q': => @useQ next
       's': => @sprint next
       't': => @aim next
       'tt': => @aimTwice next
@@ -146,18 +162,21 @@ class TacticX
 
     if callback then callback()
 
+  # get(list: string[], g: number = 0, i: number = 0): string
   get: (list, g = 0, i = 0) ->
-    if g >= $.length list then return false
+    if g >= $.length list then return ''
     group = list[g]
-    if i >= $.length group then return false
+    if i >= $.length group then return ''
     return group[i]
 
+  # jump(callback: Fn): void
   jump: (callback) ->
     Movement.jump()
     unless Movement.isMoving
       @delay 450, callback
     else @delay 550, callback
 
+  # reset(): void
   reset: ->
 
     Client.delay '~tactic'
@@ -167,10 +186,12 @@ class TacticX
 
     @isActive = false
 
+  # sprint(callback: Fn): void
   sprint: (callback) ->
     Movement.sprint()
     @delay @intervalExecute, callback
 
+  # start(): void
   start: ->
 
     if @isActive then return
@@ -188,6 +209,7 @@ class TacticX
 
     @execute listTactic, 0, 0
 
+  # stop(): void
   stop: ->
 
     if @isActive
@@ -196,6 +218,7 @@ class TacticX
 
     $.click 'left:up'
 
+  # useE(isHolding: boolean, callback: Fn): void
   useE: (isHolding, callback) ->
 
     if SkillTimer.listCountDown[Party.current]
@@ -205,6 +228,7 @@ class TacticX
     Player.useE isHolding
     @delay @intervalExecute, callback
 
+  # useEE(callback: Fn): void
   useEE: (callback) ->
 
     if SkillTimer.listCountDown[Party.current]
@@ -216,6 +240,12 @@ class TacticX
       Player.useE()
       @delay @intervalExecute, callback
 
+  # useQ(callback: Fn): void
+  useQ: (callback) ->
+    Player.useQ()
+    @delay @intervalExecute, callback
+
+  # validate(): boolean
   validate: ->
 
     unless Scene.name == 'normal' then return false

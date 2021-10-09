@@ -1,3 +1,9 @@
+### interface
+type Position = 1 | 2 | 3 | 4
+type Step = 'end' | 'start'
+type Timestamp = number
+###
+
 # function
 
 class SkillTimerX
@@ -7,14 +13,16 @@ class SkillTimerX
   listQ: {}
   listRecord: {}
 
+  # ---
+
   constructor: ->
     Client.on 'tick', @update
     @reset()
 
+  # check(): void
   check: ->
 
-    if Config.data.performance == 'low'
-      return
+    if Config.data.performance == 'low' then return
 
     Client.delay 'skill-timer'
 
@@ -28,7 +36,7 @@ class SkillTimerX
       start = Client.point [86, 90]
       end = Client.point [90, 93]
 
-      if name == 'mona' || name == 'kamisato'
+      if name == 'mona' || name == 'kamisato_ayaka'
         start = Client.point [81, 90]
         end = Client.point [85, 93]
 
@@ -40,6 +48,7 @@ class SkillTimerX
       @listCountDown[current] = 1
       @listDuration[current] = 1
 
+  # endTartaglia(): boolean
   endTartaglia: ->
 
     n = Party.getIndexBy 'tartaglia'
@@ -53,14 +62,17 @@ class SkillTimerX
 
     return true
 
+  # hide(n: Position): void
   hide: (n) ->
     unless Config.data.skillTimer then return
     Hud.render n, ''
 
+  # makeDiff(n: number): string
   makeDiff: (n) ->
     if ($.abs n) > 1e3 then return "#{$.floor n * 0.001}s"
     return "#{Round n * 0.001, 1}s"
 
+  # record(step: Step): void
   record: (step) ->
 
     {current, name} = Party
@@ -84,6 +96,7 @@ class SkillTimerX
       @recordStart now
       return
 
+  # recordEnd(now: Timestamp): void
   recordEnd: (now) ->
 
     {current, name} = Party
@@ -113,6 +126,7 @@ class SkillTimerX
     @listRecord[current] = 0
     @check()
 
+  # recordStart(now: Timestamp): void
   recordStart: (now) ->
 
     {current, name} = Party
@@ -123,16 +137,19 @@ class SkillTimerX
 
     @listRecord[current] = now
 
+  # render(n: Position, message: string): void
   render: (n, message) ->
     unless Config.data.skillTimer then return
     Hud.render n, message
 
+  # reset(): void
   reset: -> for n in [1, 2, 3, 4]
     @listCountDown[n] = 0
     @listDuration[n] = 0
     @listQ[n] = 0
     @listRecord[n] = 0
 
+  # update(): void
   update: ->
 
     now = $.now()
@@ -160,11 +177,9 @@ class SkillTimerX
         @hide n
         return
 
-      if n == Party.current
-        $.push listMessage, '💬'
+      if n == Party.current then $.push listMessage, '💬'
 
       @render n, $.join listMessage, ' '
 
 # execute
-
 SkillTimer = new SkillTimerX()

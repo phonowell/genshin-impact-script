@@ -82,6 +82,9 @@ on-long-press = a, a~
 [ningguang]
 on-long-press = a, 700, a, 400, a~, 500, e
 
+[sangonomiya_kokomi]
+on-long-press = a, a, j, 40
+
 [venti]
 on-long-press = @m, a, 100, a, tt; a, a~
 

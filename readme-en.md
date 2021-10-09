@@ -26,6 +26,10 @@ Configurable action when switching characters with `Number Keys`.
 
 You can configure custom battle moves for each character independently, and long press `Left Click` to cycle through them automatically.
 
+### Auto-Pickup mode
+
+Auto-pickup, press `Alt + F` to enter and exit this mode.
+
 ### Fishing mode
 
 Auto hook, press `F11` to enter and exit this mode.
@@ -38,7 +42,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 **Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
-Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.23/Genshin_Impact_Script_EN_0.0.23.zip) and unzip it.
+Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.24/Genshin_Impact_Script_EN_0.0.24.zip) and unzip it.
 
 Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select Apply).
 

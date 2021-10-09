@@ -1,7 +1,16 @@
+### interface
+type Action = 'down' | 'up'
+type Key = string
+###
+
+# function
+
 class MovementX extends KeyBindingX
 
   count: 0
   isMoving: false
+
+  # ---
 
   constructor: ->
     super()
@@ -27,11 +36,15 @@ class MovementX extends KeyBindingX
       @isMoving = false
       console.log 'movement: end moving'
 
+  # check(key: Key, action: Action): void
   check: (key, action) ->
     if action == 'down' then @checkDown key
     else @checkUp key
 
+  # checkDown(key: Key): void
   checkDown: (key) ->
+
+    $.press "#{key}:down"
 
     if @isPressed[key] then return
     @isPressed[key] = true
@@ -40,9 +53,10 @@ class MovementX extends KeyBindingX
     if count and !@count then @emit 'move:start'
     @count = count
 
-    $.press "#{key}:down"
-
+  # checkUp(key: Key): void
   checkUp: (key) ->
+
+    $.press "#{key}:up"
 
     unless @isPressed[key] then return
     @isPressed[key] = false
@@ -51,12 +65,12 @@ class MovementX extends KeyBindingX
     if !count and @count then @emit 'move:end'
     @count = count
 
-    $.press "#{key}:up"
-
+  # jump(): void
   jump: ->
     $.press 'space'
     ts.jump = $.now()
 
+  # sprint(): void
   sprint: -> $.click 'right'
 
 # execute

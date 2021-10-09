@@ -1,14 +1,11 @@
-
 ### interface
-event
-half-menu
-fishing
-loading
-menu
-normal
-special-menu
-title
-unknown
+type Color = number
+type Name = 'event'
+  | 'half-menu'
+  | 'fishing'
+  | 'menu'
+  | 'normal'
+  | 'unknown'
 using-q
 ###
 
@@ -19,6 +16,8 @@ class SceneX extends EmitterShellX
   isMulti: false
   name: 'unknown'
   tsUpdate: 0
+
+  # ---
 
   constructor: ->
     super()
@@ -31,6 +30,7 @@ class SceneX extends EmitterShellX
         @isMulti = @checkPoint [16, 2], [20, 6], 0xA9E588
         if @isMulti then console.log 'scene: multi-player'
 
+  # check(): void
   check: ->
 
     if @checkPoint [94, 1], [99, 8], 0x3B4255 then return 'menu'
@@ -42,16 +42,19 @@ class SceneX extends EmitterShellX
 
     return 'unknown'
 
+  # checkPoint(start: number, end: number, color: Color): boolean
   checkPoint: (start, end, color) ->
     [x, y] = $.findColor color, (Client.point start), Client.point end
     return x * y > 0
 
+  # makeInterval(): number
   makeInterval: ->
     if @name != 'unknown' then return 2e3
     if Config.data.performance == 'high' then return 200
     if Config.data.performance == 'low' then return 1e3
     return 500
 
+  # update(): void
   update: ->
 
     if @name == 'fishing' then return

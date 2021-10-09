@@ -1,3 +1,11 @@
+### interface
+type Fn = () => unknown
+type Level = 'high' | 'low' | 'normal'
+type Position = [number, number]
+###
+
+# function
+
 class ClientX extends EmitterShellX
 
   height: 0
@@ -6,6 +14,8 @@ class ClientX extends EmitterShellX
   left: 0
   top: 0
   width: 0
+
+  # ---
 
   constructor: ->
     super()
@@ -24,13 +34,13 @@ class ClientX extends EmitterShellX
       `Menu, Tray, Icon, on.ico`
       @setPriority 'normal'
       @suspend false
-      Client.delay 1e3, @setSize
+      @delay 1e3, @setSize
 
     `Menu, Tray, Icon, on.ico,, 1`
     @setPriority 'normal'
 
     @setSize()
-    Client.delay 1e3, @report
+    @delay 1e3, @report
 
     $.on 'alt + f4', =>
       $.beep()
@@ -44,10 +54,12 @@ class ClientX extends EmitterShellX
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
-      Client.delay 1e3, @setSize
+      @delay 1e3, @setSize
 
+  # check(): boolean
   check: -> return WinActive "ahk_exe #{Config.data.process}"
 
+  # delay(id?: string, time?: number, callback?: Fn): void
   delay: (args...) -> # id, time, callback
 
     len = $.length args
@@ -66,11 +78,13 @@ class ClientX extends EmitterShellX
     result = $.setTimeout callback, delay
     if hasId then timer[id] = result
 
+  # point(input: Position): Position
   point: (input) -> return [
       @vw input[0]
       @vh input[1]
     ]
 
+  # report(): void
   report: -> console.log [
     "client/is-fullscreen: #{@isFullScreen}"
     "client/performance: #{Config.data.performance}"
@@ -78,13 +92,16 @@ class ClientX extends EmitterShellX
     "client/size: #{@width}, #{@height}"
   ]
 
+  # reset(): void
   reset: ->
     @setPriority 'normal'
     @resetTimer()
 
+  # resetTimer(): void
   resetTimer: -> for _timer of timer
     $.clearTimeout _timer
 
+  # setSize(): void
   setSize: ->
 
     name = "ahk_exe #{Config.data.process}"
@@ -106,6 +123,7 @@ class ClientX extends EmitterShellX
       @width = @width - 6
       @height = @height - 29
 
+  # suspend: (isSuspend: boolean): void
   suspend: (isSuspend) ->
 
     if isSuspend
@@ -121,8 +139,10 @@ class ClientX extends EmitterShellX
       $.suspend false
       return
 
+  # setPriority(level: Level): void
   setPriority: (level) -> `Process, Priority, % Config.data.process, % level`
 
+  # tick(): void
   tick: ->
 
     unless @check()

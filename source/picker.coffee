@@ -1,15 +1,24 @@
+### interface
+type Color = number
+type Position = [number, number]
+###
+
 # function
 
 class PickerX
 
+  isAuto: false
   isFound: false
   isPicking: false
   tsDetect: 0
 
+  # ---
+
   constructor: ->
 
-    if Config.data.quickEvent then Client.on 'tick', @pick
-    if Config.data.autoPickup then Client.on 'tick', @detect
+    Client.on 'tick', @next
+    Client.on 'tick', @pick
+    $.on 'alt + f', @toggle
 
     Player.on 'pick:start', =>
       $.press 'f'
@@ -18,6 +27,7 @@ class PickerX
 
     Player.on 'pick:end', => @isPicking = false
 
+  # detect(): void
   detect: ->
 
     if @isPicking then return
@@ -30,32 +40,33 @@ class PickerX
     unless now - @tsDetect >= interval then return
     @tsDetect = now
 
-    [x, y] = @find [57, 40], [59, 60], 0x323232
+    [x, y] = @find ['59%', '30%'], ['61%', '70%'], 0xECE5D8
     unless x * y > 0
       @isFound = false
       return
 
-    start = [
-      Client.vw 61
-      y - 1
-    ]
-    end = [
-      Client.vw 63
-      y + 1
-    ]
-    [x, y] = $.findColor 0xFFFFFF, start, end
-    if x * y > 0
+    [x, y] = @find ['57%', '30%'], ['59%', '70%'], 0x323232
+    unless x * y > 0
       @isFound = false
       return
+
+    [x, y] = @find ['61%', y], ['63%', y + 1], 0xFFFFFF
+    if x * y > 0
+      color = $.getColor [x + 1, y]
+      if color == 0xFFFFFF
+        @isFound = false
+        return
 
     @isFound = true
     $.press 'f'
     $.click 'wheel-down'
 
+  # find(start: Position, end: Position, color: Color): Position
   find: (start, end, color = 0xFFFFFF) ->
-    [x, y] = $.findColor color, (Client.point start), Client.point end
+    [x, y] = $.findColor color, (Point.new start), Point.new end
     return [x, y]
 
+  # pick(): void
   pick: ->
     unless @isPicking then return
     if @skip() then return
@@ -63,24 +74,48 @@ class PickerX
     $.press 'f'
     $.click 'wheel-down'
 
+  # next(): void
+  next: ->
+
+    unless @isAuto then return
+
+    if Config.data.quickEvent and Scene.name == 'event'
+      @skip()
+      return
+
+    if Config.data.fastPickup and Scene.name == 'normal'
+      @detect()
+      return
+
+  # skip(): boolean
   skip: ->
 
     unless Scene.name == 'event' then return false
 
-    $.press 'f'
+    $.press 'space'
 
-    point = ''
+    p = ''
     for color in [0x806200, 0xFFCC32, 0xFFFFFF]
-      [x, y] = @find [65, 40], [70, 80], color
-      if x * y > 0
-        point = [x, y]
-        break
+      [x, y] = @find ['65%', '40%'], ['70%', '80%'], color
+      unless x * y > 0 then continue
+      p = [x, y]
+      break
 
-    unless point then return false
+    unless p then return false
 
-    $.move point
+    $.move p
     $.click()
     return true
+
+  # toggle(): void
+  toggle: ->
+
+    @isAuto = !@isAuto
+
+    if @isAuto then Hud.render 5, 'enter auto-pickup mode'
+    else Hud.render 5, 'leave auto-pickup mode'
+
+    $.beep()
 
 # execute
 Picker = new PickerX()
