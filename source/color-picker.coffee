@@ -6,7 +6,7 @@ class ColorPickerX
 
     if Config.data.isDebug
       $.on 'alt + f9', =>
-        $.beep()
+        Sound.beep()
         @pick()
 
   pick: ->

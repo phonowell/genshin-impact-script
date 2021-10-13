@@ -60,19 +60,13 @@ class FishingX
       $.press 'l-button'
       Client.delay '~fishing', 1e3, @start
 
-  notice: ->
-    $.beep()
-    Client.delay '~fishing', 500, ->
-      $.beep()
-      Client.delay '~fishing', 500, $.beep
-
   pull: ->
     @isPulling = true
     $.press 'l-button:down'
     Client.delay '~', 50, -> $.press 'l-button:up'
 
   start: ->
-    Client.delay 'fishing/notice', 60e3, @notice
+    Client.delay 'fishing/notice', 60e3, -> Sound.beep 3
     $.press 'l-button'
 
   toggle: ->
@@ -86,12 +80,16 @@ class FishingX
     if @isActive
       Scene.name = 'fishing'
       timer.fishing = $.setInterval @watch, 100
-      Hud.render 5, 'enter fishing mode'
+      msg = 'enter fishing mode'
+      if Config.data.region == 'cn' then msg = '开启钓鱼模式'
+      Hud.render 5, msg
     else
       Scene.name = 'unknown'
-      Hud.render 5, 'leave fishing mode'
+      msg = 'leave fishing mode'
+      if Config.data.region == 'cn' then msg = '关闭钓鱼模式'
+      Hud.render 5, msg
 
-    $.beep()
+    Sound.beep 2
 
   watch: ->
 

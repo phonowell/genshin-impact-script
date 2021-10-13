@@ -9,7 +9,7 @@ specifiers:
   canvas: ^2.8.0
   coffee-ahk: ^0.0.40-fixed.1
   eslint: ^7.32.0
-  fire-keeper: ^0.0.197
+  fire-keeper: ^0.0.199
   lodash: ^4.17.21
   shell-ahk: ^0.0.13-fixed
   ts-node: ^10.2.1
@@ -18,7 +18,7 @@ specifiers:
 dependencies:
   canvas: 2.8.0
   coffee-ahk: 0.0.40-fixed.1_@types+node@16.10.3
-  fire-keeper: 0.0.197_typescript@4.4.3
+  fire-keeper: 0.0.199_typescript@4.4.3
   lodash: 4.17.21
   shell-ahk: 0.0.13-fixed_@types+node@16.10.3
   ts-node: 10.2.1_8304ecd715830f7c190b4d1dea90b100
@@ -53,8 +53,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@babel/parser/7.15.7:
-    resolution: {integrity: sha512-rycZXvQ+xS9QyIcJ9HXeDWf1uxqlbVFAUq0Rq0dbc50Zb/+wUe/ehyfzGfm9KZZF0kBejYgxltBXocP+gKdL2g==}
+  /@babel/parser/7.15.8:
+    resolution: {integrity: sha512-BRYa3wcQnjS/nqI8Ac94pYYpJfojHVvVXJ97+IDCImX4Jc8W8Xv1+47enbruk+q1etOpsQNwnfFcNGw+gtPGxA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
     dev: false
@@ -1211,7 +1211,7 @@ packages:
   /constantinople/4.0.1:
     resolution: {integrity: sha512-vCrqcSIq4//Gx74TXXCGnHpulY1dskqLTFGDmhrGxzeXL8lF8kvXv6mpNWlJj1uD4DW23D4ljAqbY4RRaaUZIw==}
     dependencies:
-      '@babel/parser': 7.15.7
+      '@babel/parser': 7.15.8
       '@babel/types': 7.15.6
     dev: false
 
@@ -2073,7 +2073,7 @@ packages:
       kleur: 4.1.4
       lodash: 4.17.21
       ora: 5.4.1
-      prompts: 2.4.1
+      prompts: 2.4.2
       yargs: 17.2.1
     transitivePeerDependencies:
       - typescript
@@ -2105,7 +2105,7 @@ packages:
       kleur: 4.1.4
       lodash: 4.17.21
       ora: 5.4.1
-      prompts: 2.4.1
+      prompts: 2.4.2
       yargs: 17.2.1
     transitivePeerDependencies:
       - typescript
@@ -2136,14 +2136,14 @@ packages:
       js-yaml: 4.1.0
       kleur: 4.1.4
       lodash: 4.17.21
-      prompts: 2.4.1
+      prompts: 2.4.2
       yargs: 17.2.1
     transitivePeerDependencies:
       - typescript
     dev: false
 
-  /fire-keeper/0.0.197_typescript@4.4.3:
-    resolution: {integrity: sha512-SsEK5asGye+vVRBy/dBmRvBuHkjVOb3kRF5KmpaXIxqCLsRJfHcxvMZ8NdtJFVtkFsKiEVfiPl9y549EaA20/A==}
+  /fire-keeper/0.0.199_typescript@4.4.3:
+    resolution: {integrity: sha512-HROEHcC8LtZ4uz6iaGl1cKRjXpeDbMOkeW3bkbf2Jc5YBIXyab9eUv4vMWDwxo9f5XZ0/jenQiT+UsYqd1Vs0g==}
     dependencies:
       archiver: 5.3.0
       download: 8.0.0
@@ -2167,7 +2167,7 @@ packages:
       js-yaml: 4.1.0
       kleur: 4.1.4
       lodash: 4.17.21
-      prompts: 2.4.1
+      prompts: 2.4.2
       yargs: 17.2.1
     transitivePeerDependencies:
       - typescript
@@ -4160,8 +4160,8 @@ packages:
       asap: 2.0.6
     dev: false
 
-  /prompts/2.4.1:
-    resolution: {integrity: sha512-EQyfIuO2hPDsX1L/blblV+H7I0knhgAd82cVneCwcdND9B8AuCDuRcBH6yIcG4dFzlOUqbazQqwGjx5xmsNLuQ==}
+  /prompts/2.4.2:
+    resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
     dependencies:
       kleur: 3.0.3
@@ -5514,7 +5514,7 @@ packages:
     resolution: {integrity: sha512-RNGKj82nUPg3g5ygxkQl0R937xLyho1J24ItRCBTr/m1YnZkzJy1hUiHUJrc/VlsDQzsCnInEGSg3bci0Lmd4w==}
     engines: {node: '>= 10.0.0'}
     dependencies:
-      '@babel/parser': 7.15.7
+      '@babel/parser': 7.15.8
       '@babel/types': 7.15.6
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5

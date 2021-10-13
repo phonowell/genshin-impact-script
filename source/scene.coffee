@@ -50,8 +50,6 @@ class SceneX extends EmitterShellX
   # makeInterval(): number
   makeInterval: ->
     if @name != 'unknown' then return 2e3
-    if Config.data.performance == 'high' then return 200
-    if Config.data.performance == 'low' then return 1e3
     return 500
 
   # update(): void

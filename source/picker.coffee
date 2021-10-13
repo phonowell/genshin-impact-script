@@ -34,16 +34,16 @@ class PickerX
     unless Scene.name == 'normal' then return
 
     interval = 200
-    if @isFound then interval = 100
+    if @isFound then interval = 50
 
     now = $.now()
     unless now - @tsDetect >= interval then return
     @tsDetect = now
 
-    [x, y] = @find ['59%', '30%'], ['61%', '70%'], 0xECE5D8
-    unless x * y > 0
-      @isFound = false
-      return
+    # [x, y] = @find ['59%', '30%'], ['61%', '70%'], 0xECE5D8
+    # unless x * y > 0
+    #   @isFound = false
+    #   return
 
     [x, y] = @find ['57%', '30%'], ['59%', '70%'], 0x323232
     unless x * y > 0
@@ -59,7 +59,7 @@ class PickerX
 
     @isFound = true
     $.press 'f'
-    $.click 'wheel-down'
+    # $.click 'wheel-down'
 
   # find(start: Position, end: Position, color: Color): Position
   find: (start, end, color = 0xFFFFFF) ->
@@ -72,7 +72,7 @@ class PickerX
     if @skip() then return
     unless Scene.name == 'normal' then return
     $.press 'f'
-    $.click 'wheel-down'
+    # $.click 'wheel-down'
 
   # next(): void
   next: ->
@@ -112,10 +112,16 @@ class PickerX
 
     @isAuto = !@isAuto
 
-    if @isAuto then Hud.render 5, 'enter auto-pickup mode'
-    else Hud.render 5, 'leave auto-pickup mode'
+    if @isAuto
+      msg = 'enter auto-pickup mode'
+      if Config.data.region == 'cn' then msg = '开启自动拾取'
+      Hud.render 5, msg
+    else
+      msg = 'leave auto-pickup mode'
+      if Config.data.region == 'cn' then msg = '关闭自动拾取'
+      Hud.render 5, msg
 
-    $.beep()
+    Sound.beep 2
 
 # execute
 Picker = new PickerX()

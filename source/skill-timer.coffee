@@ -12,6 +12,7 @@ class SkillTimerX
   listDuration: {}
   listQ: {}
   listRecord: {}
+  tsUpdate: 0
 
   # ---
 
@@ -22,7 +23,7 @@ class SkillTimerX
   # check(): void
   check: ->
 
-    if Config.data.performance == 'low' then return
+    if Config.data.weakNetwork then return
 
     Client.delay 'skill-timer'
 
@@ -152,34 +153,36 @@ class SkillTimerX
   # update(): void
   update: ->
 
+    interval = 200
+    if Scene.name != 'normal' then interval = 1e3
+
     now = $.now()
+    unless now - @tsUpdate >= interval then return
+    @tsUpdate = now
 
     for n in [1, 2, 3, 4]
+      @updateItem n, now
 
-      unless @listCountDown[n] or @listDuration[n]
-        continue
+  # update(n: Position, now: number): void
+  updateItem: (n, now) ->
 
-      if now >= @listCountDown[n]
-        @listCountDown[n] = 0
+    unless @listCountDown[n] or @listDuration[n] then return
 
-      if now >= @listDuration[n]
-        @listDuration[n] = 0
+    if now >= @listCountDown[n] then @listCountDown[n] = 0
+    if now >= @listDuration[n] then @listDuration[n] = 0
 
-      listMessage = []
+    listMessage = []
 
-      if @listCountDown[n]
-        $.push listMessage, @makeDiff now - @listCountDown[n]
+    if @listCountDown[n] then $.push listMessage, @makeDiff now - @listCountDown[n]
+    if @listDuration[n] then $.push listMessage, "[#{@makeDiff @listDuration[n] - now}]"
 
-      if @listDuration[n]
-        $.push listMessage, "[#{@makeDiff @listDuration[n] - now}]"
+    unless $.length listMessage
+      @hide n
+      return
 
-      unless $.length listMessage
-        @hide n
-        return
+    if n == Party.current then $.push listMessage, '💬'
 
-      if n == Party.current then $.push listMessage, '💬'
-
-      @render n, $.join listMessage, ' '
+    @render n, $.join listMessage, ' '
 
 # execute
 SkillTimer = new SkillTimerX()

@@ -3,9 +3,12 @@ import __hn__ from '../data/character/h-n.yaml'
 import __ot__ from '../data/character/o-t.yaml'
 import __uz__ from '../data/character/u-z.yaml'
 
+# function
 class CharacterX
 
   data: {}
+
+  # ---
 
   constructor: ->
 
@@ -22,14 +25,17 @@ class CharacterX
         typeE: char['type-e']
         weapon: char.weapon
 
+      @data[key].audio = @pickMulti key, 'audio'
       @data[key].onLongPress = @makeOnLongPress @pickMulti key, 'on-long-press'
       @data[key].onSwitch = @pickMulti key, 'on-switch'
 
+  # padArray(list: [number] | [number, number]): [number, number]
   padArray: (list) ->
     if ($.length list) == 2 then return list
     $.push list, list[0]
     return list
 
+  # pickMulti(key: string, name: string): string | undefined
   pickMulti: (key, name) ->
 
     value = Config.read "#{key}/#{name}", 0
@@ -41,6 +47,7 @@ class CharacterX
     value = Config.read "#{$.toLowerCase @data[key].nameEN}/#{name}", 0
     return value
 
+  # makeOnLongPress(value: string): string[] | undefined
   makeOnLongPress: (value) ->
 
     unless value then return 0
@@ -56,6 +63,7 @@ class CharacterX
 
     return listAll
 
+  # makeValueIntoArray: (value: number | number[]): number[]
   makeValueIntoArray: (value) -> switch $.type value
     when 'array' then return value
     when 'number' then return [value]

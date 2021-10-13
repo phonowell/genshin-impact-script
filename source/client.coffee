@@ -20,10 +20,7 @@ class ClientX extends EmitterShellX
   constructor: ->
     super()
 
-    interval = 200
-    if Config.data.performance == 'low' then interval = 500
-    else if Config.data.performance == 'high' then interval = 100
-    $.setInterval @tick, interval
+    $.setInterval @tick, 100
 
     @on 'pause', =>
       `Menu, Tray, Icon, off.ico`
@@ -43,12 +40,12 @@ class ClientX extends EmitterShellX
     @delay 1e3, @report
 
     $.on 'alt + f4', =>
-      $.beep()
+      Sound.beep 2
       @reset()
       $.exit()
 
     $.on 'ctrl + f5', =>
-      $.beep()
+      Sound.beep 2
       @reset()
       $.reload()
 
@@ -87,7 +84,6 @@ class ClientX extends EmitterShellX
   # report(): void
   report: -> console.log [
     "client/is-fullscreen: #{@isFullScreen}"
-    "client/performance: #{Config.data.performance}"
     "client/position: #{@left}, #{@top}"
     "client/size: #{@width}, #{@height}"
   ]

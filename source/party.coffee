@@ -37,6 +37,9 @@ class PartyX extends EmitterShellX
       if nameOld == 'tartaglia' and nameNew != 'tartaglia'
         SkillTimer.endTartaglia()
 
+      {audio} = Character.data[@name]
+      if audio then Client.delay 200, -> Sound.play audio
+
     $.on 'f12', @scan
 
   # checkCurrent(n: Position): boolean
@@ -51,7 +54,7 @@ class PartyX extends EmitterShellX
     Client.delay 'party/check'
     delay = 200
 
-    if Config.data.performance == 'low'
+    if Config.data.weakNetwork
       Client.delay 'party/check', delay, callback
       return
 
@@ -60,12 +63,9 @@ class PartyX extends EmitterShellX
       Client.delay 'party/check', delay, callback
       return
 
-    if Config.data.performance == 'medium'
-      delay = 300
-
     Client.delay 'party/check', delay, =>
       unless @checkCurrent n
-        $.beep()
+        Sound.beep()
         return
       if callback then callback()
 
@@ -114,11 +114,11 @@ class PartyX extends EmitterShellX
   scan: ->
 
     if Scene.name != 'normal' or Scene.isMulti
-      $.beep()
+      Sound.beep()
       return
 
     if @isBusy
-      $.beep()
+      Sound.beep()
       return
     @isBusy = true
 
