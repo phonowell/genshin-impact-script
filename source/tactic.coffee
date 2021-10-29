@@ -1,9 +1,7 @@
 # !@e - not at e duration
 # !@e? - e is not ready
-# !@m - not at movement
 # @e - at e-duration
 # @e? - e is ready
-# @m - at movement
 # a - attack
 # a~ - charged attack
 # e - use e
@@ -66,16 +64,6 @@ class TacticX
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
-  # atMovement: (cbA: Fn, cbB: Fn, isNot: boolean = false): void
-  atMovement: (cbA, cbB, isNot = false) ->
-
-    cb = [cbA, cbB]
-    if isNot then cb = [cbB, cbA]
-
-    if Movement.isMoving
-      @delay @intervalCheck, cb[0]
-    else @delay @intervalCheck, cb[1]
-
   # atReady(cbA: Fn, cb: Fn, isNot: boolean = false): void
   atReady: (cbA, cbB, isNot = false) ->
 
@@ -110,7 +98,7 @@ class TacticX
         $.click 'left:up'
         @isPressed['l-button'] = false
 
-        if Movement.isMoving and Party.name == 'klee'
+        if Party.name == 'klee'
           @delay 200, => @jump callback
           return
 
@@ -172,9 +160,7 @@ class TacticX
   # jump(callback: Fn): void
   jump: (callback) ->
     Movement.jump()
-    unless Movement.isMoving
-      @delay 450, callback
-    else @delay 550, callback
+    @delay 550, callback
 
   # reset(): void
   reset: ->

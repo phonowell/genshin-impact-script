@@ -26,7 +26,6 @@ on-long-press = a, e~
 
 - `@e` 元素战技生效阶段
 - `@e?` 元素战技就绪
-- `@m` 角色移动
 - `a`/`a~` 普通攻击/蓄力攻击
 - `e`/`e~` 点按/长按元素战技
 - `ee` 连续使用元素战技
@@ -65,7 +64,7 @@ on-long-press = a, e~
 on-long-press = a~, 150
 
 [fischl]
-on-long-press = @m, a, 100, a, tt; a, a~
+on-long-press = a, 100, a, tt
 
 [ganyu]
 on-long-press = a~, a
@@ -86,7 +85,7 @@ on-long-press = a, 700, a, 400, a~, 500, e
 on-long-press = a, a, j, 40
 
 [venti]
-on-long-press = @m, a, 100, a, tt; a, a~
+on-long-press = a, a~
 
 [zhongli]
 on-long-press = a, e~

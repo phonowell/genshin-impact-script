@@ -26,7 +26,6 @@ The tactic module consists of the following units:
 
 - `@e` E skill effective phase
 - `@e?` E skill is ready
-- `@m` Moving
 - `a`/`a~` Normal attack/Charged attack
 - `e`/`e~` E skill (tap/hold)
 - `ee` Continuous use of E skill
@@ -65,7 +64,7 @@ The remaining two examples are both relatively simple: Klee will use a cycle of 
 on-long-press = a~, 150
 
 [fischl]
-on-long-press = @m, a, 100, a, tt; a, a~
+on-long-press = a, 100, a, tt
 
 [ganyu]
 on-long-press = a~, a
@@ -86,7 +85,7 @@ on-long-press = a, 700, a, 400, a~, 500, e
 on-long-press = a, a, j, 40
 
 [venti]
-on-long-press = @m, a, 100, a, tt; a, a~
+on-long-press = a, a~
 
 [zhongli]
 on-long-press = a, e~

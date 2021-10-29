@@ -59,6 +59,8 @@ class ClientX extends EmitterShellX
   # delay(id?: string, time?: number, callback?: Fn): void
   delay: (args...) -> # id, time, callback
 
+    if @isSuspend then return
+
     len = $.length args
     if len == 1 then [id, time, callback] = [args[0], 0, 0]
     else if len == 2 then [id, time, callback] = ['', args[0], args[1]]

@@ -50,7 +50,7 @@ class SceneX extends EmitterShellX
   # makeInterval(): number
   makeInterval: ->
     if @name != 'unknown' then return 2e3
-    return 500
+    return 200
 
   # update(): void
   update: ->

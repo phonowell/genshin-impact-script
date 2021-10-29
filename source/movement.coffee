@@ -1,14 +1,12 @@
-### interface
-type Action = 'down' | 'up'
-type Key = string
-###
+# variable
+
+ts.jump = 0
 
 # function
 
 class MovementX extends KeyBindingX
 
-  count: 0
-  isMoving: false
+  isWalking: false
 
   # ---
 
@@ -17,61 +15,72 @@ class MovementX extends KeyBindingX
 
     # move
     for key in ['w', 'a', 's', 'd']
-      $.on key, => @check key, 'down'
-      $.on "#{key}:up", => @check key, 'up'
+      @bindEvent 'move', key
 
-    # run & jump
+    # walk
+    $.on 'alt + w', => Client.delay 'walk', 100, @toggleWalk
+    Player.on 'attack:start', @stopWalk
+    @on 'move:start', @stopWalk
+
+    # jump
     @bindEvent 'jump', 'space', 'prevent'
-    @bindEvent 'sprint', 'r-button'
-    @bindEvent 'unhold', 'x', 'prevent'
 
-    # binding
+    @on 'jump:start', ->
+      $.press 'space:down'
+      ts.jump = $.now()
 
-    @on 'move:start', =>
-      if @isMoving then return
-      @isMoving = true
-      console.log 'movement: start moving'
-    @on 'move:end', =>
-      unless @isMoving then return
-      @isMoving = false
-      console.log 'movement: end moving'
+    @on 'jump:end', ->
 
-  # check(key: Key, action: Action): void
-  check: (key, action) ->
-    if action == 'down' then @checkDown key
-    else @checkUp key
+      $.press 'space:up'
 
-  # checkDown(key: Key): void
-  checkDown: (key) ->
+      now = $.now()
+      diff = now - ts.jump
+      ts.jump = now
 
-    $.press "#{key}:down"
+      unless Config.data.betterJump and Scene.name == 'normal' then return
+      unless diff < 350 then return
 
-    if @isPressed[key] then return
-    @isPressed[key] = true
-    count = @count + 1
-
-    if count and !@count then @emit 'move:start'
-    @count = count
-
-  # checkUp(key: Key): void
-  checkUp: (key) ->
-
-    $.press "#{key}:up"
-
-    unless @isPressed[key] then return
-    @isPressed[key] = false
-    count = @count - 1
-
-    if !count and @count then @emit 'move:end'
-    @count = count
+      Client.delay '~jump', 350 - diff, ->
+        Movement.jump()
+        ts.jump = $.now()
 
   # jump(): void
   jump: ->
     $.press 'space'
     ts.jump = $.now()
 
-  # sprint(): void
-  sprint: -> $.click 'right'
+  # startWalk(): void
+  startWalk: ->
+
+    unless Scene.name == 'normal' then return
+    if @isWalking then return
+
+    @isWalking = true
+    msg = 'enter auto-walk mode'
+    if Config.data.region == 'cn' then msg = '开启自动前行'
+    Hud.render 5, msg
+
+    $.press 'w:down'
+    Sound.beep 2
+
+  # stopWalk(): void
+  stopWalk: ->
+
+    unless Scene.name == 'normal' then return
+    unless @isWalking then return
+
+    @isWalking = false
+    msg = 'leave auto-walk mode'
+    if Config.data.region == 'cn' then msg = '关闭自动前行'
+    Hud.render 5, msg
+
+    $.press 'w:up'
+    Sound.beep 2
+
+  # toggleWalk(): void
+  toggleWalk: ->
+    if @isWalking then @stopWalk()
+    else @startWalk()
 
 # execute
 Movement = new MovementX()

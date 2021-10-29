@@ -52,7 +52,7 @@ class PartyX extends EmitterShellX
   checkCurrentAs: (n, callback) ->
 
     Client.delay 'party/check'
-    delay = 200
+    delay = 300
 
     if Config.data.weakNetwork
       Client.delay 'party/check', delay, callback
