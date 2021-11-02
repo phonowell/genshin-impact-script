@@ -2,8 +2,8 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/lodash': ^4.14.176
-  '@types/node': ^16.11.5
-  '@types/yargs': ^17.0.4
+  '@types/node': ^16.11.6
+  '@types/yargs': ^17.0.5
   '@typescript-eslint/eslint-plugin': ^4.33.0
   '@typescript-eslint/parser': ^4.33.0
   canvas: ^2.8.0
@@ -16,17 +16,17 @@ specifiers:
 
 dependencies:
   canvas: 2.8.0
-  coffee-ahk: 0.0.40-fixed.1_@types+node@16.11.5
+  coffee-ahk: 0.0.40-fixed.1_@types+node@16.11.6
   fire-keeper: 0.0.199_typescript@4.4.4
   lodash: 4.17.21
-  shell-ahk: 0.0.13-fixed_@types+node@16.11.5
-  ts-node: 10.4.0_209ed3137f8b35664889b84bcf9b7514
+  shell-ahk: 0.0.13-fixed_@types+node@16.11.6
+  ts-node: 10.4.0_0cb88d80cb04d25b21fa3ec194608c65
   typescript: 4.4.4
 
 devDependencies:
   '@types/lodash': 4.14.176
-  '@types/node': 16.11.5
-  '@types/yargs': 17.0.4
+  '@types/node': 16.11.6
+  '@types/yargs': 17.0.5
   '@typescript-eslint/eslint-plugin': 4.33.0_83aa6eb90d476d226895a490658e997b
   '@typescript-eslint/parser': 4.33.0_typescript@4.4.4
 
@@ -37,14 +37,14 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: false
 
-  /@babel/parser/7.15.8:
-    resolution: {integrity: sha512-BRYa3wcQnjS/nqI8Ac94pYYpJfojHVvVXJ97+IDCImX4Jc8W8Xv1+47enbruk+q1etOpsQNwnfFcNGw+gtPGxA==}
+  /@babel/parser/7.16.0:
+    resolution: {integrity: sha512-TEHWXf0xxpi9wKVyBCmRcSSDjbJ/cl6LUdlbYUHEaNQUJGhreJbZrXT6sR4+fZLxVUJqNRB4KyOvjuy/D9009A==}
     engines: {node: '>=6.0.0'}
     hasBin: true
     dev: false
 
-  /@babel/types/7.15.6:
-    resolution: {integrity: sha512-BPU+7QhqNjmWyDO0/vitH/CuhpV8ZmK1wpKva8nuyNF5MJfuRNWMc+hc14+u9xT93kvykMdncrJT19h74uB1Ig==}
+  /@babel/types/7.16.0:
+    resolution: {integrity: sha512-PJgg/k3SdLsGb3hhisFvtLOw5ts113klrpLuIPtCJIU+BB24fqq6lf8RWqKJEjzqXR9AEH1rIb5XTqwBHB+kQg==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/helper-validator-identifier': 7.15.7
@@ -70,7 +70,7 @@ packages:
       detect-libc: 1.0.3
       https-proxy-agent: 5.0.0
       make-dir: 3.1.0
-      node-fetch: 2.6.5
+      node-fetch: 2.6.6
       nopt: 5.0.0
       npmlog: 5.0.1
       rimraf: 3.0.2
@@ -130,16 +130,16 @@ packages:
     resolution: {integrity: sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==}
     dev: true
 
-  /@types/node/16.11.5:
-    resolution: {integrity: sha512-NyUV2DGcqYIx9op++MG2+Z4Nhw1tPhi0Wfs81TgncuX1aJC4zf2fgCJlJhl4BW9bCSS04e34VkqmOS96w0XQdg==}
+  /@types/node/16.11.6:
+    resolution: {integrity: sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w==}
     dev: true
 
   /@types/yargs-parser/20.2.1:
     resolution: {integrity: sha512-7tFImggNeNBVMsn0vLrpn1H1uPrUBdnARPTpZoitY37ZrdJREzf7I16tMrlK3hen349gr1NYh8CmZQa7CTG6Aw==}
     dev: true
 
-  /@types/yargs/17.0.4:
-    resolution: {integrity: sha512-D/wihO9WFYqwsmJI0e0qS+U09wIQtYRSBJlXWjTFGjouEuOCy0BU4N/ZK5utb00S5lW/9LO7vOpvGDd8M06NvQ==}
+  /@types/yargs/17.0.5:
+    resolution: {integrity: sha512-4HNq144yhaVjJs+ON6A07NEoi9Hh0Rhl/jI9Nt/l/YRjt+T6St/QK3meFARWZ8IgkzoD1LC0PdTdJenlQQi2WQ==}
     dependencies:
       '@types/yargs-parser': 20.2.1
     dev: true
@@ -428,7 +428,7 @@ packages:
     engines: {node: '>= 10'}
     dependencies:
       archiver-utils: 2.1.0
-      async: 3.2.1
+      async: 3.2.2
       buffer-crc32: 0.2.13
       readable-stream: 3.6.0
       readdir-glob: 1.1.1
@@ -599,8 +599,8 @@ packages:
       async-done: 1.3.2
     dev: false
 
-  /async/3.2.1:
-    resolution: {integrity: sha512-XdD5lRO/87udXCMC9meWdYiR+Nq6ZjUfXidViUZGu2F1MO4T3XwZ1et0hb2++BgLfhyJwy44BGB/yx80ABx8hg==}
+  /async/3.2.2:
+    resolution: {integrity: sha512-H0E+qZaDEfx/FY4t7iLRv1W2fFI6+pyCeTw1uN20AQPiwqwM6ojPxHxdLv4z8hi2DtnW9BOckSspLucW7pIE5g==}
     dev: false
 
   /atob/2.1.2:
@@ -613,7 +613,7 @@ packages:
     resolution: {integrity: sha512-GAwkz0AihzY5bkwIY5QDR+LvsRQgB/B+1foMPvi0FZPMl5fjD7ICiznUiBdLYMH1QYe6vqu4gWYytZOccLouFw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
-      '@babel/types': 7.15.6
+      '@babel/types': 7.16.0
     dev: false
 
   /bach/1.2.0:
@@ -997,7 +997,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /coffee-ahk/0.0.38_@types+node@16.11.5:
+  /coffee-ahk/0.0.38_@types+node@16.11.6:
     resolution: {integrity: sha512-nkkQLyp758YlAjTXAtK4Awf1DGuIWL2fbOHPfAGy7/F+ry2naDYf7Gh8SxdJltCrviXRBafji6TEkS8Wfw3Dfw==}
     dependencies:
       coffeescript: 2.6.1
@@ -1005,7 +1005,7 @@ packages:
       fire-keeper: 0.0.191_typescript@4.4.4
       iconv-lite: 0.6.3
       kleur: 4.1.4
-      ts-node: 10.4.0_209ed3137f8b35664889b84bcf9b7514
+      ts-node: 10.4.0_0cb88d80cb04d25b21fa3ec194608c65
       typescript: 4.4.4
     transitivePeerDependencies:
       - '@swc/core'
@@ -1013,7 +1013,7 @@ packages:
       - '@types/node'
     dev: false
 
-  /coffee-ahk/0.0.40-fixed.1_@types+node@16.11.5:
+  /coffee-ahk/0.0.40-fixed.1_@types+node@16.11.6:
     resolution: {integrity: sha512-JJVAFR1HIlIfWJjsLerNi7TTSAP3zOezbYQ62Opujc+KlzOVCURA4O7nHXwFJ/TMh1zuyxURPhABO3jfez9z1w==}
     dependencies:
       coffeescript: 2.6.1
@@ -1022,7 +1022,7 @@ packages:
       iconv-lite: 0.6.3
       kleur: 4.1.4
       lodash: 4.17.21
-      ts-node: 10.4.0_209ed3137f8b35664889b84bcf9b7514
+      ts-node: 10.4.0_0cb88d80cb04d25b21fa3ec194608c65
       typescript: 4.4.4
     transitivePeerDependencies:
       - '@swc/core'
@@ -1122,8 +1122,8 @@ packages:
   /constantinople/4.0.1:
     resolution: {integrity: sha512-vCrqcSIq4//Gx74TXXCGnHpulY1dskqLTFGDmhrGxzeXL8lF8kvXv6mpNWlJj1uD4DW23D4ljAqbY4RRaaUZIw==}
     dependencies:
-      '@babel/parser': 7.15.8
-      '@babel/types': 7.15.6
+      '@babel/parser': 7.16.0
+      '@babel/types': 7.16.0
     dev: false
 
   /content-disposition/0.5.3:
@@ -3446,8 +3446,8 @@ packages:
       lower-case: 1.1.4
     dev: false
 
-  /node-fetch/2.6.5:
-    resolution: {integrity: sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==}
+  /node-fetch/2.6.6:
+    resolution: {integrity: sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==}
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
@@ -4294,12 +4294,12 @@ packages:
       split-string: 3.1.0
     dev: false
 
-  /shell-ahk/0.0.13-fixed_@types+node@16.11.5:
+  /shell-ahk/0.0.13-fixed_@types+node@16.11.6:
     resolution: {integrity: sha512-MZXdmxysAGMa6sE/xiAW/HHy9KX0fDJNVyJ4rYTSZ92GtOiHak8yOXRxjicRRLvndGIKrbc2dLi7oGCAz8bTqg==}
     dependencies:
-      coffee-ahk: 0.0.38_@types+node@16.11.5
+      coffee-ahk: 0.0.38_@types+node@16.11.6
       fire-keeper: 0.0.192_typescript@4.4.4
-      ts-node: 10.4.0_209ed3137f8b35664889b84bcf9b7514
+      ts-node: 10.4.0_0cb88d80cb04d25b21fa3ec194608c65
       typescript: 4.4.4
     transitivePeerDependencies:
       - '@swc/core'
@@ -4786,7 +4786,7 @@ packages:
       escape-string-regexp: 1.0.5
     dev: false
 
-  /ts-node/10.4.0_209ed3137f8b35664889b84bcf9b7514:
+  /ts-node/10.4.0_0cb88d80cb04d25b21fa3ec194608c65:
     resolution: {integrity: sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==}
     hasBin: true
     peerDependencies:
@@ -4805,7 +4805,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 16.11.5
+      '@types/node': 16.11.6
       acorn: 8.5.0
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -5131,8 +5131,8 @@ packages:
     resolution: {integrity: sha512-RNGKj82nUPg3g5ygxkQl0R937xLyho1J24ItRCBTr/m1YnZkzJy1hUiHUJrc/VlsDQzsCnInEGSg3bci0Lmd4w==}
     engines: {node: '>= 10.0.0'}
     dependencies:
-      '@babel/parser': 7.15.8
-      '@babel/types': 7.15.6
+      '@babel/parser': 7.16.0
+      '@babel/types': 7.16.0
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5
     dev: false

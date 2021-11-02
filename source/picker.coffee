@@ -121,7 +121,5 @@ class PickerX
       if Config.data.region == 'cn' then msg = '关闭自动拾取'
       Hud.render 5, msg
 
-    Sound.beep 2
-
 # execute
 Picker = new PickerX()

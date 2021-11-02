@@ -89,8 +89,6 @@ class FishingX
       if Config.data.region == 'cn' then msg = '关闭钓鱼模式'
       Hud.render 5, msg
 
-    Sound.beep 2
-
   watch: ->
 
     unless @checkIsFishing() then return

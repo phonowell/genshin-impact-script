@@ -1,7 +1,7 @@
 # function
 class UpgraderX
 
-  target: '0.0.27'
+  target: '0.0.28'
 
   # ---
 

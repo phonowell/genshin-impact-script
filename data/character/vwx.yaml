@@ -6,6 +6,7 @@ venti:
   name-cn: 温迪
   name-en: Venti
   star: 5
+  vision: anemo
   weapon: bow
 
 xiangling:
@@ -17,6 +18,7 @@ xiangling:
   name-cn: 香菱
   name-en: Xiangling
   star: 4
+  vision: pyro
   weapon: polearm
 
 xiao:
@@ -25,6 +27,7 @@ xiao:
   name-cn: 魈
   name-en: Xiao
   star: 5
+  vision: anemo
   weapon: polearm
 
 xingqiu:
@@ -36,6 +39,7 @@ xingqiu:
   name-cn: 行秋
   name-en: Xingqiu
   star: 4
+  vision: hydro
   weapon: sword
 
 xinyan:
@@ -47,36 +51,5 @@ xinyan:
   name-cn: 辛焱
   name-en: Xinyan
   star: 4
+  vision: pyro
   weapon: claymore
-
-yanfei:
-  cd-e: 9
-  cd-q: 20
-  color: 0xFCEBE3
-  duration-q: 15
-  name-cn: 烟绯
-  name-en: Yanfei
-  star: 4
-  weapon: catalyst
-
-yoimiya:
-  cd-e: 18
-  cd-q: 15
-  color: 0xF7CFAF
-  duration-e: 10
-  duration-q: 10
-  name-cn: 宵宫
-  name-en: Yoimiya
-  star: 5
-  weapon: bow
-
-zhongli:
-  cd-e: [4, 12.5] # [4, 12]
-  cd-q: 12
-  color: 0x4B3525
-  duration-e: 20.5 # 20
-  duration-q: 3.6
-  name-cn: 钟离
-  name-en: Zhongli
-  star: 5
-  weapon: polearm

@@ -22,10 +22,11 @@ on-long-press = a, a~
 on-long-press = a, e~
 ```
 
-The tactic module consists of the following units:
+The tactic contains the following keywords:
 
-- `@e` E skill effective phase
-- `@e?` E skill is ready
+- `@e`/`!@e` E skill effective/not-effective phase
+- `@e?`/`!@e? ` E skill is ready/not-ready
+- `@m`/`!@m` Character is/isn't in movement state
 - `a`/`a~` Normal attack/Charged attack
 - `e`/`e~` E skill (tap/hold)
 - `ee` Continuous use of E skill

@@ -1,0 +1,34 @@
+mona:
+  cd-e: 12
+  cd-q: 15
+  color: 0x5A5064
+  duration-e: 6
+  duration-q: 4.5
+  name-cn: 莫娜
+  name-en: Mona
+  star: 5
+  vision: hydro
+  weapon: catalyst
+
+ningguang:
+  cd-e: 12
+  cd-q: 12
+  color: 0xFFFDF8
+  duration-e: 29
+  name-cn: 凝光
+  name-en: Ningguang
+  star: 4
+  vision: geo
+  weapon: catalyst
+
+noelle:
+  cd-e: 24
+  cd-q: 15
+  color: 0xDED8D2
+  duration-e: 12
+  duration-q: 15
+  name-cn: 诺艾尔
+  name-en: Noelle
+  star: 4
+  vision: geo
+  weapon: claymore

@@ -24,7 +24,5 @@ class ItemUserX
     if @isAuto then Hud.render 5, 'enter auto-item mode'
     else Hud.render 5, 'leave auto-item mode'
 
-    Sound.beep 2
-
 # execute
 ItemUser = new ItemUserX()

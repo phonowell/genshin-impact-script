@@ -1,13 +1,3 @@
-hu_tao:
-  cd-e: 16
-  cd-q: 15
-  color: 0x7B5B61
-  duration-e: 9
-  name-cn: 胡桃
-  name-en: Hu Tao
-  star: 5
-  weapon: polearm
-
 jean:
   cd-e: 6
   color: [0xC0875F, 0xE8D1BC]
@@ -15,6 +5,7 @@ jean:
   name-en: Jean
   star: 5
   type-e: 1
+  vision: anemo
   weapon: sword
 
 kaedehara_kazuha:
@@ -25,6 +16,7 @@ kaedehara_kazuha:
   name-cn: 枫原万叶
   name-en: Kaedehara Kazuha
   star: 5
+  vision: anemo
   weapon: sword
 
 kaeya:
@@ -35,6 +27,7 @@ kaeya:
   name-cn: 凯亚
   name-en: Kaeya
   star: 4
+  vision: cryo
   weapon: sword
 
 kamisato_ayaka:
@@ -45,6 +38,7 @@ kamisato_ayaka:
   name-cn: 神里绫华
   name-en: Kamisato Ayaka
   star: 5
+  vision: cryo
   weapon: sword
 
 keqing:
@@ -56,6 +50,7 @@ keqing:
   name-en: Keqing
   star: 5
   type-e: 1
+  vision: electro
   weapon: sword
 
 klee:
@@ -66,6 +61,7 @@ klee:
   name-cn: 可莉
   name-en: Klee
   star: 5
+  vision: pyro
   weapon: catalyst
 
 kujou_sara:
@@ -76,6 +72,7 @@ kujou_sara:
   name-cn: 九条裟罗
   name-en: Kujou Sara
   star: 4
+  vision: electro
   weapon: bow
 
 lisa:
@@ -86,6 +83,7 @@ lisa:
   name-cn: 丽莎
   name-en: Lisa
   star: 4
+  vision: electro
   weapon: catalyst
 
 lumine:
@@ -93,36 +91,5 @@ lumine:
   name-cn: 荧
   name-en: Lumine
   star: 4
+  vision: anemo
   weapon: sword
-
-mona:
-  cd-e: 12
-  cd-q: 15
-  color: 0x5A5064
-  duration-e: 6
-  duration-q: 4.5
-  name-cn: 莫娜
-  name-en: Mona
-  star: 5
-  weapon: catalyst
-
-ningguang:
-  cd-e: 12
-  cd-q: 12
-  color: 0xFFFDF8
-  duration-e: 29
-  name-cn: 凝光
-  name-en: Ningguang
-  star: 4
-  weapon: catalyst
-
-noelle:
-  cd-e: 24
-  cd-q: 15
-  color: 0xDED8D2
-  duration-e: 12
-  duration-q: 15
-  name-cn: 诺艾尔
-  name-en: Noelle
-  star: 4
-  weapon: claymore

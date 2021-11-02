@@ -1,7 +1,12 @@
-import __ag__ from '../data/character/a-g.yaml'
-import __hn__ from '../data/character/h-n.yaml'
-import __ot__ from '../data/character/o-t.yaml'
-import __uz__ from '../data/character/u-z.yaml'
+import __abc__ from '../data/character/abc.yaml'
+import __def__ from '../data/character/def.yaml'
+import __ghi__ from '../data/character/ghi.yaml'
+import __jkl__ from '../data/character/jkl.yaml'
+import __mno__ from '../data/character/mno.yaml'
+import __pqr__ from '../data/character/pqr.yaml'
+import __stu__ from '../data/character/stu.yaml'
+import __vwx__ from '../data/character/vwx.yaml'
+import __yz__ from '../data/character/yz.yaml'
 
 # function
 class CharacterX
@@ -12,7 +17,7 @@ class CharacterX
 
   constructor: ->
 
-    for key, char of $.mixin {}, __ag__, __hn__, __ot__, __uz__
+    for key, char of $.mixin {}, __abc__, __def__, __ghi__, __jkl__, __mno__, __pqr__, __stu__, __vwx__, __yz__
 
       @data[key] =
         cdE: @padArray @makeValueIntoArray char['cd-e']

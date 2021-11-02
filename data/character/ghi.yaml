@@ -1,0 +1,22 @@
+ganyu:
+  cd-e: 10
+  cd-q: 15
+  color: 0xBDCCC5
+  duration-e: 6
+  duration-q: 15
+  name-cn: 甘雨
+  name-en: Ganyu
+  star: 5
+  vision: cryo
+  weapon: bow
+
+hu_tao:
+  cd-e: 16
+  cd-q: 15
+  color: 0x7B5B61
+  duration-e: 9
+  name-cn: 胡桃
+  name-en: Hu Tao
+  star: 5
+  vision: pyro
+  weapon: polearm

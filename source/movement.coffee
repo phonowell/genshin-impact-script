@@ -6,21 +6,34 @@ ts.jump = 0
 
 class MovementX extends KeyBindingX
 
-  isWalking: false
+  isForwarding: false
+  isMoving: false
+  count: 0
 
   # ---
 
   constructor: ->
     super()
 
-    # move
-    for key in ['w', 'a', 's', 'd']
-      @bindEvent 'move', key
-
     # walk
-    $.on 'alt + w', => Client.delay 'walk', 100, @toggleWalk
-    Player.on 'attack:start', @stopWalk
-    @on 'move:start', @stopWalk
+    for key in ['w', 'a', 's', 'd'] then @bindEvent 'walk', key
+
+    @on 'walk:start', =>
+      unless @count then @emit 'move:start'
+      if @count >= 4 then return
+      @count++
+
+    @on 'walk:end', =>
+      if @count == 1 then @emit 'move:end'
+      if @count <= 0 then return
+      @count--
+
+    @on 'move:start', => @isMoving = true
+    @on 'move:end', => @isMoving = false
+
+    # forward
+    $.on 'alt + w', => Client.delay 'forward', 100, @toggleForward
+    @on 'walk:start', @stopForward
 
     # jump
     @bindEvent 'jump', 'space', 'prevent'
@@ -49,38 +62,36 @@ class MovementX extends KeyBindingX
     $.press 'space'
     ts.jump = $.now()
 
-  # startWalk(): void
-  startWalk: ->
+  # startForward(): void
+  startForward: ->
 
     unless Scene.name == 'normal' then return
-    if @isWalking then return
+    if @isForwarding then return
 
-    @isWalking = true
-    msg = 'enter auto-walk mode'
+    @isForwarding = true
+    msg = 'enter auto-forward mode'
     if Config.data.region == 'cn' then msg = '开启自动前行'
     Hud.render 5, msg
 
     $.press 'w:down'
-    Sound.beep 2
 
-  # stopWalk(): void
-  stopWalk: ->
+  # stopForward(): void
+  stopForward: ->
 
     unless Scene.name == 'normal' then return
-    unless @isWalking then return
+    unless @isForwarding then return
 
-    @isWalking = false
-    msg = 'leave auto-walk mode'
+    @isForwarding = false
+    msg = 'leave auto-forward mode'
     if Config.data.region == 'cn' then msg = '关闭自动前行'
     Hud.render 5, msg
 
     $.press 'w:up'
-    Sound.beep 2
 
-  # toggleWalk(): void
-  toggleWalk: ->
-    if @isWalking then @stopWalk()
-    else @startWalk()
+  # toggleForward(): void
+  toggleForward: ->
+    if @isForwarding then @stopForward()
+    else @startForward()
 
 # execute
 Movement = new MovementX()

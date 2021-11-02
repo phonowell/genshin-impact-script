@@ -8,6 +8,7 @@
 # preswing-e?
 # star
 # type-e?
+# vision: anemo cryo electro hydro geo pyro
 # weapon
 
 aether:
@@ -15,6 +16,7 @@ aether:
   name-cn: 空
   name-en: Aether
   star: 4
+  vision: anemo
   weapon: sword
 
 albedo:
@@ -25,6 +27,7 @@ albedo:
   name-cn: 阿贝多
   name-en: Albedo
   star: 5
+  vision: geo
   weapon: sword
 
 aloy:
@@ -35,6 +38,7 @@ aloy:
   name-cn: 埃洛伊
   name-en: Aloy
   star: 5
+  vision: cryo
   weapon: bow
 
 amber:
@@ -46,6 +50,7 @@ amber:
   name-cn: 安柏
   name-en: Amber
   star: 4
+  vision: pyro
   weapon: bow
 
 barbara:
@@ -56,6 +61,7 @@ barbara:
   name-cn: 芭芭拉
   name-en: Barbara
   star: 5
+  vision: hydro
   weapon: catalyst
 
 beidou:
@@ -67,6 +73,7 @@ beidou:
   name-en: Beidou
   star: 4
   type-e: 1
+  vision: electro
   weapon: claymore
 
 bennett:
@@ -77,6 +84,7 @@ bennett:
   name-cn: 班尼特
   name-en: Bennett
   star: 4
+  vision: pyro
   weapon: sword
 
 chongyun:
@@ -87,58 +95,5 @@ chongyun:
   name-cn: 重云
   name-en: Chongyun
   star: 4
+  vision: cryo
   weapon: claymore
-
-diluc:
-  cd-e: 10
-  cd-q: 12
-  color: 0xCF3226
-  duration-q: 8
-  name-cn: 迪卢克
-  name-en: Diluc
-  star: 5
-  weapon: claymore
-
-diona:
-  cd-e: [6, 15]
-  cd-q: 20
-  color: 0xFED6CE
-  duration-e: [4, 10]
-  duration-q: 12
-  name-cn: 迪奥娜
-  name-en: Diona
-  star: 4
-  weapon: bow
-
-eula:
-  cd-e: [4, 10]
-  cd-q: 20
-  color: 0x80BAC6
-  duration-e: [18, 7]
-  duration-q: 7
-  name-cn: 优菈
-  name-en: Eula
-  star: 5
-  weapon: claymore
-
-fischl:
-  cd-e: 25
-  cd-q: 15
-  color: 0xFFE3A9
-  duration-e: 10
-  name-cn: 菲谢尔
-  name-en: Fischl
-  star: 4
-  type-e: 1
-  weapon: bow
-
-ganyu:
-  cd-e: 10
-  cd-q: 15
-  color: 0xBDCCC5
-  duration-e: 6
-  duration-q: 15
-  name-cn: 甘雨
-  name-en: Ganyu
-  star: 5
-  weapon: bow
