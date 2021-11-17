@@ -25,7 +25,7 @@ sayu:
 sucrose:
   cd-e: 14.5 # 15
   cd-q: 20
-  color: 0x488962
+  color: 0xDCEBD1
   duration-q: 6
   name-cn: 砂糖
   name-en: Sucrose

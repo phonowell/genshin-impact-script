@@ -30,8 +30,13 @@ Player.on 'switch:end', ->
   unless Scene.name == 'normal' then return
 
   if state.isFiredSwitch
+
     {name} = Party
+    unless name then return
+
     {onSwitch} = Character.data[name]
+    unless onSwitch then return
+    
     onSwitchEnd onSwitch
     return
   state.isFiredSwitch = true

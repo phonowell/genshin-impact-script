@@ -31,6 +31,7 @@ on-long-press = a, e~
 - `e`/`e~` 点按/长按元素战技
 - `ee` 连续使用元素战技
 - `j` 跳跃
+- `ja` 跳跃攻击
 - `s` 冲刺
 - `t` 瞄准
 - `tt` 连续瞄准
@@ -71,7 +72,7 @@ on-long-press = a, 100, a, tt
 on-long-press = a~, a
 
 [hu_tao]
-on-long-press = !@e, a, e, @e, 300; a~, 150, j, 50
+on-long-press = !@e, a, e, @e, 300; a~, j, 50
 
 [keqing]
 on-long-press = a, ee

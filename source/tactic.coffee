@@ -10,6 +10,7 @@
 # ee - use e twice
 # e~ - holding e
 # j - jump
+# ja - jump & attack
 # q - use q
 # s - sprint
 # t - aim
@@ -93,17 +94,16 @@ class TacticX
       $.click 'left:down'
       @isPressed['l-button'] = true
 
-      delay = 300
+      delay = 400
       name = Party.name
       {weapon} = Character.data[name]
       switch weapon
         when 'bow'
           delay = 1500
           if name == 'ganyu' then delay = 1800
-          if name == 'tartaglia' then delay = 300
+          if name == 'tartaglia' then delay = 400
           if name == 'yoimiya' then delay = 2600
         when 'sword'
-          delay = 400
           if name == 'xingqiu' then delay = 600
 
       @delay delay, =>
@@ -150,6 +150,7 @@ class TacticX
       'ee': => @useEE next
       'e~': => @useE true, next
       'j': => @jump next
+      'ja': => @jumpAttack next
       'q': => @useQ next
       's': => @sprint next
       't': => @aim next
@@ -175,6 +176,13 @@ class TacticX
     unless Movement.isMoving
       @delay 450, callback
     else @delay 550, callback
+
+  # jumpAttack(callback: Fn): void
+  jumpAttack: (callback) ->
+    Movement.jump()
+    @delay 50, ->
+      $.click 'left'
+      @delay 50, callback
 
   # reset(): void
   reset: ->

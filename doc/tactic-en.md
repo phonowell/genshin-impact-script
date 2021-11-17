@@ -31,6 +31,7 @@ The tactic contains the following keywords:
 - `e`/`e~` E skill (tap/hold)
 - `ee` Continuous use of E skill
 - `j` Jump
+- `ja` Jump & attack
 - `s` Sprint
 - `t` Aim
 - `tt` Continuous aim
@@ -71,7 +72,7 @@ on-long-press = a, 100, a, tt
 on-long-press = a~, a
 
 [hu_tao]
-on-long-press = !@e, a, e, @e, 300; a~, 150, j, 50
+on-long-press = !@e, a, e, @e, 300; a~, j, 50
 
 [keqing]
 on-long-press = a, ee

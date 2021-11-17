@@ -44,10 +44,7 @@ class ClientX extends EmitterShellX
       @reset()
       $.exit()
 
-    $.on 'ctrl + f5', =>
-      Sound.beep 2
-      @reset()
-      $.reload()
+    $.on 'ctrl + f5', -> Sound.beep 3, $.reload
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
@@ -72,7 +69,7 @@ class ClientX extends EmitterShellX
     unless time then return
 
     delay = time
-    if id[0] == '~' then delay = delay * (1 + $.random() * 0.2) # 100% ~ 120%
+    if id[0] == '~' then delay = delay * (1 + $.random() * 0.1) # 100% ~ 110%
 
     result = $.setTimeout callback, delay
     if hasId then timer[id] = result

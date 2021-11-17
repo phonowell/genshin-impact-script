@@ -62,6 +62,9 @@ class MovementX extends KeyBindingX
     $.press 'space'
     ts.jump = $.now()
 
+  # sprite(): void
+  sprite: -> $.click 'right'
+
   # startForward(): void
   startForward: ->
 
