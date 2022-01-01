@@ -38,32 +38,32 @@ class PartyX extends EmitterShellX
         SkillTimer.endTartaglia()
 
       {audio} = Character.data[@name]
-      if audio then Client.delay 200, -> Sound.play audio
+      if audio then Timer.add 200, -> Sound.play audio
 
     $.on 'f12', @scan
 
   # checkCurrent(n: Position): boolean
   checkCurrent: (n) ->
     [start, end] = @makeRange n, 'narrow'
-    [x, y] = $.findColor 0x323232, start, end
+    [x, y] = ColorManager.find 0x323232, start, end
     return !(x * y > 0)
 
   # checkCurrentAs(n: Position, callback: Fn): void
   checkCurrentAs: (n, callback) ->
 
-    Client.delay 'party/check'
+    Timer.remove 'party/check'
     delay = 300
 
     if Config.data.weakNetwork
-      Client.delay 'party/check', delay, callback
+      Timer.add 'party/check', delay, callback
       return
 
     name = @listMember[n]
     unless name
-      Client.delay 'party/check', delay, callback
+      Timer.add 'party/check', delay, callback
       return
 
-    Client.delay 'party/check', delay, =>
+    Timer.add 'party/check', delay, =>
       unless @checkCurrent n
         Sound.beep()
         return
@@ -88,7 +88,7 @@ class PartyX extends EmitterShellX
 
       for color in char.color
 
-        [x, y] = $.findColor color, start, end
+        [x, y] = ColorManager.find color, start, end
         unless x * y > 0 then continue
 
         return name
@@ -113,7 +113,7 @@ class PartyX extends EmitterShellX
   # scan(): void
   scan: ->
 
-    if Scene.name != 'normal' or Scene.isMulti
+    if Scene.name != 'normal'
       Sound.beep()
       return
 
@@ -152,7 +152,7 @@ class PartyX extends EmitterShellX
       $.press 1
       @switchTo 1
 
-    Client.delay 200, => @isBusy = false
+    Timer.add 200, => @isBusy = false
 
   # switchTo(n: Position): void
   switchTo: (n) ->

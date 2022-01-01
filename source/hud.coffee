@@ -9,13 +9,12 @@ class HudX
   lifetime: 5e3
   map: {}
   mapLast: {}
-  tsUpdate: 0
 
   # ---
 
   constructor: ->
-    Client.on 'tick', @update
     Client.on 'pause', @hideAll
+    @watch()
 
   # hide: (n: Position, isForce: boolean = false): void
   hide: (n, isForce = false) ->
@@ -57,10 +56,9 @@ class HudX
 
     interval = 200
     if Scene.name != 'normal' then interval = 1e3
+    unless Timer.checkInterval 'hud/throttle', interval then return
 
     now = $.now()
-    unless now - @tsUpdate >= interval then return
-    @tsUpdate = now
 
     for n in [1, 2, 3, 4, 5]
 
@@ -81,9 +79,12 @@ class HudX
       id = n + 1
       `ToolTip, % msg, % x, % y, % id`
 
-    if Config.data.isDebug
-      cost = $.now() - now
-      if cost >= 20 then console.log "hud/cost: #{$.now() - now} ms"
+  # watch(): void
+  watch: ->
+    interval = 200
+    Client.on 'pause', -> Timer.remove 'hud/watch'
+    Client.on 'resume', => Timer.loop 'hud/watch', interval, @update
+    Timer.loop 'hud/watch', interval, @update
 
 # execute
 Hud = new HudX()

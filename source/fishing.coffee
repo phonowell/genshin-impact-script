@@ -48,7 +48,7 @@ class FishingX
     return true
 
   findColor: (color, start, end) ->
-    [x, y] = $.findColor color, start, end
+    [x, y] = ColorManager.find color, start, end
     if x * y > 0 then return [x, y]
     return false
 
@@ -56,30 +56,30 @@ class FishingX
 
     @isPulling = false
 
-    Client.delay '~fishing', 2e3, =>
+    Timer.add 'fishing', 2e3, =>
       $.press 'l-button'
-      Client.delay '~fishing', 1e3, @start
+      Timer.add 'fishing', 1e3, @start
 
   pull: ->
     @isPulling = true
     $.press 'l-button:down'
-    Client.delay '~', 50, -> $.press 'l-button:up'
+    Timer.add 50, -> $.press 'l-button:up'
 
   start: ->
-    Client.delay 'fishing/notice', 60e3, -> Sound.beep 3
+    Timer.add 'fishing/notice', 60e3, -> Sound.beep 3
     $.press 'l-button'
 
   toggle: ->
 
     @isActive = !@isActive
 
-    $.clearInterval timer.fishing
-    Client.delay '~fishing'
-    Client.delay 'fishing/notice'
+    Timer.remove 'fishing/watch'
+    Timer.remove 'fishing'
+    Timer.remove 'fishing/notice'
 
     if @isActive
       Scene.name = 'fishing'
-      timer.fishing = $.setInterval @watch, 100
+      Timer.loop 'fishing/watch', 100, @watch
       msg = 'enter fishing mode'
       if Config.data.region == 'cn' then msg = '开启钓鱼模式'
       Hud.render 5, msg

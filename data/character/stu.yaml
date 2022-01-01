@@ -55,3 +55,11 @@ thoma:
   star: 4
   vision: pyro
   weapon: polearm
+
+traveler:
+  color: [0xE7DEBD, 0xCC864B] # lumine, aether
+  name-cn: 旅行者
+  name-en: Traveler
+  star: 4
+  vision: anemo
+  weapon: sword

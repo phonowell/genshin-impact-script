@@ -2,9 +2,6 @@
 type Fn = () => unknown
 ###
 
-# variable
-timer.beep = 0
-
 # function
 class SoundX
 
@@ -22,12 +19,11 @@ class SoundX
       return
     @index = 1
 
-    $.clearInterval timer.beep
-    timer.beep = $.setInterval =>
+    Timer.loop 'sound/beep', 200, =>
       $.beep()
       @index++
       if @index >= n
-        $.clearInterval timer.beep
+        Timer.remove 'sound/beep'
         if callback then callback()
     , 200
 

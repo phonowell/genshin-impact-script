@@ -72,7 +72,7 @@ on-long-press = a, 100, a, tt
 on-long-press = a~, a
 
 [hu_tao]
-on-long-press = !@e, a, e, @e, 300; a~, j, 50
+on-long-press = !@e, a, e, @e, 300; a~, j, 100
 
 [keqing]
 on-long-press = a, ee

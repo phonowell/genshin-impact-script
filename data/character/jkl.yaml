@@ -85,11 +85,3 @@ lisa:
   star: 4
   vision: electro
   weapon: catalyst
-
-lumine:
-  color: 0xE7DEBD
-  name-cn: 荧
-  name-en: Lumine
-  star: 4
-  vision: anemo
-  weapon: sword

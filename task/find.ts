@@ -12,10 +12,10 @@ type MapColor = {
 // variable
 
 const listSource = [
-  'F:/0.png',
   'F:/1.png',
   'F:/2.png',
   'F:/3.png',
+  'F:/4.png',
 ]
 
 // function
@@ -74,6 +74,8 @@ const main = async () => {
     count: result[key],
   })), 'count')
   listResult.reverse()
+
+  if (!listResult.length) throw new Error('result is empty')
 
   await $write('./data/color.yaml', listResult.map(it => {
     return `- #${it.color} / 0x${it.color}  / ${it.count} times`

@@ -10,6 +10,18 @@ ganyu:
   vision: cryo
   weapon: bow
 
+gorou:
+  cd-e: 10
+  cd-q: 20
+  color: 0xBA8C43
+  duration-e: 10
+  duration-q: 9
+  name-cn: 五郎
+  name-en: Gorou
+  star: 4
+  vision: geo
+  weapon: bow
+
 hu_tao:
   cd-e: 16
   cd-q: 15

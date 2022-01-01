@@ -124,7 +124,7 @@ class TacticX
   # delay(time: number, callback: Fn): void
   delay: (time, callback) ->
     unless @isActive then return
-    Client.delay '~tactic', time, callback
+    Timer.add 'tactic', time, callback
 
   # execute(listTactic: string[], g: number = 0, i: number = 0): void
   execute: (listTactic, g = 0, i = 0) ->
@@ -187,7 +187,7 @@ class TacticX
   # reset(): void
   reset: ->
 
-    Client.delay '~tactic'
+    Timer.remove 'tactic'
 
     if @isPressed['l-button']
       $.click 'left:up'
@@ -196,7 +196,7 @@ class TacticX
 
   # sprint(callback: Fn): void
   sprint: (callback) ->
-    Movement.sprint()
+    Movement.sprite()
     @delay @intervalExecute, callback
 
   # start(): void

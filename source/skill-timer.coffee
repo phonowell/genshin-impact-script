@@ -12,27 +12,29 @@ class SkillTimerX
   listDuration: {}
   listQ: {}
   listRecord: {}
-  tsUpdate: 0
 
   # ---
 
   constructor: ->
-    Client.on 'tick', @update
     @reset()
+    @watch()
 
   # check(): void
   check: ->
 
     if Config.data.weakNetwork then return
 
-    Client.delay 'skill-timer'
+    Timer.remove 'skill-timer'
 
     {current, name} = Party
     {typeE} = Character.data[name]
 
     if typeE == 1 then return
 
-    Client.delay 'skill-timer', 500, =>
+    delay = 500
+    if name == 'gorou' then delay = 1e3
+
+    Timer.add 'skill-timer', delay, =>
 
       start = Client.point [86, 90]
       end = Client.point [90, 93]
@@ -41,7 +43,7 @@ class SkillTimerX
         start = Client.point [81, 90]
         end = Client.point [85, 93]
 
-      [x, y] = $.findColor 0xFFFFFF, start, end
+      [x, y] = ColorManager.find 0xFFFFFF, start, end
       if x * y > 0 then return
 
       console.log 'skill-timer: invalid record'
@@ -155,11 +157,9 @@ class SkillTimerX
 
     interval = 200
     if Scene.name != 'normal' then interval = 1e3
+    unless Timer.checkInterval 'skill-timer/throttle', interval then return
 
     now = $.now()
-    unless now - @tsUpdate >= interval then return
-    @tsUpdate = now
-
     for n in [1, 2, 3, 4]
       @updateItem n, now
 
@@ -183,6 +183,13 @@ class SkillTimerX
     if n == Party.current then $.push listMessage, '💬'
 
     @render n, $.join listMessage, ' '
+
+  # watch(): void
+  watch: ->
+    interval = 200
+    Client.on 'pause', -> Timer.remove 'skill-timer/watch'
+    Client.on 'resume', => Timer.loop 'skill-timer/watch', interval, @update
+    Timer.loop 'skill-timer/watch', interval, @update
 
 # execute
 SkillTimer = new SkillTimerX()

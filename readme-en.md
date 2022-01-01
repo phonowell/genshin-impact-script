@@ -46,7 +46,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 **Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
-Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.28/Genshin_Impact_Script_EN_0.0.28.zip) and unzip it.
+Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.29/Genshin_Impact_Script_EN_0.0.29.zip) and unzip it.
 
 Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select Apply).
 

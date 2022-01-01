@@ -91,7 +91,7 @@ const load = async (): Promise<string[]> => {
 
   $info.pause()
   const listSource = await $source('./data/sync/**/*.yaml')
-  const listData = (await Promise.all<string[]>(listSource.map(source => $read(source))))
+  const listData = (await Promise.all(listSource.map(source => $read<string[]>(source))))
   $info.resume()
 
   let result: string[] = []

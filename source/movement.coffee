@@ -1,7 +1,3 @@
-# variable
-
-ts.jump = 0
-
 # function
 
 class MovementX extends KeyBindingX
@@ -9,6 +5,7 @@ class MovementX extends KeyBindingX
   isForwarding: false
   isMoving: false
   count: 0
+  tsJump: 0
 
   # ---
 
@@ -32,35 +29,35 @@ class MovementX extends KeyBindingX
     @on 'move:end', => @isMoving = false
 
     # forward
-    $.on 'alt + w', => Client.delay 'forward', 100, @toggleForward
+    $.on 'alt + w', => Timer.add 'forward', 100, @toggleForward
     @on 'walk:start', @stopForward
 
     # jump
     @bindEvent 'jump', 'space', 'prevent'
 
-    @on 'jump:start', ->
+    @on 'jump:start', =>
       $.press 'space:down'
-      ts.jump = $.now()
+      @tsJump = $.now()
 
-    @on 'jump:end', ->
+    @on 'jump:end', =>
 
       $.press 'space:up'
 
       now = $.now()
-      diff = now - ts.jump
-      ts.jump = now
+      diff = now - @tsJump
+      @tsJump = now
 
       unless Config.data.betterJump and Scene.name == 'normal' then return
       unless diff < 350 then return
 
-      Client.delay '~jump', 350 - diff, ->
+      Timer.add 'jump', 350 - diff, ->
         Movement.jump()
-        ts.jump = $.now()
+        @tsJump = $.now()
 
   # jump(): void
   jump: ->
     $.press 'space'
-    ts.jump = $.now()
+    @tsJump = $.now()
 
   # sprite(): void
   sprite: -> $.click 'right'

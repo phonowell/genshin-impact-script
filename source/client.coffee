@@ -20,7 +20,7 @@ class ClientX extends EmitterShellX
   constructor: ->
     super()
 
-    $.setInterval @tick, 100
+    Timer.loop 100, @tick
 
     @on 'pause', =>
       `Menu, Tray, Icon, off.ico`
@@ -31,13 +31,13 @@ class ClientX extends EmitterShellX
       `Menu, Tray, Icon, on.ico`
       @setPriority 'normal'
       @suspend false
-      @delay 1e3, @setSize
+      Timer.add 1e3, @setSize
 
     `Menu, Tray, Icon, on.ico,, 1`
     @setPriority 'normal'
 
     @setSize()
-    @delay 1e3, @report
+    Timer.add 1e3, @report
 
     $.on 'alt + f4', =>
       Sound.beep 2
@@ -48,31 +48,10 @@ class ClientX extends EmitterShellX
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
-      @delay 1e3, @setSize
+      Timer.add 1e3, @setSize
 
   # check(): boolean
   check: -> return WinActive "ahk_exe #{Config.data.process}"
-
-  # delay(id?: string, time?: number, callback?: Fn): void
-  delay: (args...) -> # id, time, callback
-
-    if @isSuspend then return
-
-    len = $.length args
-    if len == 1 then [id, time, callback] = [args[0], 0, 0]
-    else if len == 2 then [id, time, callback] = ['', args[0], args[1]]
-    else [id, time, callback] = args
-
-    hasId = id and id != '~'
-
-    if hasId and timer[id] then $.clearTimeout timer[id]
-    unless time then return
-
-    delay = time
-    if id[0] == '~' then delay = delay * (1 + $.random() * 0.1) # 100% ~ 110%
-
-    result = $.setTimeout callback, delay
-    if hasId then timer[id] = result
 
   # point(input: Position): Position
   point: (input) -> return [
@@ -90,11 +69,7 @@ class ClientX extends EmitterShellX
   # reset(): void
   reset: ->
     @setPriority 'normal'
-    @resetTimer()
-
-  # resetTimer(): void
-  resetTimer: -> for _timer of timer
-    $.clearTimeout _timer
+    Timer.reset()
 
   # setSize(): void
   setSize: ->

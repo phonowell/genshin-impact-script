@@ -28,7 +28,7 @@ class FollowerX
     start = Client.point [3, 2]
     end = Client.point [14, 21]
 
-    [x, y] = $.findColor 0x408000, start, end
+    [x, y] = ColorManager.find 0x408000, start, end
     unless x * y > 0 then return false
 
     [x0, y0] = Client.point [8.5, 11.5]
@@ -40,11 +40,11 @@ class FollowerX
 
   move: ->
     $.press 's:down'
-    Client.delay '~', 200, ->
+    Timer.add 200, ->
       $.press 'space'
-      Client.delay '~', 200, ->
+      Timer.add 200, ->
         $.press 'space'
-        Client.delay '~', 400, ->
+        Timer.add 400, ->
           $.press 's:up'
 
   rotate: ->

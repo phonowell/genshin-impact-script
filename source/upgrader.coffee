@@ -1,11 +1,11 @@
 # function
 class UpgraderX
 
-  target: '0.0.29'
+  target: '0.0.30'
 
   # ---
 
-  constructor: -> Client.delay 1e3, @main
+  constructor: -> Timer.add 1e3, @main
 
   # confirm(text: string, callback: (data: boolean) => void): void
   confirm: (text, callback) ->
@@ -37,7 +37,7 @@ class UpgraderX
     @get url, (result) =>
 
       unless result
-        Client.delay 600e3, @main
+        Timer.add 600e3, @main
         return
 
       if result == 'Not Found' then return

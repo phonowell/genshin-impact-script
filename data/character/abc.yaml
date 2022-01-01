@@ -11,14 +11,6 @@
 # vision: anemo cryo electro hydro geo pyro
 # weapon
 
-aether:
-  color: 0xCC864B
-  name-cn: 空
-  name-en: Aether
-  star: 4
-  vision: anemo
-  weapon: sword
-
 albedo:
   cd-e: 4
   cd-q: 12
@@ -52,6 +44,18 @@ amber:
   star: 4
   vision: pyro
   weapon: bow
+
+arataki_itto:
+  cd-e: 10
+  cd-q: 18
+  color: 0xE5E7E7
+  duration-e: 6
+  duration-q: 11
+  name-cn: 荒泷一斗
+  name-en: Arataki Itto
+  star: 5
+  vision: geo
+  weapon: claymore
 
 barbara:
   cd-e: 32

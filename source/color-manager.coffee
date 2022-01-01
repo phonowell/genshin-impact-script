@@ -1,6 +1,4 @@
-class ColorPickerX
-
-  tsLast: 0
+class ColorManagerX
 
   constructor: ->
 
@@ -9,6 +7,10 @@ class ColorPickerX
         Sound.beep()
         @pick()
 
+  # find(color: number, start: Point, end: Point): Point
+  find: $.findColor
+
+  # pick(): void
   pick: ->
 
     color = $.getColor()
@@ -21,4 +23,4 @@ class ColorPickerX
     ClipBoard = color
 
 # export
-ColorPicker = new ColorPickerX()
+ColorManager = new ColorManagerX()

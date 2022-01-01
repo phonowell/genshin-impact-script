@@ -9,18 +9,18 @@ $ = $
 # variable
 
 state = {}
-timer = {}
-ts = {}
 
 # import
 
 import 'config'
+import 'timer'
 import 'client'
 
 import 'point'
 
 import 'console'
 import 'hud'
+import 'color-manager'
 import 'scene'
 import 'sound'
 import 'upgrader'
@@ -37,7 +37,6 @@ import 'picker'
 import 'tactic'
 
 # import 'follower'
-import 'color-picker'
 import 'fishing'
 
 import 'action/*'

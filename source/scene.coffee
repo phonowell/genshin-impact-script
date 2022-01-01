@@ -13,22 +13,20 @@ using-q
 
 class SceneX extends EmitterShellX
 
-  isMulti: false
+  isFrozen: false
   name: 'unknown'
-  tsUpdate: 0
+  tsChange: 0
 
   # ---
 
   constructor: ->
     super()
 
-    Client.on 'tick', @update
-
     @on 'change', =>
       console.log "scene: #{@name}"
-      if @name == 'normal'
-        @isMulti = @checkPoint [16, 2], [20, 6], 0xA9E588
-        if @isMulti then console.log 'scene: multi-player'
+      @tsChange = $.now()
+
+    @watch()
 
   # check(): void
   check: ->
@@ -44,34 +42,43 @@ class SceneX extends EmitterShellX
 
   # checkPoint(start: number, end: number, color: Color): boolean
   checkPoint: (start, end, color) ->
-    [x, y] = $.findColor color, (Client.point start), Client.point end
+    [x, y] = ColorManager.find color, (Client.point start), Client.point end
     return x * y > 0
+
+  # freeze(name: Name, time: number): void
+  freeze: (name, time) ->
+
+    if name != @name
+      @name = name
+      @emit 'change', @name
+
+    @isFrozen = true
+    Timer.add 'scene/unfreeze', time, => @isFrozen = false
 
   # makeInterval(): number
   makeInterval: ->
     if @name != 'unknown' then return 2e3
-    return 200
+    return 1e3
 
   # update(): void
   update: ->
 
+    if @isFrozen then return
     if @name == 'fishing' then return
 
-    now = $.now()
-    unless now - @tsUpdate >= @makeInterval()
-      return
-    @tsUpdate = now
+    unless Timer.checkInterval 'scene/throttle', @makeInterval() then return
 
     name = @check()
-
-    if Config.data.isDebug
-      cost = $.now() - now
-      if cost >= 20 then console.log "scene/cost: #{cost} ms"
-
     if name == @name then return
-
     @name = name
     @emit 'change', @name
+
+  # watch(): void
+  watch: ->
+    interval = 500
+    Client.on 'pause', -> Timer.remove 'scene/watch'
+    Client.on 'resume', => Timer.loop 'scene/watch', interval, @update
+    Timer.loop 'scene/watch', interval, @update
 
 # execute
 Scene = new SceneX()
