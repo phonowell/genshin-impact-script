@@ -4,7 +4,7 @@ Sweet! What a cute Genshin Impact script!
 
 ## Introduction
 
-A script based on `AHK` that provides a few small features for Genshin Impact players.
+A script that provides a little extra functionality for the Genshin Impact players. Really just a little bit dayo!
 
 **Does not contain any cheats.**
 
@@ -46,7 +46,7 @@ Set the process priority to the lowest when the game window is inactive.
 
 **Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
-Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.29/Genshin_Impact_Script_EN_0.0.29.zip) and unzip it.
+Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.30/Genshin_Impact_Script_EN_0.0.30.zip) and unzip it.
 
 Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select Apply).
 
@@ -97,7 +97,6 @@ The type of appearance. Can be one of the following values:
 - All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
 - Use `Right Click` for sprinting, not `Left Shift`
 - The game should run in `16:9` resolution
-- Avoid discussing the script in public
 
 ## Qusetion & Answer
 

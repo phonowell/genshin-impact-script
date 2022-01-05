@@ -2,13 +2,13 @@
 
 好耶！是人畜无害的原神脚本！
 
-企鹅群：515565970
+企鹅群：515565970（加群前请务必通读本文档）
 
 [English](./readme-en.md)
 
 ## 简介
 
-一个基于`AHK`实现，为原神玩家提供一点点额外小功能的游戏脚本。
+为原神玩家提供一点点额外小功能的游戏脚本。真的只是一点点哟！
 
 **不含任何作弊功能。**
 
@@ -50,7 +50,7 @@
 
 **注意，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
 
-下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.29/Genshin_Impact_Script_CN_0.0.29.zip)并解压。
+下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.30/Genshin_Impact_Script_CN_0.0.30.zip)并解压。
 
 进入解压文件夹双击其中的`start.exe`即可（会提示是否应用管理员权限，选择应用）。
 
@@ -101,7 +101,6 @@ on-switch = e~
 - 所有操作均绑定默认按键；但`切换走/跑`除外，它应当由`左Ctrl`变更为`右Ctrl`
 - 使用`右键`进行冲刺，而非`左Shift`
 - 游戏应以`16:9`分辨率运行
-- 避免在公开场合讨论
 
 ## 常见问题
 

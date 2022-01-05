@@ -21,6 +21,17 @@ yoimiya:
   vision: pyro
   weapon: bow
 
+yun_jin:
+  cd-e: 9
+  cd-q: 15
+  color: 0x48385F
+  duration-q: 12
+  name-cn: 云堇
+  name-en: Yun Jin
+  star: 4
+  vision: geo
+  weapon: polearm
+
 zhongli:
   cd-e: [4, 12.5] # [4, 12]
   cd-q: 12

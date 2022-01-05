@@ -15,7 +15,7 @@
   "description": "",
   "devDependencies": {
     "@types/lodash": "^4.14.178",
-    "@types/node": "^16.11.17",
+    "@types/node": "^16.11.19",
     "@types/yargs": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0"
@@ -40,5 +40,5 @@
     "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
-  "version": "0.0.29"
+  "version": "0.0.30"
 }
