@@ -1,81 +1,77 @@
 # genshin-impact-script
 
-好耶！是人畜无害的原神脚本！
+Sweet! What a cute Genshin Impact script!
 
-企鹅群：515565970（加群前请务必通读本文档）
+## Introduction
 
-[English](./readme-en.md)
+A script that provides a little extra functionality for the Genshin Impact players. Really just a little bit dayo!
 
-## 简介
+**Does not contain any cheats.**
 
-为原神玩家提供一点点额外小功能的游戏脚本。真的只是一点点哟！
+## Features
 
-**不含任何作弊功能。**
+### Fast pickup/skip dialogue
 
-## 功能
+Quickly pick up items/skip conversations when `F` key is pressed.
 
-### 快速拾取物品/跳过对话
+### Skill timer
 
-按下`F`键时快速拾取物品/跳过对话。
+Display the cooldown time and effect duration of `E` skills.
 
-### 技能计时器
+### Debut action
 
-可显示元素战技的冷却时间及效果持续时间。
+Configurable action when switching characters with `Number Keys`.
 
-### 登场动作
+### Tactic module
 
-使用`数字键`切换角色时，可配置登场时的动作。
+You can configure custom battle moves for each character independently, and long press `Left Click` to cycle through them automatically.
 
-### 自定义动作模组
+### Auto-Pickup mode
 
-可为每个角色独立配置自定义的战斗动作，长按`左键`即可自动循环。
+Auto-pickup, press `Alt + F` to enter and exit this mode.
 
-### 自动拾取
+### Auto-Forward mode
 
-自动拾取/跳过对话，按下`Alt + F`开关该模式。
+Auto forward, press `Alt + W` to enter and exit this mode.
 
-### 自动前行
+### Fishing mode
 
-自动前进，按下`Alt + W`开关该模式。
+Auto hook, press `F11` to enter and exit this mode.
 
-### 钓鱼模式
+### Process priority adjustment
 
-自动钓鱼，按下`F11`开关该模式。
+Set the process priority to the lowest when the game window is inactive.
 
-### 进程优先级调整
+## Usage
 
-当游戏窗口处于非活动状态时，将进程优先级设为最低。
+**Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
 
-## 使用
+Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.31/Genshin_Impact_Script_EN_0.0.31.zip) and unzip it.
 
-**注意，需要在游戏中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`。**
+Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select Apply).
 
-下载[压缩文档](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.30/Genshin_Impact_Script_CN_0.0.30.zip)并解压。
+### Skill Timer
 
-进入解压文件夹双击其中的`start.exe`即可（会提示是否应用管理员权限，选择应用）。
+Before using this function, you need to identify the characters by the following action: Press `F12` key with the right avatar visible.
 
-### 技能计时器
+After changing the team lineup, you need to re-identify them.
 
-在使用该功能前，需要通过如下动作识别队伍角色：在右侧队员头像可见情况下，按下`F12`键。
+The following characters are not supported right now:
 
-改变队伍阵容后，应重新识别角色。
+- Aether
+- Lumine
 
-以下角色目前暂不支持：
+## Configuration
 
-- 空
-- 荧
+Refer to the [configuration](./data/config.ini) for details.
 
-## 配置
+When finished editing, press `Ctrl + F5` to take effect instantly.
 
-详细请参考[功能配置](./data/config.ini)内的说明。
+### Characters
 
-当完成编辑后，按下`Ctrl + F5`即可即时生效。
+Add the chanacter name at the bottom of the file to enable character-specific configuration.
 
-### 角色
-
-在文件底部加入角色名以开启针对特定角色的配置。
-
-例如：
+For Example:
 
 ```ini
 [klee]
@@ -87,25 +83,25 @@ on-switch = e~
 
 #### on-long-press
 
-自定义的动作模组。详情请点击[这里](./doc/tactic.md)。
+Customized tactic module. For details, click [here](./doc/tactic.md).
 
 #### on-switch
 
-登场方式。可为以下数值之一：
+The type of appearance. Can be one of the following values:
 
-- `e` 依据登场按下数字键的时长，使用对应的元素战技
-- `e~` 登场时使用角色的元素战技（长按）
+- `e` Uses the corresponding `E` skill depending on the length of time the number key is pressed
+- `e~` Uses `E` skill (hold)
 
-## 注意
+## Note
 
-- 所有操作均绑定默认按键；但`切换走/跑`除外，它应当由`左Ctrl`变更为`右Ctrl`
-- 使用`右键`进行冲刺，而非`左Shift`
-- 游戏应以`16:9`分辨率运行
+- All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
+- Use `Right Click` for sprinting, not `Left Shift`
+- The game should run in `16:9` resolution
 
-## 常见问题
+## Qusetion & Answer
 
-点击[这里](./doc/qa.md)。
+Click [here](./doc/qa.md).
 
-## 免责声明
+## Disclaimers
 
-你们懂的。
+You knew that.

@@ -86,9 +86,11 @@ rules:
   init-declarations: 1
   no-label-var: 2
   no-restricted-globals: 0
-  no-shadow:
-    - warn
-    - builtinGlobals: false
+
+  no-shadow: 0
+  '@typescript-eslint/no-shadow':
+    - error
+
   no-undef-init: 2
   no-undefined: 0
   no-use-before-define: 0

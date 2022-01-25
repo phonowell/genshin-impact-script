@@ -1,7 +1,7 @@
 # function
 class UpgraderX
 
-  target: '0.0.31'
+  target: '0.0.32'
 
   # ---
 
@@ -43,8 +43,6 @@ class UpgraderX
       if result == 'Not Found' then return
 
       msg = "Found new version: v#{@target}\nUpgrade right now?"
-      if Config.data.region == 'cn'
-        msg = "发现新版本：v#{@target}\n是否立刻更新？"
 
       @confirm msg, (answer) ->
         unless answer then return

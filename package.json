@@ -35,10 +35,10 @@
     "url": "https://github.com/phonowell/genshin-impact-script.git"
   },
   "scripts": {
-    "alice": "node task/alice",
+    "alice": "ts-node task/alice",
     "build": "npm run alice build",
     "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
-  "version": "0.0.30"
+  "version": "0.0.31"
 }

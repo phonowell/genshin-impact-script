@@ -1,3 +1,0 @@
-scene
-  duration
-  freeze

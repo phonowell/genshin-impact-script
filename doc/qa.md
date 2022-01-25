@@ -1,34 +1,30 @@
-# 常见问题
+# FAQ
 
-## 我用不了
+## I can't use it
 
-- 确保分辨率正确
-- 确保未使用画面滤镜
-- 提`issue`
+- Make sure the resolution is correct
+- Make sure no screen filters are used
+- `issue`
 
-## 会封号么
+## Will it be banned?
 
 [#16](https://github.com/phonowell/genshin-impact-script/issues/16)
 
-## 识别角色错误
+## Wrong character recognition
 
-- 多人模式下无法使用
-- 小队成员数不为`4`时无法使用
-- 确保未使用画面滤镜
-- 换个方向试试
+- Can't use in multiplayer mode
+- Can't use if the number of team members is not `4`
+- Make sure the screen filter is not used
+- Try a different direction
 
-## 一直在切换走路跑步
+## Keep switching between walking and running
 
-在设置中将`切换走/跑`功能由`左Ctrl`变更为`右Ctrl`
+Change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the settings
 
-## 无法关闭风之翼
+## Can't unfold Wind Wings
 
-长按`space`
+Long press `space`
 
-## 闪避时经常卡住
+## Stuck a lot when dodging
 
-使用`右键`进行冲刺，而非`左Shift`
-
-## 加群的口令是什么
-
-“我永远喜欢凝光光”
+Use `right click` for sprinting instead of `left shift`

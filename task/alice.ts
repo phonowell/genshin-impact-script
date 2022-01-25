@@ -1,8 +1,8 @@
 import $argv from 'fire-keeper/argv'
+import $compact from 'lodash/compact'
 import $getBasename from 'fire-keeper/getBasename'
 import $prompt from 'fire-keeper/prompt'
 import $source from 'fire-keeper/source'
-import _compact from 'lodash/compact'
 
 // interface
 
@@ -40,7 +40,7 @@ const load = async (): Promise<string[]> => {
       : basename
   })
 
-  return _compact(listResult)
+  return $compact(listResult)
 }
 
 const main = async (): Promise<void> => {

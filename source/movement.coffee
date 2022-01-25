@@ -70,7 +70,6 @@ class MovementX extends KeyBindingX
 
     @isForwarding = true
     msg = 'enter auto-forward mode'
-    if Config.data.region == 'cn' then msg = '开启自动前行'
     Hud.render 5, msg
 
     $.press 'w:down'
@@ -83,7 +82,6 @@ class MovementX extends KeyBindingX
 
     @isForwarding = false
     msg = 'leave auto-forward mode'
-    if Config.data.region == 'cn' then msg = '关闭自动前行'
     Hud.render 5, msg
 
     $.press 'w:up'

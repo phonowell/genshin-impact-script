@@ -7,7 +7,7 @@ import $prompt from 'fire-keeper/prompt'
 import $read from 'fire-keeper/read'
 import $source from 'fire-keeper/source'
 import $stat from 'fire-keeper/stat'
-import _uniq from 'lodash/uniq'
+import $uniq from 'lodash/uniq'
 
 // interface
 
@@ -102,7 +102,7 @@ const load = async (): Promise<string[]> => {
       ...data,
     ]
 
-  return _uniq(result)
+  return $uniq(result)
 }
 
 const main = async (): Promise<void> => {

@@ -91,11 +91,9 @@ class PickerX
 
     if @isAuto
       msg = 'enter auto-pickup mode'
-      if Config.data.region == 'cn' then msg = '开启自动拾取'
       Hud.render 5, msg
     else
       msg = 'leave auto-pickup mode'
-      if Config.data.region == 'cn' then msg = '关闭自动拾取'
       Hud.render 5, msg
 
   # watch(): void

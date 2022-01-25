@@ -81,12 +81,10 @@ class FishingX
       Scene.name = 'fishing'
       Timer.loop 'fishing/watch', 100, @watch
       msg = 'enter fishing mode'
-      if Config.data.region == 'cn' then msg = '开启钓鱼模式'
       Hud.render 5, msg
     else
       Scene.name = 'unknown'
       msg = 'leave fishing mode'
-      if Config.data.region == 'cn' then msg = '关闭钓鱼模式'
       Hud.render 5, msg
 
   watch: ->

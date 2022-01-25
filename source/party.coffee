@@ -135,9 +135,7 @@ class PartyX extends EmitterShellX
       $.push @listMember, name
 
       char = Character.data[name]
-      nameOutput = char.nameEN
-      if Config.data.region == 'cn'
-        nameOutput = char.nameCN
+      nameOutput = char.name
 
       if !@current and @checkCurrent n
         @current = n
