@@ -1,6 +1,6 @@
 ### interface
 type Point = [number, number]
-type Position = 1 | 2 | 3 | 4 | 5
+type Position = 0 | 1 | 2 | 3 | 4 | 5
 ###
 
 # function
@@ -24,7 +24,7 @@ class HudX
     `ToolTip,, 0, 0, % id`
 
   # hideAll(): void
-  hideAll: -> for n in [1, 2, 3, 4, 5]
+  hideAll: -> for n in [0, 1, 2, 3, 4, 5]
     @hide n, true
 
   # makePosition: (n: Position): Point
@@ -34,9 +34,11 @@ class HudX
       left = Client.vw 80
     else left = Client.width
 
+    unless n then n = Party.total + 1
+
     return [
       left
-      Client.vh 22 + 9 * (n - 1)
+      Client.vh [37, 32, 28, 23][Party.total - 1] + 9 * (n - 1) - 1
     ]
 
   # render(n: Position, msg: string): void
@@ -60,7 +62,7 @@ class HudX
 
     now = $.now()
 
-    for n in [1, 2, 3, 4, 5]
+    for n in [0, 1, 2, 3, 4, 5]
 
       [time, msg] = @map[n]
 

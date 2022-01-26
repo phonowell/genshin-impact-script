@@ -69,8 +69,7 @@ class MovementX extends KeyBindingX
     if @isForwarding then return
 
     @isForwarding = true
-    msg = 'enter auto-forward mode'
-    Hud.render 5, msg
+    Hud.render 0, 'auto forward ON'
 
     $.press 'w:down'
 
@@ -81,8 +80,7 @@ class MovementX extends KeyBindingX
     unless @isForwarding then return
 
     @isForwarding = false
-    msg = 'leave auto-forward mode'
-    Hud.render 5, msg
+    Hud.render 0, 'auto forward OFF'
 
     $.press 'w:up'
 

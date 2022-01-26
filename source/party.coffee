@@ -12,6 +12,7 @@ class PartyX extends EmitterShellX
   isBusy: false
   listMember: ['']
   name: ''
+  total: 4
   tsSwitch: 0
 
   # ---
@@ -69,6 +70,25 @@ class PartyX extends EmitterShellX
         return
       if callback then callback()
 
+  # countMember(): void
+  countMember: ->
+
+    start = Client.point [97, 15]
+    end = Client.point [98, 65]
+
+    result = 0
+
+    for n in [1, 2, 3, 4, 5]
+      [x, y] = ColorManager.find 0xFFFFFF, start, end
+      unless x * y > 0 then break
+      result++
+      start = [
+        Client.vw 95
+        y + Client.vw 5
+      ]
+
+    @total = result + 1
+
   # getIndexBy(name: string): Position
   getIndexBy: (name) ->
     unless @has name then return 0
@@ -101,13 +121,23 @@ class PartyX extends EmitterShellX
   # makeRange(n: Position, isNarrow: boolean = false): Range
   makeRange: (n, isNarrow = false) ->
 
-    if isNarrow
-      start = Client.point [96, 20 + 9 * (n - 1)]
-      end = Client.point [99, 20 + 9 * n]
-      return [start, end]
+    top = [37, 32, 28, 23][@total - 1] + 9 * (n - 1)
 
-    start = Client.point [90, 20 + 9 * (n - 1)]
-    end = Client.point [96, 20 + 9 * n]
+    left = 90
+    right = 96
+    if isNarrow
+      left = 96
+      right = 99
+
+    start = Client.point [
+      left,
+      top - 4
+    ]
+    end = Client.point [
+      right,
+      top + 4
+    ]
+
     return [start, end]
 
   # scan(): void
@@ -122,6 +152,8 @@ class PartyX extends EmitterShellX
       return
     @isBusy = true
 
+    @countMember()
+
     @current = 0
     @listMember = ['']
     @name = ''
@@ -130,6 +162,7 @@ class PartyX extends EmitterShellX
     Hud.reset()
 
     for n in [1, 2, 3, 4]
+      if n > @total then break
 
       name = @getNameViaPosition n
       $.push @listMember, name
@@ -155,6 +188,7 @@ class PartyX extends EmitterShellX
   # switchTo(n: Position): void
   switchTo: (n) ->
     unless n then return
+    unless n <= @total then return
     @checkCurrentAs n, => @emit 'switch', n, @current
 
   # switchBy(name: string): void

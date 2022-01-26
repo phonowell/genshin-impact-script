@@ -89,12 +89,8 @@ class PickerX
 
     @isAuto = !@isAuto
 
-    if @isAuto
-      msg = 'enter auto-pickup mode'
-      Hud.render 5, msg
-    else
-      msg = 'leave auto-pickup mode'
-      Hud.render 5, msg
+    if @isAuto then Hud.render 0, 'auto pickup ON'
+    else Hud.render 0, 'auto pickup OFF'
 
   # watch(): void
   watch: ->
