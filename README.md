@@ -1,75 +1,70 @@
-# genshin-impact-script
+# Dull Blade
 
 Sweet! What a cute Genshin Impact script!
 
 ## Introduction
 
-A script that provides a little extra functionality for the Genshin Impact players. Really just a little bit dayo!
+Dull Blade, which provides only a little bit of attack, offers a little bit of extra functionality for Genshin Impact players. Really just a little bit dayo!
 
-**Does not contain any cheats.**
+**!!NO CHEATS!!**
 
 ## Features
 
-### Fast pickup/skip dialogue
+### Skill Timer
 
-Quickly pick up items/skip conversations when `F` key is pressed.
+- Display the cooldown and effect duration of `E` skills
 
-### Skill timer
+### Auto Pickup
 
-Display the cooldown time and effect duration of `E` skills.
+- Hold down `F` key to pick up items quickly/skip dialogue
+- Press `Alt + F` to enter/exit auto-pickup mode; this mode will automatically pick up items or skip conversations
 
-### Debut action
+### Auto Fight
 
-Configurable action when switching characters with `Number Keys`.
+- Configurable action when switching characters with `Number Keys`
+- You can configure custom moves for each character independently, and long press `Left Click` to cycle through them automatically
 
-### Tactic module
+### Auto Fish
 
-You can configure custom battle moves for each character independently, and long press `Left Click` to cycle through them automatically.
+- Press `F11` to enter/exit this mode
 
-### Auto-Pickup mode
+### Auto Forward
 
-Auto-pickup, press `Alt + F` to enter and exit this mode.
+- Press `Alt + W` to enter/exit this mode
 
-### Auto-Forward mode
+### Auto Glide
 
-Auto forward, press `Alt + W` to enter and exit this mode.
+- Automatically turn on the glider when `Space` is pressed
 
-### Fishing mode
+### Other
 
-Auto hook, press `F11` to enter and exit this mode.
-
-### Process priority adjustment
-
-Set the process priority to the lowest when the game window is inactive.
+- Set the process priority to the lowest when the game window is inactive
 
 ## Usage
 
-**Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game.**
+**Note that you need to change the `Switch Walk/Run` function from `Left Ctrl` to `Right Ctrl` in the game**
 
-Download the [zip file](https://github.com/phonowell/genshin-impact-script/releases/download/0.0.31/Genshin_Impact_Script_EN_0.0.31.zip) and unzip it.
+Download the release and unzip it
 
-Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select Apply).
+Go to the unpacked folder and double-click `start.exe` in it (you will be prompted if you want to apply administrator privileges, select **Apply**)
 
 ### Skill Timer
 
-Before using this function, you need to identify the characters by the following action: Press `F12` key with the right avatar visible.
+Before using this function, you need to identify the characters by the following action: Press `F12` key with the right avatar visible
 
-After changing the team lineup, you need to re-identify them.
+After changing the team lineup, the characters should be re-identified
 
-The following characters are not supported right now:
-
-- Aether
-- Lumine
+Some characters are not supported at the moment
 
 ## Configuration
 
-Refer to the [configuration](./data/config.ini) for details.
+Refer to the [configuration](./data/config.ini) for details
 
-When finished editing, press `Ctrl + F5` to take effect instantly.
+When you finish editing, press `Ctrl + F5` and it will take effect immediately
 
 ### Characters
 
-Add the chanacter name at the bottom of the file to enable character-specific configuration.
+Add the chanacter name at the bottom of the file to enable character-specific configuration
 
 For Example:
 
@@ -83,25 +78,26 @@ on-switch = e~
 
 #### on-long-press
 
-Customized tactic module. For details, click [here](./doc/tactic.md).
+Customized tactic module. For details, click [here](./doc/tactic.md)
 
 #### on-switch
 
 The type of appearance. Can be one of the following values:
 
-- `e` Uses the corresponding `E` skill depending on the length of time the number key is pressed
-- `e~` Uses `E` skill (hold)
+- `e` Uses the corresponding `E` skill depending on the key duration
+- `e~` Uses the long press version of `E` skill
 
 ## Note
 
 - All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
 - Use `Right Click` for sprinting, not `Left Shift`
-- The game should run in `16:9` resolution
+- The game should run in `16:9` resolution, the recommended resolution is `1600x900` for windowed
+- Since version `0.0.31`, `Celestia` and `World Tree` servers are no longer supported
 
 ## Qusetion & Answer
 
-Click [here](./doc/qa.md).
+Click [here](./doc/qa.md)
 
 ## Disclaimers
 
-You knew that.
+You knew that

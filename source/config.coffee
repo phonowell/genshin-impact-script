@@ -12,10 +12,7 @@ class ConfigX
     @data.isDebug = @read 'debug/debug', 0
 
     # basic
-    @data.region = @read 'basic/region', 'en'
-    if @data.region == 'cn' then @data.process = 'YuanShen.exe'
-    else if @data.region == 'en' then @data.process = 'GenshinImpact.exe'
-    else @data.process = @data.region
+    @data.process = @read 'basic/process', 'GenshinImpact.exe'
     @data.weakNetwork = @read 'basic/weak-network', 0
 
     # feature

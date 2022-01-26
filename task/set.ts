@@ -2,7 +2,7 @@ import $ from 'fire-keeper'
 
 // function
 
-const main = async (): Promise<void> => {
+const main = async () => {
 
   const version = await savePkg()
   if (!version) return
@@ -12,11 +12,10 @@ const main = async (): Promise<void> => {
 
 const saveMd = async (
   version: string,
-): Promise<void> => {
+) => {
 
   const listSource = [
     './readme.md',
-    './readme-en.md',
   ]
 
   for (const source of listSource) {
@@ -29,7 +28,7 @@ const saveMd = async (
   }
 }
 
-const savePkg = async (): Promise<string> => {
+const savePkg = async () => {
 
   type Pkg = {
     version: string
