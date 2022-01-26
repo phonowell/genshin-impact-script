@@ -4,7 +4,9 @@ Sweet! What a cute Genshin Impact script!
 
 ## Introduction
 
-Dull Blade, which provides only a little bit of attack, offers a little bit of extra functionality for Genshin Impact players. Really just a little bit dayo!
+Dull Blade, which provides only a slight attack, also provides a tiny bit of extra functionality for Genshin Impact players
+
+Really just a little bit dayo!
 
 **!!NO CHEATS!!**
 
