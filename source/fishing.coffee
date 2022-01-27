@@ -62,10 +62,10 @@ class FishingX
     if @isActive
       Scene.name = 'fishing'
       Timer.loop 'fishing/watch', 100, @watch
-      Hud.render 0, 'auto fish ON'
+      Hud.render 0, 'auto fish [ON]'
     else
       Scene.name = 'unknown'
-      Hud.render 0, 'auto fish OFF'
+      Hud.render 0, 'auto fish [OFF]'
 
   watch: ->
 

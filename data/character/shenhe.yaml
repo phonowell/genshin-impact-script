@@ -1,6 +1,6 @@
 cd-e: [10, 15]
 cd-q: 20
-color: 0xE9E9E9
+color: [16119282]
 duration-e: [10, 15]
 duration-q: 12
 name: Shenhe

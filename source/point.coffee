@@ -23,10 +23,10 @@ class PointX
     return [x, y]
 
   # vw(number): number
-  vh: (n) -> return $.round @height * n * 0.01
+  vh: (n) -> return $.round Client.height * n * 0.01
 
   # vh(number): number
-  vw: (n) -> return $.round @width * n * 0.01
+  vw: (n) -> return $.round Client.width * n * 0.01
 
 # execute
 Point = new PointX()

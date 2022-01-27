@@ -1,6 +1,6 @@
 cd-e: [4, 10]
 cd-q: 20
-color: 0x9FCCD4
+color: [8436422]
 duration-e: [18, 7]
 duration-q: 7
 name: Eula

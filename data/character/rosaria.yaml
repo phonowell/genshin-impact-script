@@ -1,6 +1,6 @@
 cd-e: 6
 cd-q: 15
-color: 0xF1F1F1
+color: [15063762, 10569850]
 duration-q: 8
 name: Rosaria
 star: 4

@@ -1,6 +1,6 @@
 cd-e: 10
 cd-q: 18
-color: 0x34287B
+color: [2761577]
 duration-e: 25
 duration-q: 7
 name: Raiden Shogun
