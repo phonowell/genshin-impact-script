@@ -6,16 +6,7 @@ class FishingX
   constructor: ->
     $.on 'f11', @toggle
 
-  checkIsFishing: ->
-
-    color = 0xFFFFFF
-    start = Client.point [94, 94]
-    end = Client.point [98, 97]
-
-    p1 = @findColor color, start, end
-    unless p1 then return false
-
-    return true
+  checkIsFishing: -> return !!(@findColor 0xFFFFFF, ['94%', '94%'], ['98%', '97%'])
 
   checkShape: ->
 
@@ -24,8 +15,8 @@ class FishingX
     # 2, pull
 
     color = 0xFFFFC0
-    start = Client.point [35, 8]
-    end = Client.point [65, 18]
+    start = ['35%', '8%']
+    end = ['65%', '18%']
 
     p1 = @findColor color, start, end
     unless p1 then return 0
@@ -33,22 +24,13 @@ class FishingX
     p2 = @findColor color, [start[0], p1[1] + 5], end
     unless p2 then return 0
 
-    if p1[0] - p2[0] > (Client.vw 2) then return 1
+    if p1[0] - p2[0] > (Point.vw 2) then return 1
     return 2
 
-  checkStart: ->
-
-    color = 0xFFE92C
-    start = Client.point [82, 87]
-    end = Client.point [87, 97]
-
-    p1 = @findColor color, start, end
-    if p1 then return false
-
-    return true
+  checkStart: -> return !(@findColor 0xFFE92C, ['82%', '87%'], ['87%', '97%'])
 
   findColor: (color, start, end) ->
-    [x, y] = ColorManager.find color, start, end
+    [x, y] = ColorManager.find color, (Point.new start), Point.new end
     if x * y > 0 then return [x, y]
     return false
 

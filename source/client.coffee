@@ -53,12 +53,6 @@ class ClientX extends EmitterShellX
   # check(): boolean
   check: -> return WinActive "ahk_exe #{Config.data.process}"
 
-  # point(input: Position): Position
-  point: (input) -> return [
-      @vw input[0]
-      @vh input[1]
-    ]
-
   # report(): void
   report: -> console.log [
     "client/is-fullscreen: #{@isFullScreen}"
@@ -124,9 +118,6 @@ class ClientX extends EmitterShellX
       return
 
     @emit 'tick'
-
-  vh: (n) -> return $.round @height * n * 0.01
-  vw: (n) -> return $.round @width * n * 0.01
 
 # execute
 Client = new ClientX()

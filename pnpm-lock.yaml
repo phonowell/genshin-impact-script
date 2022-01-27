@@ -6,7 +6,6 @@ specifiers:
   '@types/yargs': ^17.0.8
   '@typescript-eslint/eslint-plugin': ^4.33.0
   '@typescript-eslint/parser': ^4.33.0
-  canvas: ^2.9.0
   coffee-ahk: ^0.0.41
   fire-keeper: ^0.0.199
   lodash: ^4.17.21
@@ -15,7 +14,6 @@ specifiers:
   typescript: ^4.5.5
 
 dependencies:
-  canvas: registry.npmmirror.com/canvas/2.9.0
   coffee-ahk: registry.npmmirror.com/coffee-ahk/0.0.41_@types+node@16.11.21
   fire-keeper: registry.npmmirror.com/fire-keeper/0.0.199_typescript@4.5.5
   lodash: registry.npmmirror.com/lodash/4.17.21
@@ -83,12 +81,6 @@ packages:
     version: 1.0.2
     dev: false
 
-  registry.nlark.com/abbrev/1.1.1:
-    resolution: {integrity: sha1-+PLIh60Qv2f2NPAFtph/7TF5qsg=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/abbrev/download/abbrev-1.1.1.tgz}
-    name: abbrev
-    version: 1.1.1
-    dev: false
-
   registry.nlark.com/accord/0.26.4:
     resolution: {integrity: sha1-/EyNPrq0BqB8sogZuFllHESpLoA=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/accord/download/accord-0.26.4.tgz}
     name: accord
@@ -115,17 +107,6 @@ packages:
     name: acorn-walk
     version: 8.2.0
     engines: {node: '>=0.4.0'}
-    dev: false
-
-  registry.nlark.com/agent-base/6.0.2:
-    resolution: {integrity: sha1-Sf/1hXfP7j83F2/qtMIuAPhtf3c=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/agent-base/download/agent-base-6.0.2.tgz}
-    name: agent-base
-    version: 6.0.2
-    engines: {node: '>= 6.0.0'}
-    dependencies:
-      debug: registry.npmmirror.com/debug/4.3.3
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   registry.nlark.com/align-text/0.1.4:
@@ -230,12 +211,6 @@ packages:
       buffer-equal: registry.nlark.com/buffer-equal/1.0.0
     dev: false
 
-  registry.nlark.com/aproba/2.0.0:
-    resolution: {integrity: sha1-UlILiuW1aSFbNU78DKo/4eRaitw=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/aproba/download/aproba-2.0.0.tgz}
-    name: aproba
-    version: 2.0.0
-    dev: false
-
   registry.nlark.com/archive-type/4.0.0:
     resolution: {integrity: sha1-+S5yIzBW38aWlHJ0nCZ72wRrHXA=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/archive-type/download/archive-type-4.0.0.tgz}
     name: archive-type
@@ -282,16 +257,6 @@ packages:
     resolution: {integrity: sha1-+cjBN1fMHde8N5rHeyxipcKGjEA=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/archy/download/archy-1.0.0.tgz}
     name: archy
     version: 1.0.0
-    dev: false
-
-  registry.nlark.com/are-we-there-yet/2.0.0:
-    resolution: {integrity: sha1-Ny4Oe9J52OlMZTqqH2cgCIS/Phw=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/are-we-there-yet/download/are-we-there-yet-2.0.0.tgz}
-    name: are-we-there-yet
-    version: 2.0.0
-    engines: {node: '>=10'}
-    dependencies:
-      delegates: registry.npmmirror.com/delegates/1.0.0
-      readable-stream: registry.nlark.com/readable-stream/3.6.0
     dev: false
 
   registry.nlark.com/argparse/1.0.10:
@@ -702,13 +667,6 @@ packages:
       lazy-cache: registry.nlark.com/lazy-cache/1.0.4
     dev: false
 
-  registry.nlark.com/chownr/2.0.0:
-    resolution: {integrity: sha1-Fb++U9LqtM9w8YqM1o6+Wzyx3s4=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/chownr/download/chownr-2.0.0.tgz}
-    name: chownr
-    version: 2.0.0
-    engines: {node: '>=10'}
-    dev: false
-
   registry.nlark.com/class-utils/0.3.6:
     resolution: {integrity: sha1-+TNprouafOAv1B+q0MqDAzGQxGM=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/class-utils/download/class-utils-0.3.6.tgz}
     name: class-utils
@@ -867,12 +825,6 @@ packages:
       inherits: registry.nlark.com/inherits/2.0.4
       readable-stream: registry.nlark.com/readable-stream/2.3.7
       typedarray: registry.nlark.com/typedarray/0.0.6
-    dev: false
-
-  registry.nlark.com/console-control-strings/1.1.0:
-    resolution: {integrity: sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/console-control-strings/download/console-control-strings-1.1.0.tgz}
-    name: console-control-strings
-    version: 1.1.0
     dev: false
 
   registry.nlark.com/constantinople/4.0.1:
@@ -1455,15 +1407,6 @@ packages:
       universalify: registry.nlark.com/universalify/2.0.0
     dev: false
 
-  registry.nlark.com/fs-minipass/2.1.0:
-    resolution: {integrity: sha1-f1A2/b8SxjwWkZDL5BmchSJx+fs=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/fs-minipass/download/fs-minipass-2.1.0.tgz}
-    name: fs-minipass
-    version: 2.1.0
-    engines: {node: '>= 8'}
-    dependencies:
-      minipass: registry.npmmirror.com/minipass/3.1.6
-    dev: false
-
   registry.nlark.com/fs-mkdirp-stream/1.0.0:
     resolution: {integrity: sha1-C3gV/DIBxqaeFNuYzgmMFpNSWes=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/fs-mkdirp-stream/download/fs-mkdirp-stream-1.0.0.tgz}
     name: fs-mkdirp-stream
@@ -1633,6 +1576,9 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       gulp: '>=4'
+    peerDependenciesMeta:
+      gulp:
+        optional: true
     dependencies:
       gulp: registry.npmmirror.com/gulp/4.0.2
       marked: registry.npmmirror.com/marked/2.1.3
@@ -1798,12 +1744,6 @@ packages:
       has-symbols: registry.nlark.com/has-symbols/1.0.2
     dev: false
 
-  registry.nlark.com/has-unicode/2.0.1:
-    resolution: {integrity: sha1-4Ob+aijPUROIVeCG0Wkedx3iqLk=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/has-unicode/download/has-unicode-2.0.1.tgz}
-    name: has-unicode
-    version: 2.0.1
-    dev: false
-
   registry.nlark.com/has-value/0.3.1:
     resolution: {integrity: sha1-ex9YutpiyoJ+wKIHgCVlSEWZXh8=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/has-value/download/has-value-0.3.1.tgz}
     name: has-value
@@ -1865,18 +1805,6 @@ packages:
     resolution: {integrity: sha1-ObDhat2bYFvwqe89nar0hDtMrNI=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/http-cache-semantics/download/http-cache-semantics-3.8.1.tgz}
     name: http-cache-semantics
     version: 3.8.1
-    dev: false
-
-  registry.nlark.com/https-proxy-agent/5.0.0:
-    resolution: {integrity: sha1-4qkFQqu2inYuCghQ9sntrf2FBrI=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/https-proxy-agent/download/https-proxy-agent-5.0.0.tgz}
-    name: https-proxy-agent
-    version: 5.0.0
-    engines: {node: '>= 6'}
-    dependencies:
-      agent-base: registry.nlark.com/agent-base/6.0.2
-      debug: registry.npmmirror.com/debug/4.3.3
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   registry.nlark.com/ieee754/1.2.1:
@@ -2550,6 +2478,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: registry.nlark.com/yallist/4.0.0
+    dev: true
 
   registry.nlark.com/make-dir/1.3.0:
     resolution: {integrity: sha1-ecEDO4BRW9bSTsmTPoYMp17ifww=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/make-dir/download/make-dir-1.3.0.tgz}
@@ -2568,15 +2497,6 @@ packages:
     dependencies:
       pify: registry.npmmirror.com/pify/4.0.1
       semver: registry.nlark.com/semver/5.7.1
-    dev: false
-
-  registry.nlark.com/make-dir/3.1.0:
-    resolution: {integrity: sha1-QV6WcEazp/HRhSd9hKpYIDcmoT8=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/make-dir/download/make-dir-3.1.0.tgz}
-    name: make-dir
-    version: 3.1.0
-    engines: {node: '>=8'}
-    dependencies:
-      semver: registry.nlark.com/semver/6.3.0
     dev: false
 
   registry.nlark.com/make-error/1.3.6:
@@ -2713,29 +2633,12 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  registry.nlark.com/mimic-response/2.1.0:
-    resolution: {integrity: sha1-0Tdj019hPQnsN+uzC6wEacDuj0M=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/mimic-response/download/mimic-response-2.1.0.tgz}
-    name: mimic-response
-    version: 2.1.0
-    engines: {node: '>=8'}
-    dev: false
-
   registry.nlark.com/minimatch/3.0.4:
     resolution: {integrity: sha1-UWbihkV/AzBgZL5Ul+jbsMPTIIM=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/minimatch/download/minimatch-3.0.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fminimatch%2Fdownload%2Fminimatch-3.0.4.tgz}
     name: minimatch
     version: 3.0.4
     dependencies:
       brace-expansion: registry.npmmirror.com/brace-expansion/1.1.11
-    dev: false
-
-  registry.nlark.com/minizlib/2.1.2:
-    resolution: {integrity: sha1-6Q00Zrogm5MkUVCKEc49NjIUWTE=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/minizlib/download/minizlib-2.1.2.tgz}
-    name: minizlib
-    version: 2.1.2
-    engines: {node: '>= 8'}
-    dependencies:
-      minipass: registry.npmmirror.com/minipass/3.1.6
-      yallist: registry.nlark.com/yallist/4.0.0
     dev: false
 
   registry.nlark.com/mixin-deep/1.3.2:
@@ -2753,6 +2656,7 @@ packages:
     name: nan
     version: 2.15.0
     dev: false
+    optional: true
 
   registry.nlark.com/nanomatch/1.2.13:
     resolution: {integrity: sha1-uHqKpPwN6P5r6IiVs4mD/yZb0Rk=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/nanomatch/download/nanomatch-1.2.13.tgz}
@@ -2785,16 +2689,6 @@ packages:
     version: 2.3.2
     dependencies:
       lower-case: registry.nlark.com/lower-case/1.1.4
-    dev: false
-
-  registry.nlark.com/nopt/5.0.0:
-    resolution: {integrity: sha1-UwlCu1ilEvzK/lP+IQ8TolNV3Ig=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/nopt/download/nopt-5.0.0.tgz}
-    name: nopt
-    version: 5.0.0
-    engines: {node: '>=6'}
-    hasBin: true
-    dependencies:
-      abbrev: registry.nlark.com/abbrev/1.1.1
     dev: false
 
   registry.nlark.com/normalize-package-data/2.5.0:
@@ -3645,6 +3539,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: registry.nlark.com/lru-cache/6.0.0
+    dev: true
 
   registry.nlark.com/set-blocking/2.0.0:
     resolution: {integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/set-blocking/download/set-blocking-2.0.0.tgz}
@@ -3662,12 +3557,6 @@ packages:
       is-extendable: registry.nlark.com/is-extendable/0.1.1
       is-plain-object: registry.nlark.com/is-plain-object/2.0.4
       split-string: registry.nlark.com/split-string/3.1.0
-    dev: false
-
-  registry.nlark.com/simple-concat/1.0.1:
-    resolution: {integrity: sha1-9Gl2CCujXCJj8cirXt/ibEHJVS8=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/simple-concat/download/simple-concat-1.0.1.tgz}
-    name: simple-concat
-    version: 1.0.1
     dev: false
 
   registry.nlark.com/sisteransi/1.0.5:
@@ -4333,12 +4222,6 @@ packages:
       defaults: registry.nlark.com/defaults/1.0.3
     dev: false
 
-  registry.nlark.com/webidl-conversions/3.0.1:
-    resolution: {integrity: sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/webidl-conversions/download/webidl-conversions-3.0.1.tgz}
-    name: webidl-conversions
-    version: 3.0.1
-    dev: false
-
   registry.nlark.com/when/3.7.8:
     resolution: {integrity: sha1-xxMLan6gRpPoQs3J56Hyqjmjn4I=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/when/download/when-3.7.8.tgz}
     name: when
@@ -4430,6 +4313,7 @@ packages:
     resolution: {integrity: sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/yallist/download/yallist-4.0.0.tgz}
     name: yallist
     version: 4.0.0
+    dev: true
 
   registry.nlark.com/yn/3.1.1:
     resolution: {integrity: sha1-HodAGgnXZ8HV6rJqbkwYUYLS61A=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.nlark.com/yn/download/yn-3.1.1.tgz}
@@ -4500,26 +4384,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@cspotcode/source-map-consumer': registry.nlark.com/@cspotcode/source-map-consumer/0.8.0
-    dev: false
-
-  registry.npmmirror.com/@mapbox/node-pre-gyp/1.0.8:
-    resolution: {integrity: sha512-CMGKi28CF+qlbXh26hDe6NxCd7amqeAzEqnS6IHeO6LoaKyM/n+Xw3HT1COdq8cuioOdlKdqn/hCmqPUOMOywg==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/@mapbox/node-pre-gyp/download/@mapbox/node-pre-gyp-1.0.8.tgz}
-    name: '@mapbox/node-pre-gyp'
-    version: 1.0.8
-    hasBin: true
-    dependencies:
-      detect-libc: registry.npmmirror.com/detect-libc/1.0.3
-      https-proxy-agent: registry.nlark.com/https-proxy-agent/5.0.0
-      make-dir: registry.nlark.com/make-dir/3.1.0
-      node-fetch: registry.npmmirror.com/node-fetch/2.6.7
-      nopt: registry.nlark.com/nopt/5.0.0
-      npmlog: registry.npmmirror.com/npmlog/5.0.1
-      rimraf: registry.npmmirror.com/rimraf/3.0.2
-      semver: registry.nlark.com/semver/7.3.5
-      tar: registry.npmmirror.com/tar/6.1.11
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
     dev: false
 
   registry.npmmirror.com/@nodelib/fs.stat/2.0.5:
@@ -4811,21 +4675,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  registry.npmmirror.com/canvas/2.9.0:
-    resolution: {integrity: sha512-0l93g7uxp7rMyr7H+XRQ28A3ud0dKIUTIEkUe1Dxh4rjUYN7B93+SjC3r1PDKA18xcQN87OFGgUnyw7LSgNLSQ==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/canvas/download/canvas-2.9.0.tgz}
-    name: canvas
-    version: 2.9.0
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dependencies:
-      '@mapbox/node-pre-gyp': registry.npmmirror.com/@mapbox/node-pre-gyp/1.0.8
-      nan: registry.nlark.com/nan/2.15.0
-      simple-get: registry.npmmirror.com/simple-get/3.1.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    dev: false
-
   registry.npmmirror.com/chalk/0.4.0:
     resolution: {integrity: sha512-sQfYDlfv2DGVtjdoQqxS0cEZDroyG8h6TamA6rvxwlrU5BaSLDx9xhatBYl2pxZ7gmpNaPFVwBtdGdu5rQ+tYQ==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/chalk/download/chalk-0.4.0.tgz}
     name: chalk
@@ -5107,6 +4956,7 @@ packages:
         optional: true
     dependencies:
       ms: registry.npmmirror.com/ms/2.1.2
+    dev: true
 
   registry.npmmirror.com/decamelize/1.2.0:
     resolution: {integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/decamelize/download/decamelize-1.2.0.tgz}
@@ -5122,15 +4972,6 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       mimic-response: registry.nlark.com/mimic-response/1.0.1
-    dev: false
-
-  registry.npmmirror.com/decompress-response/4.2.1:
-    resolution: {integrity: sha1-QUAjzHowLaJc4uyC0NUjjMr9iYY=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/decompress-response/download/decompress-response-4.2.1.tgz}
-    name: decompress-response
-    version: 4.2.1
-    engines: {node: '>=8'}
-    dependencies:
-      mimic-response: registry.nlark.com/mimic-response/2.1.0
     dev: false
 
   registry.npmmirror.com/decompress-targz/4.1.1:
@@ -5149,20 +4990,6 @@ packages:
     name: default-resolution
     version: 2.0.0
     engines: {node: '>= 0.10'}
-    dev: false
-
-  registry.npmmirror.com/delegates/1.0.0:
-    resolution: {integrity: sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/delegates/download/delegates-1.0.0.tgz}
-    name: delegates
-    version: 1.0.0
-    dev: false
-
-  registry.npmmirror.com/detect-libc/1.0.3:
-    resolution: {integrity: sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/detect-libc/download/detect-libc-1.0.3.tgz}
-    name: detect-libc
-    version: 1.0.3
-    engines: {node: '>=0.10'}
-    hasBin: true
     dev: false
 
   registry.npmmirror.com/doctypes/1.1.0:
@@ -5539,23 +5366,6 @@ packages:
       nan: registry.nlark.com/nan/2.15.0
     dev: false
     optional: true
-
-  registry.npmmirror.com/gauge/3.0.2:
-    resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/gauge/download/gauge-3.0.2.tgz}
-    name: gauge
-    version: 3.0.2
-    engines: {node: '>=10'}
-    dependencies:
-      aproba: registry.nlark.com/aproba/2.0.0
-      color-support: registry.nlark.com/color-support/1.1.3
-      console-control-strings: registry.nlark.com/console-control-strings/1.1.0
-      has-unicode: registry.nlark.com/has-unicode/2.0.1
-      object-assign: registry.nlark.com/object-assign/4.1.1
-      signal-exit: registry.npmmirror.com/signal-exit/3.0.6
-      string-width: registry.npmmirror.com/string-width/4.2.3
-      strip-ansi: registry.npmmirror.com/strip-ansi/6.0.1
-      wide-align: registry.npmmirror.com/wide-align/1.1.5
-    dev: false
 
   registry.npmmirror.com/glob-parent/2.0.0:
     resolution: {integrity: sha1-gTg9ctsFT8zPUzbaqQLxgvbtuyg=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/glob-parent/download/glob-parent-2.0.0.tgz}
@@ -5989,15 +5799,6 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  registry.npmmirror.com/minipass/3.1.6:
-    resolution: {integrity: sha512-rty5kpw9/z8SX9dmxblFA6edItUmwJgMeYDZRrwlIVN27i8gysGbznJwUggw2V/FVqFSDdWy040ZPS811DYAqQ==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/minipass/download/minipass-3.1.6.tgz}
-    name: minipass
-    version: 3.1.6
-    engines: {node: '>=8'}
-    dependencies:
-      yallist: registry.nlark.com/yallist/4.0.0
-    dev: false
-
   registry.npmmirror.com/mkdirp/1.0.4:
     resolution: {integrity: sha1-PrXtYmInVteaXw4qIh3+utdcL34=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/mkdirp/download/mkdirp-1.0.4.tgz}
     name: mkdirp
@@ -6016,37 +5817,13 @@ packages:
     resolution: {integrity: sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/ms/download/ms-2.1.2.tgz}
     name: ms
     version: 2.1.2
+    dev: true
 
   registry.npmmirror.com/mute-stdout/1.0.1:
     resolution: {integrity: sha1-rLAwDrTeI6fd7sAU4+lgRLNHIzE=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/mute-stdout/download/mute-stdout-1.0.1.tgz}
     name: mute-stdout
     version: 1.0.1
     engines: {node: '>= 0.10'}
-    dev: false
-
-  registry.npmmirror.com/node-fetch/2.6.7:
-    resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/node-fetch/download/node-fetch-2.6.7.tgz}
-    name: node-fetch
-    version: 2.6.7
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: registry.npmmirror.com/whatwg-url/5.0.0
-    dev: false
-
-  registry.npmmirror.com/npmlog/5.0.1:
-    resolution: {integrity: sha1-8GZ46A4pQZrWerlk4PpplZweuLA=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/npmlog/download/npmlog-5.0.1.tgz}
-    name: npmlog
-    version: 5.0.1
-    dependencies:
-      are-we-there-yet: registry.nlark.com/are-we-there-yet/2.0.0
-      console-control-strings: registry.nlark.com/console-control-strings/1.1.0
-      gauge: registry.npmmirror.com/gauge/3.0.2
-      set-blocking: registry.nlark.com/set-blocking/2.0.0
     dev: false
 
   registry.npmmirror.com/number-is-nan/1.0.1:
@@ -6238,15 +6015,6 @@ packages:
     engines: {node: '>=0.12'}
     dev: false
 
-  registry.npmmirror.com/rimraf/3.0.2:
-    resolution: {integrity: sha1-8aVAK6YiCtUswSgrrBrjqkn9Bho=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/rimraf/download/rimraf-3.0.2.tgz}
-    name: rimraf
-    version: 3.0.2
-    hasBin: true
-    dependencies:
-      glob: registry.npmmirror.com/glob/7.2.0
-    dev: false
-
   registry.npmmirror.com/safefs/6.16.0:
     resolution: {integrity: sha1-4ZAcDqHokmKJvY1Tg6Zc4hu0TS8=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/safefs/download/safefs-6.16.0.tgz}
     name: safefs
@@ -6277,16 +6045,6 @@ packages:
     resolution: {integrity: sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/signal-exit/download/signal-exit-3.0.6.tgz}
     name: signal-exit
     version: 3.0.6
-    dev: false
-
-  registry.npmmirror.com/simple-get/3.1.0:
-    resolution: {integrity: sha1-tFvgYkNeUNFZVAtXYgLO7EC5xrM=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/simple-get/download/simple-get-3.1.0.tgz}
-    name: simple-get
-    version: 3.1.0
-    dependencies:
-      decompress-response: registry.npmmirror.com/decompress-response/4.2.1
-      once: registry.nlark.com/once/1.4.0
-      simple-concat: registry.nlark.com/simple-concat/1.0.1
     dev: false
 
   registry.npmmirror.com/source-map-resolve/0.5.3:
@@ -6411,20 +6169,6 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
-  registry.npmmirror.com/tar/6.1.11:
-    resolution: {integrity: sha1-Z2CjjwA6+hsv/Q/+npq70Oqz1iE=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/tar/download/tar-6.1.11.tgz}
-    name: tar
-    version: 6.1.11
-    engines: {node: '>= 10'}
-    dependencies:
-      chownr: registry.nlark.com/chownr/2.0.0
-      fs-minipass: registry.nlark.com/fs-minipass/2.1.0
-      minipass: registry.npmmirror.com/minipass/3.1.6
-      minizlib: registry.nlark.com/minizlib/2.1.2
-      mkdirp: registry.npmmirror.com/mkdirp/1.0.4
-      yallist: registry.nlark.com/yallist/4.0.0
-    dev: false
-
   registry.npmmirror.com/terser/5.10.0:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/terser/download/terser-5.10.0.tgz}
     name: terser
@@ -6468,12 +6212,6 @@ packages:
       extend-shallow: registry.nlark.com/extend-shallow/3.0.2
       regex-not: registry.nlark.com/regex-not/1.0.2
       safe-regex: registry.nlark.com/safe-regex/1.1.0
-    dev: false
-
-  registry.npmmirror.com/tr46/0.0.3:
-    resolution: {integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/tr46/download/tr46-0.0.3.tgz}
-    name: tr46
-    version: 0.0.3
     dev: false
 
   registry.npmmirror.com/ts-node/10.4.0_06de4b00c69b73d094e2c5b522a6ad57:
@@ -6601,23 +6339,6 @@ packages:
       strip-bom: registry.nlark.com/strip-bom/2.0.0
       strip-bom-stream: registry.nlark.com/strip-bom-stream/2.0.0
       vinyl: registry.nlark.com/vinyl/1.2.0
-    dev: false
-
-  registry.npmmirror.com/whatwg-url/5.0.0:
-    resolution: {integrity: sha1-lmRU6HZUYuN2RNNib2dCzotwll0=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/whatwg-url/download/whatwg-url-5.0.0.tgz}
-    name: whatwg-url
-    version: 5.0.0
-    dependencies:
-      tr46: registry.npmmirror.com/tr46/0.0.3
-      webidl-conversions: registry.nlark.com/webidl-conversions/3.0.1
-    dev: false
-
-  registry.npmmirror.com/wide-align/1.1.5:
-    resolution: {integrity: sha1-3x1MIGhUNp7PPJpImPGyP72dFdM=, registry: http://registry.npm.bilibili.co/, tarball: https://registry.npmmirror.com/wide-align/download/wide-align-1.1.5.tgz}
-    name: wide-align
-    version: 1.1.5
-    dependencies:
-      string-width: registry.npmmirror.com/string-width/4.2.3
     dev: false
 
   registry.npmmirror.com/xtend/4.0.2:

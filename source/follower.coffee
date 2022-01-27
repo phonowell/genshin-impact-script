@@ -25,13 +25,13 @@ class FollowerX
 
   detect: ->
 
-    start = Client.point [3, 2]
-    end = Client.point [14, 21]
+    start = Point.new ['3%', '2%']
+    end = Point.new ['14%', '21%']
 
     [x, y] = ColorManager.find 0x408000, start, end
     unless x * y > 0 then return false
 
-    [x0, y0] = Client.point [8.5, 11.5]
+    [x0, y0] = Point.new ['8.5%', '11.5%']
 
     diff = y - y0
     unless diff > 0 then return false

@@ -4,7 +4,6 @@
     "url": "https://github.com/phonowell/genshin-impact-script/issues"
   },
   "dependencies": {
-    "canvas": "^2.9.0",
     "coffee-ahk": "^0.0.41",
     "fire-keeper": "^0.0.199",
     "lodash": "^4.17.21",

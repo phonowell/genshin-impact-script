@@ -31,14 +31,14 @@ class HudX
   makePosition: (n) ->
 
     if Client.isFullScreen
-      left = Client.vw 80
+      left = Point.vw 80
     else left = Client.width
 
     unless n then n = Party.total + 1
 
     return [
       left
-      Client.vh [37, 32, 28, 23][Party.total - 1] + 9 * (n - 1) - 1
+      Point.vh [37, 32, 28, 23][Party.total - 1] + 9 * (n - 1) - 1
     ]
 
   # render(n: Position, msg: string): void

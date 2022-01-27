@@ -1,12 +1,12 @@
-# Dull Blade
+# Electro Slime
 
 Sweet! What a cute Genshin Impact script!
 
 ## Introduction
 
-Dull Blade, which provides only a slight attack, also provides a tiny bit of extra functionality for Genshin Impact players
+Electro Slime, only provides a tiny bit of extra functionality for Genshin Impact players, and
 
-Really just a little bit dayo!
+There will always be those who dare to brave the lightning's glow!
 
 **!!NO CHEATS!!**
 

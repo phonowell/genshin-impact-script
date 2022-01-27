@@ -31,18 +31,18 @@ class SceneX extends EmitterShellX
   # check(): void
   check: ->
 
-    if @checkPoint [94, 1], [99, 8], 0x3B4255 then return 'menu'
-    if @checkPoint [1, 16], [4, 22], 0xFFFFFF then return 'normal'
-    if @checkPoint [95, 2], [98, 7], 0xFFFFFF then return 'normal'
-    if @checkPoint [1, 1], [5, 8], 0x3B4255 then return 'half-menu'
+    if @checkPoint ['94%', '1%'], ['99%', '8%'], 0x3B4255 then return 'menu'
+    if @checkPoint ['1%', '16%'], ['4%', '22%'], 0xFFFFFF then return 'normal'
+    if @checkPoint ['95%', '2%'], ['98%', '7%'], 0xFFFFFF then return 'normal'
+    if @checkPoint ['1%', '1%'], ['5%', '8%'], 0x3B4255 then return 'half-menu'
 
-    if @checkPoint [49, 79], [51, 82], 0xFFC300 then return 'event'
+    if @checkPoint ['49%', '79%'], ['51%', '82%'], 0xFFC300 then return 'event'
 
     return 'unknown'
 
   # checkPoint(start: number, end: number, color: Color): boolean
   checkPoint: (start, end, color) ->
-    [x, y] = ColorManager.find color, (Client.point start), Client.point end
+    [x, y] = ColorManager.find color, (Point.new start), Point.new end
     return x * y > 0
 
   # freeze(name: Name, time: number): void

@@ -73,8 +73,8 @@ class PartyX extends EmitterShellX
   # countMember(): void
   countMember: ->
 
-    start = Client.point [97, 15]
-    end = Client.point [98, 65]
+    start = Point.new ['97%', '15%']
+    end = Point.new ['98%', '65%']
 
     result = 0
 
@@ -83,8 +83,8 @@ class PartyX extends EmitterShellX
       unless x * y > 0 then break
       result++
       start = [
-        Client.vw 95
-        y + Client.vw 5
+        Point.vw 95
+        y + Point.vw 5
       ]
 
     @total = result + 1
@@ -129,14 +129,8 @@ class PartyX extends EmitterShellX
       left = 96
       right = 99
 
-    start = Client.point [
-      left,
-      top - 4
-    ]
-    end = Client.point [
-      right,
-      top + 4
-    ]
+    start = Point.new ["#{left}%", "#{top - 4}%"]
+    end = Point.new ["#{right}%", "#{top + 4}%"]
 
     return [start, end]
 

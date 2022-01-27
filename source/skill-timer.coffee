@@ -36,12 +36,12 @@ class SkillTimerX
 
     Timer.add 'skill-timer', delay, =>
 
-      start = Client.point [86, 90]
-      end = Client.point [90, 93]
+      start = Point.new [86, 90]
+      end = Point.new [90, 93]
 
       if name == 'mona' || name == 'kamisato_ayaka'
-        start = Client.point [81, 90]
-        end = Client.point [85, 93]
+        start = Point.new [81, 90]
+        end = Point.new [85, 93]
 
       [x, y] = ColorManager.find 0xFFFFFF, start, end
       if x * y > 0 then return
