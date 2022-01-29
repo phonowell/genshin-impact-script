@@ -38,7 +38,7 @@ class HudX
 
     return [
       left
-      Point.vh [37, 32, 28, 23][Party.total - 1] + 9 * (n - 1) - 1
+      Point.vh [37, 32, 28, 23, 19][Party.total - 1] + 9 * (n - 1) - 1
     ]
 
   # render(n: Position, msg: string): void

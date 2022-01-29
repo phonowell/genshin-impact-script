@@ -146,7 +146,7 @@ class SkillTimerX
     Hud.render n, message
 
   # reset(): void
-  reset: -> for n in [1, 2, 3, 4]
+  reset: -> for n in [1, 2, 3, 4, 5]
     @listCountDown[n] = 0
     @listDuration[n] = 0
     @listQ[n] = 0
@@ -160,7 +160,7 @@ class SkillTimerX
     unless Timer.checkInterval 'skill-timer/throttle', interval then return
 
     now = $.now()
-    for n in [1, 2, 3, 4]
+    for n in [1, 2, 3, 4, 5]
       @updateItem n, now
 
   # update(n: Position, now: number): void

@@ -92,7 +92,7 @@ class PartyX extends EmitterShellX
   # getIndexBy(name: string): Position
   getIndexBy: (name) ->
     unless @has name then return 0
-    for n in [1, 2, 3, 4]
+    for n in [1, 2, 3, 4, 5]
       if @listMember[n] == name
         return n
 
@@ -121,7 +121,7 @@ class PartyX extends EmitterShellX
   # makeRange(n: Position, isNarrow: boolean = false): Range
   makeRange: (n, isNarrow = false) ->
 
-    top = [37, 32, 28, 23][@total - 1] + 9 * (n - 1)
+    top = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
 
     left = 90
     right = 96
@@ -155,7 +155,7 @@ class PartyX extends EmitterShellX
     SkillTimer.reset()
     Hud.reset()
 
-    for n in [1, 2, 3, 4]
+    for n in [1, 2, 3, 4, 5]
       if n > @total then break
 
       name = @getNameViaPosition n

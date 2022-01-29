@@ -9,7 +9,7 @@ class PlayerX extends KeyBindingX
     super()
 
     # switch
-    for key in [1, 2, 3, 4]
+    for key in [1, 2, 3, 4, 5]
       @bindEvent 'switch', key, 'prevent'
 
     # attack
