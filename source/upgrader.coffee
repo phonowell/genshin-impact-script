@@ -33,8 +33,7 @@ class UpgraderX
   # main(): void
   main: ->
 
-    url = "https://github.com/phonowell/genshin-impact-script/releases/tag/#{@target}"
-    @get url, (result) =>
+    @get "https://github.com/phonowell/genshin-impact-script/releases/tag/#{@target}", (result) =>
 
       unless result
         Timer.add 600e3, @main
@@ -46,7 +45,7 @@ class UpgraderX
 
       @confirm msg, (answer) ->
         unless answer then return
-        $.open url
+        $.open 'https://github.com/phonowell/genshin-impact-script/releases'
 
 # execute
 Upgrader = new UpgraderX()

@@ -12,6 +12,7 @@ class ConfigX
     @data.isDebug = @read 'debug/debug', 0
 
     # basic
+    @data.path = @read 'basic/path', 0
     @data.process = @read 'basic/process', 'GenshinImpact.exe'
     @data.weakNetwork = @read 'basic/weak-network', 0
 

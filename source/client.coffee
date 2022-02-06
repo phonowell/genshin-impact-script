@@ -12,6 +12,7 @@ class ClientX extends EmitterShellX
   isFullScreen: false
   isSuspend: false
   left: 0
+  name: "ahk_exe #{Config.data.process}"
   top: 0
   width: 0
 
@@ -20,23 +21,33 @@ class ClientX extends EmitterShellX
   constructor: ->
     super()
 
-    Timer.loop 100, @tick
+    `Menu, Tray, Icon, on.ico,, 1`
+
+    unless @isExist()
+      if Config.data.path then $.open Config.data.path
+
+    `WinWait, % this.name`
+    `WinActivate, % this.name`
+
+    @watch()
 
     @on 'pause', =>
       `Menu, Tray, Icon, off.ico`
-      @setPriority 'low'
       @suspend true
+      @setPriority 'low'
 
     @on 'resume', =>
       `Menu, Tray, Icon, on.ico`
-      @setPriority 'normal'
       @suspend false
-      Timer.add 1e3, @setSize
+      @setPriority 'normal'
+      @getSize()
+      @setStyle()
+      Timer.add 1e3, @getSize
 
-    `Menu, Tray, Icon, on.ico,, 1`
     @setPriority 'normal'
+    @getSize()
+    @setStyle()
 
-    @setSize()
     Timer.add 1e3, @report
 
     $.on 'alt + f4', =>
@@ -48,10 +59,33 @@ class ClientX extends EmitterShellX
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
-      Timer.add 1e3, @setSize
+      @getSize()
+      @setStyle()
+      Timer.add 1e3, @report
 
-  # check(): boolean
-  check: -> return WinActive "ahk_exe #{Config.data.process}"
+  # getSize(): void
+  getSize: ->
+
+    `WinGetPos, __left__, __top__, __width__, __height__, % this.name`
+
+    @left = __left__
+    @top = __top__
+    @width = __width__
+    @height = __height__
+
+    for key in ['left', 'top', 'width', 'height']
+      unless @[key]
+        @[key] = 0
+
+    if @left == 0 and @top == 0 and @width == A_ScreenWidth and @height == A_ScreenHeight
+      @isFullScreen = true
+    else @isFullScreen = false
+
+  # isActive(): boolean
+  isActive: -> return WinActive "ahk_exe #{Config.data.process}"
+
+  # isExist(): boolean
+  isExist: -> return WinExist "ahk_exe #{Config.data.process}"
 
   # report(): void
   report: -> console.log [
@@ -65,27 +99,17 @@ class ClientX extends EmitterShellX
     @setPriority 'normal'
     Timer.reset()
 
-  # setSize(): void
-  setSize: ->
-
-    name = "ahk_exe #{Config.data.process}"
-    `WinGetPos, __left__, __top__, __width__, __height__, % name`
-
-    @left = __left__
-    @top = __top__
-    @width = __width__
-    @height = __height__
-
-    for key in ['left', 'top', 'width', 'height']
-      unless @[key]
-        @[key] = 0
-
-    if @left == 0 and @top == 0 and @width == A_ScreenWidth and @height == A_ScreenHeight
-      @isFullScreen = true
-
-    unless @isFullScreen
-      @width = @width - 6
-      @height = @height - 29
+  # setStyle(): void
+  setStyle: ->
+    `WinSet, Style, -0x00040000, % this.name` # border
+    `WinSet, Style, -0x00C00000, % this.name` # caption
+    if @isFullScreen then return
+    width = ($.round @width / 80) * 80
+    height = $.round width / 16 * 9
+    left = (A_ScreenWidth - width) * 0.5
+    top = (A_ScreenHeight - height) * 0.5
+    `WinMove, % this.name,, % left, % top, % width, % height`
+    @getSize()
 
   # suspend: (isSuspend: boolean): void
   suspend: (isSuspend) ->
@@ -106,10 +130,10 @@ class ClientX extends EmitterShellX
   # setPriority(level: Level): void
   setPriority: (level) -> `Process, Priority, % Config.data.process, % level`
 
-  # tick(): void
-  tick: ->
+  # update(): void
+  update: ->
 
-    unless @check()
+    unless @isActive()
       unless @isSuspend then @emit 'pause'
       return
 
@@ -117,7 +141,10 @@ class ClientX extends EmitterShellX
       @emit 'resume'
       return
 
-    @emit 'tick'
+  # watch(): void
+  watch: ->
+    interval = 100
+    Timer.loop interval, @update
 
 # execute
 Client = new ClientX()

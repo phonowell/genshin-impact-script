@@ -1,12 +1,10 @@
-# Electro Slime
+# GIS
 
 Sweet! What a cute Genshin Impact script!
 
 ## Introduction
 
-Electro Slime, only provides a tiny bit of extra functionality for Genshin Impact players, and
-
-There will always be those who dare to brave the lightning's glow!
+A script that provides a little extra functionality for the Genshin Impact players. Really just a little bit dayo!
 
 **!!NO CHEATS!!**
 
