@@ -7,7 +7,7 @@
     "coffee-ahk": "^0.0.41",
     "fire-keeper": "^0.0.199",
     "lodash": "^4.17.21",
-    "shell-ahk": "^0.0.13-fixed",
+    "shell-ahk": "0.0.14-fixed.4",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
   },

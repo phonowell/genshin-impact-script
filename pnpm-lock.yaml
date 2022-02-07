@@ -9,7 +9,7 @@ specifiers:
   coffee-ahk: ^0.0.41
   fire-keeper: ^0.0.199
   lodash: ^4.17.21
-  shell-ahk: ^0.0.13-fixed
+  shell-ahk: 0.0.14-fixed.4
   ts-node: ^10.4.0
   typescript: ^4.5.5
 
@@ -17,7 +17,7 @@ dependencies:
   coffee-ahk: 0.0.41_@types+node@17.0.15
   fire-keeper: 0.0.199_typescript@4.5.5
   lodash: 4.17.21
-  shell-ahk: 0.0.13-fixed_@types+node@17.0.15
+  shell-ahk: 0.0.14-fixed.4_@types+node@17.0.15
   ts-node: 10.4.0_2659dc6620f2255efe6a8f122d014e4b
   typescript: 4.5.5
 
@@ -951,14 +951,15 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /coffee-ahk/0.0.38_@types+node@17.0.15:
-    resolution: {integrity: sha512-nkkQLyp758YlAjTXAtK4Awf1DGuIWL2fbOHPfAGy7/F+ry2naDYf7Gh8SxdJltCrviXRBafji6TEkS8Wfw3Dfw==}
+  /coffee-ahk/0.0.40_@types+node@17.0.15:
+    resolution: {integrity: sha512-wNdL/z5I8XXVCzH5PxB4ZRYamGdKuaGa2VTay4O/SmrDsnxzeZd38dduHIGvxzsIQgzKPhU+1KhF2mSAoBYiWA==}
     dependencies:
       coffeescript: 2.6.1
       cson: 7.20.0
-      fire-keeper: 0.0.191_typescript@4.5.5
+      fire-keeper: 0.0.194_typescript@4.5.5
       iconv-lite: 0.6.3
       kleur: 4.1.4
+      lodash: 4.17.21
       ts-node: 10.4.0_2659dc6620f2255efe6a8f122d014e4b
       typescript: 4.5.5
     transitivePeerDependencies:
@@ -1769,41 +1770,8 @@ packages:
       parse-filepath: 1.0.2
     dev: false
 
-  /fire-keeper/0.0.191_typescript@4.5.5:
-    resolution: {integrity: sha512-ES0lNnskTjxih6hzqTymXyRp+4WaBudlJkXNJ5JVuqX/y+dsV6ur8ueBvUkr3M4s+bGGbk7j7MJOIW1k6NIbhg==}
-    dependencies:
-      archiver: 5.3.0
-      download: 8.0.0
-      fs-extra: 10.0.0
-      glob: 7.2.0
-      gulp: 4.0.2
-      gulp-clean-css: 4.3.0
-      gulp-coffee: 3.0.3
-      gulp-htmlmin: 5.0.1
-      gulp-if: 3.0.0
-      gulp-markdown: 6.0.0_gulp@4.0.2
-      gulp-plumber: 1.2.1
-      gulp-pug: 5.0.0
-      gulp-rename: 2.0.0
-      gulp-stylus: 2.7.1
-      gulp-terser: 2.1.0
-      gulp-typescript: 6.0.0-alpha.1_typescript@4.5.5
-      gulp-using: 0.1.1
-      gulp-watch: 5.0.1
-      gulp-yaml: 2.0.4
-      js-yaml: 4.1.0
-      kleur: 4.1.4
-      lodash: 4.17.21
-      ora: 5.4.1
-      prompts: 2.4.2
-      yargs: 17.3.1
-    transitivePeerDependencies:
-      - acorn
-      - typescript
-    dev: false
-
-  /fire-keeper/0.0.192_typescript@4.5.5:
-    resolution: {integrity: sha512-/1wLGuQSA2BLKmyiocN16wWXilZdOEd3tl4jLgGppkKTOIe+jPmPvpL7v1m5QG80harheIIZxelvBhG1lTM1iA==}
+  /fire-keeper/0.0.194_typescript@4.5.5:
+    resolution: {integrity: sha512-azfjcF/I9hjMNlBfkVMh27r3wDqj+qPNQtfAHyHs/BC0zTK3xbRpCGXCVJfgKjN2CWHhs58Iv3urBvAb+ZbU+Q==}
     dependencies:
       archiver: 5.3.0
       download: 8.0.0
@@ -2073,7 +2041,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.0.5
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: false
@@ -2224,7 +2192,7 @@ packages:
   /gulp-match/1.1.0:
     resolution: {integrity: sha512-DlyVxa1Gj24DitY2OjEsS+X6tDpretuxD6wTfhXE/Rw2hweqc1f6D/XtsJmoiCwLWfXgR87W9ozEityPCVzGtQ==}
     dependencies:
-      minimatch: 3.0.4
+      minimatch: 3.0.5
     dev: false
 
   /gulp-plumber/1.2.1:
@@ -3232,8 +3200,8 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /minimatch/3.0.4:
-    resolution: {integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==}
+  /minimatch/3.0.5:
+    resolution: {integrity: sha512-tUpxzX0VAzJHjLu0xUfFv1gwVp9ba3IOuRAVH2EGuRW8a5emA2FlACLqiT/lDVtS1W+TGNwqz3sWaNyLgDJWuw==}
     dependencies:
       brace-expansion: 1.1.11
     dev: false
@@ -3864,7 +3832,7 @@ packages:
   /readdir-glob/1.1.1:
     resolution: {integrity: sha512-91/k1EzZwDx6HbERR+zucygRFfiPl2zkIYZtv3Jjr6Mn7SkKcVct8aVO+sSRiGMc6fLf72du3d92/uY63YPdEA==}
     dependencies:
-      minimatch: 3.0.4
+      minimatch: 3.0.5
     dev: false
 
   /readdirp/2.2.1:
@@ -4118,11 +4086,12 @@ packages:
       split-string: 3.1.0
     dev: false
 
-  /shell-ahk/0.0.13-fixed_@types+node@17.0.15:
-    resolution: {integrity: sha512-MZXdmxysAGMa6sE/xiAW/HHy9KX0fDJNVyJ4rYTSZ92GtOiHak8yOXRxjicRRLvndGIKrbc2dLi7oGCAz8bTqg==}
+  /shell-ahk/0.0.14-fixed.4_@types+node@17.0.15:
+    resolution: {integrity: sha512-hKU9SyQeI6ArUq15RU2lE2csZ/ae7k2wq7uJiOzQ1f5W8Lqt4xtTh/jqr75KXTRVUF5HyS8BGNkGjme9HJuY3Q==}
     dependencies:
-      coffee-ahk: 0.0.38_@types+node@17.0.15
-      fire-keeper: 0.0.192_typescript@4.5.5
+      coffee-ahk: 0.0.40_@types+node@17.0.15
+      fire-keeper: 0.0.199_typescript@4.5.5
+      lodash: 4.17.21
       ts-node: 10.4.0_2659dc6620f2255efe6a8f122d014e4b
       typescript: 4.5.5
     transitivePeerDependencies:

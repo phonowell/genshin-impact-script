@@ -12,7 +12,6 @@ class ClientX extends EmitterShellX
   isFullScreen: false
   isSuspend: false
   left: 0
-  name: "ahk_exe #{Config.data.process}"
   top: 0
   width: 0
 
@@ -23,11 +22,33 @@ class ClientX extends EmitterShellX
 
     `Menu, Tray, Icon, on.ico,, 1`
 
-    unless @isExist()
+    unless $.isExisted Config.data.process
       if Config.data.path then $.open Config.data.path
 
-    `WinWait, % this.name`
-    `WinActivate, % this.name`
+    $.wait Config.data.process, @init
+
+  # getSize(): void
+  getSize: ->
+
+    name = "ahk_exe #{Config.data.process}"
+    `WinGetPos, __left__, __top__, __width__, __height__, % name`
+
+    @left = __left__
+    @top = __top__
+    @width = __width__
+    @height = __height__
+
+    for key in ['left', 'top', 'width', 'height']
+      unless @[key]
+        @[key] = 0
+
+    if @left == 0 and @top == 0 and @width == A_ScreenWidth and @height == A_ScreenHeight
+      @isFullScreen = true
+    else @isFullScreen = false
+
+  # init(): void
+  init: ->
+    $.activate Config.data.process
 
     @watch()
 
@@ -48,8 +69,6 @@ class ClientX extends EmitterShellX
     @getSize()
     @setStyle()
 
-    Timer.add 1e3, @report
-
     $.on 'alt + f4', =>
       Sound.beep 2
       @reset()
@@ -63,29 +82,9 @@ class ClientX extends EmitterShellX
       @setStyle()
       Timer.add 1e3, @report
 
-  # getSize(): void
-  getSize: ->
-
-    `WinGetPos, __left__, __top__, __width__, __height__, % this.name`
-
-    @left = __left__
-    @top = __top__
-    @width = __width__
-    @height = __height__
-
-    for key in ['left', 'top', 'width', 'height']
-      unless @[key]
-        @[key] = 0
-
-    if @left == 0 and @top == 0 and @width == A_ScreenWidth and @height == A_ScreenHeight
-      @isFullScreen = true
-    else @isFullScreen = false
-
-  # isActive(): boolean
-  isActive: -> return WinActive "ahk_exe #{Config.data.process}"
-
-  # isExist(): boolean
-  isExist: -> return WinExist "ahk_exe #{Config.data.process}"
+    Timer.add 1e3, =>
+      @report()
+      Upgrader.check()
 
   # report(): void
   report: -> console.log [
@@ -101,14 +100,15 @@ class ClientX extends EmitterShellX
 
   # setStyle(): void
   setStyle: ->
-    `WinSet, Style, -0x00040000, % this.name` # border
-    `WinSet, Style, -0x00C00000, % this.name` # caption
+    $.setStyle Config.data.process, -0x00040000 # border
+    $.setStyle Config.data.process, -0x00C00000 # caption
     if @isFullScreen then return
     width = ($.round @width / 80) * 80
     height = $.round width / 16 * 9
     left = (A_ScreenWidth - width) * 0.5
     top = (A_ScreenHeight - height) * 0.5
-    `WinMove, % this.name,, % left, % top, % width, % height`
+    name = "ahk_exe #{Config.data.process}"
+    `WinMove, % name,, % left, % top, % width, % height`
     @getSize()
 
   # suspend: (isSuspend: boolean): void
@@ -133,7 +133,7 @@ class ClientX extends EmitterShellX
   # update(): void
   update: ->
 
-    unless @isActive()
+    unless $.isActive Config.data.process
       unless @isSuspend then @emit 'pause'
       return
 
