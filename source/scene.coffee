@@ -42,8 +42,8 @@ class SceneX extends EmitterShellX
 
   # checkPoint(start: number, end: number, color: Color): boolean
   checkPoint: (start, end, color) ->
-    [x, y] = ColorManager.find color, (Point.new start), Point.new end
-    return x * y > 0
+    p = ColorManager.find color, (Point.new start), Point.new end
+    return Point.isValid p
 
   # freeze(name: Name, time: number): void
   freeze: (name, time) ->
@@ -76,6 +76,7 @@ class SceneX extends EmitterShellX
   # watch(): void
   watch: ->
     interval = 500
+    if Config.data.gdip then interval = 200
     Client.on 'pause', -> Timer.remove 'scene/watch'
     Client.on 'resume', => Timer.loop 'scene/watch', interval, @update
     Timer.loop 'scene/watch', interval, @update

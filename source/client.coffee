@@ -88,6 +88,7 @@ class ClientX extends EmitterShellX
 
   # report(): void
   report: -> console.log [
+    "client/gdip: #{Config.data.gdip}"
     "client/is-fullscreen: #{@isFullScreen}"
     "client/position: #{@left}, #{@top}"
     "client/size: #{@width}, #{@height}"

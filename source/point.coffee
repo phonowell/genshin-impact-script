@@ -6,6 +6,9 @@ type Position = [number, number]
 
 class PointX
 
+  # isValid(input: Point): boolean
+  isValid: (p) -> return p[0] >= 0 and p[1] >= 0
+
   # new(input: [number | string, number | string]): Position
   new: (input) ->
 

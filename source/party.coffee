@@ -46,8 +46,8 @@ class PartyX extends EmitterShellX
   # checkCurrent(n: Position): boolean
   checkCurrent: (n) ->
     [start, end] = @makeRange n, 'narrow'
-    [x, y] = ColorManager.find 0x323232, start, end
-    return !(x * y > 0)
+    p = ColorManager.find 0x323232, start, end
+    return !Point.isValid p
 
   # checkCurrentAs(n: Position, callback: Fn): void
   checkCurrentAs: (n, callback) ->
@@ -80,7 +80,7 @@ class PartyX extends EmitterShellX
 
     for n in [1, 2, 3, 4, 5]
       [x, y] = ColorManager.find 0xFFFFFF, start, end
-      unless x * y > 0 then break
+      unless Point.isValid [x, y] then break
       result++
       start = [
         Point.vw 95
@@ -107,10 +107,7 @@ class PartyX extends EmitterShellX
       unless char.color then continue
 
       for color in char.color
-
-        [x, y] = ColorManager.find color, start, end
-        unless x * y > 0 then continue
-
+        unless Point.isValid ColorManager.find color, start, end then continue
         return name
 
     return ''

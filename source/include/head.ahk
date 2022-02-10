@@ -11,7 +11,7 @@ CoordMode, Mouse, Client
 CoordMode, Pixel, Client
 CoordMode, ToolTip, Client
 SendMode, Event
-SetBatchLines, 10ms
+SetBatchLines, -1
 SetKeyDelay, 0, 50
 SetMouseDelay, 0, 50
 StringCaseSense, On

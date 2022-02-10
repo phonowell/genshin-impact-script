@@ -43,8 +43,8 @@ class SkillTimerX
         start = Point.new ['81%', '90%']
         end = Point.new ['85%', '93%']
 
-      [x, y] = ColorManager.find 0xFFFFFF, start, end
-      if x * y > 0 then return
+      p = ColorManager.find 0xFFFFFF, start, end
+      if Point.isValid p then return
 
       console.log 'skill-timer: invalid record'
 

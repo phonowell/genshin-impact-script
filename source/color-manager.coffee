@@ -8,12 +8,19 @@ class ColorManagerX
         @pick()
 
   # find(color: number, start: Point, end: Point): Point
-  find: $.findColor
+  find: (color, start, end) ->
+    unless Config.data.gdip then return $.findColor color, start, end
+    return Gdip.findColor color, start, end
+
+  # get(p: Point): number
+  get: (p) ->
+    unless Config.data.gdip then return $.getColor p
+    return Gdip.getColor p
 
   # pick(): void
   pick: ->
 
-    color = $.getColor()
+    color2 = @get()
     [x, y] = $.getPosition()
 
     x1 = $.round (x * 100) / Client.width

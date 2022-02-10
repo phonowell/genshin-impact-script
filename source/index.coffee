@@ -20,6 +20,7 @@ import 'point'
 
 import 'console'
 import 'hud'
+import 'gdip'
 import 'color-manager'
 import 'scene'
 import 'sound'
@@ -40,3 +41,5 @@ import 'tactic'
 import 'fishing'
 
 import 'action/*'
+
+import 'trial'

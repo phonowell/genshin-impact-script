@@ -33,7 +33,7 @@ class ConsoleX
     $.push @listContent, [tsOutdate, msg, id]
 
   # hide(): void
-  hide: -> `ToolTip, , 0, 0, 20`
+  hide: -> `ToolTip,, 0, 0, 20`
 
   # log<T>(input: T): T
   log: (input) ->

@@ -12,6 +12,11 @@ class MovementX extends KeyBindingX
   constructor: ->
     super()
 
+    # shift
+    @bindEvent 'shift', 'l-shift', 'prevent'
+    @on 'shift:start', -> $.click 'right:down'
+    @on 'shift:end', -> $.click 'right:up'
+
     # walk
     for key in ['w', 'a', 's', 'd'] then @bindEvent 'walk', key
 
@@ -76,7 +81,7 @@ class MovementX extends KeyBindingX
   # stopForward(): void
   stopForward: ->
 
-    unless Scene.name == 'normal' then return
+    # unless Scene.name == 'normal' then return
     unless @isForwarding then return
 
     @isForwarding = false

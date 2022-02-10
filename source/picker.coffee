@@ -33,7 +33,7 @@ class PickerX
     unless Scene.name == 'normal' then return
 
     [x, y] = @findColor 0x323232, ['57%', '30%'], ['59%', '70%']
-    unless x * y > 0 then return
+    unless Point.isValid [x, y] then return
 
     color = @findTitleColor y
     unless color then return
@@ -43,11 +43,11 @@ class PickerX
 
       # check shape
       if x1 * y1 > 0
-        color1 = $.getColor [x1 + 1, y1]
+        color1 = ColorManager.get [x1 + 1, y1]
         if color1 == 0xFFFFFF then return
 
       # recheck
-      unless ($.getColor [x, y]) == 0x323232 then return
+      unless (ColorManager.get [x, y]) == 0x323232 then return
 
     $.press 'f'
 
@@ -81,6 +81,7 @@ class PickerX
   next: ->
 
     interval = 200
+    if Config.data.gdip then interval = 100
     if @isFound
       @isFound = false
       interval = 100
@@ -103,12 +104,11 @@ class PickerX
 
     p = ''
     for color in [0x806200, 0xFFCC32, 0xFFFFFF]
-      [x, y] = @findColor color, ['65%', '40%'], ['70%', '80%']
-      unless x * y > 0 then continue
-      p = [x, y]
-      break
-
-    unless p then return false
+      p1 = @findColor color, ['65%', '40%'], ['70%', '80%']
+      if Point.isValid p1
+        p = p1
+        break
+    unless p then return true
 
     $.move p
     $.click()
@@ -116,6 +116,10 @@ class PickerX
 
   # toggle(): void
   toggle: ->
+
+    if Config.data.isFrozen
+      $.beep()
+      return
 
     @isAuto = !@isAuto
 

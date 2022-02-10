@@ -30,8 +30,8 @@ class FishingX
   checkStart: -> return !(@findColor 0xFFE92C, ['82%', '87%'], ['87%', '97%'])
 
   findColor: (color, start, end) ->
-    [x, y] = ColorManager.find color, (Point.new start), Point.new end
-    if x * y > 0 then return [x, y]
+    p = ColorManager.find color, (Point.new start), Point.new end
+    if Point.isValid p then return p
     return false
 
   next: ->
