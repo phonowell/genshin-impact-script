@@ -1,3 +1,5 @@
+import 'include/ShiftAppVolume.ahk'
+
 ### interface
 type Fn = () => unknown
 ###
@@ -7,7 +9,10 @@ class SoundX
 
   index: 0
 
-  # ---
+  constructor: ->
+    Client.on 'pause', -> ShiftAppVolumeTopped Config.data.process, 0
+    Client.on 'resume', -> ShiftAppVolumeTopped Config.data.process, 1
+    ShiftAppVolumeTopped Config.data.process, 1
 
   # beep(n: number = 1, callback: Fn): void
   beep: (n = 1, callback = '') ->

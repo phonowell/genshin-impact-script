@@ -72,7 +72,10 @@ class ClientX extends EmitterShellX
     $.on 'alt + f4', =>
       Sound.beep 2
       @reset()
-      $.exit()
+      if Config.data.path
+        name = "ahk_exe #{Config.data.process}"
+        `WinClose, % name`
+      Timer.add 1e3, $.exit
 
     $.on 'ctrl + f5', -> Sound.beep 3, $.reload
 

@@ -57,7 +57,7 @@ class GdipX
     return @argb2rgb argb
 
   # rgb2argb(rgb: number): number
-  rgb2argb: (rgb) -> return `(rgb | (0xFF << 24))`
+  rgb2argb: (rgb) -> return rgb + 0xFF000000
 
   # screenshot(): boolean
   screenshot: ->
@@ -65,7 +65,8 @@ class GdipX
     interval = 100
     unless Timer.checkInterval 'gdip/throttle', interval then return true
 
-    pBitmap = Gdip_BitmapFromScreen "#{Client.left}|#{Client.top}|#{Client.width}|#{Client.height}"
+    {left, top, width, height} = Client
+    pBitmap = Gdip_BitmapFromScreen "#{left}|#{top}|#{width}|#{height}"
     unless pBitmap then return false
 
     if @pBitmap then Gdip_DisposeImage @pBitmap

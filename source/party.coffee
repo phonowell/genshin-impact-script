@@ -42,6 +42,9 @@ class PartyX extends EmitterShellX
       if audio then Timer.add 200, -> Sound.play audio
 
     $.on 'f12', @scan
+    $.on 'alt + f12', =>
+      @reset()
+      Hud.render 0, 'party reset'
 
   # checkCurrent(n: Position): boolean
   checkCurrent: (n) ->
@@ -131,6 +134,13 @@ class PartyX extends EmitterShellX
 
     return [start, end]
 
+  # reset(): void
+  reset: ->
+    @current = 0
+    @listMember = ['']
+    @name = ''
+    @total = 4
+
   # scan(): void
   scan: ->
 
@@ -143,11 +153,8 @@ class PartyX extends EmitterShellX
       return
     @isBusy = true
 
+    @reset()
     @countMember()
-
-    @current = 0
-    @listMember = ['']
-    @name = ''
 
     SkillTimer.reset()
     Hud.reset()

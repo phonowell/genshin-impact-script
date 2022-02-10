@@ -18,9 +18,9 @@ const pack = async () => {
   const { version } = await $.read<{ version: string }>('./package.json')
 
   const buffer = await $.read<Buffer>('./source/index.ahk')
-  const dir = `./dist/Genshin_Impact_Script_${version}`
+  const dir = `./dist/GIS_${version}`
 
-  await $.write('./dist/start.ahk', buffer)
+  await $.write('./dist/GIS.ahk', buffer)
 
   await $.copy([
     './data/config.ini',

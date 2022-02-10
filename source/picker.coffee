@@ -22,7 +22,7 @@ class PickerX
       unless Config.data.fastPickup then return
       @isPicking = true
 
-    Player.on 'pick:end', => @isPicking = false
+    Player.on 'pick:end', => Timer.add 'picker/debounce', 100, => @isPicking = false
 
     @watch()
 
@@ -39,7 +39,7 @@ class PickerX
     unless color then return
 
     if color == 0xFFFFFF
-      [x1, y1] = @findColor 0xFFFFFF, ['61%', y], ['63%', y + 10]
+      [x1, y1] = @findColor 0xFFFFFF, ['61%', y], ['63%', y + 20]
 
       # check shape
       if x1 * y1 > 0
@@ -57,7 +57,7 @@ class PickerX
     @isFound = false
 
     for color in [0xFFFFFF, 0xCCCCCC, 0xACFF45, 0x4FF4FF, 0xF998FF]
-      [x1, y1] = @findColor color, ['63%', y], ['65%', y + 10]
+      [x1, y1] = @findColor color, ['63%', y], ['65%', y + 20]
       unless x1 * y1 > 0 then continue
       @isFound = true
       break
@@ -75,6 +75,7 @@ class PickerX
     unless @isPicking then return
     if @skip() then return
     unless Scene.name == 'normal' then return
+    console.log "picker/listen: #{$.now()}"
     $.press 'f'
 
   # next(): void
