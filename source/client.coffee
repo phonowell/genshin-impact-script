@@ -72,9 +72,8 @@ class ClientX extends EmitterShellX
     $.on 'alt + f4', => Sound.beep 2, =>
       @reset()
       if Config.data.path
-        name = "ahk_exe #{Config.data.process}"
-        `WinMinimize, % name`
-        `WinClose, % name`
+        $.minimize Config.data.process
+        $.close Config.data.process
       $.exit()
 
     $.on 'ctrl + f5', -> Sound.beep 3, =>
@@ -93,7 +92,6 @@ class ClientX extends EmitterShellX
 
   # report(): void
   report: -> console.log [
-    "client/gdip: #{Config.data.gdip}"
     "client/is-fullscreen: #{@isFullScreen}"
     "client/position: #{@left}, #{@top}"
     "client/size: #{@width}, #{@height}"

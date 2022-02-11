@@ -8,7 +8,6 @@ type Position = [number, number]
 class PickerX
 
   isAuto: false
-  isFound: false
   isPicking: false
 
   # ---
@@ -42,27 +41,25 @@ class PickerX
       [x1, y1] = @findColor 0xFFFFFF, ['61%', y], ['63%', y + 20]
 
       # check shape
-      if x1 * y1 > 0
+      if Point.isValid [x1, y1]
         color1 = ColorManager.get [x1 + 1, y1]
+        unless color1 then return
         if color1 == 0xFFFFFF then return
-
-      # recheck
-      unless (ColorManager.get [x, y]) == 0x323232 then return
 
     $.press 'f'
 
   # findTitleColor(y: number): string | false
   findTitleColor: (y) ->
 
-    @isFound = false
+    isFound = false
 
     for color in [0xFFFFFF, 0xCCCCCC, 0xACFF45, 0x4FF4FF, 0xF998FF]
       [x1, y1] = @findColor color, ['63%', y], ['65%', y + 20]
-      unless x1 * y1 > 0 then continue
-      @isFound = true
+      unless Point.isValid [x1, y1] then continue
+      isFound = true
       break
 
-    if @isFound then return color
+    if isFound then return color
     else return 0
 
   # findColor(color: Color, start: Position, end: Position): Position
@@ -80,13 +77,6 @@ class PickerX
 
   # next(): void
   next: ->
-
-    interval = 200
-    if Config.data.gdip then interval = 100
-    if @isFound
-      @isFound = false
-      interval = 100
-    unless Timer.checkInterval 'picker/throttle', interval then return
 
     if Config.data.quickEvent and Scene.name == 'event'
       @skip()

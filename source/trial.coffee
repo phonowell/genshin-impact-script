@@ -1,6 +1,5 @@
-do ->
+->
 
-  Config.data.gdip = true
   Config.data.weakNetwork = false
   Config.data.betterJump = true
   Config.data.fastPickup = true

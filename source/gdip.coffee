@@ -52,9 +52,15 @@ class GdipX
 
   # getColor(p: Point): number
   getColor: (p = '') ->
+
+    unless @screenshot() then return 0
+
     unless p then p = $.getPosition()
     argb = Gdip_GetPixel @pBitmap, p[0], p[1]
-    return @argb2rgb argb
+    rgb = @argb2rgb argb
+
+    unless rgb >= 0 then return 0
+    return rgb
 
   # rgb2argb(rgb: number): number
   rgb2argb: (rgb) -> return rgb + 0xFF000000

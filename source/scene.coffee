@@ -1,8 +1,8 @@
 ### interface
 type Color = number
 type Name = 'event'
-  | 'half-menu'
   | 'fishing'
+  | 'half-menu'
   | 'menu'
   | 'normal'
   | 'unknown'
@@ -31,14 +31,39 @@ class SceneX extends EmitterShellX
   # check(): void
   check: ->
 
-    if @checkPoint ['94%', '1%'], ['99%', '8%'], 0x3B4255 then return 'menu'
-    if @checkPoint ['1%', '16%'], ['4%', '22%'], 0xFFFFFF then return 'normal'
-    if @checkPoint ['95%', '2%'], ['98%', '7%'], 0xFFFFFF then return 'normal'
-    if @checkPoint ['1%', '1%'], ['5%', '8%'], 0x3B4255 then return 'half-menu'
-
-    if @checkPoint ['49%', '79%'], ['51%', '82%'], 0xFFC300 then return 'event'
+    if @checkIsMenu() then return 'menu'
+    if @checkIsHalfMenu() then return 'half-menu'
+    if @checkIsNormal() then return 'normal'
+    if @checkIsEvent() then return 'event'
 
     return 'unknown'
+
+  # checkIsEvent(): boolean
+  checkIsEvent: ->
+    unless @checkPoint ['45%', '79%'], ['55%', '82%'], 0xFFC300 then return false
+    return true
+
+  # checkIsHalfMenu(): boolean
+  checkIsHalfMenu: ->
+    start = ['1%', '3%']
+    end = ['3%', '6%']
+    unless @checkPoint start, end, 0x3B4255 then return false
+    unless @checkPoint start, end, 0xECE5D8 then return false
+    return true
+
+  # checkIsMenu(): boolean
+  checkIsMenu: ->
+    start = ['95%', '3%']
+    end = ['97%', '5%']
+    unless @checkPoint start, end, 0x3B4255 then return false
+    unless @checkPoint start, end, 0xECE5D8 then return false
+    return true
+
+  # checkIsNormal(): boolean
+  checkIsNormal: ->
+    if @checkPoint ['2%', '17%'], ['4%', '21%'], 0xFFFFFF then return true
+    if @checkPoint ['95%', '2%'], ['97%', '6%'], 0xFFFFFF then return true
+    return false
 
   # checkPoint(start: number, end: number, color: Color): boolean
   checkPoint: (start, end, color) ->
@@ -55,18 +80,14 @@ class SceneX extends EmitterShellX
     @isFrozen = true
     Timer.add 'scene/unfreeze', time, => @isFrozen = false
 
-  # makeInterval(): number
-  makeInterval: ->
-    if @name != 'unknown' then return 2e3
-    return 1e3
+  # isMenu(): boolean
+  isMenu: -> return $.includes @name, 'menu'
 
   # update(): void
   update: ->
 
     if @isFrozen then return
     if @name == 'fishing' then return
-
-    unless Timer.checkInterval 'scene/throttle', @makeInterval() then return
 
     name = @check()
     if name == @name then return
@@ -75,8 +96,7 @@ class SceneX extends EmitterShellX
 
   # watch(): void
   watch: ->
-    interval = 500
-    if Config.data.gdip then interval = 200
+    interval = 200
     Client.on 'pause', -> Timer.remove 'scene/watch'
     Client.on 'resume', => Timer.loop 'scene/watch', interval, @update
     Timer.loop 'scene/watch', interval, @update
