@@ -1,4 +1,4 @@
-->
+do ->
 
   Config.data.weakNetwork = false
   Config.data.betterJump = true

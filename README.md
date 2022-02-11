@@ -38,7 +38,7 @@ A script that provides a little extra functionality for the Genshin Impact playe
 
 ### Other
 
-- Set the process priority to the lowest when the game window is inactive
+- Make the game running as borderless; mute it when the game is inactive and set the process priority to the lowest
 
 ## Usage
 
@@ -90,7 +90,6 @@ The type of appearance. Can be one of the following values:
 ## Note
 
 - All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
-- Use `Right Click` for sprinting, not `Left Shift`
 - The game should run in `16:9` resolution, the recommended resolution is `1600x900` for windowed
 - Since version `0.0.31`, `Celestia` and `World Tree` servers are no longer supported
 
