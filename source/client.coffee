@@ -69,15 +69,17 @@ class ClientX extends EmitterShellX
     @getSize()
     @setStyle()
 
-    $.on 'alt + f4', =>
-      Sound.beep 2
+    $.on 'alt + f4', => Sound.beep 2, =>
       @reset()
       if Config.data.path
         name = "ahk_exe #{Config.data.process}"
+        `WinMinimize, % name`
         `WinClose, % name`
-      Timer.add 1e3, $.exit
+      $.exit()
 
-    $.on 'ctrl + f5', -> Sound.beep 3, $.reload
+    $.on 'ctrl + f5', -> Sound.beep 3, =>
+      @reset()
+      $.reload()
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'

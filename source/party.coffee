@@ -109,9 +109,12 @@ class PartyX extends EmitterShellX
       if @has name then continue
       unless char.color then continue
 
-      for color in char.color
-        unless Point.isValid ColorManager.find color, start, end then continue
-        return name
+      for group in char.color
+        count = 0
+        for color in group
+          unless Point.isValid ColorManager.find color, start, end then break
+          count++
+        if count >= 3 then return name
 
     return ''
 
