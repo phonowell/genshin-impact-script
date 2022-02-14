@@ -11,7 +11,7 @@ using-q
 
 # function
 
-class SceneX extends EmitterShellX
+class Scene extends EmitterShellX
 
   isFrozen: false
   name: 'unknown'
@@ -102,4 +102,4 @@ class SceneX extends EmitterShellX
     Timer.loop 'scene/watch', interval, @update
 
 # execute
-Scene = new SceneX()
+Scene = new Scene()

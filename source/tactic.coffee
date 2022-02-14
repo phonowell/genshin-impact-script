@@ -22,7 +22,7 @@ type Fn = () => unknown
 
 # function
 
-class TacticX
+class Tactic
 
   intervalCheck: 50
   intervalExecute: 100
@@ -267,4 +267,4 @@ class TacticX
     return listTactic
 
 # execute
-Tactic = new TacticX()
+Tactic = new Tactic()

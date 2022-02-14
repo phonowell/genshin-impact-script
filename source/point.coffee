@@ -4,7 +4,7 @@ type Position = [number, number]
 
 # function
 
-class PointX
+class Point
 
   # isValid(input: Point): boolean
   isValid: (p) -> return p[0] >= 0 and p[1] >= 0
@@ -32,4 +32,4 @@ class PointX
   vw: (n) -> return $.round Client.width * n * 0.01
 
 # execute
-Point = new PointX()
+Point = new Point()

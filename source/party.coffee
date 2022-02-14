@@ -6,7 +6,7 @@ type Range = [[number, number], [number, number]]
 
 # function
 
-class PartyX extends EmitterShellX
+class Party extends EmitterShellX
 
   current: 0
   isBusy: false
@@ -196,4 +196,4 @@ class PartyX extends EmitterShellX
   switchBy: (name) -> @switchTo @getIndexBy name
 
 # execute
-Party = new PartyX()
+Party = new Party()

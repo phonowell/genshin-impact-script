@@ -1,4 +1,4 @@
-class ConsoleX
+class Console
 
   isChanged: false
   lifetime: 10e3
@@ -70,4 +70,4 @@ class ConsoleX
     Timer.loop 'console/watch', interval, @update
 
 # execute
-console = new ConsoleX()
+console = new Console()

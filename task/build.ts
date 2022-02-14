@@ -5,22 +5,29 @@ import c2a from 'coffee-ahk'
 
 const clean = () => $.remove('./dist')
 
-const compile = () => c2a('./source/index.coffee', { salt: 'genshin' })
+const compile = (
+  source: string,
+) => c2a(`./source/${source}.coffee`, { salt: 'genshin' })
 
 const main = async () => {
-  await compile()
+  await compile('index')
+  await compile('slim')
   await clean()
-  await pack()
+  await pack('index', 'GIS')
+  await pack('slim', 'GISS')
 }
 
-const pack = async () => {
+const pack = async (
+  source: string,
+  target: string,
+) => {
 
   const { version } = await $.read<{ version: string }>('./package.json')
 
-  const buffer = await $.read<Buffer>('./source/index.ahk')
-  const dir = `./dist/GIS_${version}`
+  const buffer = await $.read<Buffer>(`./source/${source}.ahk`)
+  const dir = `./dist/${target}_${version}`
 
-  await $.write('./dist/GIS.ahk', buffer)
+  await $.write(`./dist/${target}.ahk`, buffer)
 
   await $.copy([
     './data/config.ini',

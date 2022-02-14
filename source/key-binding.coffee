@@ -1,4 +1,4 @@
-class KeyBindingX extends EmitterShellX
+class KeyBinding extends EmitterShellX
 
   isPressed: {}
   isPrevented: {}

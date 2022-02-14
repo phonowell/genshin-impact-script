@@ -39,5 +39,5 @@
     "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
-  "version": "0.0.31"
+  "version": "0.0.32"
 }

@@ -1,6 +1,6 @@
 # function
 
-class MovementX extends KeyBindingX
+class Movement extends KeyBinding
 
   isForwarding: false
   isMoving: false
@@ -95,4 +95,4 @@ class MovementX extends KeyBindingX
     else @startForward()
 
 # execute
-Movement = new MovementX()
+Movement = new Movement()

@@ -1,7 +1,7 @@
 # function
-class UpgraderX
+class Upgrader
 
-  target: '0.0.32'
+  target: '0.0.33'
 
   # ---
 
@@ -23,4 +23,4 @@ class UpgraderX
         $.open 'https://github.com/phonowell/genshin-impact-script/releases'
 
 # execute
-Upgrader = new UpgraderX()
+Upgrader = new Upgrader()

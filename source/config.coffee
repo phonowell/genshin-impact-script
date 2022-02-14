@@ -1,5 +1,5 @@
 # function
-class ConfigX
+class Config
 
   data: {}
   source: 'config.ini'
@@ -29,4 +29,4 @@ class ConfigX
     return $.toLowerCase __result__
 
 # execute
-Config = new ConfigX()
+Config = new Config()

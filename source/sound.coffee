@@ -1,11 +1,11 @@
-import 'include/ShiftAppVolume.ahk'
+import '../../gis-static/lib/ShiftAppVolume.ahk'
 
 ### interface
 type Fn = () => unknown
 ###
 
 # function
-class SoundX
+class Sound
 
   index: 0
 
@@ -36,4 +36,4 @@ class SoundX
   play: (name) -> $.play "audio/#{name}"
 
 # execute
-sound = new SoundX()
+Sound = new Sound()

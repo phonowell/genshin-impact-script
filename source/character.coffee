@@ -46,7 +46,7 @@ import __yun_jin__ from '../../genshin-character-data/source/yun_jin.yaml'
 import __zhongli__ from '../../genshin-character-data/source/zhongli.yaml'
 
 # function
-class CharacterX
+class Character
 
   data: {}
 
@@ -156,4 +156,4 @@ class CharacterX
     else return [0]
 
 # execute
-Character = new CharacterX()
+Character = new Character()

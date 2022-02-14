@@ -6,7 +6,7 @@ type Position = [number, number]
 
 # function
 
-class ClientX extends EmitterShellX
+class Client extends EmitterShellX
 
   height: 0
   isFullScreen: false
@@ -151,4 +151,4 @@ class ClientX extends EmitterShellX
     Timer.loop interval, @update
 
 # execute
-Client = new ClientX()
+Client = new Client()

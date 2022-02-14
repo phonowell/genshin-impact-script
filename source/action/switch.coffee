@@ -1,3 +1,5 @@
+# variable
+
 state.isFiredSwitch = false
 state.isPressedSwitch = false
 
@@ -36,7 +38,7 @@ Player.on 'switch:end', ->
 
     {onSwitch} = Character.data[name]
     unless onSwitch then return
-    
+
     onSwitchEnd onSwitch
     return
   state.isFiredSwitch = true

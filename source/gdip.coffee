@@ -1,5 +1,5 @@
-import 'include/Gdip_All.ahk'
-import 'include/Gdip_PixelSearch.ahk'
+import '../../gis-static/lib/Gdip_All.ahk'
+import '../../gis-static/lib/Gdip_PixelSearch.ahk'
 
 ### interface
 type Point = [number, number]
@@ -7,7 +7,7 @@ type Point = [number, number]
 
 # function
 
-class GdipX
+class Gdip
 
   cache: [0, '']
   pArea: 0
@@ -85,4 +85,4 @@ class GdipX
     @pToken = Gdip_Startup()
 
 # execute
-Gdip = new GdipX()
+Gdip = new Gdip()

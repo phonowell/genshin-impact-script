@@ -6,7 +6,7 @@ type Timestamp = number
 
 # function
 
-class SkillTimerX
+class SkillTimer
 
   listCountDown: {}
   listDuration: {}
@@ -192,4 +192,4 @@ class SkillTimerX
     Timer.loop 'skill-timer/watch', interval, @update
 
 # execute
-SkillTimer = new SkillTimerX()
+SkillTimer = new SkillTimer()

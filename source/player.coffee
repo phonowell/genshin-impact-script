@@ -3,7 +3,7 @@ type Key = string
 ###
 
 # function
-class PlayerX extends KeyBindingX
+class Player extends KeyBinding
 
   constructor: ->
     super()
@@ -58,4 +58,4 @@ class PlayerX extends KeyBindingX
     Scene.freeze 'normal', 2e3
 
 # execute
-Player = new PlayerX()
+Player = new Player()

@@ -4,7 +4,7 @@ type Position = 0 | 1 | 2 | 3 | 4 | 5
 ###
 
 # function
-class HudX
+class Hud
 
   lifetime: 5e3
   map: {}
@@ -89,4 +89,4 @@ class HudX
     Timer.loop 'hud/watch', interval, @update
 
 # execute
-Hud = new HudX()
+Hud = new Hud()

@@ -1,4 +1,4 @@
-class ColorManagerX
+class ColorManager
 
   constructor: ->
 
@@ -29,4 +29,4 @@ class ColorManagerX
     ClipBoard = color
 
 # export
-ColorManager = new ColorManagerX()
+ColorManager = new ColorManager()

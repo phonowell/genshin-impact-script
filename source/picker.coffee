@@ -5,7 +5,7 @@ type Position = [number, number]
 
 # function
 
-class PickerX
+class Picker
 
   isAuto: false
   isPicking: false
@@ -72,7 +72,6 @@ class PickerX
     unless @isPicking then return
     if @skip() then return
     unless Scene.name == 'normal' then return
-    console.log "picker/listen: #{$.now()}"
     $.press 'f'
 
   # next(): void
@@ -128,4 +127,4 @@ class PickerX
     Timer.loop 'picker/watch', interval, fn
 
 # execute
-Picker = new PickerX()
+Picker = new Picker()

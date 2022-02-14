@@ -4,7 +4,7 @@ type Fn = () => unknown
 
 # function
 
-class TimerX
+class Timer
 
   cacheTimer: {}
   cacheTs: {}
@@ -70,4 +70,4 @@ class TimerX
     $.clearTimeout @cacheTimer[id]
 
 # execute
-Timer = new TimerX()
+Timer = new Timer()

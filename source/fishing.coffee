@@ -1,4 +1,4 @@
-class FishingX
+class Fishing
 
   isActive: false
   isPulling: false
@@ -88,4 +88,4 @@ class FishingX
     @pull()
 
 # execute
-Fishing = new FishingX()
+Fishing = new Fishing()
