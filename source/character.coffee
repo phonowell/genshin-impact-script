@@ -40,6 +40,7 @@ import __xiangling__ from '../../genshin-character-data/source/xiangling.yaml'
 import __xiao__ from '../../genshin-character-data/source/xiao.yaml'
 import __xingqiu__ from '../../genshin-character-data/source/xingqiu.yaml'
 import __xinyan__ from '../../genshin-character-data/source/xinyan.yaml'
+import __yae_miko__ from '../../genshin-character-data/source/yae_miko.yaml'
 import __yanfei__ from '../../genshin-character-data/source/yanfei.yaml'
 import __yoimiya__ from '../../genshin-character-data/source/yoimiya.yaml'
 import __yun_jin__ from '../../genshin-character-data/source/yun_jin.yaml'
@@ -97,6 +98,7 @@ class Character
     $.mixin data, xiao: __xiao__
     $.mixin data, xingqiu: __xingqiu__
     $.mixin data, xinyan: __xinyan__
+    $.mixin data, yae_miko: __yae_miko__
     $.mixin data, yanfei: __yanfei__
     $.mixin data, yoimiya: __yoimiya__
     $.mixin data, yun_jin: __yun_jin__
