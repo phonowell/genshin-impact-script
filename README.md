@@ -2,6 +2,8 @@
 
 Sweet! What a cute Genshin Impact script!
 
+[中文](./doc/readme-cn.md)
+
 ## Introduction
 
 A script that provides a little extra functionality for the Genshin Impact players. Really just a little bit dayo!
@@ -90,7 +92,7 @@ The type of appearance. Can be one of the following values:
 ## Note
 
 - All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
-- The game should run in `16:9` resolution, the recommended resolution is `1600x900` for windowed
+- The game should run as `16:9` and not less than `1600x900` resolution; no filters can be used
 - Since version `0.0.31`, `Celestia` and `World Tree` servers are no longer supported
 
 ## Qusetion & Answer
