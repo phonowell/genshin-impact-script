@@ -56,22 +56,30 @@ class Party extends EmitterShellX
   checkCurrentAs: (n, callback) ->
 
     Timer.remove 'party/check'
-    delay = 300
+    interval = 100
+    limit = 500
 
     if Config.data.weakNetwork
-      Timer.add 'party/check', delay, callback
+      Timer.add 'party/check', interval, callback
       return
 
     name = @listMember[n]
     unless name
-      Timer.add 'party/check', delay, callback
+      Timer.add 'party/check', interval, callback
       return
 
-    Timer.add 'party/check', delay, =>
-      unless @checkCurrent n
-        Sound.beep()
+    tsCheck = $.now()
+    Timer.loop 'party/check', interval, =>
+
+      if @checkCurrent n
+        Timer.remove 'party/check'
+        callback()
         return
-      if callback then callback()
+
+      unless $.now() - tsCheck >= limit then return
+
+      Timer.remove 'party/check'
+      Sound.beep()
 
   # countMember(): void
   countMember: ->

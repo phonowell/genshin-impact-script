@@ -68,7 +68,7 @@ class Gdip
   # screenshot(): boolean
   screenshot: ->
 
-    interval = 100
+    interval = 90
     unless Timer.checkInterval 'gdip/throttle', interval then return true
 
     {left, top, width, height} = Client
