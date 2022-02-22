@@ -22,19 +22,19 @@ class SkillTimer
   # check(): void
   check: ->
 
-    if Config.data.weakNetwork then return
-
-    Timer.remove 'skill-timer'
+    Timer.remove 'skill-timer/check'
 
     {current, name} = Party
-    {typeE} = Character.data[name]
+    {preswingE, typeE} = Character.data[name]
 
     if typeE == 1 then return
 
-    delay = 500
-    if name == 'gorou' then delay = 1e3
+    delay = preswingE * 1e3 + 400
+    interval = 200
+    limit = delay + 600
 
-    Timer.add 'skill-timer', delay, =>
+    tsCheck = $.now()
+    Timer.add 'skill-timer/check', delay, => Timer.loop 'skill-timer/check', interval, =>
 
       start = Point.new ['86%', '90%']
       end = Point.new ['90%', '93%']
@@ -44,9 +44,14 @@ class SkillTimer
         end = Point.new ['85%', '93%']
 
       p = ColorManager.find 0xFFFFFF, start, end
-      if Point.isValid p then return
+      if Point.isValid p
+        Timer.remove 'skill-timer/check'
+        return
 
-      console.log 'skill-timer: invalid record'
+      unless $.now() - tsCheck >= limit then return
+      Timer.remove 'skill-timer/check'
+
+      console.log "skill-timer: invalid record of #{name}"
 
       @listCountDown[current] = 1
       @listDuration[current] = 1
@@ -84,12 +89,10 @@ class SkillTimer
 
     now = $.now()
 
-    if (name == 'tartaglia') and @endTartaglia()
-      return
+    if (name == 'tartaglia') and @endTartaglia() then return
 
     countdown = @listCountDown[current]
-    if countdown and countdown - now > 1e3
-      return
+    if countdown and countdown - now > 1e3 then return
 
     if step == 'end'
       @recordEnd now
@@ -103,12 +106,15 @@ class SkillTimer
   recordEnd: (now) ->
 
     {current, name} = Party
-    {cdE, durationE, typeE} = Character.data[name]
+    {cdE, durationE, preswingE, typeE} = Character.data[name]
 
     unless @listRecord[current] then return
 
-    if now - @listRecord[current] < 500 # tap
-      @listCountDown[current] = @listRecord[current] + (cdE[0] * 1e3) + 500
+    correction = preswingE * 1e3
+
+    # tap
+    if now - @listRecord[current] < 500
+      @listCountDown[current] = @listRecord[current] + (cdE[0] * 1e3) + correction
       if durationE[0]
         @listDuration[current] = @listRecord[current] + (durationE[0] * 1e3)
       @listRecord[current] = 0
@@ -118,11 +124,11 @@ class SkillTimer
     # hold
 
     if typeE == 1
-      @listCountDown[current] = now + (cdE[1] * 1e3) + 500
+      @listCountDown[current] = now + (cdE[1] * 1e3) + correction
       if durationE[1]
         @listDuration[current] = now + (durationE[1] * 1e3)
     else
-      @listCountDown[current] = @listRecord[current] + (cdE[1] * 1e3) + 500
+      @listCountDown[current] = @listRecord[current] + (cdE[1] * 1e3) + correction
       if durationE[1]
         @listDuration[current] = @listRecord[current] + (durationE[1] * 1e3)
 

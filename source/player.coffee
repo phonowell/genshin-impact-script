@@ -29,9 +29,11 @@ class Player extends KeyBinding
 
     $.press "alt + #{key}"
     Party.switchTo key
+
+    unless Party.current then return
     SkillTimer.listQ[Party.current] = $.now()
 
-    Scene.freeze 'normal', 2e3
+    Scene.freeze 'unknown/unknown', 200
 
   # useE(isHolding: boolean = false): void
   useE: (isHolding = false) ->
@@ -53,9 +55,9 @@ class Player extends KeyBinding
     unless Scene.name == 'normal' then return
 
     $.press 'q'
-    SkillTimer.listQ[Party.current] = $.now()
 
-    Scene.freeze 'normal', 2e3
+    unless Party.current then return
+    SkillTimer.listQ[Party.current] = $.now()
 
 # execute
 Player = new Player()

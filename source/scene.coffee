@@ -1,5 +1,6 @@
 ### interface
 type Color = number
+type Group = [string] | [Name, string]
 type Name = 'event'
   | 'fishing'
   | 'half-menu'
@@ -15,6 +16,7 @@ class Scene extends EmitterShellX
 
   isFrozen: false
   name: 'unknown'
+  subname: 'unknown'
   tsChange: 0
 
   # ---
@@ -23,20 +25,20 @@ class Scene extends EmitterShellX
     super()
 
     @on 'change', =>
-      console.log "scene: #{@name}"
+      console.log "scene: #{@name}/#{@subname}"
       @tsChange = $.now()
 
     @watch()
 
-  # check(): void
+  # check(): [Name, string]
   check: ->
 
-    if @checkIsMenu() then return 'menu'
-    if @checkIsHalfMenu() then return 'half-menu'
-    if @checkIsNormal() then return 'normal'
-    if @checkIsEvent() then return 'event'
+    if @checkIsMenu() then return ['menu', 'unknown']
+    if @checkIsHalfMenu() then return ['half-menu', 'unknown']
+    if @checkIsNormal() then return ['normal', 'unknown']
+    if @checkIsEvent() then return ['event', 'unknown']
 
-    return 'unknown'
+    return ['unknown', 'unknown']
 
   # checkIsEvent(): boolean
   checkIsEvent: ->
@@ -70,15 +72,27 @@ class Scene extends EmitterShellX
     p = ColorManager.find color, (Point.new start), Point.new end
     return Point.isValid p
 
-  # freeze(name: Name, time: number): void
-  freeze: (name, time) ->
+  # formatGroup(group: Group): [Name, string]
+  formatGroup: (group) ->
+    if ($.length group) == 1 then return group.split '/'
+    return group
 
-    if name != @name
+  # freeze(group: string): void
+  freeze: (group, time) ->
+
+    unless @is group
+      [name, subname] = group.split '/'
       @name = name
-      @emit 'change', @name
+      @subname = subname
+      @emit 'change'
 
     @isFrozen = true
     Timer.add 'scene/unfreeze', time, => @isFrozen = false
+
+  # is(args...: Group): boolean
+  is: (args...) ->
+    [name, subname] = @formatGroup args
+    return name == @name and subname == @subname
 
   # isMenu(): boolean
   isMenu: -> return $.includes @name, 'menu'
@@ -89,10 +103,11 @@ class Scene extends EmitterShellX
     if @isFrozen then return
     if @name == 'fishing' then return
 
-    name = @check()
-    if name == @name then return
+    [name, subname] = @check()
+    if @is name, subname then return
     @name = name
-    @emit 'change', @name
+    @subname = subname
+    @emit 'change'
 
   # watch(): void
   watch: ->

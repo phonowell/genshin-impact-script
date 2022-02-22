@@ -118,7 +118,7 @@ class Picker
 
   # watch(): void
   watch: ->
-    interval = 100
+    interval = 200
     fn = =>
       if @isAuto and !@isPicking then @next()
       else @listen()

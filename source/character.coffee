@@ -113,6 +113,8 @@ class Character
         durationE: @padArray @makeValueIntoArray char['duration-e']
         durationQ: char['duration-q']
         name: char['name']
+        preswingE: char['preswing-e']
+        star: char['star']
         typeE: char['type-e']
         weapon: char.weapon
 

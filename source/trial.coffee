@@ -1,6 +1,5 @@
 do ->
 
-  Config.data.weakNetwork = false
   Config.data.betterJump = true
   Config.data.fastPickup = true
   Config.data.quickEvent = true
