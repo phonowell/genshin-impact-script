@@ -10,6 +10,8 @@ type Point = [number, number]
 class Gdip
 
   cache: [0, '']
+  cost:
+    screenshot: []
   count:
     error: 0
     findColor: 0
@@ -81,10 +83,12 @@ class Gdip
   report: ->
     console.log [
       "gdip/error: #{@count.error}"
-      "gdip/findColor: #{@count.findColor}/#{@count.findColor2}"
+      "gdip/findColor: #{@count.findColor} / #{@count.findColor2}"
       "gdip/getColor: #{@count.getColor}"
-      "gdip/screenshot: #{@count.screenshot}"
+      "gdip/screenshot: #{@count.screenshot} / #{$.round ($.sum @cost.screenshot) / ($.length @cost.screenshot)} ms"
     ]
+    @cost =
+      screenshot: []
     @count =
       error: 0
       findColor: 0
@@ -98,9 +102,10 @@ class Gdip
   # screenshot(): boolean
   screenshot: ->
 
-    interval = 190
+    interval = 90
     unless Timer.checkInterval 'gdip/throttle', interval then return true
     @count.screenshot++
+    tsShot = $.now()
 
     {left, top, width, height} = Client
     pBitmap = Gdip_BitmapFromScreen "#{left}|#{top}|#{width}|#{height}"
@@ -108,6 +113,7 @@ class Gdip
 
     if @pBitmap then Gdip_DisposeImage @pBitmap
     @pBitmap = pBitmap
+    $.push @cost.screenshot, $.now() - tsShot
     return true
 
   # start(): void
