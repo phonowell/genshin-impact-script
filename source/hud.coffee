@@ -1,6 +1,6 @@
 ### interface
 type Point = [number, number]
-type Position = 0 | 1 | 2 | 3 | 4 | 5
+type Slot = 0 | 1 | 2 | 3 | 4 | 5
 ###
 
 # function
@@ -13,10 +13,10 @@ class Hud
   # ---
 
   constructor: ->
-    Client.on 'pause', @hideAll
+    Client.on 'leave', @hideAll
     @watch()
 
-  # hide: (n: Position, isForce: boolean = false): void
+  # hide: (n: Slot, isForce: boolean = false): void
   hide: (n, isForce = false) ->
     unless @mapLast[n] or isForce then return
     @mapLast[n] = ''
@@ -27,7 +27,7 @@ class Hud
   hideAll: -> for n in [0, 1, 2, 3, 4, 5]
     @hide n, true
 
-  # makePosition: (n: Position): Point
+  # makePosition: (n: Slot): Point
   makePosition: (n) ->
 
     if Client.isFullScreen
@@ -41,7 +41,7 @@ class Hud
       Point.vh [37, 32, 28, 23, 19][Party.total - 1] + 9 * (n - 1) - 1
     ]
 
-  # render(n: Position, msg: string): void
+  # render(n: Slot, msg: string): void
   render: (n, msg) -> @map[n] = [
     $.now() + @lifetime
     msg
@@ -84,8 +84,8 @@ class Hud
   # watch(): void
   watch: ->
     interval = 200
-    Client.on 'pause', -> Timer.remove 'hud/watch'
-    Client.on 'resume', => Timer.loop 'hud/watch', interval, @update
+    Client.on 'leave', -> Timer.remove 'hud/watch'
+    Client.on 'enter', => Timer.loop 'hud/watch', interval, @update
     Timer.loop 'hud/watch', interval, @update
 
 # execute

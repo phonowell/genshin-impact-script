@@ -81,12 +81,14 @@ class Gdip
 
   # report(): void
   report: ->
-    console.log [
-      "gdip/error: #{@count.error}"
-      "gdip/findColor: #{@count.findColor} / #{@count.findColor2}"
-      "gdip/getColor: #{@count.getColor}"
-      "gdip/screenshot: #{@count.screenshot} / #{$.round ($.sum @cost.screenshot) / ($.length @cost.screenshot)} ms"
-    ]
+
+    # log
+    if @count.error then console.log "gdip/error: #{@count.error}"
+    console.log "gdip/findColor: #{@count.findColor} / #{@count.findColor2}"
+    if @count.getColor then console.log "gdip/getColor: #{@count.getColor}"
+    console.log "gdip/screenshot: #{@count.screenshot} / #{$.round ($.sum @cost.screenshot) / ($.length @cost.screenshot)} ms"
+
+    # reset
     @cost =
       screenshot: []
     @count =
@@ -125,8 +127,8 @@ class Gdip
   watch: ->
     unless Config.data.isDebug then return
     interval = 1e3
-    Client.on 'pause', -> Timer.remove 'gdip/watch'
-    Client.on 'resume', => Timer.loop 'gdip/watch', interval, @report
+    Client.on 'leave', -> Timer.remove 'gdip/watch'
+    Client.on 'enter', => Timer.loop 'gdip/watch', interval, @report
     Timer.loop 'gdip/watch', interval, @report
 
 # execute

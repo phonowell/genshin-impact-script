@@ -122,8 +122,8 @@ class Picker
     fn = =>
       if @isAuto and !@isPicking then @next()
       else @listen()
-    Client.on 'pause', -> Timer.remove 'picker/watch'
-    Client.on 'resume', -> Timer.loop 'picker/watch', interval, fn
+    Client.on 'leave', -> Timer.remove 'picker/watch'
+    Client.on 'enter', -> Timer.loop 'picker/watch', interval, fn
     Timer.loop 'picker/watch', interval, fn
 
 # execute

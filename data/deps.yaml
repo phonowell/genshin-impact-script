@@ -1,0 +1,25 @@
+- point: Client
+- timer: Client
+- upgrader: Timer
+- character: Config
+- key-binding: Client
+- transparent: Config
+- config: Skill, Timer
+- sound: Client, Config, Timer
+- console: Client, Config, Timer
+- menu: Config, KeyBinding, Scene
+- hud: Client, Party, Point, Scene, Timer
+- gdip: Client, Config, Point, Timer, console
+- slim: Client, Config, Sound, Timer, console
+- trial: Config, Picker, Skill, Timer, console
+- movement: Config, Hud, KeyBinding, Scene, Timer
+- client: Config, Menu, Sound, Timer, Upgrader, console
+- fishing: ColorManager, Hud, Point, Scene, Sound, Timer
+- scene: Client, ColorManager, Fishing, Menu, Point, Timer, console
+- color-manager: Client, Config, Gdip, Picker, Point, Sound, console
+- player: Character, KeyBinding, Party, Scene, Skill, Timer, console
+- picker: Client, ColorManager, Config, Hud, Player, Point, Scene, Timer
+- tactic: Character, Movement, Party, Player, Scene, Skill, Timer, console
+- party: Character, ColorManager, Hud, Point, Scene, Skill, Sound, Timer, console
+- skill: Character, Client, ColorManager, Config, Hud, Party, Point, Scene, Timer, console
+- index: Character, Client, Config, Fishing, Gdip, Hud, Menu, Movement, Party, Picker, Player, Point, Scene, Skill, Sound, Tactic, Timer, Trial, Upgrader, console

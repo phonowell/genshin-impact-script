@@ -52,12 +52,12 @@ class Client extends EmitterShellX
 
     @watch()
 
-    @on 'pause', =>
+    @on 'leave', =>
       `Menu, Tray, Icon, off.ico`
       @suspend true
       @setPriority 'low'
 
-    @on 'resume', =>
+    @on 'enter', =>
       `Menu, Tray, Icon, on.ico`
       @suspend false
       @setPriority 'normal'
@@ -138,11 +138,11 @@ class Client extends EmitterShellX
   update: ->
 
     unless $.isActive Config.data.process
-      unless @isSuspend then @emit 'pause'
+      unless @isSuspend then @emit 'leave'
       return
 
     if @isSuspend
-      @emit 'resume'
+      @emit 'enter'
       return
 
   # watch(): void

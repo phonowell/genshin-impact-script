@@ -1,7 +1,7 @@
 ### interface
 type Fn = () => unknown
-type Position = 1 | 2 | 3 | 4
 type Range = [[number, number], [number, number]]
+type Slot = 1 | 2 | 3 | 4 | 5
 ###
 
 # function
@@ -36,7 +36,7 @@ class Party extends EmitterShellX
       @tsSwitch = $.now()
 
       if nameOld == 'tartaglia' and nameNew != 'tartaglia'
-        SkillTimer.endTartaglia()
+        Skill.endTartaglia()
 
       {audio} = Character.data[@name]
       if audio then Timer.add 200, -> Sound.play audio
@@ -46,34 +46,36 @@ class Party extends EmitterShellX
       @reset()
       Hud.render 0, 'party reset'
 
-  # checkCurrent(n: Position): boolean
+  # checkCurrent(n: Slot): boolean
   checkCurrent: (n) ->
     [start, end] = @makeRange n, 'narrow'
     p = ColorManager.find 0x323232, start, end
     return !Point.isValid p
 
-  # checkCurrentAs(n: Position, callback: Fn): void
+  # checkCurrentAs(n: Slot, callback: Fn): void
   checkCurrentAs: (n, callback) ->
 
-    Timer.remove 'party/check'
     interval = 200
     limit = 600
+    token = 'party/check-current-as'
+
+    Timer.remove token
 
     name = @listMember[n]
     unless name
-      Timer.add 'party/check', interval, callback
+      Timer.add token, interval, callback
       return
 
     tsCheck = $.now()
-    Timer.loop 'party/check', interval, =>
+    Timer.loop token, interval, =>
 
       if @checkCurrent n
-        Timer.remove 'party/check'
+        Timer.remove token
         callback()
         return
 
       unless $.now() - tsCheck >= limit then return
-      Timer.remove 'party/check'
+      Timer.remove token
 
       Sound.beep()
 
@@ -96,15 +98,15 @@ class Party extends EmitterShellX
 
     @total = result + 1
 
-  # getIndexBy(name: string): Position
+  # getIndexBy(name: string): Slot
   getIndexBy: (name) ->
     unless @has name then return 0
     for n in [1, 2, 3, 4, 5]
       if @listMember[n] == name
         return n
 
-  # getNameViaPosition(n: Position): string
-  getNameViaPosition: (n) ->
+  # getNameViaSlot(n: Slot): string
+  getNameViaSlot: (n) ->
 
     [start, end] = @makeRange n
 
@@ -125,7 +127,7 @@ class Party extends EmitterShellX
   # has(name: string): boolean
   has: (name) -> return $.includes @listMember, name
 
-  # makeRange(n: Position, isNarrow: boolean = false): Range
+  # makeRange(n: Slot, isNarrow: boolean = false): Range
   makeRange: (n, isNarrow = false) ->
 
     top = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
@@ -163,13 +165,13 @@ class Party extends EmitterShellX
     @reset()
     @countMember()
 
-    SkillTimer.reset()
+    Skill.reset()
     Hud.reset()
 
     for n in [1, 2, 3, 4, 5]
       if n > @total then break
 
-      name = @getNameViaPosition n
+      name = @getNameViaSlot n
       $.push @listMember, name
 
       char = Character.data[name]
@@ -190,7 +192,7 @@ class Party extends EmitterShellX
 
     Timer.add 200, => @isBusy = false
 
-  # switchTo(n: Position): void
+  # switchTo(n: Slot): void
   switchTo: (n) ->
     unless n then return
     unless n <= @total then return

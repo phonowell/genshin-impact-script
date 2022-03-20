@@ -8,7 +8,7 @@ class Console
 
     unless Config.data.isDebug then return
 
-    Client.on 'pause', @hide
+    Client.on 'leave', @hide
     @watch()
 
   # add(msg: string): void
@@ -65,8 +65,8 @@ class Console
   # watch
   watch: ->
     interval = 500
-    Client.on 'pause', -> Timer.remove 'console/watch'
-    Client.on 'resume', => Timer.loop 'console/watch', interval, @update
+    Client.on 'leave', -> Timer.remove 'console/watch'
+    Client.on 'enter', => Timer.loop 'console/watch', interval, @update
     Timer.loop 'console/watch', interval, @update
 
 # execute

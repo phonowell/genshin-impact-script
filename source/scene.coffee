@@ -94,9 +94,6 @@ class Scene extends EmitterShellX
     [name, subname] = @formatGroup args
     return name == @name and subname == @subname
 
-  # isMenu(): boolean
-  isMenu: -> return $.includes @name, 'menu'
-
   # update(): void
   update: ->
 
@@ -112,8 +109,8 @@ class Scene extends EmitterShellX
   # watch(): void
   watch: ->
     interval = 200
-    Client.on 'pause', -> Timer.remove 'scene/watch'
-    Client.on 'resume', => Timer.loop 'scene/watch', interval, @update
+    Client.on 'leave', -> Timer.remove 'scene/watch'
+    Client.on 'enter', => Timer.loop 'scene/watch', interval, @update
     Timer.loop 'scene/watch', interval, @update
 
 # execute

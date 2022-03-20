@@ -63,7 +63,7 @@ class Tactic
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
 
-    if SkillTimer.listDuration[Party.current]
+    if Skill.listDuration[Party.current]
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
@@ -83,7 +83,7 @@ class Tactic
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
 
-    unless SkillTimer.listCountDown[Party.current]
+    unless Skill.listCountDown[Party.current]
       @delay @intervalCheck, cb[0]
     else @delay @intervalCheck, cb[1]
 
@@ -229,28 +229,28 @@ class Tactic
   # useE(isHolding: boolean, callback: Fn): void
   useE: (isHolding, callback) ->
 
-    if SkillTimer.listCountDown[Party.current]
+    if Skill.listCountDown[Party.current]
       @delay @intervalCheck, callback
       return
 
-    Player.useE isHolding
+    Skill.useE isHolding
     @delay @intervalExecute, callback
 
   # useEE(callback: Fn): void
   useEE: (callback) ->
 
-    if SkillTimer.listCountDown[Party.current]
+    if Skill.listCountDown[Party.current]
       @delay @intervalCheck, callback
       return
 
-    Player.useE()
+    Skill.useE()
     @delay 600, =>
-      Player.useE()
+      Skill.useE()
       @delay @intervalExecute, callback
 
   # useQ(callback: Fn): void
   useQ: (callback) ->
-    Player.useQ()
+    Skill.useQ()
     @delay @intervalExecute, callback
 
   # validate(): boolean

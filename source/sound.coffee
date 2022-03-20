@@ -10,8 +10,8 @@ class Sound
   index: 0
 
   constructor: ->
-    Client.on 'pause', @mute
-    Client.on 'resume', @unmute
+    Client.on 'leave', @mute
+    Client.on 'enter', @unmute
     @unmute()
 
   # beep(n: number = 1, callback: Fn): void

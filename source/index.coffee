@@ -6,10 +6,6 @@ import 'shell-ahk'
 
 $ = $
 
-# variable
-
-state = {}
-
 # import
 
 import 'config'
@@ -28,7 +24,8 @@ import 'scene'
 import 'party'
 import 'hud'
 
-import 'skill-timer'
+import 'menu'
+import 'skill'
 import 'key-binding'
 import 'player'
 import 'movement'
@@ -38,5 +35,3 @@ import 'tactic'
 import 'fishing'
 import 'upgrader'
 # import 'trial'
-
-import 'action/*'

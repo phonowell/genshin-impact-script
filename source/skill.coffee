@@ -1,12 +1,12 @@
 ### interface
-type Position = 1 | 2 | 3 | 4
+type Slot = 1 | 2 | 3 | 4 | 5
 type Step = 'end' | 'start'
 type Timestamp = number
 ###
 
 # function
 
-class SkillTimer
+class Skill
 
   listCountDown: {}
   listDuration: {}
@@ -22,7 +22,8 @@ class SkillTimer
   # check(): void
   check: ->
 
-    Timer.remove 'skill-timer/check'
+    token = 'skill/check'
+    Timer.remove token
 
     {current, name} = Party
     {preswingE, typeE} = Character.data[name]
@@ -34,7 +35,7 @@ class SkillTimer
     limit = delay + 600
 
     tsCheck = $.now()
-    Timer.add 'skill-timer/check', delay, => Timer.loop 'skill-timer/check', interval, =>
+    Timer.add token, delay, => Timer.loop token, interval, =>
 
       start = Point.new ['86%', '90%']
       end = Point.new ['90%', '93%']
@@ -45,13 +46,13 @@ class SkillTimer
 
       p = ColorManager.find 0xFFFFFF, start, end
       if Point.isValid p
-        Timer.remove 'skill-timer/check'
+        Timer.remove token
         return
 
       unless $.now() - tsCheck >= limit then return
-      Timer.remove 'skill-timer/check'
+      Timer.remove token
 
-      console.log "skill-timer: invalid record of #{name}"
+      console.log "skill: invalid record of #{name}"
 
       @listCountDown[current] = 1
       @listDuration[current] = 1
@@ -70,7 +71,7 @@ class SkillTimer
 
     return true
 
-  # hide(n: Position): void
+  # hide(n: Slot): void
   hide: (n) ->
     unless Config.data.skillTimer then return
     Hud.render n, ''
@@ -84,14 +85,11 @@ class SkillTimer
   record: (step) ->
 
     {current, name} = Party
-
     unless name then return
-
-    now = $.now()
-
     if (name == 'tartaglia') and @endTartaglia() then return
 
     countdown = @listCountDown[current]
+    now = $.now()
     if countdown and countdown - now > 1e3 then return
 
     if step == 'end'
@@ -146,7 +144,7 @@ class SkillTimer
 
     @listRecord[current] = now
 
-  # render(n: Position, message: string): void
+  # render(n: Slot, message: string): void
   render: (n, message) ->
     unless Config.data.skillTimer then return
     Hud.render n, message
@@ -158,18 +156,31 @@ class SkillTimer
     @listQ[n] = 0
     @listRecord[n] = 0
 
+  # switchQ(key: Key): void
+  switchQ: (key) ->
+
+    unless Scene.name == 'normal' then return
+
+    $.press "alt + #{key}"
+    Party.switchTo key
+
+    unless Party.current then return
+    @listQ[Party.current] = $.now()
+
+    Scene.freeze 'unknown/unknown', 200
+
   # update(): void
   update: ->
 
     interval = 200
     if Scene.name != 'normal' then interval = 1e3
-    unless Timer.checkInterval 'skill-timer/throttle', interval then return
+    unless Timer.checkInterval 'skill/throttle', interval then return
 
     now = $.now()
     for n in [1, 2, 3, 4, 5]
       @updateItem n, now
 
-  # update(n: Position, now: number): void
+  # update(n: Slot, now: number): void
   updateItem: (n, now) ->
 
     unless @listCountDown[n] or @listDuration[n] then return
@@ -190,12 +201,37 @@ class SkillTimer
 
     @render n, $.join listMessage, ' '
 
+  # useE(isHolding: boolean = false): void
+  useE: (isHolding = false) ->
+
+    unless Scene.name == 'normal' then return
+
+    delay = 50
+    if isHolding then delay = 1e3
+
+    $.press 'e:down'
+    @record 'start'
+    Timer.add 'skill/use', delay, =>
+      $.press 'e:up'
+      @record 'end'
+
+  # useQ(): void
+  useQ: ->
+
+    unless Scene.name == 'normal' then return
+
+    $.press 'q'
+
+    unless Party.current then return
+    @listQ[Party.current] = $.now()
+
   # watch(): void
   watch: ->
     interval = 200
-    Client.on 'pause', -> Timer.remove 'skill-timer/watch'
-    Client.on 'resume', => Timer.loop 'skill-timer/watch', interval, @update
-    Timer.loop 'skill-timer/watch', interval, @update
+    token = 'skill/watch'
+    Client.on 'leave', -> Timer.remove token
+    Client.on 'enter', => Timer.loop token, interval, @update
+    Timer.loop token, interval, @update
 
 # execute
-SkillTimer = new SkillTimer()
+Skill = new Skill()

@@ -1,63 +1,108 @@
 ### interface
-type Key = string
+type Fn = () => unknown
+type Slot = 1 | 2 | 3 | 4 | 5
 ###
 
 # function
+
 class Player extends KeyBinding
 
   constructor: ->
     super()
 
-    # switch
-    for key in [1, 2, 3, 4, 5]
-      @bindEvent 'switch', key, 'prevent'
+    @aboutSkill()
+    @aboutSwitch()
 
     # attack
-    @bindEvent 'attack', 'l-button', 'prevent'
-
-    # use skill
-    @bindEvent 'use-e', 'e'
-    @bindEvent 'use-q', 'q'
+    @registerEvent 'attack', 'l-button', 'prevent'
 
     # others
-    @bindEvent 'pick', 'f', 'prevent'
+    @registerEvent 'pick', 'f', 'prevent'
 
-  # switchQ(key: Key): void
-  switchQ: (key) ->
+  # aboutSkill(): void
+  aboutSkill: ->
+    @registerEvent 'use-e', 'e'
+    @registerEvent 'use-q', 'q'
+    @on 'use-e:start', -> Skill.record 'start'
+    @on 'use-e:end', -> Skill.record 'end'
+    @on 'use-q:start', Skill.useQ
 
-    unless Scene.name == 'normal' then return
+  # aboutSwitch(): void
+  aboutSwitch: ->
 
-    $.press "alt + #{key}"
-    Party.switchTo key
+    for key in [1, 2, 3, 4, 5]
+      @registerEvent 'raw-switch', key
+      $.on "alt + #{key}", => @useQ key
 
-    unless Party.current then return
-    SkillTimer.listQ[Party.current] = $.now()
+    for step in ['start', 'end']
+      @on "raw-switch:#{step}", (key) =>
+        unless Scene.name == 'normal' then return
+        unless key <= Party.total then return
+        @emit "switch:#{step}", key
 
-    Scene.freeze 'unknown/unknown', 200
+    @on 'switch:start', (key) =>
+      Party.switchTo key
+      @waitForSwitch 'start', key, =>
 
-  # useE(isHolding: boolean = false): void
-  useE: (isHolding = false) ->
+        onSwitch = @getOnSwitch()
+        unless onSwitch then return
 
-    unless Scene.name == 'normal' then return
+        if onSwitch == 'e~'
+          Skill.useE 'holding'
+          return
 
-    delay = 50
-    if isHolding then delay = 1e3
+        $.press 'e:down'
+        Skill.record 'start'
 
-    $.press 'e:down'
-    SkillTimer.record 'start'
-    Timer.add 'player', delay, ->
+    @on 'switch:end', (key) => @waitForSwitch 'end', key, => Timer.add 50, =>
+
+      onSwitch = @getOnSwitch()
+      unless onSwitch then return
+
+      if onSwitch == 'e~' then return
+
       $.press 'e:up'
-      SkillTimer.record 'end'
+      Skill.record 'end'
 
-  # useQ(): void
-  useQ: ->
+  # getOnSwitch(): string
+  getOnSwitch: ->
 
-    unless Scene.name == 'normal' then return
+    {name} = Party
+    unless name then return ''
 
-    $.press 'q'
+    {onSwitch} = Character.data[name]
+    unless onSwitch then return ''
 
-    unless Party.current then return
-    SkillTimer.listQ[Party.current] = $.now()
+    return onSwitch
+
+  # useQ(key: Slot): void
+  useQ: (key) ->
+
+    if key == Party.current
+      Skill.useQ()
+      return
+
+    Skill.switchQ key
+
+  # waitForSwitch(token: string, n: Slot, callback: Fn)
+  waitForSwitch: (token, n, callback) ->
+
+    interval = 50
+    limit = 1e3
+    token = "player/wait-for-switch-#{token}"
+
+    Timer.remove token
+
+    tsCheck = $.now()
+    Timer.loop token, interval, ->
+
+      if n == Party.current
+        Timer.remove token
+        callback()
+        return
+
+      unless $.now() - tsCheck >= limit then return
+      Timer.remove token
 
 # execute
 Player = new Player()

@@ -13,12 +13,12 @@ class Movement extends KeyBinding
     super()
 
     # shift
-    @bindEvent 'shift', 'l-shift', 'prevent'
+    @registerEvent 'shift', 'l-shift', 'prevent'
     @on 'shift:start', -> $.click 'right:down'
     @on 'shift:end', -> $.click 'right:up'
 
     # walk
-    for key in ['w', 'a', 's', 'd'] then @bindEvent 'walk', key
+    for key in ['w', 'a', 's', 'd'] then @registerEvent 'walk', key
 
     @on 'walk:start', =>
       unless @count then @emit 'move:start'
@@ -38,7 +38,7 @@ class Movement extends KeyBinding
     @on 'walk:start', @stopForward
 
     # jump
-    @bindEvent 'jump', 'space', 'prevent'
+    @registerEvent 'jump', 'space', 'prevent'
 
     @on 'jump:start', =>
       $.press 'space:down'
