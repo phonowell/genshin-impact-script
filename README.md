@@ -89,6 +89,18 @@ The type of appearance. Can be one of the following values:
 - `e` Uses the corresponding `E` skill depending on the key duration
 - `e~` Uses the long press version of `E` skill
 
+### Characters Debut Audio
+
+You can define the character's debut audio , To use this function, you need to reprogram the home directory to create the `audio` folder and define it in configuration.
+For Example:
+
+```ini
+
+[ganyu]
+on-long-press = a~, a
+audio = ganyu.mp3
+```
+
 ## Note
 
 - All actions are bound to the default key; except `Switch Walk/Run`, which should be changed from `Left Ctrl` to `Right Ctrl`
