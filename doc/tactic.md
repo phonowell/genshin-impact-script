@@ -30,6 +30,7 @@ The tactic contains the following keywords:
 - `a`/`a~` Normal attack/Charged attack
 - `e`/`e~` E skill (tap/hold)
 - `ee` Continuous use of E skill
+- `q` Q skill 
 - `j` Jump
 - `ja` Jump & attack
 - `s` Sprint
