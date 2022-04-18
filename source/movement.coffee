@@ -7,8 +7,6 @@ class Movement extends KeyBinding
   count: 0
   tsJump: 0
 
-  # ---
-
   constructor: ->
     super()
 
@@ -52,7 +50,7 @@ class Movement extends KeyBinding
       diff = now - @tsJump
       @tsJump = now
 
-      unless Config.data.betterJump and Scene.name == 'normal' then return
+      unless Config.data.betterJump and Scene.is 'normal' then return
       unless diff < 350 then return
 
       Timer.add 'jump', 350 - diff, ->
@@ -70,7 +68,7 @@ class Movement extends KeyBinding
   # startForward(): void
   startForward: ->
 
-    unless Scene.name == 'normal' then return
+    unless Scene.is 'normal' then return
     if @isForwarding then return
 
     @isForwarding = true
@@ -81,7 +79,7 @@ class Movement extends KeyBinding
   # stopForward(): void
   stopForward: ->
 
-    # unless Scene.name == 'normal' then return
+    # unless Scene.is 'normal' then return
     unless @isForwarding then return
 
     @isForwarding = false

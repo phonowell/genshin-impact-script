@@ -1,3 +1,8 @@
+### interface
+type Point = [number, number] | [string, string]
+type Shape = 0 | 1 | 2 # return, return, pull
+###
+# function
 class Fishing
 
   isActive: false
@@ -6,13 +11,11 @@ class Fishing
   constructor: ->
     $.on 'f11', @toggle
 
+  # checkIsFishing(): boolean
   checkIsFishing: -> return !!(@findColor 0xFFFFFF, ['94%', '94%'], ['98%', '97%'])
 
+  # checkShapre(): Shape
   checkShape: ->
-
-    # 0, return
-    # 1, return
-    # 2, pull
 
     color = 0xFFFFC0
     start = ['35%', '8%']
@@ -27,13 +30,16 @@ class Fishing
     if p1[0] - p2[0] > (Point.vw 2) then return 1
     return 2
 
+  # checkStart(): boolean
   checkStart: -> return !(@findColor 0xFFE92C, ['82%', '87%'], ['87%', '97%'])
 
+  # findColor(color: string, start: Point, end: Point): Point | false
   findColor: (color, start, end) ->
     p = ColorManager.find color, (Point.new start), Point.new end
     if Point.isValid p then return p
     return false
 
+  # next(): void
   next: ->
 
     @isPulling = false
@@ -42,15 +48,18 @@ class Fishing
       $.press 'l-button'
       Timer.add 'fishing', 1e3, @start
 
+  # pull(): void
   pull: ->
     @isPulling = true
     $.press 'l-button:down'
     Timer.add 50, -> $.press 'l-button:up'
 
+  # start(): void
   start: ->
     Timer.add 'fishing/notice', 60e3, -> Sound.beep 3
     $.press 'l-button'
 
+  # toggle(): void
   toggle: ->
 
     @isActive = !@isActive
@@ -60,13 +69,14 @@ class Fishing
     Timer.remove 'fishing/notice'
 
     if @isActive
-      Scene.name = 'fishing'
+      Scene.is 'fishing'
       Timer.loop 'fishing/watch', 100, @watch
       Hud.render 0, 'auto fish [ON]'
     else
-      Scene.name = 'unknown'
+      Scene.is 'unknown'
       Hud.render 0, 'auto fish [OFF]'
 
+  # watch(): void
   watch: ->
 
     unless @checkIsFishing() then return

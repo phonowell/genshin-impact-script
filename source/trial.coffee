@@ -7,7 +7,7 @@ do ->
 
   Timer.add 1e3, ->
 
-    n = 20220216
+    n = 20220501
     if A_YYYY * 1e4 + A_MM * 1e2 + A_DD > n
       $.exit()
       return

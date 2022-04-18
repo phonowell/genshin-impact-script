@@ -6,97 +6,118 @@ type Point = [number, number]
 ###
 
 # function
-
 class Gdip
 
-  cache: [0, '']
-  cost:
-    screenshot: []
-  count:
-    error: 0
-    findColor: 0
-    findColor2: 0
-    getColor: 0
-    screenshot: 0
-  pArea: 0
-  pBitmap: 0
-  pToken: 0
+  cache:
+    findColor: {}
+    getColor: {}
+    pArea: {}
+    pBitmap: 0
+    pToken: 0
 
   constructor: ->
     @start()
-    @watch()
+    if Config.data.isDebug then Indicator.on 'update', @report
 
   # argb2rgb(argb: number): number
   argb2rgb: (argb) -> return argb - 0xFF000000
 
+  # clearCache(): void
+  clearCache: ->
+
+    @cache.findColor = {}
+    @cache.getColor = {}
+
+    for pArea of @cache.pArea
+      Gdip_DisposeImage pArea
+    @cache.pArea = {}
+
+    if @cache.pBitmap then Gdip_DisposeImage @cache.pBitmap
+    @cache.pBitmap = 0
+
   # end(): void
   end: ->
-    unless @pToken then return
-    Gdip_Shutdown @pToken
-    @pToken = 0
+    unless @cache.pToken then return
+    Gdip_Shutdown @cache.pToken
+    @cache.pToken = 0
 
   # findColor(color: number, start: Point, end: Point): Point
   findColor: (color, start = '', end = '') ->
 
     unless @screenshot()
-      @count.error++
+      Indicator.setCount 'gdip/error'
       return [-1, -1]
-    @count.findColor++
+
+    Indicator.setCount 'gdip/findColor'
 
     unless start then start = [0, 0]
     unless end then end = [Client.width, Client.height]
     [x, y] = start
     [w, h] = [end[0] - x, end[1] - y]
 
-    [last, token] = @cache
-    now = $.now()
-    unless now - last < 100 and token == "#{x}|#{y}|#{w}|#{h}"
-      @count.findColor2++
-      @cache = [now, "#{x}|#{y}|#{w}|#{h}"]
-      pArea = Gdip_CloneBitmapArea @pBitmap, x, y, w, h
+    key = "#{x}|#{y}|#{w}|#{h}"
+    pArea = @cache.pArea[key]
+    unless pArea
+      pArea = Gdip_CloneBitmapArea @cache.pBitmap, x, y, w, h
       unless pArea then return [-1, -1]
-      if @pArea then Gdip_DisposeImage @pArea
-      @pArea = pArea
+      @cache.pArea[key] = pArea
+
+    key2 = "#{key}|#{color}"
+    result = @cache.findColor[key2]
+    if result then return result
 
     argb = @rgb2argb color
-    err = `Gdip_PixelSearch(this.pArea, argb, __x__, __y__)`
+    err = `Gdip_PixelSearch(pArea, argb, __x__, __y__)`
     if err then return [-1, -1]
 
-    return `[__x__ == -1 ? -1 : __x__ + x, __y__ == -1 ? -1 : __y__ + y]`
+    result = `[__x__ == -1 ? -1 : __x__ + x, __y__ == -1 ? -1 : __y__ + y]`
+    @cache.findColor[key2] = result
+    Indicator.setCount 'gdip/findColor2'
+    return result
 
   # getColor(p: Point): number
   getColor: (p = '') ->
 
     unless @screenshot()
-      @count.error++
+      Indicator.setCount 'gdip/error'
       return 0
-    @count.getColor++
+    Indicator.setCount 'gdip/getColor'
 
     unless p then p = $.getPosition()
-    argb = Gdip_GetPixel @pBitmap, p[0], p[1]
-    rgb = @argb2rgb argb
+    key = "#{p[0]}|#{p[1]}"
+    result = @cache.getColor[key]
+    if result then return result
 
+    argb = Gdip_GetPixel @cache.pBitmap, p[0], p[1]
+    rgb = @argb2rgb argb
     unless rgb >= 0 then return 0
-    return rgb
+
+    result = rgb
+    @cache.getColor[key] = result
+    Indicator.setCount 'gdip/getColor2'
+    return result
 
   # report(): void
   report: ->
 
-    # log
-    if @count.error then console.log "gdip/error: #{@count.error}"
-    console.log "gdip/findColor: #{@count.findColor} / #{@count.findColor2}"
-    if @count.getColor then console.log "gdip/getColor: #{@count.getColor}"
-    console.log "gdip/screenshot: #{@count.screenshot} / #{$.round ($.sum @cost.screenshot) / ($.length @cost.screenshot)} ms"
+    token = 'gdip/error'
+    count = Indicator.getCount token
+    if count then console.log "#{token}: #{count}"
 
-    # reset
-    @cost =
-      screenshot: []
-    @count =
-      error: 0
-      findColor: 0
-      findColor2: 0
-      getColor: 0
-      screenshot: 0
+    token = 'gdip/findColor'
+    count = Indicator.getCount token
+    count2 = Indicator.getCount 'gdip/findColor2'
+    if count then console.log "#{token}: #{count} / #{count2}"
+
+    token = 'gdip/getColor'
+    count = Indicator.getCount token
+    count2 = Indicator.getCount 'gdip/getColor2'
+    if count then console.log "#{token}: #{count} / #{count2}"
+
+    token = 'gdip/screenshot'
+    count = Indicator.getCount token
+    cost = Indicator.getCost token
+    if count then console.log "#{token}: #{count} / #{cost} ms"
 
   # rgb2argb(rgb: number): number
   rgb2argb: (rgb) -> return rgb + 0xFF000000
@@ -104,32 +125,30 @@ class Gdip
   # screenshot(): boolean
   screenshot: ->
 
-    interval = 90
-    unless Timer.checkInterval 'gdip/throttle', interval then return true
-    @count.screenshot++
-    tsShot = $.now()
+    token = 'gdip/screenshot'
+    interval = (Indicator.getCost token) * 2
+    if interval < 90 then interval = 90
+
+    if @cache.pBitmap and not Timer.checkInterval 'gdip/throttle', interval then return true
+    Indicator.setCount token
+    Indicator.setCost token, 'start'
 
     {left, top, width, height} = Client
     pBitmap = Gdip_BitmapFromScreen "#{left}|#{top}|#{width}|#{height}"
     unless pBitmap then return false
 
-    if @pBitmap then Gdip_DisposeImage @pBitmap
-    @pBitmap = pBitmap
-    $.push @cost.screenshot, $.now() - tsShot
+    @clearCache()
+    Timer.add token, 1e3, @clearCache
+    @cache.pBitmap = pBitmap
+
+    Indicator.setCost token, 'end'
     return true
 
   # start(): void
   start: ->
-    if @pToken then return
-    @pToken = Gdip_Startup()
+    if @cache.pToken then return
+    @cache.pToken = Gdip_Startup()
 
-  # watch(): void
-  watch: ->
-    unless Config.data.isDebug then return
-    interval = 1e3
-    Client.on 'leave', -> Timer.remove 'gdip/watch'
-    Client.on 'enter', => Timer.loop 'gdip/watch', interval, @report
-    Timer.loop 'gdip/watch', interval, @report
 
 # execute
 Gdip = new Gdip()

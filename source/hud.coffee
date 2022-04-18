@@ -10,8 +10,6 @@ class Hud
   map: {}
   mapLast: {}
 
-  # ---
-
   constructor: ->
     Client.on 'leave', @hideAll
     @watch()
@@ -57,7 +55,6 @@ class Hud
   update: ->
 
     interval = 200
-    if Scene.name != 'normal' then interval = 1e3
     unless Timer.checkInterval 'hud/throttle', interval then return
 
     now = $.now()

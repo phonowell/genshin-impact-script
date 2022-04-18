@@ -5,7 +5,6 @@ type Position = [number, number]
 ###
 
 # function
-
 class Client extends EmitterShellX
 
   height: 0
@@ -14,8 +13,6 @@ class Client extends EmitterShellX
   left: 0
   top: 0
   width: 0
-
-  # ---
 
   constructor: ->
     super()
@@ -48,16 +45,17 @@ class Client extends EmitterShellX
 
   # init(): void
   init: ->
-    $.activate Config.data.process
 
     @watch()
 
     @on 'leave', =>
+      console.log 'client: leave'
       `Menu, Tray, Icon, off.ico`
       @suspend true
       @setPriority 'low'
 
     @on 'enter', =>
+      console.log 'client: enter'
       `Menu, Tray, Icon, on.ico`
       @suspend false
       @setPriority 'normal'
@@ -65,15 +63,12 @@ class Client extends EmitterShellX
       @setStyle()
       Timer.add 1e3, @getSize
 
-    @setPriority 'normal'
-    @getSize()
-    @setStyle()
-
     $.on 'alt + f4', => Sound.beep 2, =>
       @reset()
       if Config.data.path
         $.minimize Config.data.process
         $.close Config.data.process
+        Sound.unmute()
       $.exit()
 
     $.on 'ctrl + f5', -> Sound.beep 3, =>
@@ -89,6 +84,9 @@ class Client extends EmitterShellX
     Timer.add 1e3, =>
       @report()
       Upgrader.check()
+
+    $.activate Config.data.process
+    Timer.add 200, => @emit 'enter'
 
   # report(): void
   report: -> console.log [

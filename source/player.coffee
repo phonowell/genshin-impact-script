@@ -32,15 +32,16 @@ class Player extends KeyBinding
 
     for key in [1, 2, 3, 4, 5]
       @registerEvent 'raw-switch', key
-      $.on "alt + #{key}", => @useQ key
+      $.on "alt + #{key}", => @switchQ key
 
     for step in ['start', 'end']
       @on "raw-switch:#{step}", (key) =>
-        unless Scene.name == 'normal' then return
+        unless Scene.is 'normal' then return
         unless key <= Party.total then return
         @emit "switch:#{step}", key
 
     @on 'switch:start', (key) =>
+
       Party.switchTo key
       @waitForSwitch 'start', key, =>
 
@@ -75,8 +76,8 @@ class Player extends KeyBinding
 
     return onSwitch
 
-  # useQ(key: Slot): void
-  useQ: (key) ->
+  # switchQ(key: Slot): void
+  switchQ: (key) ->
 
     if key == Party.current
       Skill.useQ()

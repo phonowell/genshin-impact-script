@@ -15,8 +15,6 @@ class Party extends EmitterShellX
   total: 4
   tsSwitch: 0
 
-  # ---
-
   constructor: ->
     super()
 
@@ -55,8 +53,9 @@ class Party extends EmitterShellX
   # checkCurrentAs(n: Slot, callback: Fn): void
   checkCurrentAs: (n, callback) ->
 
-    interval = 200
-    limit = 600
+    delay = 100
+    interval = 100
+    limit = 500
     token = 'party/check-current-as'
 
     Timer.remove token
@@ -67,17 +66,19 @@ class Party extends EmitterShellX
       return
 
     tsCheck = $.now()
-    Timer.loop token, interval, =>
+    Timer.add token, delay, => Timer.loop token, interval, =>
 
       if @checkCurrent n
         Timer.remove token
         callback()
+        console.log "#{token}: #{name} passed"
         return
 
       unless $.now() - tsCheck >= limit then return
       Timer.remove token
 
       Sound.beep()
+      console.log "#{token}: #{name} failed"
 
   # countMember(): void
   countMember: ->
@@ -153,7 +154,7 @@ class Party extends EmitterShellX
   # scan(): void
   scan: ->
 
-    if Scene.name != 'normal'
+    unless Scene.is 'normal'
       Sound.beep()
       return
 

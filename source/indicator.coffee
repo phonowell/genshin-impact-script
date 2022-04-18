@@ -1,0 +1,69 @@
+# function
+class Indicator extends EmitterShellX
+
+  cacheCost: {} # Record<string, number[]>
+  cacheCount: {} # Record<string, number>
+  cacheTs: {} # Record<string, number>
+
+  constructor: ->
+    super()
+    @watch()
+
+  # clear(): void
+  clear: ->
+    @emit 'update'
+    @cacheCost = {}
+    @cacheCount = {}
+
+  # getCost(name: string): number
+  getCost: (name) ->
+    unless name then return
+
+    group = @cacheCost[name]
+    unless group then group = []
+
+    len = $.length group
+    unless len then return 0
+
+    return $.round ($.sum group) / len
+
+  # getCount(name: string): number
+  getCount: (name) ->
+    unless name then return
+    value = @cacheCount[name]
+    unless value then value = 0
+    return value
+
+  # setCost(name: string, step = 'start'| 'end'): void
+  setCost: (name, step) ->
+    unless name then return
+
+    now = $.now()
+    if step == 'start'
+      @cacheTs[name] = now
+      return
+
+    group = @cacheCost[name]
+    unless group then group = []
+
+    $.push group, now - @cacheTs[name]
+    @cacheCost[name] = group
+
+  # setCount(name: string): void
+  setCount: (name) ->
+    unless name then return
+
+    value = @cacheCount[name]
+    unless value then value = 0
+    @cacheCount[name] = value + 1
+
+  # watch(): void
+  watch: ->
+    interval = 1e3
+    token = 'indicator/watch'
+    Client.on 'leave', -> Timer.remove token
+    Client.on 'enter', => Timer.loop token, interval, @clear
+    Timer.loop token, interval, @clear
+
+# execute
+Indicator = new Indicator()

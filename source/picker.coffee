@@ -10,8 +10,6 @@ class Picker
   isAuto: false
   isPicking: false
 
-  # ---
-
   constructor: ->
 
     $.on 'alt + f', @toggle
@@ -29,7 +27,7 @@ class Picker
   find: ->
 
     if @isPicking then return
-    unless Scene.name == 'normal' then return
+    unless Scene.is 'normal' then return
 
     [x, y] = @findColor 0x323232, ['57%', '30%'], ['59%', '70%']
     unless Point.isValid [x, y] then return
@@ -71,24 +69,24 @@ class Picker
   listen: ->
     unless @isPicking then return
     if @skip() then return
-    unless Scene.name == 'normal' then return
+    unless Scene.is 'normal' then return
     $.press 'f'
 
   # next(): void
   next: ->
 
-    if Config.data.quickEvent and Scene.name == 'event'
+    if Config.data.quickEvent and Scene.is 'event'
       @skip()
       return
 
-    if Config.data.fastPickup and Scene.name == 'normal'
+    if Config.data.fastPickup and Scene.is 'normal'
       @find()
       return
 
   # skip(): boolean
   skip: ->
 
-    unless Scene.name == 'event' then return false
+    unless Scene.is 'event' then return false
 
     $.press 'space'
 
@@ -120,6 +118,7 @@ class Picker
   watch: ->
     interval = 100
     fn = =>
+      if Tactic.isActive then return
       if @isAuto and !@isPicking then @next()
       else @listen()
     Client.on 'leave', -> Timer.remove 'picker/watch'

@@ -11,7 +11,6 @@ using-q
 ###
 
 # function
-
 class Scene extends EmitterShellX
 
   isFrozen: false
@@ -19,16 +18,12 @@ class Scene extends EmitterShellX
   subname: 'unknown'
   tsChange: 0
 
-  # ---
-
   constructor: ->
     super()
 
     @on 'change', =>
       console.log "scene: #{@name}/#{@subname}"
       @tsChange = $.now()
-
-    @watch()
 
   # check(): [Name, string]
   check: ->
@@ -72,16 +67,10 @@ class Scene extends EmitterShellX
     p = ColorManager.find color, (Point.new start), Point.new end
     return Point.isValid p
 
-  # formatGroup(group: Group): [Name, string]
-  formatGroup: (group) ->
-    if ($.length group) == 1 then return group.split '/'
-    return group
+  # freeze(name: Name, subname: string, time: number): void
+  freeze: (name, subname, time) ->
 
-  # freeze(group: string): void
-  freeze: (group, time) ->
-
-    unless @is group
-      [name, subname] = group.split '/'
+    unless @is name, subname
       @name = name
       @subname = subname
       @emit 'change'
@@ -89,9 +78,10 @@ class Scene extends EmitterShellX
     @isFrozen = true
     Timer.add 'scene/unfreeze', time, => @isFrozen = false
 
-  # is(args...: Group): boolean
-  is: (args...) ->
-    [name, subname] = @formatGroup args
+  # is(name: Name, subname?: string): boolean
+  is: (name, subname = '') ->
+    @update()
+    unless subname then return name == @name
     return name == @name and subname == @subname
 
   # update(): void
@@ -101,17 +91,10 @@ class Scene extends EmitterShellX
     if @name == 'fishing' then return
 
     [name, subname] = @check()
-    if @is name, subname then return
+    if name == @name and subname == @subname then return
     @name = name
     @subname = subname
     @emit 'change'
-
-  # watch(): void
-  watch: ->
-    interval = 200
-    Client.on 'leave', -> Timer.remove 'scene/watch'
-    Client.on 'enter', => Timer.loop 'scene/watch', interval, @update
-    Timer.loop 'scene/watch', interval, @update
 
 # execute
 Scene = new Scene()

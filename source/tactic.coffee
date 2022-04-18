@@ -30,8 +30,6 @@ class Tactic
   isActive: false
   isPressed: {}
 
-  # ---
-
   constructor: ->
 
     Player
@@ -256,7 +254,7 @@ class Tactic
   # validate(): boolean
   validate: ->
 
-    unless Scene.name == 'normal' then return false
+    unless Scene.is 'normal' then return false
 
     {name} = Party
     unless name then return false

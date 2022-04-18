@@ -14,6 +14,7 @@ import 'point'
 
 import 'client'
 import 'console'
+import 'indicator'
 
 import 'character'
 import 'gdip'
@@ -34,4 +35,7 @@ import 'picker'
 import 'tactic'
 import 'fishing'
 import 'upgrader'
+
+import 'recorder'
+
 # import 'trial'

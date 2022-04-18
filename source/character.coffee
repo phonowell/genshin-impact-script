@@ -17,6 +17,7 @@ import __jean__ from '../../genshin-character-data/source/jean.yaml'
 import __kaedehara_kazuha__ from '../../genshin-character-data/source/kaedehara_kazuha.yaml'
 import __kaeya__ from '../../genshin-character-data/source/kaeya.yaml'
 import __kamisato_ayaka__ from '../../genshin-character-data/source/kamisato_ayaka.yaml'
+import __kamisato_ayato__ from '../../genshin-character-data/source/kamisato_ayato.yaml'
 import __keqing__ from '../../genshin-character-data/source/keqing.yaml'
 import __klee__ from '../../genshin-character-data/source/klee.yaml'
 import __kujou_sara__ from '../../genshin-character-data/source/kujou_sara.yaml'
@@ -51,8 +52,6 @@ class Character
 
   data: {}
 
-  # ---
-
   constructor: ->
 
     data = {}
@@ -75,6 +74,7 @@ class Character
     $.mixin data, kaedehara_kazuha: __kaedehara_kazuha__
     $.mixin data, kaeya: __kaeya__
     $.mixin data, kamisato_ayaka: __kamisato_ayaka__
+    $.mixin data, kamisato_ayato: __kamisato_ayato__
     $.mixin data, keqing: __keqing__
     $.mixin data, klee: __klee__
     $.mixin data, kujou_sara: __kujou_sara__

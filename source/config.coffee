@@ -4,8 +4,6 @@ class Config
   data: {}
   source: 'config.ini'
 
-  # ---
-
   constructor: ->
 
     # debug
@@ -16,10 +14,10 @@ class Config
     @data.process = @read 'basic/process', 'GenshinImpact.exe'
 
     # feature
-    @data.betterJump = @read 'feature/enable-better-jump', 1
-    @data.fastPickup = @read 'feature/enable-fast-pickup', 1
-    @data.quickEvent = @read 'feature/enable-quick-event', 1
-    @data.skillTimer = @read 'feature/enable-skill-timer', 1
+    @data.betterJump = @read 'feature/enable-better-jump', 0
+    @data.fastPickup = @read 'feature/enable-fast-pickup', 0
+    @data.quickEvent = @read 'feature/enable-quick-event', 0
+    @data.skillTimer = @read 'feature/enable-skill-timer', 0
 
   # read(key: string, defaultValue: string = ''): void
   read: (key, defaultValue = '') ->

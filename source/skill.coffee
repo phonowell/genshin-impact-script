@@ -13,11 +13,19 @@ class Skill
   listQ: {}
   listRecord: {}
 
-  # ---
-
   constructor: ->
     @reset()
     @watch()
+
+  # cancelCheck(): void
+  cancelCheck: ->
+
+    token = 'skill/check'
+    Timer.remove token
+
+    {current, name} = Party
+    unless @listCountDown[current] then return
+    console.log "#{token}: #{name} cancelled"
 
   # check(): void
   check: ->
@@ -31,7 +39,7 @@ class Skill
     if typeE == 1 then return
 
     delay = preswingE * 1e3 + 400
-    interval = 200
+    interval = 100
     limit = delay + 600
 
     tsCheck = $.now()
@@ -47,12 +55,13 @@ class Skill
       p = ColorManager.find 0xFFFFFF, start, end
       if Point.isValid p
         Timer.remove token
+        console.log "#{token}: #{name} passed"
         return
 
       unless $.now() - tsCheck >= limit then return
       Timer.remove token
 
-      console.log "skill: invalid record of #{name}"
+      console.log "#{token}: #{name} failed"
 
       @listCountDown[current] = 1
       @listDuration[current] = 1
@@ -159,7 +168,7 @@ class Skill
   # switchQ(key: Key): void
   switchQ: (key) ->
 
-    unless Scene.name == 'normal' then return
+    unless Scene.is 'normal' then return
 
     $.press "alt + #{key}"
     Party.switchTo key
@@ -167,13 +176,12 @@ class Skill
     unless Party.current then return
     @listQ[Party.current] = $.now()
 
-    Scene.freeze 'unknown/unknown', 200
+    @cancelCheck()
 
   # update(): void
   update: ->
 
     interval = 200
-    if Scene.name != 'normal' then interval = 1e3
     unless Timer.checkInterval 'skill/throttle', interval then return
 
     now = $.now()
@@ -204,7 +212,7 @@ class Skill
   # useE(isHolding: boolean = false): void
   useE: (isHolding = false) ->
 
-    unless Scene.name == 'normal' then return
+    unless Scene.is 'normal' then return
 
     delay = 50
     if isHolding then delay = 1e3
@@ -218,12 +226,18 @@ class Skill
   # useQ(): void
   useQ: ->
 
-    unless Scene.name == 'normal' then return
+    unless Scene.is 'normal' then return
 
     $.press 'q'
 
-    unless Party.current then return
-    @listQ[Party.current] = $.now()
+    {current, name} = Party
+    unless current then return
+    @listQ[current] = $.now()
+
+    {star} = Character.data[name]
+    if star == 5
+      @cancelCheck()
+      Scene.freeze 'normal', '5-star-q', 2e3
 
   # watch(): void
   watch: ->

@@ -3,8 +3,6 @@ class Upgrader
 
   target: '0.0.34'
 
-  # ---
-
   # check(): void
   check: ->
 

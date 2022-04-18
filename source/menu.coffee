@@ -12,7 +12,10 @@ class Menu extends KeyBinding
         $.press 'esc'
 
   # isMenu(): boolean
-  isMenu: -> return $.includes Scene.name, 'menu'
+  isMenu: ->
+    if Scene.is 'menu' then return true
+    if Scene.is 'half-menu' then return true
+    return false
 
 # execute
 Menu = new Menu()
