@@ -66,6 +66,11 @@ class Skill
       @listCountDown[current] = 1
       @listDuration[current] = 1
 
+  # correctCD(cd: number): number
+  correctCD: (cd) ->
+    unless Party.hasBuff 'impetuous winds' then return cd
+    return cd * 0.95
+
   # endTartaglia(): boolean
   endTartaglia: ->
 
@@ -121,7 +126,7 @@ class Skill
 
     # tap
     if now - @listRecord[current] < 500
-      @listCountDown[current] = @listRecord[current] + (cdE[0] * 1e3) + correction
+      @listCountDown[current] = @listRecord[current] + @correctCD (cdE[0] * 1e3) + correction
       if durationE[0]
         @listDuration[current] = @listRecord[current] + (durationE[0] * 1e3)
       @listRecord[current] = 0
@@ -131,11 +136,11 @@ class Skill
     # hold
 
     if typeE == 1
-      @listCountDown[current] = now + (cdE[1] * 1e3) + correction
+      @listCountDown[current] = now + @correctCD (cdE[1] * 1e3) + correction
       if durationE[1]
         @listDuration[current] = now + (durationE[1] * 1e3)
     else
-      @listCountDown[current] = @listRecord[current] + (cdE[1] * 1e3) + correction
+      @listCountDown[current] = @listRecord[current] + @correctCD (cdE[1] * 1e3) + correction
       if durationE[1]
         @listDuration[current] = @listRecord[current] + (durationE[1] * 1e3)
 

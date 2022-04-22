@@ -14,7 +14,7 @@ class Player extends KeyBinding
     @aboutSwitch()
 
     # attack
-    @registerEvent 'attack', 'l-button', 'prevent'
+    @registerEvent 'attack', 'l-button'
 
     # others
     @registerEvent 'pick', 'f', 'prevent'

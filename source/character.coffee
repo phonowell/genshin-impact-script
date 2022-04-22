@@ -104,9 +104,9 @@ class Character
     $.mixin data, yun_jin: __yun_jin__
     $.mixin data, zhongli: __zhongli__
 
-    for key, char of data
+    for name, char of data
 
-      @data[key] =
+      @data[name] =
         cdE: @padArray @makeValueIntoArray char['cd-e']
         cdQ: char['cd-q']
         color: @makeValueIntoArray char['color']
@@ -116,11 +116,12 @@ class Character
         preswingE: char['preswing-e']
         star: char['star']
         typeE: char['type-e']
+        vision: char.vision
         weapon: char.weapon
 
-      @data[key].audio = @pickMulti key, 'audio'
-      @data[key].onLongPress = @makeOnLongPress @pickMulti key, 'on-long-press'
-      @data[key].onSwitch = @pickMulti key, 'on-switch'
+      @data[name].audio = @pickFromConfig name, 'audio'
+      @data[name].onLongPress = @makeOnLongPress @pickFromConfig name, 'on-long-press'
+      @data[name].onSwitch = @pickFromConfig name, 'on-switch'
 
   # padArray(list: [number] | [number, number]): [number, number]
   padArray: (list) ->
@@ -128,14 +129,26 @@ class Character
     $.push list, list[0]
     return list
 
-  # pickMulti(key: string, name: string): string | undefined
-  pickMulti: (key, name) ->
+  # pickFromConfig(name: string, key: string): string | undefined
+  pickFromConfig: (name, key) ->
 
-    value = Config.read "#{key}/#{name}", 0
-    if value then return value
+    # like hu_tao
+    target = Config.read name
+    if target then return Config.read "#{name}/#{key}", 0
 
-    value = Config.read "#{$.toLowerCase @data[key].name}/#{name}", 0
-    return value
+    # like hu tao
+    target = Config.read $.toLowerCase @data[name].name
+    if target then return Config.read "#{$.toLowerCase @data[name].name}/#{key}", 0
+
+    # weapon
+    target = Config.read @data[name].weapon
+    if target then return Config.read "#{@data[name].weapon}/#{key}", 0
+
+    # all
+    target = Config.read 'all'
+    if target then return Config.read "all/#{key}", 0
+
+    return 0
 
   # makeOnLongPress(value: string): string[] | undefined
   makeOnLongPress: (value) ->

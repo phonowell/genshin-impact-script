@@ -10,6 +10,7 @@ class Party extends EmitterShellX
 
   current: 0
   isBusy: false
+  listBuff: []
   listMember: ['']
   name: ''
   total: 4
@@ -18,7 +19,17 @@ class Party extends EmitterShellX
   constructor: ->
     super()
 
-    @on 'change', => console.log "party: #{$.join ($.tail @listMember), ', '}"
+    @on 'change', =>
+      console.log "party/member: #{$.join ($.tail @listMember), ', '}"
+      n = 0
+      for name in @listMember
+        unless name then continue
+        {vision} = Character.data[name]
+        unless vision == 'anemo' then continue
+        n++
+      if n >= 2 then @addBuff 'impetuous winds'
+      else @removeBuff 'impetuous winds'
+      if ($.length @listBuff) then console.log "party/buff: #{$.join @listBuff, ','}"
 
     @on 'switch', (n) =>
 
@@ -43,6 +54,11 @@ class Party extends EmitterShellX
     $.on 'alt + f12', =>
       @reset()
       Hud.render 0, 'party reset'
+
+  # addBuff(name: string): void
+  addBuff: (name) ->
+    if $.includes @listBuff, name then return
+    $.push @listBuff, name
 
   # checkCurrent(n: Slot): boolean
   checkCurrent: (n) ->
@@ -128,6 +144,9 @@ class Party extends EmitterShellX
   # has(name: string): boolean
   has: (name) -> return $.includes @listMember, name
 
+  # hasBuff(name: string): boolean
+  hasBuff: (name) -> return $.includes @listBuff, name
+
   # makeRange(n: Slot, isNarrow: boolean = false): Range
   makeRange: (n, isNarrow = false) ->
 
@@ -144,9 +163,15 @@ class Party extends EmitterShellX
 
     return [start, end]
 
+  # removeBuff(name: string): void
+  removeBuff: (name) ->
+    unless $.includes @listBuff, name then return
+    @listBuff = $.filter @listBuff, (it) -> return it != name
+
   # reset(): void
   reset: ->
     @current = 0
+    @listBuff = []
     @listMember = ['']
     @name = ''
     @total = 4

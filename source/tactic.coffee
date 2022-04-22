@@ -184,12 +184,7 @@ class Tactic
 
   # reset(): void
   reset: ->
-
     Timer.remove 'tactic'
-
-    if @isPressed['l-button']
-      $.click 'left:up'
-
     @isActive = false
 
   # sprint(callback: Fn): void
@@ -203,26 +198,19 @@ class Tactic
     if @isActive then return
 
     listTactic = @validate()
-    unless listTactic
-      $.click 'left:down'
-      return
+    unless listTactic then return
+    $.click 'left:up'
 
     @isActive = true
 
     wait = 1e3 - ($.now() - Party.tsSwitch)
-    if wait < 200
-      wait = 200
+    if wait < 100
+      wait = 100
 
     @execute listTactic, 0, 0
 
   # stop(): void
-  stop: ->
-
-    if @isActive
-      @reset()
-      return
-
-    $.click 'left:up'
+  stop: -> @reset()
 
   # useE(isHolding: boolean, callback: Fn): void
   useE: (isHolding, callback) ->

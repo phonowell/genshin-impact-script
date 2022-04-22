@@ -19,11 +19,12 @@ class Config
     @data.quickEvent = @read 'feature/enable-quick-event', 0
     @data.skillTimer = @read 'feature/enable-skill-timer', 0
 
-  # read(key: string, defaultValue: string = ''): void
-  read: (key, defaultValue = '') ->
-    [__section__, __key__] = $.split key, '/'
-    `IniRead, __result__, % this.source, % __section__, % __key__, % defaultValue`
-    return $.toLowerCase __result__
+  # read(input: string, defaultValue: string = ''): void
+  read: (input, defaultValue = '') ->
+    [section, key] = $.split input, '/'
+    if key then `IniRead, result, % this.source, % section, % key, % defaultValue`
+    else `IniRead, result, % this.source, % section`
+    return $.toLowerCase `result`
 
 # execute
 Config = new Config()
