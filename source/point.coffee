@@ -6,22 +6,22 @@ type Position = [number, number]
 
 class Point
 
-  # isValid(input: Point): boolean
+  # isValid(ipt: Point): boolean
   isValid: (p) -> return p[0] >= 0 and p[1] >= 0
 
-  # new(input: [number | string, number | string]): Position
-  new: (input) ->
+  # new(ipt: [number | string, number | string]): Position
+  new: (ipt) ->
 
     x = 0
     y = 0
 
-    if ($.type input[0]) == 'number'
-      x = input[0]
-    else x = @vw $.replace input[0], '%', ''
+    if ($.type ipt[0]) == 'number'
+      x = ipt[0]
+    else x = @vw $.replace ipt[0], '%', ''
 
-    if ($.type input[1]) == 'number'
-      y = input[1]
-    else y = @vh $.replace input[1], '%', ''
+    if ($.type ipt[1]) == 'number'
+      y = ipt[1]
+    else y = @vh $.replace ipt[1], '%', ''
 
     return [x, y]
 

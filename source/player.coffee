@@ -71,7 +71,7 @@ class Player extends KeyBinding
     {name} = Party
     unless name then return ''
 
-    {onSwitch} = Character.data[name]
+    {onSwitch} = Character.get name
     unless onSwitch then return ''
 
     return onSwitch

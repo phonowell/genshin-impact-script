@@ -50,7 +50,7 @@ class Movement extends KeyBinding
       diff = now - @tsJump
       @tsJump = now
 
-      unless Config.data.betterJump and Scene.is 'normal' then return
+      unless (Config.get 'better-jump') and Scene.is 'normal' then return
       unless diff < 350 then return
 
       Timer.add 'jump', 350 - diff, ->

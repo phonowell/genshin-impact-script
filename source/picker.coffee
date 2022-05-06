@@ -7,7 +7,6 @@ type Position = [number, number]
 
 class Picker
 
-  isAuto: false
   isPicking: false
 
   constructor: ->
@@ -16,7 +15,6 @@ class Picker
 
     Player.on 'pick:start', =>
       $.press 'f'
-      unless Config.data.fastPickup then return
       @isPicking = true
 
     Player.on 'pick:end', => Timer.add 'picker/debounce', 100, => @isPicking = false
@@ -75,11 +73,11 @@ class Picker
   # next(): void
   next: ->
 
-    if Config.data.quickEvent and Scene.is 'event'
+    if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'event'
       @skip()
       return
 
-    if Config.data.fastPickup and Scene.is 'normal'
+    if (Config.get 'better-pickup/use-fast-pickup') and Scene.is 'normal'
       @find()
       return
 
@@ -102,27 +100,15 @@ class Picker
     $.click()
     return true
 
-  # toggle(): void
-  toggle: ->
-
-    if Config.data.isFrozen
-      $.beep()
-      return
-
-    @isAuto = !@isAuto
-
-    if @isAuto then Hud.render 0, 'auto pickup [ON]'
-    else Hud.render 0, 'auto pickup [OFF]'
-
   # watch(): void
   watch: ->
     interval = 100
     fn = =>
       if Tactic.isActive then return
-      if @isAuto and !@isPicking then @next()
+      if (Config.get 'better-pickup') and !@isPicking then @next()
       else @listen()
-    Client.on 'leave', -> Timer.remove 'picker/watch'
-    Client.on 'enter', -> Timer.loop 'picker/watch', interval, fn
+    Client.on 'idle', -> Timer.remove 'picker/watch'
+    Client.on 'activate', -> Timer.loop 'picker/watch', interval, fn
     Timer.loop 'picker/watch', interval, fn
 
 # execute

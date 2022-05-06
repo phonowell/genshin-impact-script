@@ -19,7 +19,7 @@ class Transparent
     @render()
 
   render: ->
-    name = "ahk_exe #{Config.data.process}"
+    name = "ahk_exe #{Config.get 'basic/process'}"
     opacity = 255 * (@opacity / 100)
     `WinSet, Transparent, % opacity, % name`
 

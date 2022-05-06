@@ -24,8 +24,7 @@ class Party extends EmitterShellX
       n = 0
       for name in @listMember
         unless name then continue
-        {vision} = Character.data[name]
-        unless vision == 'anemo' then continue
+        unless (Character.get name, 'vision') == 'anemo' then continue
         n++
       if n >= 2 then @addBuff 'impetuous winds'
       else @removeBuff 'impetuous winds'
@@ -47,7 +46,7 @@ class Party extends EmitterShellX
       if nameOld == 'tartaglia' and nameNew != 'tartaglia'
         Skill.endTartaglia()
 
-      {audio} = Character.data[@name]
+      {audio} = Character.get @name
       if audio then Timer.add 200, -> Sound.play audio
 
     $.on 'f12', @scan
@@ -200,13 +199,12 @@ class Party extends EmitterShellX
       name = @getNameViaSlot n
       $.push @listMember, name
 
-      char = Character.data[name]
-      nameOutput = char.name
+      nameOutput = Character.get name, 'name'
 
       if !@current and @checkCurrent n
         @current = n
         @name = name
-        nameOutput = "#{nameOutput} 💬"
+        nameOutput = "#{nameOutput} 🎮"
 
       Hud.render n, nameOutput
 

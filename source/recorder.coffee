@@ -1,4 +1,5 @@
 ### interface
+type Fn = () => unknown
 type Item = [number, string, string]
 ###
 
@@ -8,8 +9,8 @@ class Recorder extends KeyBinding
 
   current: 0
   file: {}
-  isActive: false
   isPlaying: false
+  isRecording: false
   list: []
   listTrigger: [
     'f11', 'f12'
@@ -32,21 +33,45 @@ class Recorder extends KeyBinding
   constructor: ->
     super()
 
-    @file.default = $.file 'replay-0.txt'
+    `FileCreateDir, replay`
+
+    @file.default = $.file 'replay/0.txt'
+    $.on 'ctrl + numpad-0', =>
+      if @isPlaying then @stopReplaying
+      @replay()
+
     for key in [1, 2, 3, 4, 5, 6, 7, 8, 9]
-      @file[key] = $.file "replay-#{key}.txt"
-      $.on "ctrl + numpad-#{key}", => @replay key
+      @file[key] = $.file "replay/#{key}.txt"
+      $.on "ctrl + numpad-#{key}", =>
+        if @isPlaying then @stopReplaying()
+        @replay key
 
     Client.on 'leave', @stop
 
     @on 'record:start', (key) => @record "#{key}:down"
     @on 'record:end', (key) => @record "#{key}:up"
 
-    $.on 'ctrl + numpad-0', @replay
 
     $.on 'ctrl + numpad-dot', =>
-      unless @isActive then @start()
-      else @stop()
+      unless @isRecording then @startRecording()
+      else @stopRecording()
+
+
+
+  # execute(list: string[], callback: Fn): void
+  execute: (list, callback) ->
+
+    if list[0] == '@input'
+      value = list[1]
+      `Send, % value`
+      callback()
+      return
+
+    if list[0] == '@play'
+      value = list[1]
+      @file.temp = $.file "replay/#{value}.txt"
+      @replay 'temp', callback
+      return
 
   # fire(key: string): void
   fire: (key) ->
@@ -60,34 +85,34 @@ class Recorder extends KeyBinding
   # log(message: string): void
   log: (message) -> Hud.render 0, message
 
-  # next(list: Item[], i: number): void
-  next: (list, i) ->
-
-    unless @isPlaying
-      $.beep()
-      @resetAllPressedKeys()
-      @log 'cancel replaying'
-      return
+  # next(list: Item[], i: number, callback?: Fn): void
+  next: (list, i, callback = '') ->
 
     if i >= $.length list
       $.beep 3
       @isPlaying = false
       @resetAllPressedKeys()
+      if callback then callback()
       @log 'end replaying'
       return
 
     [delay, key, position] = list[i]
-    console.log "replay: #{delay} | #{key} | #{position}"
-    Timer.add delay, =>
+    console.log "replay: #{delay} #{key} #{position}"
+
+    if $.startsWith delay, '@'
+      Timer.add 'replay/next', 50, => @execute list[i], => @next list, i + 1, callback
+      return
+
+    Timer.add 'replay/next', delay, =>
       if ($.includes key, 'l-button') and position
         $.move Point.new $.split position, ','
       @fire key
-      @next list, i + 1
+      @next list, i + 1, callback
 
   # record(key: string): void
   record: (key) ->
 
-    unless @isActive then return
+    unless @isRecording then return
 
     @log key
 
@@ -105,15 +130,11 @@ class Recorder extends KeyBinding
 
     $.push @list, {delay, key, position}
 
-  # replay(key = 'default'): void
-  replay: (key = 'default') ->
+  # replay(key = 'default', callback?: Fn): void
+  replay: (key = 'default', callback = '') ->
 
-    if @isActive
+    if @isRecording
       $.beep()
-      return
-
-    if @isPlaying
-      @isPlaying = false
       return
 
     content = @file[key].load()
@@ -121,12 +142,15 @@ class Recorder extends KeyBinding
 
     list = []
     for item in $.split content, '\n'
+      item = $.trim item
       unless item then continue
-      $.push list, $.split item, '|'
+      if $.startsWith item, '#' then continue
+      item = RegExReplace item, '\s+', ' '
+      $.push list, $.split item, ' '
 
     $.beep 3
     @isPlaying = true
-    @next list, 0
+    @next list, 0, callback
     @log 'start replaying'
 
   # save(): void
@@ -138,46 +162,58 @@ class Recorder extends KeyBinding
     for item, i in @list
       {delay, key, position} = item
       if i == 0 then delay = 1e3
-      line = $.trim ($.join [delay, key, position], '|'), '|'
+      line = $.trim $.join [delay, key, position], ' '
       result = "#{result}#{line}\n"
 
     @file.default.save result
 
-  # start(): void
-  start: ->
-
-    if @isActive then return
+  # startRecording(): void
+  startRecording: ->
 
     if @isPlaying
       $.beep()
       return
 
+    if @isRecording then return
+
     for key in @listWatch
       @registerEvent 'record', key
       @registerEvent 'record', "alt + #{key}"
 
-    @isActive = true
+    @isRecording = true
     @list = []
     @ts = $.now()
 
     $.beep 2
     @log 'start recording'
 
-  # stop(): void
-  stop: ->
+  # stopRecording(): void
+  stopRecording: ->
 
-    unless @isActive then return
+    unless @isRecording then return
 
     for key in @listWatch
       @unregisterEvent 'record', key
       @unregisterEvent 'record', "alt + #{key}"
 
-    @isActive = false
+    @isRecording = false
     @resetAllPressedKeys()
     @save()
 
     $.beep 2
     @log 'end recording'
+
+  # stopReplaying(): void
+  stopReplaying: ->
+
+    unless @isPlaying then return
+    @isPlaying = false
+
+    Timer.remove 'replay/next'
+    @resetAllPressedKeys()
+
+    $.beep()
+    @log 'stop replaying'
 
 
 # execute

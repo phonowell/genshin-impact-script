@@ -8,6 +8,7 @@ type Timestamp = number
 
 class Skill
 
+  listCache: {}
   listCountDown: {}
   listDuration: {}
   listQ: {}
@@ -34,7 +35,7 @@ class Skill
     Timer.remove token
 
     {current, name} = Party
-    {preswingE, typeE} = Character.data[name]
+    {preswingE, typeE} = Character.get name
 
     if typeE == 1 then return
 
@@ -85,15 +86,15 @@ class Skill
 
     return true
 
-  # hide(n: Slot): void
-  hide: (n) ->
-    unless Config.data.skillTimer then return
-    Hud.render n, ''
-
-  # makeDiff(n: number): string
-  makeDiff: (n) ->
+  # format(n: number): string
+  format: (n) ->
     if ($.abs n) > 1e3 then return "#{$.floor n * 0.001}s"
     return "#{Round n * 0.001, 1}s"
+
+  # hide(n: Slot): void
+  hide: (n) ->
+    unless Config.get 'skill-timer' then return
+    Hud.render n, ''
 
   # record(step: Step): void
   record: (step) ->
@@ -118,7 +119,7 @@ class Skill
   recordEnd: (now) ->
 
     {current, name} = Party
-    {cdE, durationE, preswingE, typeE} = Character.data[name]
+    {cdE, durationE, preswingE, typeE} = Character.get name
 
     unless @listRecord[current] then return
 
@@ -129,6 +130,7 @@ class Skill
       @listCountDown[current] = @listRecord[current] + @correctCD (cdE[0] * 1e3) + correction
       if durationE[0]
         @listDuration[current] = @listRecord[current] + (durationE[0] * 1e3)
+      @listCache[current] = [(@correctCD cdE[0]), durationE[0]]
       @listRecord[current] = 0
       @check()
       return
@@ -144,27 +146,34 @@ class Skill
       if durationE[1]
         @listDuration[current] = @listRecord[current] + (durationE[1] * 1e3)
 
+    @listCache[current] = [(@correctCD cdE[1]), durationE[1]]
     @listRecord[current] = 0
     @check()
 
   # recordStart(now: Timestamp): void
   recordStart: (now) ->
-
-    {current, name} = Party
-    {cdE} = Character.data[name]
-
-    if @listRecord[current]
-      return
-
+    {current} = Party
+    if @listRecord[current] then return
     @listRecord[current] = now
 
   # render(n: Slot, message: string): void
   render: (n, message) ->
-    unless Config.data.skillTimer then return
+    unless Config.get 'skill-timer' then return
     Hud.render n, message
+
+  # renderProgress(n: number, m: number, method = 'ceil'): string
+  renderProgress: (n, m, method = 'ceil') ->
+    char = ['⬛', '⬜']
+    percent = $[method] n * 5 / m
+    listResult = []
+    for i in [1, 2, 3, 4, 5]
+      if percent >= i then $.push listResult, char[0]
+      else $.push listResult, char[1]
+    return $.join listResult, ''
 
   # reset(): void
   reset: -> for n in [1, 2, 3, 4, 5]
+    @listCache = [0, 0]
     @listCountDown[n] = 0
     @listDuration[n] = 0
     @listQ[n] = 0
@@ -203,16 +212,23 @@ class Skill
 
     listMessage = []
 
-    if @listCountDown[n] then $.push listMessage, @makeDiff now - @listCountDown[n]
-    if @listDuration[n] then $.push listMessage, "[#{@makeDiff @listDuration[n] - now}]"
+    if @listCountDown[n]
+      progress = @renderProgress @listCache[n][0] - (@listCountDown[n] - now) * 0.001, @listCache[n][0], 'floor'
+      formatted = @format now - @listCountDown[n]
+      $.push listMessage, "#{progress} #{formatted}"
+    else $.push listMessage, @renderProgress 1, 1
 
-    unless $.length listMessage
+    if @listDuration[n]
+      progress = @renderProgress (@listDuration[n] - now) * 0.001, @listCache[n][1]
+      formatted = @format @listDuration[n] - now
+      $.push listMessage, "#{progress} [#{formatted}]"
+    # else $.push listMessage, @renderProgress 0, 1
+
+    unless ($.abs @listCountDown[n]) + @listDuration[n]
       @hide n
       return
 
-    if n == Party.current then $.push listMessage, '💬'
-
-    @render n, $.join listMessage, ' '
+    @render n, $.join listMessage, '\n'
 
   # useE(isHolding: boolean = false): void
   useE: (isHolding = false) ->
@@ -239,10 +255,9 @@ class Skill
     unless current then return
     @listQ[current] = $.now()
 
-    {star} = Character.data[name]
-    if star == 5
+    if (Character.get name, 'star') == 5
       @cancelCheck()
-      Scene.freeze 'normal', '5-star-q', 2e3
+      Scene.freeze 'normal', '5-star-q', 1500
 
   # watch(): void
   watch: ->

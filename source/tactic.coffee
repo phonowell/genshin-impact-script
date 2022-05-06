@@ -93,9 +93,8 @@ class Tactic
       @isPressed['l-button'] = true
 
       delay = 400
-      name = Party.name
-      {weapon} = Character.data[name]
-      switch weapon
+      {name} = Party
+      switch Character.get name, 'weapon'
         when 'bow'
           delay = 1500
           if name == 'ganyu' then delay = 1800
@@ -247,7 +246,7 @@ class Tactic
     {name} = Party
     unless name then return false
 
-    listTactic = Character.data[name].onLongPress
+    listTactic = Character.get name, 'onLongPress'
     unless listTactic then return false
 
     return listTactic

@@ -4,9 +4,9 @@
 
 [#16](https://github.com/phonowell/genshin-impact-script/issues/16)
 
-## GISS是什么 What is GISS
+## GISS 是什么 What is GISS
 
-GIS的简化版本，仅包含无边框窗口、自动静音等功能
+GIS 的简化版本，仅包含无边框窗口、自动静音等功能
 
 A slim version of GIS and contains only a few features such as borderless windows, auto-mute, etc
 

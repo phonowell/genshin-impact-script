@@ -5,9 +5,10 @@ type Position = [number, number]
 ###
 
 # function
-class Client extends EmitterShellX
+class Client extends KeyBinding
 
   height: 0
+  isActive: false
   isFullScreen: false
   isSuspend: false
   left: 0
@@ -19,15 +20,15 @@ class Client extends EmitterShellX
 
     `Menu, Tray, Icon, on.ico,, 1`
 
-    unless $.isExisted Config.data.process
-      if Config.data.path then $.open Config.data.path
+    unless $.isExisted Config.get 'basic/process'
+      if Config.get 'basic/path' then $.open Config.get 'basic/path'
 
-    $.wait Config.data.process, @init
+    $.wait (Config.get 'basic/process'), @init
 
   # getSize(): void
   getSize: ->
 
-    name = "ahk_exe #{Config.data.process}"
+    name = "ahk_exe #{Config.get 'basic/process'}"
     `WinGetPos, __left__, __top__, __width__, __height__, % name`
 
     @left = __left__
@@ -47,12 +48,14 @@ class Client extends EmitterShellX
   init: ->
 
     @watch()
+    @watchIdle()
 
     @on 'leave', =>
       console.log 'client: leave'
       `Menu, Tray, Icon, off.ico`
       @suspend true
       @setPriority 'low'
+      @emit 'idle'
 
     @on 'enter', =>
       console.log 'client: enter'
@@ -62,12 +65,25 @@ class Client extends EmitterShellX
       @getSize()
       @setStyle()
       Timer.add 1e3, @getSize
+      @emit 'activate'
+
+    @on 'activate', =>
+      @isActive = true
+      console.log 'client: activate'
+
+      Timer.add 'client/watch-idle', 60e3, =>
+        if @isSuspend then return
+        @emit 'idle'
+
+    @on 'idle', =>
+      @isActive = false
+      console.log 'client: idle'
 
     $.on 'alt + f4', => Sound.beep 2, =>
       @reset()
-      if Config.data.path
-        $.minimize Config.data.process
-        $.close Config.data.process
+      if Config.get 'basic/path'
+        $.minimize Config.get 'basic/process'
+        $.close Config.get 'basic/process'
         Sound.unmute()
       $.exit()
 
@@ -85,7 +101,7 @@ class Client extends EmitterShellX
       @report()
       Upgrader.check()
 
-    $.activate Config.data.process
+    $.activate Config.get 'basic/process'
     Timer.add 200, => @emit 'enter'
 
   # report(): void
@@ -102,14 +118,14 @@ class Client extends EmitterShellX
 
   # setStyle(): void
   setStyle: ->
-    $.setStyle Config.data.process, -0x00040000 # border
-    $.setStyle Config.data.process, -0x00C00000 # caption
+    $.setStyle (Config.get 'basic/process'), -0x00040000 # border
+    $.setStyle (Config. get 'basic/process'), -0x00C00000 # caption
     if @isFullScreen then return
     width = ($.round @width / 80) * 80
     height = $.round width / 16 * 9
     left = (A_ScreenWidth - width) * 0.5
     top = (A_ScreenHeight - height) * 0.5
-    name = "ahk_exe #{Config.data.process}"
+    name = "ahk_exe #{Config.get 'basic/process'}"
     `WinMove, % name,, % left, % top, % width, % height`
     @getSize()
 
@@ -130,12 +146,14 @@ class Client extends EmitterShellX
       return
 
   # setPriority(level: Level): void
-  setPriority: (level) -> `Process, Priority, % Config.data.process, % level`
+  setPriority: (level) ->
+    p = Config.get 'basic/process'
+    `Process, Priority, % p, % level`
 
   # update(): void
   update: ->
 
-    unless $.isActive Config.data.process
+    unless $.isActive Config.get 'basic/process'
       unless @isSuspend then @emit 'leave'
       return
 
@@ -147,6 +165,31 @@ class Client extends EmitterShellX
   watch: ->
     interval = 100
     Timer.loop interval, @update
+
+  # watchIdle(): void
+  watchIdle: ->
+
+    listWatch = [
+      'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
+      'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
+      'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
+      'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
+      'space'
+      'l-button', 'm-button', 'r-button'
+    ]
+
+    fn = =>
+      unless @isActive then @emit 'activate'
+      Timer.add 'client/watch-idle', 60e3, =>
+        if @isSuspend then return
+        @emit 'idle'
+
+    for key in listWatch
+      @registerEvent 'press', key
+
+    @on 'press:start', fn
+    @on 'press:end', fn
 
 # execute
 Client = new Client()

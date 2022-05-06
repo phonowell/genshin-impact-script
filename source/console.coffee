@@ -6,7 +6,7 @@ class Console
 
   constructor: ->
 
-    unless Config.data.isDebug then return
+    unless Config.get 'debug' then return
 
     Client.on 'leave', @hide
     @watch()
@@ -15,12 +15,13 @@ class Console
   add: (msg) ->
 
     id = ''
-    if $.includes msg, ':'
-      [id] = $.split msg, ':'
+    if $.includes msg, ':' then [id] = $.split msg, ':'
 
     tsOutdate = $.now() + @lifetime
 
-    unless id then $.push @listContent, [tsOutdate, msg, id]
+    unless id
+      $.push @listContent, [tsOutdate, msg, id]
+      return
 
     hasId = false
     for item, i in @listContent
@@ -35,16 +36,16 @@ class Console
   # hide(): void
   hide: -> `ToolTip,, 0, 0, 20`
 
-  # log<T>(input: T): T
-  log: (input) ->
+  # log<T>(ipt: T): T
+  log: (ipt) ->
 
-    if ($.type input) == 'array'
-      for msg in input
+    if ($.type ipt) == 'array'
+      for msg in ipt
         @add msg
-    else @add input
+    else @add ipt
 
     @render()
-    return input
+    return ipt
 
   # render(): void
   render: ->

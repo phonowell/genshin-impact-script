@@ -1,9 +1,15 @@
 do ->
 
-  Config.data.betterJump = true
-  Config.data.fastPickup = true
-  Config.data.quickEvent = true
-  Config.data.skillTimer = true
+  Config.set 'better-jump', true
+
+  Config.set 'better-pickup', true
+  Config.set 'better-pickup/use-fast-pickup', true
+  Config.set 'better-pickup/use-quick-skip', true
+
+  Config.set 'skill-timer', true
+
+  Config.set 'sound/use-beep', true
+  Config.set 'sound/use-mute-when-idle', true
 
   Timer.add 1e3, ->
 
@@ -13,9 +19,9 @@ do ->
       return
     console.log "trial/end: #{n}"
 
-    unless Config.data.isDebug
+    unless Config.get 'debug'
       $.exit()
       return
 
     unless Picker.isAuto then Picker.toggle()
-    Config.data.isFrozen = true
+    Config.set 'debug/frozen', true

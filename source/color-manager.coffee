@@ -2,7 +2,7 @@ class ColorManager
 
   constructor: ->
 
-    if Config.data.isDebug
+    if Config.get 'debug'
       $.on 'alt + f9', =>
         Sound.beep()
         @pick()
@@ -10,7 +10,7 @@ class ColorManager
   # find(color: number, start: Point, end: Point): Point
   find: Gdip.findColor
 
-  # format(input: string): string
+  # format(n: string): string
   format: (n) -> return $.replace "0x#{(Format '{:p}', n)}", '0x00', '0x'
 
   # get(p: Point): number

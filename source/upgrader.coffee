@@ -1,7 +1,7 @@
 # function
 class Upgrader
 
-  target: '0.0.35'
+  target: '0.0.36'
 
   # check(): void
   check: ->

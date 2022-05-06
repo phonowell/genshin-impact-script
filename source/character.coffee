@@ -51,6 +51,7 @@ import __zhongli__ from '../../genshin-character-data/source/zhongli.yaml'
 class Character
 
   data: {}
+  source: 'character.ini'
 
   constructor: ->
 
@@ -119,9 +120,15 @@ class Character
         vision: char.vision
         weapon: char.weapon
 
-      @data[name].audio = @pickFromConfig name, 'audio'
-      @data[name].onLongPress = @makeOnLongPress @pickFromConfig name, 'on-long-press'
-      @data[name].onSwitch = @pickFromConfig name, 'on-switch'
+      @data[name].audio = @pickFromFile name, 'audio'
+      @data[name].onLongPress = @makeOnLongPress @pickFromFile name, 'on-long-press'
+      @data[name].onSwitch = @pickFromFile name, 'on-switch'
+
+  # get(name: string, key?: string): unknown
+  get: (name, key = '') ->
+    unless name then return ''
+    unless key then return @data[name]
+    return @data[name][key]
 
   # padArray(list: [number] | [number, number]): [number, number]
   padArray: (list) ->
@@ -129,24 +136,24 @@ class Character
     $.push list, list[0]
     return list
 
-  # pickFromConfig(name: string, key: string): string | undefined
-  pickFromConfig: (name, key) ->
+  # pickFromFile(name: string, key: string): string | undefined
+  pickFromFile: (name, key) ->
 
     # like hu_tao
-    target = Config.read name
-    if target then return Config.read "#{name}/#{key}", 0
+    target = @read name
+    if target then return @read "#{name}/#{key}", 0
 
     # like hu tao
-    target = Config.read $.toLowerCase @data[name].name
-    if target then return Config.read "#{$.toLowerCase @data[name].name}/#{key}", 0
+    target = @read $.toLowerCase @data[name].name
+    if target then return @read "#{$.toLowerCase @data[name].name}/#{key}", 0
 
     # weapon
-    target = Config.read @data[name].weapon
-    if target then return Config.read "#{@data[name].weapon}/#{key}", 0
+    target = @read @data[name].weapon
+    if target then return @read "#{@data[name].weapon}/#{key}", 0
 
     # all
-    target = Config.read 'all'
-    if target then return Config.read "all/#{key}", 0
+    target = @read 'all'
+    if target then return @read "all/#{key}", 0
 
     return 0
 
@@ -171,6 +178,13 @@ class Character
     when 'array' then return value
     when 'number' then return [value]
     else return [0]
+
+  # read(ipt: string, defaultValue?: string): void
+  read: (ipt, defaultValue = '') ->
+    [section, key] = $.split ipt, '/'
+    if key then `IniRead, result, % this.source, % section, % key, % defaultValue`
+    else `IniRead, result, % this.source, % section`
+    return $.toLowerCase `result`
 
 # execute
 Character = new Character()

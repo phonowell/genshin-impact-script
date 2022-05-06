@@ -17,7 +17,7 @@ class Gdip
 
   constructor: ->
     @start()
-    if Config.data.isDebug then Indicator.on 'update', @report
+    if Config.get 'debug' then Indicator.on 'update', @report
 
   # argb2rgb(argb: number): number
   argb2rgb: (argb) -> return argb - 0xFF000000

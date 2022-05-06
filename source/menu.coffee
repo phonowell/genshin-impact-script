@@ -5,7 +5,7 @@ class Menu extends KeyBinding
   constructor: ->
     super()
 
-    if Config.data.quickEvent
+    if Config.get 'better-pickup/use-quick-skip'
       @registerEvent 'right-click', 'r-button'
       @on 'right-click', =>
         unless @isMenu() then return
