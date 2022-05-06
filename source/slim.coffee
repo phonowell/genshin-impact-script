@@ -11,6 +11,7 @@ state = {}
 # import
 
 import 'config'
+import 'key-binding'
 import 'timer'
 
 import 'client'

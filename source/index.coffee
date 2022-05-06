@@ -9,8 +9,9 @@ $ = $
 # import
 
 import 'config'
-import 'timer'
+import 'key-binding'
 import 'point'
+import 'timer'
 
 import 'client'
 import 'console'
@@ -27,7 +28,6 @@ import 'hud'
 
 import 'menu'
 import 'skill'
-import 'key-binding'
 import 'player'
 import 'movement'
 
