@@ -11,7 +11,7 @@ class Config
 
     # basic
     @register 'basic/path'
-    @register 'basic/process'
+    @set 'basic/process', @read 'basic/process', 'GenshinImpact.exe'
 
     # better-jump
     @register 'better-jump', 'alt + space'
