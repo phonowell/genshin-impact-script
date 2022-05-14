@@ -60,9 +60,8 @@ class Timer
     else return args
 
   # reset(): void
-  reset: ->
-    for t of @cacheTimer
-      $.clearTimeout t
+  reset: -> for t of @cacheTimer
+    $.clearTimeout t
 
   # remove(id: string): void
   remove: (id) ->

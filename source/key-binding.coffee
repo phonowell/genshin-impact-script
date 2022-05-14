@@ -5,10 +5,6 @@ class KeyBinding extends EmitterShellX
   isPressed: {}
   map: {} # Record<string, string[]>
 
-  constructor: ->
-    super()
-    Client.on 'leave', @resetAllPressedKeys
-
   # registerEvent(name: string, key: string, isPrevented: boolean): void
   registerEvent: (name, key, isPrevented = false) ->
 
@@ -30,12 +26,6 @@ class KeyBinding extends EmitterShellX
       unless isPrevented then $.press "#{key}:up"
       @emit "#{name}:end", key
       @emit name, key
-
-  # resetAllPressedKeys(): void
-  resetAllPressedKeys: -> for key, value of @isPressed
-    unless value then continue
-    if $.getState key then continue
-    $.press "#{key}:up"
 
   # unregisterEvent(name: string, key: string): void
   unregisterEvent: (name, key) ->

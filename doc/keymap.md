@@ -18,6 +18,7 @@ All keys use the game's default keys, but need to `Switch Walk/Run` bound to `Ri
 | 长按`F`<br>Long press `F`             | 快速拾取物品/跳过对话<br>Pick up items or quickly skip dialogues |
 | `Alt + F`                             | 进入/退出自动拾取模式<br>Enter/exit auto-pickup mode             |
 | 长按`Space`<br>Long press `Space`     | 关闭滑翔翼<br>Turn off the glider                                |
-| `Alt + Space`                         | 启用/停用改良跳跃<br> Enable/disable better-jump                 |
+| `Alt + Space`                         | 启用/停用改良跳跃<br>Enable/disable better-jump                  |
+| `Win + Left/Right/Up/Down`            | 移动窗口<br>Move the window                                      |
 | `Ctrl + Numpad Dot`                   | 开始/结束录像<br>Start/end recording                             |
 | `Ctrl + Numpad 0~9`                   | 播放录像<br>Replay Recording                                     |

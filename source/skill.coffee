@@ -161,14 +161,15 @@ class Skill
     unless Config.get 'skill-timer' then return
     Hud.render n, message
 
-  # renderProgress(n: number, m: number, method = 'ceil'): string
-  renderProgress: (n, m, method = 'ceil') ->
-    char = ['⬛', '⬜']
+  # renderProgress(n: number, m: number, method = 'round'): string
+  renderProgress: (n, m, method = 'round') ->
+    listChar = ['◾️', '◽️', '⬛']
     percent = $[method] n * 5 / m
     listResult = []
     for i in [1, 2, 3, 4, 5]
-      if percent >= i then $.push listResult, char[0]
-      else $.push listResult, char[1]
+      if percent > i then $.push listResult, listChar[0]
+      else if percent == i then $.push listResult, listChar[2]
+      else $.push listResult, listChar[1]
     return $.join listResult, ''
 
   # reset(): void
@@ -216,13 +217,12 @@ class Skill
       progress = @renderProgress @listCache[n][0] - (@listCountDown[n] - now) * 0.001, @listCache[n][0], 'floor'
       formatted = @format now - @listCountDown[n]
       $.push listMessage, "#{progress} #{formatted}"
-    else $.push listMessage, @renderProgress 1, 1
+    else $.push listMessage, '◾️◾️◾️◾️◾️'
 
     if @listDuration[n]
-      progress = @renderProgress (@listDuration[n] - now) * 0.001, @listCache[n][1]
+      progress = @renderProgress (@listDuration[n] - now) * 0.001, @listCache[n][1], 'ceil'
       formatted = @format @listDuration[n] - now
       $.push listMessage, "#{progress} [#{formatted}]"
-    # else $.push listMessage, @renderProgress 0, 1
 
     unless ($.abs @listCountDown[n]) + @listDuration[n]
       @hide n

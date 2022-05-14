@@ -149,7 +149,7 @@ class Party extends EmitterShellX
   # makeRange(n: Slot, isNarrow: boolean = false): Range
   makeRange: (n, isNarrow = false) ->
 
-    top = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
+    vTop = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
 
     left = 90
     right = 96
@@ -157,8 +157,8 @@ class Party extends EmitterShellX
       left = 96
       right = 99
 
-    start = Point.new ["#{left}%", "#{top - 4}%"]
-    end = Point.new ["#{right}%", "#{top + 4}%"]
+    start = Point.new ["#{left}%", "#{vTop - 4}%"]
+    end = Point.new ["#{right}%", "#{vTop + 4}%"]
 
     return [start, end]
 
@@ -178,8 +178,12 @@ class Party extends EmitterShellX
   # scan(): void
   scan: ->
 
+    token = 'party/scan'
+    Indicator.setCost token, 'start'
+
     unless Scene.is 'normal'
       Sound.beep()
+      console.log "invalid scene: #{Scene.name}/#{Scene.subname}"
       return
 
     if @isBusy
@@ -214,6 +218,8 @@ class Party extends EmitterShellX
       $.press 1
       @switchTo 1
 
+    Indicator.setCost token, 'end'
+    console.log "#{token}: completed in #{Indicator.getCost token} ms"
     Timer.add 200, => @isBusy = false
 
   # switchTo(n: Slot): void

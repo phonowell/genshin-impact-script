@@ -67,7 +67,7 @@ class Recorder extends KeyBinding
       callback()
       return
 
-    if list[0] == '@play'
+    if list[0] == '@run' or list[0] == '@play'
       value = list[1]
       @file.temp = $.file "replay/#{value}.txt"
       @replay 'temp', callback
@@ -91,7 +91,6 @@ class Recorder extends KeyBinding
     if i >= $.length list
       $.beep 3
       @isPlaying = false
-      @resetAllPressedKeys()
       if callback then callback()
       @log 'end replaying'
       return
@@ -197,7 +196,6 @@ class Recorder extends KeyBinding
       @unregisterEvent 'record', "alt + #{key}"
 
     @isRecording = false
-    @resetAllPressedKeys()
     @save()
 
     $.beep 2
@@ -210,7 +208,6 @@ class Recorder extends KeyBinding
     @isPlaying = false
 
     Timer.remove 'replay/next'
-    @resetAllPressedKeys()
 
     $.beep()
     @log 'stop replaying'

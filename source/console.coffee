@@ -5,10 +5,7 @@ class Console
   listContent: []
 
   constructor: ->
-
     unless Config.get 'debug' then return
-
-    Client.on 'leave', @hide
     @watch()
 
   # add(msg: string): void
@@ -65,10 +62,16 @@ class Console
 
   # watch
   watch: ->
+
     interval = 500
-    Client.on 'leave', -> Timer.remove 'console/watch'
-    Client.on 'enter', => Timer.loop 'console/watch', interval, @update
-    Timer.loop 'console/watch', interval, @update
+
+    Client.on 'idle', =>
+      Timer.remove 'console/watch'
+      @hide()
+
+    Client.on 'activate', =>
+      Timer.loop 'console/watch', interval, @update
+      @update()
 
 # execute
 console = new Console()

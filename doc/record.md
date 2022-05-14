@@ -76,16 +76,16 @@ Lines starting with `#` represent comments and will not be parsed for execution.
 A line starting with `@` means it contains special tags, and the following special tags are currently available:
 
 - @input
-- @play
+- @run
 
 将上述文本内容保存为`replay/9.txt`后，在游戏中按下`Ctrl + Numpad 9`,应当能看到输入并发送了`hello world`
 
 After saving the above text content as `replay/9.txt`, press `Ctrl + Numpad 9` in the game, you should see `hello world` typed and sent
 
 ```txt
-@play 9
+@run 9
 ```
 
-将上述文本内容保存为`replay/0.txt`后，在游戏中按下`Ctrl + Numpad 0`，应当能看到执行了与之前一致的动作。这是因为`@play`标记提供了在不同录像间跳转的功能
+将上述文本内容保存为`replay/0.txt`后，在游戏中按下`Ctrl + Numpad 0`，应当能看到执行了与之前一致的动作。这是因为`@run`标记提供了在不同录像间跳转的功能
 
-After saving the above text as `replay/0.txt`, press `Ctrl + Numpad 0` in the game and you should see the same action performed as before. This is because the `@play` tag provides the ability to jump between records
+After saving the above text as `replay/0.txt`, press `Ctrl + Numpad 0` in the game and you should see the same action performed as before. This is because the `@run` tag provides the ability to jump between records
