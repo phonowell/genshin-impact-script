@@ -261,11 +261,12 @@ class Skill
 
   # watch(): void
   watch: ->
+
     interval = 200
     token = 'skill/watch'
+
     Client.on 'leave', -> Timer.remove token
     Client.on 'enter', => Timer.loop token, interval, @update
-    Timer.loop token, interval, @update
 
 # execute
 Skill = new Skill()

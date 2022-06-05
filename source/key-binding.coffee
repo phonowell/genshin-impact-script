@@ -1,7 +1,12 @@
+### interface
+type Fn = () => unknown
+###
+
 # function
 
 class KeyBinding extends EmitterShellX
 
+  isFired: {}
   isPressed: {}
   map: {} # Record<string, string[]>
 
@@ -15,17 +20,34 @@ class KeyBinding extends EmitterShellX
     $.push @map[name], key
 
     $.on "#{key}.#{name}", =>
+
+      # unless name == 'press' then console.log "#{key}-down as #{name}"
+
       if @isPressed[key] then return
       @isPressed[key] = true
+
       unless isPrevented then $.press "#{key}:down"
       @emit "#{name}:start", key
 
+      @isFired[key] = true
+
     $.on "#{key}:up.#{name}", =>
-      unless @isPressed[key] then return
-      @isPressed[key] = false
-      unless isPrevented then $.press "#{key}:up"
-      @emit "#{name}:end", key
-      @emit name, key
+
+      # unless name == 'press' then console.log "#{key}-up as #{name}"
+
+      fn = =>
+
+        unless @isPressed[key] then return
+        @isPressed[key] = false
+
+        @isFired[key] = false
+
+        unless isPrevented then $.press "#{key}:up"
+        @emit "#{name}:end", key
+        @emit name, key
+
+      if @isFired[key] then fn()
+      else Timer.add 50, fn
 
   # unregisterEvent(name: string, key: string): void
   unregisterEvent: (name, key) ->

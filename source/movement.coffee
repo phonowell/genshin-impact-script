@@ -36,15 +36,9 @@ class Movement extends KeyBinding
     @on 'walk:start', @stopForward
 
     # jump
-    @registerEvent 'jump', 'space', 'prevent'
-
-    @on 'jump:start', =>
-      $.press 'space:down'
-      @tsJump = $.now()
-
+    @registerEvent 'jump', 'space'
+    @on 'jump:start', => @tsJump = $.now()
     @on 'jump:end', =>
-
-      $.press 'space:up'
 
       now = $.now()
       diff = now - @tsJump

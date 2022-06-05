@@ -11,8 +11,12 @@ class Indicator extends EmitterShellX
 
   # clear(): void
   clear: ->
+
     @emit 'update'
-    @cacheCost = {}
+
+    for name, group of @cacheCost
+      @cacheCost[name] = [@getCost name]
+
     @cacheCount = {}
 
   # getCost(name: string): number
@@ -59,11 +63,12 @@ class Indicator extends EmitterShellX
 
   # watch(): void
   watch: ->
+
     interval = 1e3
     token = 'indicator/watch'
-    Client.on 'leave', -> Timer.remove token
-    Client.on 'enter', => Timer.loop token, interval, @clear
-    Timer.loop token, interval, @clear
+
+    Client.on 'idle', -> Timer.remove token
+    Client.on 'activate', => Timer.loop token, interval, @clear
 
 # execute
 Indicator = new Indicator()

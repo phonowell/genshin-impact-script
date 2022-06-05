@@ -126,8 +126,9 @@ class Gdip
   screenshot: ->
 
     token = 'gdip/screenshot'
-    interval = (Indicator.getCost token) * 2
-    if interval < 90 then interval = 90
+    interval = (Indicator.getCost token) * 3
+    if interval < 100 then interval = 100
+    else if interval > 200 then interval = 200
 
     if @cache.pBitmap and not Timer.checkInterval 'gdip/throttle', interval then return true
     Indicator.setCount token
@@ -148,7 +149,6 @@ class Gdip
   start: ->
     if @cache.pToken then return
     @cache.pToken = Gdip_Startup()
-
 
 # execute
 Gdip = new Gdip()

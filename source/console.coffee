@@ -64,13 +64,14 @@ class Console
   watch: ->
 
     interval = 500
+    token = 'console/watch'
 
     Client.on 'idle', =>
-      Timer.remove 'console/watch'
+      Timer.remove token
       @hide()
 
     Client.on 'activate', =>
-      Timer.loop 'console/watch', interval, @update
+      Timer.loop token, interval, @update
       @update()
 
 # execute

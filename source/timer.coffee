@@ -38,6 +38,11 @@ class Timer
     @cacheTs[id] = now
     return true
 
+  # has(id: string): boolean
+  has: (id) ->
+    if @cacheTimer[id] then return true
+    else return false
+
   # loop(id?: string, time?: number, fn?: Fn): void
   loop: (args...) ->
 
@@ -60,13 +65,15 @@ class Timer
     else return args
 
   # reset(): void
-  reset: -> for t of @cacheTimer
+  reset: -> for id, t of @cacheTimer
     $.clearTimeout t
+    @cacheTimer[id] = 0
 
   # remove(id: string): void
   remove: (id) ->
-    unless @cacheTimer[id] then return
+    unless @has id then return
     $.clearTimeout @cacheTimer[id]
+    @cacheTimer[id] = 0
 
 # execute
 Timer = new Timer()

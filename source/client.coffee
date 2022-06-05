@@ -89,7 +89,6 @@ class Client extends KeyBinding
   init: ->
 
     @watch()
-    @watchIdle()
 
     @on 'leave', =>
       console.log 'client: leave'
@@ -111,12 +110,7 @@ class Client extends KeyBinding
     @on 'activate', =>
       @isActive = true
       console.log 'client: activate'
-
       unless @checkMousePosition() then $.move [@width * 0.5, @height * 0.5]
-
-      Timer.add 'client/watch-idle', 60e3, =>
-        if @isSuspend then return
-        @emit 'idle'
 
     @on 'idle', =>
       @isActive = false
@@ -159,20 +153,6 @@ class Client extends KeyBinding
 
         @position = [x, y]
         @setPosition()
-
-    Timer.add 1e3, =>
-      @report()
-      Upgrader.check()
-
-    @focus()
-    Timer.add 200, => @emit 'enter'
-
-  # report(): void
-  report: -> console.log [
-    "client/is-fullscreen: #{@isFullScreen}"
-    "client/position: #{@left}, #{@top}"
-    "client/size: #{@width}, #{@height}"
-  ]
 
   # reset(): void
   reset: ->
@@ -244,31 +224,6 @@ class Client extends KeyBinding
   watch: ->
     interval = 100
     Timer.loop interval, @update
-
-  # watchIdle(): void
-  watchIdle: ->
-
-    listWatch = [
-      'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
-      '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
-      'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
-      'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
-      'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
-      'space'
-      'l-button', 'm-button', 'r-button'
-    ]
-
-    fn = =>
-      unless @isActive then @emit 'activate'
-      Timer.add 'client/watch-idle', 60e3, =>
-        if @isSuspend then return
-        @emit 'idle'
-
-    for key in listWatch
-      @registerEvent 'press', key
-
-    @on 'press:start', fn
-    @on 'press:end', fn
 
 # execute
 Client = new Client()

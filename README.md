@@ -7,7 +7,7 @@ Sweet! What a cute Genshin Impact script!
 - [Features](./doc/feature.md)
 - [Keymap](./doc/keymap.md)
 - [Tactic](./doc/tactic.md)
-- [Record](./doc/record.md)
+- [Recording](./doc/recording.md)
 - [Note](./doc/note.md)
 - [FAQ](./doc/faq.md)
 - [Contact](./doc/contact.md)

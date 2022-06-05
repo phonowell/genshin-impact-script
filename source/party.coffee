@@ -46,9 +46,6 @@ class Party extends EmitterShellX
       if nameOld == 'tartaglia' and nameNew != 'tartaglia'
         Skill.endTartaglia()
 
-      {audio} = Character.get @name
-      if audio then Timer.add 200, -> Sound.play audio
-
     $.on 'f12', @scan
     $.on 'alt + f12', =>
       @reset()

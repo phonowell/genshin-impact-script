@@ -48,22 +48,22 @@ class Player extends KeyBinding
         onSwitch = @getOnSwitch()
         unless onSwitch then return
 
-        if onSwitch == 'e~'
-          Skill.useE 'holding'
+        if onSwitch == 'e'
+          $.press 'e:down'
+          Skill.record 'start'
           return
-
-        $.press 'e:down'
-        Skill.record 'start'
 
     @on 'switch:end', (key) => @waitForSwitch 'end', key, => Timer.add 50, =>
 
       onSwitch = @getOnSwitch()
       unless onSwitch then return
 
-      if onSwitch == 'e~' then return
+      if onSwitch == 'e'
+        $.press 'e:up'
+        Skill.record 'end'
+        return
 
-      $.press 'e:up'
-      Skill.record 'end'
+      Tactic.start onSwitch, true
 
   # getOnSwitch(): string
   getOnSwitch: ->

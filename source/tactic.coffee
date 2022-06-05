@@ -10,7 +10,6 @@
 # ee - use e twice
 # e~ - holding e
 # j - jump
-# ja - jump & attack
 # q - use q
 # s - sprint
 # t - aim
@@ -24,36 +23,15 @@ type Fn = () => unknown
 
 class Tactic
 
-  intervalCheck: 50
-  intervalExecute: 100
-
+  intervalLong: 100
+  intervalShort: 50
   isActive: false
-  isPressed: {}
+  isPressed: false
 
   constructor: ->
-
-    Player
-      .on 'attack:start', @start
-      .on 'attack:end', @stop
-
-    Party
-      .on 'change', @reset
-      .on 'switch', =>
-        unless @isActive then return
-        @stop()
-        @start()
-
-  # aim(callback: Fn): void
-  aim: (callback) ->
-    $.press 'r'
-    @delay @intervalExecute, callback
-
-  # aimTwice(callback: Fn): void
-  aimTwice: (callback) ->
-    $.press 'r'
-    @delay @intervalExecute, =>
-      $.press 'r'
-      @delay @intervalExecute, callback
+    Player.on 'attack:start', => @start Character.get Party.name, 'onLongPress'
+    Player.on 'attack:end', @stop
+    Party.on 'switch', @stop
 
   # atDuration(cbA: Fn, cbB: Fn, isNot: boolean = false): void
   atDuration: (cbA, cbB, isNot = false) ->
@@ -62,8 +40,8 @@ class Tactic
     if isNot then cb = [cbB, cbA]
 
     if Skill.listDuration[Party.current]
-      @delay @intervalCheck, cb[0]
-    else @delay @intervalCheck, cb[1]
+      @delay @intervalShort, cb[0]
+    else @delay @intervalShort, cb[1]
 
   # atMovement: (cbA: Fn, cbB: Fn, isNot: boolean = false): void
   atMovement: (cbA, cbB, isNot = false) ->
@@ -72,8 +50,8 @@ class Tactic
     if isNot then cb = [cbB, cbA]
 
     if Movement.isMoving
-      @delay @intervalCheck, cb[0]
-    else @delay @intervalCheck, cb[1]
+      @delay @intervalShort, cb[0]
+    else @delay @intervalShort, cb[1]
 
   # atReady(cbA: Fn, cb: Fn, isNot: boolean = false): void
   atReady: (cbA, cbB, isNot = false) ->
@@ -82,15 +60,32 @@ class Tactic
     if isNot then cb = [cbB, cbA]
 
     unless Skill.listCountDown[Party.current]
-      @delay @intervalCheck, cb[0]
-    else @delay @intervalCheck, cb[1]
+      @delay @intervalShort, cb[0]
+    else @delay @intervalShort, cb[1]
 
-  # attack(isCharged: boolean, callback: Fn): void
-  attack: (isCharged, callback) ->
+  # delay(time: number, callback: Fn): void
+  delay: (time, callback) ->
+    unless @isActive then return
+    Timer.add 'tactic/next', time, callback
+
+  # doAim(callback: Fn): void
+  doAim: (callback) ->
+    $.press 'r'
+    @delay @intervalLong, callback
+
+  # doAimTwice(callback: Fn): void
+  doAimTwice: (callback) ->
+    $.press 'r'
+    @delay @intervalLong, =>
+      $.press 'r'
+      @delay @intervalLong, callback
+
+  # doAttack(isCharged: boolean, callback: Fn): void
+  doAttack: (isCharged, callback) ->
 
     if isCharged
       $.click 'left:down'
-      @isPressed['l-button'] = true
+      @isPressed = true
 
       delay = 400
       {name} = Party
@@ -105,34 +100,68 @@ class Tactic
 
       @delay delay, =>
         $.click 'left:up'
-        @isPressed['l-button'] = false
+        @isPressed = false
 
         if Movement.isMoving and Party.name == 'klee'
           @delay 200, => @jump callback
           return
 
-        @delay @intervalExecute, callback
+        @delay @intervalLong, callback
 
       return
 
     $.click 'left'
     @delay 200, callback
 
-  # delay(time: number, callback: Fn): void
-  delay: (time, callback) ->
-    unless @isActive then return
-    Timer.add 'tactic', time, callback
+  # doJump(callback: Fn): void
+  doJump: (callback) ->
+    Movement.jump()
+    unless Movement.isMoving
+      @delay 450, callback
+    else @delay 550, callback
 
-  # execute(listTactic: string[], g: number = 0, i: number = 0): void
-  execute: (listTactic, g = 0, i = 0) ->
+  # doSprint(callback: Fn): void
+  doSprint: (callback) ->
+    Movement.sprite()
+    @delay @intervalLong, callback
 
-    item = @get listTactic, g, i
-    unless item
-      @execute listTactic
+  # doUseE(isHolding: boolean, callback: Fn): void
+  doUseE: (isHolding, callback) ->
+
+    if Skill.listCountDown[Party.current]
+      @delay @intervalShort, callback
       return
 
-    next = => @execute listTactic, g, i + 1
-    nextGroup = => @execute listTactic, g + 1, 0
+    Skill.useE isHolding
+    @delay @intervalLong, callback
+
+  # doUseEE(callback: Fn): void
+  doUseEE: (callback) ->
+
+    if Skill.listCountDown[Party.current]
+      @delay @intervalShort, callback
+      return
+
+    Skill.useE()
+    @delay 600, =>
+      Skill.useE()
+      @delay @intervalLong, callback
+
+  # doUseQ(callback: Fn): void
+  doUseQ: (callback) ->
+    Skill.useQ()
+    @delay @intervalLong, callback
+
+  # execute(list: string[], g: number = 0, i: number = 0, isOnce = false): void
+  execute: (list, g = 0, i = 0, isOnce = false) ->
+
+    item = @get list, g, i
+    unless item
+      unless isOnce then @execute list
+      return
+
+    next = => @execute list, g, i + 1, isOnce
+    nextGroup = => @execute list, g + 1, 0, isOnce
 
     map =
       '!@e': => @atDuration next, nextGroup, 'not'
@@ -141,24 +170,38 @@ class Tactic
       '@e': => @atDuration next, nextGroup, 0
       '@e?': => @atReady next, nextGroup, 0
       '@m': => @atMovement next, nextGroup, 0
-      'a': => @attack false, next
-      'a~': => @attack true, next
-      'e': => @useE false, next
-      'ee': => @useEE next
-      'e~': => @useE true, next
-      'j': => @jump next
-      'ja': => @jumpAttack next
-      'q': => @useQ next
-      's': => @sprint next
-      't': => @aim next
-      'tt': => @aimTwice next
+      'a': => @doAttack false, next
+      'a~': => @doAttack true, next
+      'e': => @doUseE false, next
+      'ee': => @doUseEE next
+      'e~': => @doUseE true, next
+      'j': => @doJump next
+      'q': => @doUseQ next
+      's': => @doSprint next
+      't': => @doAim next
+      'tt': => @doAimTwice next
 
-    # console.log "tactic: #{item}"
     callback = map[item]
-    if !callback and ($.type item) == 'number'
-      callback = => @delay item, next
+    unless callback
+      if ($.type item) == 'number' then callback = => @delay item, next
 
     if callback then callback()
+
+  # format(ipt: string): string[]
+  format: (ipt) ->
+
+    unless ipt then return 0
+
+    ipt = $.replace ipt, ' ', ''
+    listAll = []
+
+    for group in $.split ipt, ';'
+      listGroup = []
+      for item in $.split group, ','
+        $.push listGroup, item
+      $.push listAll, listGroup
+
+    return listAll
 
   # get(list: string[], g: number = 0, i: number = 0): string
   get: (list, g = 0, i = 0) ->
@@ -167,89 +210,25 @@ class Tactic
     if i >= $.length group then return ''
     return group[i]
 
-  # jump(callback: Fn): void
-  jump: (callback) ->
-    Movement.jump()
-    unless Movement.isMoving
-      @delay 450, callback
-    else @delay 550, callback
+  # start(list: string, isOnce = false): void
+  start: (list, isOnce = false) ->
 
-  # jumpAttack(callback: Fn): void
-  jumpAttack: (callback) ->
-    Movement.jump()
-    @delay 50, ->
-      $.click 'left'
-      @delay 50, callback
+    @stop()
 
-  # reset(): void
-  reset: ->
-    Timer.remove 'tactic'
-    @isActive = false
+    unless Scene.is 'normal' then return
 
-  # sprint(callback: Fn): void
-  sprint: (callback) ->
-    Movement.sprite()
-    @delay @intervalExecute, callback
-
-  # start(): void
-  start: ->
-
-    if @isActive then return
-
-    listTactic = @validate()
-    unless listTactic then return
-    $.click 'left:up'
+    list = @format list
+    unless list then return
 
     @isActive = true
+    $.click 'left:up'
 
-    wait = 1e3 - ($.now() - Party.tsSwitch)
-    if wait < 100
-      wait = 100
-
-    @execute listTactic, 0, 0
+    @execute list, 0, 0, isOnce
 
   # stop(): void
-  stop: -> @reset()
-
-  # useE(isHolding: boolean, callback: Fn): void
-  useE: (isHolding, callback) ->
-
-    if Skill.listCountDown[Party.current]
-      @delay @intervalCheck, callback
-      return
-
-    Skill.useE isHolding
-    @delay @intervalExecute, callback
-
-  # useEE(callback: Fn): void
-  useEE: (callback) ->
-
-    if Skill.listCountDown[Party.current]
-      @delay @intervalCheck, callback
-      return
-
-    Skill.useE()
-    @delay 600, =>
-      Skill.useE()
-      @delay @intervalExecute, callback
-
-  # useQ(callback: Fn): void
-  useQ: (callback) ->
-    Skill.useQ()
-    @delay @intervalExecute, callback
-
-  # validate(): boolean
-  validate: ->
-
-    unless Scene.is 'normal' then return false
-
-    {name} = Party
-    unless name then return false
-
-    listTactic = Character.get name, 'onLongPress'
-    unless listTactic then return false
-
-    return listTactic
+  stop: ->
+    @isActive = false
+    Timer.remove 'tactic/next'
 
 # execute
 Tactic = new Tactic()

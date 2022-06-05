@@ -15,6 +15,7 @@ import 'timer'
 
 import 'client'
 import 'console'
+import 'idle'
 import 'indicator'
 
 import 'character'
@@ -37,5 +38,6 @@ import 'fishing'
 import 'upgrader'
 
 import 'recorder'
+import 'replayer'
 
-# import 'trial'
+import 'end'

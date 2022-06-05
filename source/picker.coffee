@@ -10,15 +10,7 @@ class Picker
   isPicking: false
 
   constructor: ->
-
-    $.on 'alt + f', @toggle
-
-    Player.on 'pick:start', =>
-      $.press 'f'
-      @isPicking = true
-
-    Player.on 'pick:end', => Timer.add 'picker/debounce', 100, => @isPicking = false
-
+    @init()
     @watch()
 
   # find(): void
@@ -63,6 +55,26 @@ class Picker
     [x, y] = ColorManager.find color, (Point.new start), Point.new end
     return [x, y]
 
+  # init(): void
+  init: ->
+
+    $.on 'alt + f', @toggle
+
+    # why?
+    # sometimes pick:end event fired before pick:start event
+    # very strange
+    fn = =>
+      unless @isPicking
+        @isPicking = true
+        console.log 'picker/is-picking: true'
+        $.press 'f'
+      else
+        @isPicking = false
+        console.log 'picker/is-picking: false'
+
+    Player.on 'pick:start', fn
+    Player.on 'pick:end', fn
+
   # listen(): void
   listen: ->
     unless @isPicking then return
@@ -86,6 +98,7 @@ class Picker
 
     unless Scene.is 'event' then return false
 
+    Idle.setTimer() # avoid idle
     $.press 'space'
 
     p = ''
@@ -102,14 +115,16 @@ class Picker
 
   # watch(): void
   watch: ->
+
     interval = 100
+    token = 'picker/watch'
+
     fn = =>
-      if Tactic.isActive then return
       if (Config.get 'better-pickup') and !@isPicking then @next()
       else @listen()
-    Client.on 'idle', -> Timer.remove 'picker/watch'
-    Client.on 'activate', -> Timer.loop 'picker/watch', interval, fn
-    Timer.loop 'picker/watch', interval, fn
+
+    Client.on 'idle', -> Timer.remove token
+    Client.on 'activate', -> Timer.loop token, interval, fn
 
 # execute
 Picker = new Picker()

@@ -95,8 +95,12 @@ on-long-press = a, 100, a, tt
 [ganyu]
 on-long-press = a~, a
 
-[hu_tao]
+[hu tao]
 on-long-press = !@e, a, e, @e, 300; a~, j, 100
+
+[kamisato ayaka]
+on-long-press = !@e?, a, 100, a, 150, a, 280, a, a~, 500, s, 400; a, e
+on-switch = !@e?, s; e, 300, s
 
 [keqing]
 on-long-press = a, ee
@@ -107,7 +111,7 @@ on-long-press = a, a~
 [ningguang]
 on-long-press = a, 700, a, 400, a~, 500, e
 
-[sangonomiya_kokomi]
+[sangonomiya kokomi]
 on-long-press = a, a, j, 40
 
 [venti]

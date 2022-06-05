@@ -80,10 +80,12 @@ class Hud
 
   # watch(): void
   watch: ->
+
     interval = 200
-    Client.on 'leave', -> Timer.remove 'hud/watch'
-    Client.on 'enter', => Timer.loop 'hud/watch', interval, @update
-    Timer.loop 'hud/watch', interval, @update
+    token = 'hud/watch'
+
+    Client.on 'idle', -> Timer.remove token
+    Client.on 'activate', => Timer.loop token, interval, @update
 
 # execute
 Hud = new Hud()

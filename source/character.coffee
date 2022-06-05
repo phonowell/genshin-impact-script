@@ -43,6 +43,7 @@ import __xingqiu__ from '../../genshin-character-data/source/xingqiu.yaml'
 import __xinyan__ from '../../genshin-character-data/source/xinyan.yaml'
 import __yae_miko__ from '../../genshin-character-data/source/yae_miko.yaml'
 import __yanfei__ from '../../genshin-character-data/source/yanfei.yaml'
+import __yelan__ from '../../genshin-character-data/source/yelan.yaml'
 import __yoimiya__ from '../../genshin-character-data/source/yoimiya.yaml'
 import __yun_jin__ from '../../genshin-character-data/source/yun_jin.yaml'
 import __zhongli__ from '../../genshin-character-data/source/zhongli.yaml'
@@ -101,6 +102,7 @@ class Character
     $.mixin data, xinyan: __xinyan__
     $.mixin data, yae_miko: __yae_miko__
     $.mixin data, yanfei: __yanfei__
+    $.mixin data, yelan: __yelan__
     $.mixin data, yoimiya: __yoimiya__
     $.mixin data, yun_jin: __yun_jin__
     $.mixin data, zhongli: __zhongli__
@@ -121,7 +123,7 @@ class Character
         weapon: char.weapon
 
       @data[name].audio = @pickFromFile name, 'audio'
-      @data[name].onLongPress = @makeOnLongPress @pickFromFile name, 'on-long-press'
+      @data[name].onLongPress = @pickFromFile name, 'on-long-press'
       @data[name].onSwitch = @pickFromFile name, 'on-switch'
 
   # get(name: string, key?: string): unknown
@@ -156,22 +158,6 @@ class Character
     if target then return @read "all/#{key}", 0
 
     return 0
-
-  # makeOnLongPress(value: string): string[] | undefined
-  makeOnLongPress: (value) ->
-
-    unless value then return 0
-
-    value = $.replace value, ' ', ''
-    listAll = []
-
-    for group in $.split value, ';'
-      listGroup = []
-      for item in $.split group, ','
-        $.push listGroup, item
-      $.push listAll, listGroup
-
-    return listAll
 
   # makeValueIntoArray: (value: number | number[]): number[]
   makeValueIntoArray: (value) -> switch $.type value
