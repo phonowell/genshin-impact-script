@@ -21,4 +21,4 @@ All keys use the game's default keys, but need to `Switch Walk/Run` bound to `Ri
 | `Alt + Space`                         | 启用/停用改良跳跃<br>Enable/disable better-jump                  |
 | `Win + Left/Right/Up/Down`            | 移动窗口<br>Move the window                                      |
 | `Ctrl + Numpad Dot`                   | 开始/结束录像<br>Start/end recording                             |
-| `Ctrl + Numpad 0~9`                   | 播放录像<br>Replay Recording                                     |
+| `Ctrl + Numpad 0~9`                   | 播放录像<br>Replay recording                                     |

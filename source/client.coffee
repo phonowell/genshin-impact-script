@@ -28,6 +28,7 @@ class Client extends KeyBinding
 
   # blur(): void
   blur: ->
+    unless Config.get 'idle/use-mouse-move-out' then return
     name = 'ahk_class Shell_TrayWnd'
     `WinActivate, % name`
 
@@ -132,7 +133,6 @@ class Client extends KeyBinding
       $.press 'alt + enter'
       @getSize()
       @setStyle()
-      Timer.add 1e3, @report
 
     for direction in ['left', 'right', 'up', 'down']
       $.on "win + #{direction}", =>

@@ -32,19 +32,21 @@ class Party extends EmitterShellX
 
     @on 'switch', (n) =>
 
-      name = @listMember[n]
-      nameNew = name
-      nameOld = @listMember[@current]
-      unless nameNew then nameNew = 'unknown'
-      unless nameOld then nameOld = 'unknown'
-      console.log "party: [#{@current}]#{nameOld} -> [#{n}]#{nameNew}"
-
+      last = @current
       @current = n
-      @name = nameNew
+
+      nameLast = @listMember[last]
+      @name = @listMember[@current]
+
+      unless nameLast then nameLast = 'unknown'
+      unless @name then @name = 'unknown'
+
+      console.log "party: [#{last}]#{nameLast} -> [#{@current}]#{@name}"
+
       @tsSwitch = $.now()
 
-      if nameOld == 'tartaglia' and nameNew != 'tartaglia'
-        Skill.endTartaglia()
+      {typeE} = Character.get nameLast
+      if typeE == 2 then Skill.endEAsType2 last
 
     $.on 'f12', @scan
     $.on 'alt + f12', =>
@@ -200,7 +202,7 @@ class Party extends EmitterShellX
       name = @getNameViaSlot n
       $.push @listMember, name
 
-      nameOutput = Character.get name, 'name'
+      nameOutput = "#{Character.get name, 'name'} [C#{Character.get name, 'constellation'}]"
 
       if !@current and @checkCurrent n
         @current = n

@@ -21,6 +21,7 @@ import __kamisato_ayato__ from '../../genshin-character-data/source/kamisato_aya
 import __keqing__ from '../../genshin-character-data/source/keqing.yaml'
 import __klee__ from '../../genshin-character-data/source/klee.yaml'
 import __kujou_sara__ from '../../genshin-character-data/source/kujou_sara.yaml'
+import __kuki_shinobu__ from '../../genshin-character-data/source/kuki_shinobu.yaml'
 import __lisa__ from '../../genshin-character-data/source/lisa.yaml'
 import __mona__ from '../../genshin-character-data/source/mona.yaml'
 import __ningguang__ from '../../genshin-character-data/source/ningguang.yaml'
@@ -32,6 +33,7 @@ import __rosaria__ from '../../genshin-character-data/source/rosaria.yaml'
 import __sangonomiya_kokomi__ from '../../genshin-character-data/source/sangonomiya_kokomi.yaml'
 import __sayu__ from '../../genshin-character-data/source/sayu.yaml'
 import __shenhe__ from '../../genshin-character-data/source/shenhe.yaml'
+import __shikanoin_heizou__ from '../../genshin-character-data/source/shikanoin_heizou.yaml'
 import __sucrose__ from '../../genshin-character-data/source/sucrose.yaml'
 import __tartaglia__ from '../../genshin-character-data/source/tartaglia.yaml'
 import __thoma__ from '../../genshin-character-data/source/thoma.yaml'
@@ -80,6 +82,7 @@ class Character
     $.mixin data, keqing: __keqing__
     $.mixin data, klee: __klee__
     $.mixin data, kujou_sara: __kujou_sara__
+    $.mixin data, kuki_shinobu: __kuki_shinobu__
     $.mixin data, lisa: __lisa__
     $.mixin data, mona: __mona__
     $.mixin data, ningguang: __ningguang__
@@ -91,6 +94,7 @@ class Character
     $.mixin data, sangonomiya_kokomi: __sangonomiya_kokomi__
     $.mixin data, sayu: __sayu__
     $.mixin data, shenhe: __shenhe__
+    $.mixin data, shikanoin_heizou: __shikanoin_heizou__
     $.mixin data, sucrose: __sucrose__
     $.mixin data, tartaglia: __tartaglia__
     $.mixin data, thoma: __thoma__
@@ -116,13 +120,18 @@ class Character
         durationE: @padArray @makeValueIntoArray char['duration-e']
         durationQ: char['duration-q']
         name: char['name']
-        preswingE: char['preswing-e']
+        preswingE: @padArray @makeValueIntoArray char['preswing-e']
         star: char['star']
+        # typeE: 0 | 1 | 2 | 3
+        # 0: default
+        # 1: like jean, amber, beidou
+        # 2: tartaglia
+        # 3: like sayu & yelan
         typeE: char['type-e']
         vision: char.vision
         weapon: char.weapon
 
-      @data[name].audio = @pickFromFile name, 'audio'
+      @data[name].constellation = @pickFromFile name, 'constellation'
       @data[name].onLongPress = @pickFromFile name, 'on-long-press'
       @data[name].onSwitch = @pickFromFile name, 'on-switch'
 

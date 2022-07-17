@@ -1,6 +1,5 @@
 ### interface
 type Slot = 1 | 2 | 3 | 4 | 5
-type Step = 'end' | 'start'
 type Timestamp = number
 ###
 
@@ -35,11 +34,9 @@ class Skill
     Timer.remove token
 
     {current, name} = Party
-    {preswingE, typeE} = Character.get name
+    {preswingE} = Character.get name
 
-    if typeE == 1 then return
-
-    delay = preswingE * 1e3 + 400
+    delay = (@max preswingE) * 1e3 + 400
     interval = 100
     limit = delay + 600
 
@@ -69,22 +66,121 @@ class Skill
 
   # correctCD(cd: number): number
   correctCD: (cd) ->
-    unless Party.hasBuff 'impetuous winds' then return cd
-    return cd * 0.95
+    unless Party.hasBuff 'impetuous winds' then return cd * 1e3
+    return cd * 1e3 * 0.95
 
-  # endTartaglia(): boolean
-  endTartaglia: ->
+  # endE(): void
+  endE: ->
 
-    n = Party.getIndexBy 'tartaglia'
+    {current, name} = Party
+    unless name then return
 
-    unless @listDuration[n] then return false
+    unless @listRecord[current] then return
+
+    {typeE} = Character.get name
+    switch typeE
+      when 1 then @endEAsType1()
+      when 2 then @endEAsType2 current
+      when 3 then @endEAsType3()
+      else
+        isHolding = $.now() - @listRecord[current] > 500
+        unless isHolding then @endEAsDefault()
+        else @endEAsHolding()
+
+  # endEAsDefault(): void
+  endEAsDefault: ->
+
+    {current, name} = Party
+    {cdE, durationE, preswingE} = Character.get name
+
+    cd = @correctCD cdE[0]
+    correction = preswingE[0] * 1e3
+    duration = durationE[0] * 1e3
+    record = @listRecord[current]
+
+    @listCountDown[current] = record + cd + correction
+    if duration then @listDuration[current] = record + duration
+
+    @listCache[current] = [cd, duration]
+    @listRecord[current] = 0
+    @check()
+
+  # endEAsHolding(): void
+  endEAsHolding: ->
+
+    {current, name} = Party
+    {cdE, durationE, preswingE} = Character.get name
+
+    cd = @correctCD cdE[1]
+    correction = preswingE[1] * 1e3
+    duration = durationE[1] * 1e3
+    record = @listRecord[current]
+
+    @listCountDown[current] = record + cd + correction
+    if duration then @listDuration[current] = record + duration
+
+    @listCache[current] = [cd, duration]
+    @listRecord[current] = 0
+    @check()
+
+  # endEAsType1(): void
+  endEAsType1: ->
+
+    {current, name} = Party
+    {cdE, durationE, preswingE} = Character.get name
+
+    cd = @correctCD cdE[1]
+    correction = preswingE[1] * 1e3
+    duration = durationE[1] * 1e3
+    now = $.now()
+    record = @listRecord[current]
+
+    @listCountDown[current] = now + cd + correction
+    if duration then @listDuration[current] = now + duration
+
+    @listCache[current] = [cd, duration]
+    @listRecord[current] = 0
+    @check()
+
+  # endEAsType2(current: Slot): void
+  endEAsType2: (current) ->
+
+    unless @listDuration[current]
+      @endEAsDefault()
+      return
+
+    name = Party.listMember[current]
+    {durationE, preswingE} = Character.get name
 
     now = $.now()
+    cd = (@correctCD 30e3 - (@listDuration[current] - now) + 6e3 - 1e3) / 1e3
+    correction = preswingE[0] * 1e3
+    duration = durationE[0] * 1e3
 
-    @listCountDown[n] = now + 30e3 - (@listDuration[n] - now) + 6e3
-    @listDuration[n] = 0
+    @listCountDown[current] = now + cd + correction
+    @listDuration[current] = 0
 
-    return true
+    @listCache[current] = [cd, duration]
+    @listRecord[current] = 0
+    @check()
+
+  # endEAsType3(): void
+  endEAsType3: ->
+
+    {current, name} = Party
+    {cdE, durationE, preswingE} = Character.get name
+
+    duration = durationE[1] * 1e3
+    cd = (@correctCD cdE[1]) + duration
+    correction = preswingE[1] * 1e3
+    record = @listRecord[current]
+
+    @listCountDown[current] = record + cd + correction
+    if duration then @listDuration[current] = record + duration
+
+    @listCache[current] = [cd, duration]
+    @listRecord[current] = 0
+    # @check()
 
   # format(n: number): string
   format: (n) ->
@@ -96,65 +192,10 @@ class Skill
     unless Config.get 'skill-timer' then return
     Hud.render n, ''
 
-  # record(step: Step): void
-  record: (step) ->
-
-    {current, name} = Party
-    unless name then return
-    if (name == 'tartaglia') and @endTartaglia() then return
-
-    countdown = @listCountDown[current]
-    now = $.now()
-    if countdown and countdown - now > 1e3 then return
-
-    if step == 'end'
-      @recordEnd now
-      return
-
-    if step == 'start'
-      @recordStart now
-      return
-
-  # recordEnd(now: Timestamp): void
-  recordEnd: (now) ->
-
-    {current, name} = Party
-    {cdE, durationE, preswingE, typeE} = Character.get name
-
-    unless @listRecord[current] then return
-
-    correction = preswingE * 1e3
-
-    # tap
-    if now - @listRecord[current] < 500
-      @listCountDown[current] = @listRecord[current] + @correctCD (cdE[0] * 1e3) + correction
-      if durationE[0]
-        @listDuration[current] = @listRecord[current] + (durationE[0] * 1e3)
-      @listCache[current] = [(@correctCD cdE[0]), durationE[0]]
-      @listRecord[current] = 0
-      @check()
-      return
-
-    # hold
-
-    if typeE == 1
-      @listCountDown[current] = now + @correctCD (cdE[1] * 1e3) + correction
-      if durationE[1]
-        @listDuration[current] = now + (durationE[1] * 1e3)
-    else
-      @listCountDown[current] = @listRecord[current] + @correctCD (cdE[1] * 1e3) + correction
-      if durationE[1]
-        @listDuration[current] = @listRecord[current] + (durationE[1] * 1e3)
-
-    @listCache[current] = [(@correctCD cdE[1]), durationE[1]]
-    @listRecord[current] = 0
-    @check()
-
-  # recordStart(now: Timestamp): void
-  recordStart: (now) ->
-    {current} = Party
-    if @listRecord[current] then return
-    @listRecord[current] = now
+  # max(list: [number, number]): number
+  max: (list) ->
+    if list[0] >= list[1] then return list[0]
+    return list[1]
 
   # render(n: Slot, message: string): void
   render: (n, message) ->
@@ -179,6 +220,19 @@ class Skill
     @listDuration[n] = 0
     @listQ[n] = 0
     @listRecord[n] = 0
+
+  # startE(): void
+  startE: ->
+
+    {current, name} = Party
+    unless name then return
+
+    cd = @listCountDown[current]
+    now = $.now()
+    if cd and cd - now > 1e3 then return
+
+    if @listRecord[current] then return
+    @listRecord[current] = now
 
   # switchQ(key: Key): void
   switchQ: (key) ->
@@ -213,11 +267,14 @@ class Skill
 
     listMessage = []
 
+    tagCurrent = ''
+    if n == Party.current then tagCurrent = ' 🎮'
+
     if @listCountDown[n]
       progress = @renderProgress @listCache[n][0] - (@listCountDown[n] - now) * 0.001, @listCache[n][0], 'floor'
       formatted = @format now - @listCountDown[n]
-      $.push listMessage, "#{progress} #{formatted}"
-    else $.push listMessage, '◾️◾️◾️◾️◾️'
+      $.push listMessage, "#{progress} #{formatted}#{tagCurrent}"
+    else $.push listMessage, "◾️◾️◾️◾️◾️#{tagCurrent}"
 
     if @listDuration[n]
       progress = @renderProgress (@listDuration[n] - now) * 0.001, @listCache[n][1], 'ceil'
@@ -239,10 +296,11 @@ class Skill
     if isHolding then delay = 1e3
 
     $.press 'e:down'
-    @record 'start'
+    @startE()
+
     Timer.add 'skill/use', delay, =>
       $.press 'e:up'
-      @record 'end'
+      @endE()
 
   # useQ(): void
   useQ: ->

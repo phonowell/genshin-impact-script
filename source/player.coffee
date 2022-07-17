@@ -23,8 +23,8 @@ class Player extends KeyBinding
   aboutSkill: ->
     @registerEvent 'use-e', 'e'
     @registerEvent 'use-q', 'q'
-    @on 'use-e:start', -> Skill.record 'start'
-    @on 'use-e:end', -> Skill.record 'end'
+    @on 'use-e:start', Skill.startE
+    @on 'use-e:end', Skill.endE
     @on 'use-q:start', Skill.useQ
 
   # aboutSwitch(): void
@@ -50,7 +50,7 @@ class Player extends KeyBinding
 
         if onSwitch == 'e'
           $.press 'e:down'
-          Skill.record 'start'
+          Skill.startE()
           return
 
     @on 'switch:end', (key) => @waitForSwitch 'end', key, => Timer.add 50, =>
@@ -60,7 +60,7 @@ class Player extends KeyBinding
 
       if onSwitch == 'e'
         $.press 'e:up'
-        Skill.record 'end'
+        Skill.endE()
         return
 
       Tactic.start onSwitch, true

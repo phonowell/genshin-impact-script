@@ -27,10 +27,10 @@ class Picker
 
     if color == 0xFFFFFF
       [x1, y1] = @findColor 0xFFFFFF, ['61%', y], ['63%', y + 20]
-
-      # check shape
       if Point.isValid [x1, y1]
-        color1 = ColorManager.get [x1 + 1, y1]
+
+        # check shape
+        color1 = ColorManager.get [x1 + 2, y1]
         unless color1 then return
         if color1 == 0xFFFFFF then return
 

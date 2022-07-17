@@ -38,6 +38,11 @@ class Replayer
       @start value, callback
       return
 
+    if list[0] == '@sleep'
+      value = list[1]
+      Timer.add value, callback
+      return
+
   # fire(key: string): void
   fire: (key) ->
 

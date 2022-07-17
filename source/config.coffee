@@ -21,6 +21,10 @@ class Config
     @register 'better-pickup/use-fast-pickup'
     @register 'better-pickup/use-quick-skip'
 
+    # idle
+    @set 'idle/use-time', @read 'idle/use-time', 60
+    @register 'idle/use-mouse-move-out'
+
     # skill-timer
     @register 'skill-timer'
 

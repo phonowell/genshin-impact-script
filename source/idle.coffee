@@ -46,7 +46,11 @@ class Idle extends KeyBinding
 
   # setTimer(): void
   setTimer: ->
-    Timer.add @token, 60e3, ->
+
+    time = Config.get 'idle/use-time'
+    unless time then return
+
+    Timer.add @token, time * 1e3, ->
       if Client.isSuspend then return
       if Scene.is 'unknown' then return
       Client.emit 'idle'

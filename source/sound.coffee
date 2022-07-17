@@ -40,11 +40,6 @@ class Sound
   # mute(): void
   mute: -> ShiftAppVolumeTopped (Config.get 'basic/process'), 0
 
-  # play(name: string): void
-  play: (name) ->
-    unless Config.get 'sound' then return
-    $.play "audio/#{name}"
-
   # unmute(): void
   unmute: -> ShiftAppVolumeTopped (Config.get 'basic/process'), 1
 

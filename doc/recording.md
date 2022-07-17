@@ -77,6 +77,7 @@ A line starting with `@` means it contains special tags, and the following speci
 
 - @input
 - @run
+- @sleep
 
 将上述文本内容保存为`replay/9.txt`后，在游戏中按下`Ctrl + Numpad 9`,应当能看到输入并发送了`hello world`
 

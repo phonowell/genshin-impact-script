@@ -11,10 +11,10 @@ const compile = (
 
 const main = async () => {
   await compile('index')
-  await compile('slim')
+  // await compile('slim')
   await clean()
   await pack('index', 'GIS')
-  await pack('slim', 'GISS')
+  // await pack('slim', 'GISS')
 }
 
 const pack = async (
