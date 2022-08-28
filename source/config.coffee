@@ -1,10 +1,52 @@
 # function
+
 class Config
 
   data: {}
   source: 'config.ini'
 
   constructor: ->
+    unless @detectRegion() then return
+    @load()
+
+  # detectPath(): boolean | undefined
+  detectPath: ->
+
+    if @read 'basic/path' then return true
+
+    name = "ahk_exe #{@get 'basic/process'}"
+    __path__ = __path__
+    `WinGet, __path__, ProcessPath, % name`
+    @write 'basic/path', __path__
+
+    $.reload()
+
+  # detectRegion(): boolean | undefined
+  detectRegion: ->
+
+    if @read 'basic/process' then return true
+
+    unless A_language == '0804'
+      @write 'basic/process', 'GenshinImpact.exe'
+      return
+
+    msg = $.join [
+      'Are you from the CELESTIA or IRMINSUL server?'
+      'If you are not sure, please select NO.'
+    ], '\n'
+
+    $.confirm msg, (answer) =>
+
+      unless answer then @write 'basic/process', 'GenshinImpact.exe'
+      else @write 'basic/process', 'Yuanshen.exe'
+
+      $.reload()
+
+  # get(ipt: string): boolean
+  get: (ipt) -> return @data[ipt]
+
+  # load(): void
+  load: ->
 
     # debug
     @register 'debug'
@@ -32,13 +74,14 @@ class Config
     @register 'sound/use-beep'
     @register 'sound/use-mute-when-idle'
 
-  # get(ipt: string): boolean
-  get: (ipt) -> return @data[ipt]
+    # misc
+    @register 'misc/use-transparency-when-idle'
 
   # read(ipt: string, defaultValue?: string): void
   read: (ipt, defaultValue = '') ->
     [section, key] = @split ipt
-    `IniRead, result, % this.source, % section, % key, % defaultValue`
+    `IniRead, result, % this.source, % section, % key, % A_Space`
+    unless `result` then return $.toLowerCase defaultValue
     return $.toLowerCase `result`
 
   # register(ipt: string, hotkey?: string): void
@@ -61,16 +104,17 @@ class Config
   toggle: (ipt) ->
     if @get ipt
       @set ipt, false
-      @write ipt, ' 0'
+      @write ipt, 0
       Hud.render 0, "#{ipt}: OFF"
     else
       @set ipt, true
-      @write ipt, ' 1'
+      @write ipt, 1
       Hud.render 0, "#{ipt}: ON"
 
   # write(ipt: string, value: string): void
   write: (ipt, value) ->
     [section, key] = @split ipt
+    value = " #{value}"
     `IniWrite, % value, % this.source, % section, % key`
 
 # execute

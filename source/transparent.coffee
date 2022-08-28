@@ -1,26 +1,17 @@
 class Transparent
 
-  opacity: 100
-
   constructor: ->
-    $.on 'alt + up', @minus
-    $.on 'alt + down', @add
 
-  add: ->
-    opacity = @opacity + 10
-    if opacity > 100 then opacity = 100
-    @opacity = opacity
-    @render()
+    n = Config.get 'misc/use-transparency-when-idle'
+    unless n then return
 
-  minus: ->
-    opacity = @opacity - 10
-    if opacity < 0 then opacity = 0
-    @opacity = opacity
-    @render()
+    Client.on 'idle', => @set 100 - n
+    Client.on 'activate', => @set 100
 
-  render: ->
+  # set(vn: number): void
+  set: (vn) ->
     name = "ahk_exe #{Config.get 'basic/process'}"
-    opacity = 255 * (@opacity / 100)
+    opacity = 255 * (vn / 100)
     `WinSet, Transparent, % opacity, % name`
 
 # export

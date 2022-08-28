@@ -1,4 +1,5 @@
 # function
+
 class Indicator extends EmitterShellX
 
   cacheCost: {} # Record<string, number[]>
@@ -34,9 +35,9 @@ class Indicator extends EmitterShellX
   # getCount(name: string): number
   getCount: (name) ->
     unless name then return
-    value = @cacheCount[name]
-    unless value then value = 0
-    return value
+    vn = @cacheCount[name]
+    unless vn then vn = 0
+    return vn
 
   # setCost(name: string, step = 'start'| 'end'): void
   setCost: (name, step) ->
@@ -57,9 +58,9 @@ class Indicator extends EmitterShellX
   setCount: (name) ->
     unless name then return
 
-    value = @cacheCount[name]
-    unless value then value = 0
-    @cacheCount[name] = value + 1
+    vn = @cacheCount[name]
+    unless vn then vn = 0
+    @cacheCount[name] = vn + 1
 
   # watch(): void
   watch: ->

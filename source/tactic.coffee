@@ -1,22 +1,21 @@
 # !@e - not at e duration
-# !@e? - e is not ready
-# !@m - not at movement
-# @e - at e-duration
-# @e? - e is ready
-# @m - at movement
-# a - attack
-# a~ - charged attack
-# e - use e
-# ee - use e twice
-# e~ - holding e
-# j - jump
-# q - use q
-# s - sprint
-# t - aim
-# tt - aim twice
-
-### interface
-type Fn = () => unknown
+### keywords
+!@e? - e is not ready
+!@m - not at movement
+# - ignore
+@e - at e-duration
+@e? - e is ready
+@m - at movement
+a - attack
+a~ - charged attack
+e - use e
+ee - use e twice
+e~ - holding e
+j - jump
+q - use q
+s - sprint
+t - aim
+tt - aim twice
 ###
 
 # function
@@ -156,6 +155,7 @@ class Tactic
   execute: (list, g = 0, i = 0, isOnce = false) ->
 
     item = @get list, g, i
+    console.log "tactic/execute: #{item}"
     unless item
       unless isOnce then @execute list
       return
@@ -182,8 +182,15 @@ class Tactic
       'tt': => @doAimTwice next
 
     callback = map[item]
-    unless callback
-      if ($.type item) == 'number' then callback = => @delay item, next
+    unless callback then callback = do =>
+
+      if $.startsWith item, '#' then return nextGroup
+
+      if $.startsWith item, '$' then return =>
+        $.press SubStr item, 2
+        @delay @intervalShort, next
+
+      if ($.type item) == 'number' then return => @delay item, next
 
     if callback then callback()
 

@@ -6,6 +6,7 @@ import __barbara__ from '../../genshin-character-data/source/barbara.yaml'
 import __beidou__ from '../../genshin-character-data/source/beidou.yaml'
 import __bennett__ from '../../genshin-character-data/source/bennett.yaml'
 import __chongyun__ from '../../genshin-character-data/source/chongyun.yaml'
+import __collei__ from '../../genshin-character-data/source/collei.yaml'
 import __diluc__ from '../../genshin-character-data/source/diluc.yaml'
 import __diona__ from '../../genshin-character-data/source/diona.yaml'
 import __eula__ from '../../genshin-character-data/source/eula.yaml'
@@ -37,6 +38,7 @@ import __shikanoin_heizou__ from '../../genshin-character-data/source/shikanoin_
 import __sucrose__ from '../../genshin-character-data/source/sucrose.yaml'
 import __tartaglia__ from '../../genshin-character-data/source/tartaglia.yaml'
 import __thoma__ from '../../genshin-character-data/source/thoma.yaml'
+import __tighnari__ from '../../genshin-character-data/source/tighnari.yaml'
 import __traveler__ from '../../genshin-character-data/source/traveler.yaml'
 import __venti__ from '../../genshin-character-data/source/venti.yaml'
 import __xiangling__ from '../../genshin-character-data/source/xiangling.yaml'
@@ -51,89 +53,13 @@ import __yun_jin__ from '../../genshin-character-data/source/yun_jin.yaml'
 import __zhongli__ from '../../genshin-character-data/source/zhongli.yaml'
 
 # function
+
 class Character
 
   data: {}
   source: 'character.ini'
 
-  constructor: ->
-
-    data = {}
-    $.mixin data, albedo: __albedo__
-    $.mixin data, aloy: __aloy__
-    $.mixin data, amber: __amber__
-    $.mixin data, arataki_itto: __arataki_itto__
-    $.mixin data, barbara: __barbara__
-    $.mixin data, beidou: __beidou__
-    $.mixin data, bennett: __bennett__
-    $.mixin data, chongyun: __chongyun__
-    $.mixin data, diluc: __diluc__
-    $.mixin data, diona: __diona__
-    $.mixin data, eula: __eula__
-    $.mixin data, fischl: __fischl__
-    $.mixin data, ganyu: __ganyu__
-    $.mixin data, gorou: __gorou__
-    $.mixin data, hu_tao: __hu_tao__
-    $.mixin data, jean: __jean__
-    $.mixin data, kaedehara_kazuha: __kaedehara_kazuha__
-    $.mixin data, kaeya: __kaeya__
-    $.mixin data, kamisato_ayaka: __kamisato_ayaka__
-    $.mixin data, kamisato_ayato: __kamisato_ayato__
-    $.mixin data, keqing: __keqing__
-    $.mixin data, klee: __klee__
-    $.mixin data, kujou_sara: __kujou_sara__
-    $.mixin data, kuki_shinobu: __kuki_shinobu__
-    $.mixin data, lisa: __lisa__
-    $.mixin data, mona: __mona__
-    $.mixin data, ningguang: __ningguang__
-    $.mixin data, noelle: __noelle__
-    $.mixin data, qiqi: __qiqi__
-    $.mixin data, raiden_shogun: __raiden_shogun__
-    $.mixin data, rezor: __rezor__
-    $.mixin data, rosaria: __rosaria__
-    $.mixin data, sangonomiya_kokomi: __sangonomiya_kokomi__
-    $.mixin data, sayu: __sayu__
-    $.mixin data, shenhe: __shenhe__
-    $.mixin data, shikanoin_heizou: __shikanoin_heizou__
-    $.mixin data, sucrose: __sucrose__
-    $.mixin data, tartaglia: __tartaglia__
-    $.mixin data, thoma: __thoma__
-    $.mixin data, traveler: __traveler__
-    $.mixin data, venti: __venti__
-    $.mixin data, xiangling: __xiangling__
-    $.mixin data, xiao: __xiao__
-    $.mixin data, xingqiu: __xingqiu__
-    $.mixin data, xinyan: __xinyan__
-    $.mixin data, yae_miko: __yae_miko__
-    $.mixin data, yanfei: __yanfei__
-    $.mixin data, yelan: __yelan__
-    $.mixin data, yoimiya: __yoimiya__
-    $.mixin data, yun_jin: __yun_jin__
-    $.mixin data, zhongli: __zhongli__
-
-    for name, char of data
-
-      @data[name] =
-        cdE: @padArray @makeValueIntoArray char['cd-e']
-        cdQ: char['cd-q']
-        color: @makeValueIntoArray char['color']
-        durationE: @padArray @makeValueIntoArray char['duration-e']
-        durationQ: char['duration-q']
-        name: char['name']
-        preswingE: @padArray @makeValueIntoArray char['preswing-e']
-        star: char['star']
-        # typeE: 0 | 1 | 2 | 3
-        # 0: default
-        # 1: like jean, amber, beidou
-        # 2: tartaglia
-        # 3: like sayu & yelan
-        typeE: char['type-e']
-        vision: char.vision
-        weapon: char.weapon
-
-      @data[name].constellation = @pickFromFile name, 'constellation'
-      @data[name].onLongPress = @pickFromFile name, 'on-long-press'
-      @data[name].onSwitch = @pickFromFile name, 'on-switch'
+  constructor: -> @load()
 
   # get(name: string, key?: string): unknown
   get: (name, key = '') ->
@@ -167,6 +93,87 @@ class Character
     if target then return @read "all/#{key}", 0
 
     return 0
+
+  # load(): void
+  load: ->
+
+    data = {}
+    $.mixin data, albedo: __albedo__
+    $.mixin data, aloy: __aloy__
+    $.mixin data, amber: __amber__
+    $.mixin data, arataki_itto: __arataki_itto__
+    $.mixin data, barbara: __barbara__
+    $.mixin data, beidou: __beidou__
+    $.mixin data, bennett: __bennett__
+    $.mixin data, chongyun: __chongyun__
+    $.mixin data, collei: __collei__
+    $.mixin data, diluc: __diluc__
+    $.mixin data, diona: __diona__
+    $.mixin data, eula: __eula__
+    $.mixin data, fischl: __fischl__
+    $.mixin data, ganyu: __ganyu__
+    $.mixin data, gorou: __gorou__
+    $.mixin data, hu_tao: __hu_tao__
+    $.mixin data, jean: __jean__
+    $.mixin data, kaedehara_kazuha: __kaedehara_kazuha__
+    $.mixin data, kaeya: __kaeya__
+    $.mixin data, kamisato_ayaka: __kamisato_ayaka__
+    $.mixin data, kamisato_ayato: __kamisato_ayato__
+    $.mixin data, keqing: __keqing__
+    $.mixin data, klee: __klee__
+    $.mixin data, kujou_sara: __kujou_sara__
+    $.mixin data, kuki_shinobu: __kuki_shinobu__
+    $.mixin data, lisa: __lisa__
+    $.mixin data, mona: __mona__
+    $.mixin data, ningguang: __ningguang__
+    $.mixin data, noelle: __noelle__
+    $.mixin data, qiqi: __qiqi__
+    $.mixin data, raiden_shogun: __raiden_shogun__
+    $.mixin data, rezor: __rezor__
+    $.mixin data, rosaria: __rosaria__
+    $.mixin data, sangonomiya_kokomi: __sangonomiya_kokomi__
+    $.mixin data, sayu: __sayu__
+    $.mixin data, shenhe: __shenhe__
+    $.mixin data, shikanoin_heizou: __shikanoin_heizou__
+    $.mixin data, sucrose: __sucrose__
+    $.mixin data, tartaglia: __tartaglia__
+    $.mixin data, thoma: __thoma__
+    $.mixin data, tighnari: __tighnari__
+    $.mixin data, traveler: __traveler__
+    $.mixin data, venti: __venti__
+    $.mixin data, xiangling: __xiangling__
+    $.mixin data, xiao: __xiao__
+    $.mixin data, xingqiu: __xingqiu__
+    $.mixin data, xinyan: __xinyan__
+    $.mixin data, yae_miko: __yae_miko__
+    $.mixin data, yanfei: __yanfei__
+    $.mixin data, yelan: __yelan__
+    $.mixin data, yoimiya: __yoimiya__
+    $.mixin data, yun_jin: __yun_jin__
+    $.mixin data, zhongli: __zhongli__
+
+    for name, char of data
+
+      @data[name] =
+        cdE: @padArray @makeValueIntoArray char['cd-e']
+        cdQ: char['cd-q']
+        color: @makeValueIntoArray char['color']
+        durationE: @padArray @makeValueIntoArray char['duration-e']
+        durationQ: char['duration-q']
+        name: char['name']
+        star: char['star']
+        # typeE: 0 | 1 | 2 | 3
+        # 0: default
+        # 1: like jean, amber, beidou
+        # 2: tartaglia
+        # 3: like sayu & yelan
+        typeE: char['type-e']
+        vision: char.vision
+        weapon: char.weapon
+
+      @data[name].constellation = @pickFromFile name, 'constellation'
+      @data[name].onLongPress = @pickFromFile name, 'on-long-press'
+      @data[name].onSwitch = @pickFromFile name, 'on-switch'
 
   # makeValueIntoArray: (value: number | number[]): number[]
   makeValueIntoArray: (value) -> switch $.type value

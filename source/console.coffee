@@ -12,7 +12,10 @@ class Console
   add: (msg) ->
 
     id = ''
-    if $.includes msg, ':' then [id] = $.split msg, ':'
+    if $.includes msg, ':'
+      [id, string] = $.split msg, ':'
+      if ($.length msg) > 40
+        msg = "#{id}:\n  #{$.trim string}"
 
     tsOutdate = $.now() + @lifetime
 
@@ -47,10 +50,8 @@ class Console
   # render(): void
   render: ->
     list = $.map @listContent, (item) -> return item[1]
-    text = $.join list, '\n'
-    text = $.trim text, ' \n'
-    left = 0 - Client.left
-    top = Client.height * 0.5
+    text = $.trim ($.join list, '\n'), ' \n'
+    [left, top] = [0 - Client.left, Client.height * 0.5]
     `ToolTip, % text, % left, % top, 20`
 
   # update(): void

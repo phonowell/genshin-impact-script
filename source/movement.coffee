@@ -9,6 +9,10 @@ class Movement extends KeyBinding
 
   constructor: ->
     super()
+    @init()
+
+  # init(): void
+  init: ->
 
     # shift
     @registerEvent 'shift', 'l-shift', 'prevent'
@@ -16,7 +20,8 @@ class Movement extends KeyBinding
     @on 'shift:end', -> $.click 'right:up'
 
     # walk
-    for key in ['w', 'a', 's', 'd'] then @registerEvent 'walk', key
+    for key in ['w', 'a', 's', 'd']
+      @registerEvent 'walk', key
 
     @on 'walk:start', =>
       unless @count then @emit 'move:start'
@@ -47,9 +52,7 @@ class Movement extends KeyBinding
       unless (Config.get 'better-jump') and Scene.is 'normal' then return
       unless diff < 350 then return
 
-      Timer.add 'jump', 350 - diff, ->
-        Movement.jump()
-        @tsJump = $.now()
+      Timer.add 'jump', 350 - diff, Movement.jump
 
   # jump(): void
   jump: ->
@@ -71,10 +74,10 @@ class Movement extends KeyBinding
     $.press 'w:down'
 
   # stopForward(): void
-  stopForward: ->
+  stopForward: (key) ->
 
-    # unless Scene.is 'normal' then return
     unless @isForwarding then return
+    if key == 'a' or key == 'd' then return
 
     @isForwarding = false
     Hud.render 0, 'auto forward [OFF]'

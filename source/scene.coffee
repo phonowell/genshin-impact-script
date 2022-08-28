@@ -1,16 +1,16 @@
 ### interface
-type Color = number
 type Group = [string] | [Name, string]
 type Name = 'event'
   | 'fishing'
   | 'half-menu'
   | 'menu'
+  | 'mini-menu'
   | 'normal'
   | 'unknown'
-using-q
 ###
 
 # function
+
 class Scene extends EmitterShellX
 
   isFrozen: false
@@ -28,44 +28,70 @@ class Scene extends EmitterShellX
   # check(): [Name, string]
   check: ->
 
-    if @checkIsMenu() then return ['menu', 'unknown']
-    if @checkIsHalfMenu() then return ['half-menu', 'unknown']
-    if @checkIsNormal() then return ['normal', 'unknown']
+    if @checkIsMenu()
+      if @checkIsMap() then return ['menu', 'map']
+      return ['menu', 'unknown']
+
+    if @checkIsHalfMenu()
+      if @checkIsChat() then return ['half-menu', 'chat']
+      return ['half-menu', 'unknown']
+
+    if @checkIsNormal()
+      if @checkIsDomain() then return ['normal', 'domain']
+      return ['normal', 'unknown']
+
     if @checkIsEvent() then return ['event', 'unknown']
+    if @checkIsMiniMenu() then return ['mini-menu', 'unknown']
 
     return ['unknown', 'unknown']
 
+  # checkIsChat(): boolean
+  checkIsChat: -> return ColorManager.findAll [0x3B4255, 0xECE5D8], [
+    '58%', '2%'
+    '60%', '6%'
+  ]
+
+  # checkIsDomain(): boolean
+  checkIsDomain: -> return ColorManager.findAll 0xFFFFFF, [
+    '1%', '9%'
+    '3%', '13%'
+  ]
+
   # checkIsEvent(): boolean
-  checkIsEvent: ->
-    unless @checkPoint ['45%', '79%'], ['55%', '82%'], 0xFFC300 then return false
-    return true
+  checkIsEvent: -> return ColorManager.findAll 0xFFC300, [
+    '45%', '79%'
+    '55%', '82%'
+  ]
 
   # checkIsHalfMenu(): boolean
-  checkIsHalfMenu: ->
-    start = ['1%', '3%']
-    end = ['3%', '6%']
-    unless @checkPoint start, end, 0x3B4255 then return false
-    unless @checkPoint start, end, 0xECE5D8 then return false
-    return true
+  checkIsHalfMenu: -> return ColorManager.findAll [0x3B4255, 0xECE5D8], [
+    '1%', '3%'
+    '3%', '6%'
+  ]
+
+  # checkIsMap(): boolean
+  checkIsMap: -> return ColorManager.findAll 0xEDE5DA, [
+    '1%', '38%'
+    '2%', '40%'
+  ]
 
   # checkIsMenu(): boolean
-  checkIsMenu: ->
-    start = ['95%', '3%']
-    end = ['97%', '5%']
-    unless @checkPoint start, end, 0x3B4255 then return false
-    unless @checkPoint start, end, 0xECE5D8 then return false
-    return true
+  checkIsMenu: -> return ColorManager.findAll [0x3B4255, 0xECE5D8], [
+    '95%', '3%'
+    '97%', '6%'
+  ]
+
+  # checkIsMiniMenu(): boolean
+  checkIsMiniMenu: -> return ColorManager.findAll 0xECE5D8, [
+    '97%', '1%'
+    '98%', '5%'
+  ]
 
   # checkIsNormal(): boolean
-  checkIsNormal: ->
-    if @checkPoint ['2%', '17%'], ['4%', '21%'], 0xFFFFFF then return true
-    if @checkPoint ['95%', '2%'], ['97%', '6%'], 0xFFFFFF then return true
-    return false
-
-  # checkPoint(start: number, end: number, color: Color): boolean
-  checkPoint: (start, end, color) ->
-    p = ColorManager.find color, (Point.new start), Point.new end
-    return Point.isValid p
+  checkIsNormal: -> return ColorManager.findAll 0xFFFFFF, [
+    '95%', '2%'
+    '97%', '6%'
+  ]
 
   # freeze(name: Name, subname: string, time: number): void
   freeze: (name, subname, time) ->

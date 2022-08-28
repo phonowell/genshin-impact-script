@@ -1,10 +1,7 @@
 import '../../gis-static/lib/ShiftAppVolume.ahk'
 
-### interface
-type Fn = () => unknown
-###
-
 # function
+
 class Sound
 
   index: 0

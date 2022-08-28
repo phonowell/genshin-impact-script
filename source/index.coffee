@@ -11,6 +11,7 @@ $ = $
 import 'config'
 import 'key-binding'
 import 'point'
+import 'area'
 import 'timer'
 
 import 'client'
@@ -22,6 +23,7 @@ import 'character'
 import 'gdip'
 import 'color-manager'
 import 'sound'
+import 'transparent'
 
 import 'scene'
 import 'party'

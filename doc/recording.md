@@ -2,6 +2,8 @@
 
 提供可编程的按键录制与重放功能
 
+Provides programmable keystroke recording and replay functions
+
 ## 快速开始 Quick start
 
 首先，按下`Ctrl + Numpad Dot`，随意按几个其他按键之后，再次按下`Ctrl + Numpad Dot`，你就获得了第一份录像。它的文件名为`replay/0.txt`

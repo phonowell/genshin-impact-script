@@ -1,11 +1,10 @@
 import c2a from 'coffee-ahk'
-import $sleep from 'fire-keeper/sleep'
-import $watch from 'fire-keeper/watch'
+import sleep from 'fire-keeper/dist/sleep'
+import watch from 'fire-keeper/dist/watch'
 
 // function
 
 class Compiler {
-
   delay = 1e3
   interval = 5e3
   isBusy = false
@@ -16,7 +15,6 @@ class Compiler {
   }
 
   async next() {
-
     if (!this.list.size) return
     if (this.isBusy) return
 
@@ -28,18 +26,20 @@ class Compiler {
     await c2a(source, {
       salt: 'genshin',
     })
-      .catch(e => console.error(e))
+      .catch((e) => console.error(e))
       .finally(async () => {
-        await $sleep(this.delay)
+        await sleep(this.delay)
         this.isBusy = false
       })
   }
 }
 
 const main = () => {
-  process.on('uncaughtException', e => console.error(e))
+  process.on('uncaughtException', (e) => console.error(e))
   const compiler = new Compiler()
-  $watch('./source/**/*.coffee', () => compiler.list.add('./source/index.coffee'))
+  watch('./source/**/*.coffee', () =>
+    compiler.list.add('./source/index.coffee')
+  )
 }
 
 // export

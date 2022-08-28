@@ -1,7 +1,8 @@
 # function
+
 class Upgrader
 
-  target: '0.0.38'
+  target: '0.0.39'
 
   # check(): void
   check: ->
@@ -14,7 +15,10 @@ class Upgrader
 
       if result == 'Not Found' then return
 
-      msg = "Found new version: v#{@target}\nUpgrade right now?"
+      msg = $.join [
+        "Found new version: v#{@target}"
+        'Upgrade right now?'
+      ], '\n'
 
       $.confirm msg, (answer) ->
         unless answer then return

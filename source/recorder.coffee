@@ -1,7 +1,3 @@
-### interface
-type Fn = () => unknown
-###
-
 # function
 
 class Recorder extends KeyBinding

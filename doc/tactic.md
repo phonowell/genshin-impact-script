@@ -32,20 +32,21 @@ on-long-press = a, e~
 
 Discover these keywords:
 
-| 按键<br>Keyword | 说明<br>Description                                       |
-| --------------- | --------------------------------------------------------- |
-| `@e`/`!@e`      | 元素战技是否生效<br>E skill effective/not-effective phase |
-| `@e?`/`!@e?`    | 元素战技是否就绪<br>E skill is ready/not-ready            |
-| `@m`/`!@m`      | 角色是否正在移动<br>Character is/isn't in movement state  |
-| `a`/`a~`        | 普通攻击/重击<br>Normal attack/Charged attack             |
-| `e`/`e~`        | 使用元素战技（点按/长按）<br>E skill (tap/hold)           |
-| `ee`            | 快速使用两次元素战技<br>Two quick uses of E skill         |
-| `j`             | 跳跃<br>Jump                                              |
-| `ja`            | 跳跃攻击<br>Jump & attack                                 |
-| `s`             | 冲刺<br>Sprint                                            |
-| `t`             | 瞄准<br>Aim                                               |
-| `tt`            | 快速瞄准两次<br>Quick aim twice                           |
-| 数字<br>Numbers | 延时，单位为`毫秒`<br>Representing time delay, in `ms`    |
+| 关键字<br>Keyword | 说明<br>Description                                       |
+| ----------------- | --------------------------------------------------------- |
+| `#`               | 立刻跳转至下一组<br>Jump immediately to the next group    |
+| `@e`/`!@e`        | 元素战技是否生效<br>E skill effective/not-effective phase |
+| `@e?`/`!@e?`      | 元素战技是否就绪<br>E skill is ready/not-ready            |
+| `@m`/`!@m`        | 角色是否正在移动<br>Character is/isn't in movement state  |
+| `a`/`a~`          | 普通攻击/重击<br>Normal attack/Charged attack             |
+| `e`/`e~`          | 使用元素战技（点按/长按）<br>E skill (tap/hold)           |
+| `ee`              | 快速使用两次元素战技<br>Two quick uses of E skill         |
+| `j`               | 跳跃<br>Jump                                              |
+| `ja`              | 跳跃攻击<br>Jump & attack                                 |
+| `s`               | 冲刺<br>Sprint                                            |
+| `t`               | 瞄准<br>Aim                                               |
+| `tt`              | 快速瞄准两次<br>Quick aim twice                           |
+| 数字<br>Numbers   | 延时，单位为`毫秒`<br>Representing time delay, in `ms`    |
 
 不同指令间使用`,`分隔，不同组之间使用`;`分隔
 
@@ -163,3 +164,13 @@ For most characters, the following setting would be useful:
 [all]
 on-long-press = a, e
 ```
+
+## 原生按键 Raw
+
+自版本`0.0.38`起，可以通过`$`后跟按键名来调用键盘的上的按键，例如`$w`即代表按下`w`键
+
+Since version `0.0.38`, you can call the keys on the keyboard by using `$` followed by the key name, e.g. `$w` means pressing the `w` key
+
+类似的，`$l-button:down, 1000, $l-button:up`表示长按左键
+
+Similarly, `$l-button:down, 1000, $l-button:up` means long press on the left key

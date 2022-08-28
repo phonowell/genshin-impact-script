@@ -1,6 +1,4 @@
 ### interface
-type Fn = () => unknown
-type Range = [[number, number], [number, number]]
 type Slot = 1 | 2 | 3 | 4 | 5
 ###
 
@@ -48,7 +46,10 @@ class Party extends EmitterShellX
       {typeE} = Character.get nameLast
       if typeE == 2 then Skill.endEAsType2 last
 
-    $.on 'f12', @scan
+    $.on 'f12', =>
+      @scan()
+      Character.load()
+
     $.on 'alt + f12', =>
       @reset()
       Hud.render 0, 'party reset'
@@ -59,16 +60,12 @@ class Party extends EmitterShellX
     $.push @listBuff, name
 
   # checkCurrent(n: Slot): boolean
-  checkCurrent: (n) ->
-    [start, end] = @makeRange n, 'narrow'
-    p = ColorManager.find 0x323232, start, end
-    return !Point.isValid p
+  checkCurrent: (n) -> return !ColorManager.findAll 0x323232, @makeArea n, 'narrow'
 
   # checkCurrentAs(n: Slot, callback: Fn): void
   checkCurrentAs: (n, callback) ->
 
-    delay = 100
-    interval = 100
+    interval = 15
     limit = 500
     token = 'party/check-current-as'
 
@@ -80,36 +77,35 @@ class Party extends EmitterShellX
       return
 
     tsCheck = $.now()
-    Timer.add token, delay, => Timer.loop token, interval, =>
+    Timer.loop token, interval, =>
+
+      diff = $.now() - tsCheck
 
       if @checkCurrent n
         Timer.remove token
         callback()
-        console.log "#{token}: #{name} passed"
+        console.log "#{token}: #{name} passed in #{diff} ms"
         return
 
-      unless $.now() - tsCheck >= limit then return
+      unless diff >= limit then return
       Timer.remove token
 
       Sound.beep()
-      console.log "#{token}: #{name} failed"
+      console.log "#{token}: #{name} failed after #{diff} ms"
 
   # countMember(): void
   countMember: ->
 
-    start = Point.new ['97%', '15%']
-    end = Point.new ['98%', '65%']
+    start = ['97%', '15%']
+    end = ['98%', '65%']
 
     result = 0
 
     for n in [1, 2, 3, 4, 5]
-      [x, y] = ColorManager.find 0xFFFFFF, start, end
-      unless Point.isValid [x, y] then break
+      p = ColorManager.findAny 0xFFFFFF, [start, end]
+      unless p then break
       result++
-      start = [
-        Point.vw 95
-        y + Point.vw 5
-      ]
+      start[1] = p[1] + Point.h '5%'
 
     @total = result + 1
 
@@ -123,7 +119,7 @@ class Party extends EmitterShellX
   # getNameViaSlot(n: Slot): string
   getNameViaSlot: (n) ->
 
-    [start, end] = @makeRange n
+    a = @makeArea n
 
     for name, char of Character.data
 
@@ -133,7 +129,7 @@ class Party extends EmitterShellX
       for group in char.color
         count = 0
         for color in group
-          unless Point.isValid ColorManager.find color, start, end then break
+          unless Point.isValid ColorManager.find color, a then break
           count++
         if count >= 3 then return name
 
@@ -145,21 +141,18 @@ class Party extends EmitterShellX
   # hasBuff(name: string): boolean
   hasBuff: (name) -> return $.includes @listBuff, name
 
-  # makeRange(n: Slot, isNarrow: boolean = false): Range
-  makeRange: (n, isNarrow = false) ->
+  # makeArea(n: Slot, isNarrow: boolean = false): Area
+  makeArea: (n, isNarrow = false) ->
 
     vTop = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
 
-    left = 90
-    right = 96
-    if isNarrow
-      left = 96
-      right = 99
+    [left, right] = [90, 96]
+    if isNarrow then [left, right] = [96, 99]
 
-    start = Point.new ["#{left}%", "#{vTop - 4}%"]
-    end = Point.new ["#{right}%", "#{vTop + 4}%"]
-
-    return [start, end]
+    return [
+      ["#{left}%", "#{vTop - 4}%"]
+      ["#{right}%", "#{vTop + 4}%"]
+    ]
 
   # removeBuff(name: string): void
   removeBuff: (name) ->
@@ -202,8 +195,14 @@ class Party extends EmitterShellX
       name = @getNameViaSlot n
       $.push @listMember, name
 
-      nameOutput = "#{Character.get name, 'name'} [C#{Character.get name, 'constellation'}]"
+      nameOutput = Character.get name, 'name'
+      if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
+        nameOutput = $.replace nameOutput, ' ', '\n'
 
+      # constellation
+      nameOutput = "#{nameOutput} [C#{Character.get name, 'constellation'}]"
+
+      # current
       if !@current and @checkCurrent n
         @current = n
         @name = name

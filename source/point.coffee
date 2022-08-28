@@ -1,35 +1,34 @@
-### interface
-type Position = [number, number]
-###
-
 # function
 
 class Point
 
-  # isValid(ipt: Point): boolean
-  isValid: (p) -> return p[0] >= 0 and p[1] >= 0
+  # create(ipt: (number | string)[]): Position
+  create: (ipt) ->
 
-  # new(ipt: [number | string, number | string]): Position
-  new: (ipt) ->
+    unless $.isArray ipt then throw new Error 'point/create: invalid ipt'
 
-    x = 0
-    y = 0
+    return [
+      @w ipt[0]
+      @h ipt[1]
+    ]
 
-    if ($.type ipt[0]) == 'number'
-      x = ipt[0]
-    else x = @vw $.replace ipt[0], '%', ''
+  # h(n: number | string): number
+  h: (n) ->
+    if $.isNumber n then return n
+    n = $.replace n, '%', ''
+    return $.round Client.height * n * 0.01
 
-    if ($.type ipt[1]) == 'number'
-      y = ipt[1]
-    else y = @vh $.replace ipt[1], '%', ''
+  # isValid(p: Point): boolean
+  isValid: (p) ->
+    unless $.isArray p then return false
+    unless p[0] >= 0 and p[1] >= 0 then return false
+    return true
 
-    return [x, y]
-
-  # vw(number): number
-  vh: (n) -> return $.round Client.height * n * 0.01
-
-  # vh(number): number
-  vw: (n) -> return $.round Client.width * n * 0.01
+  # w(n: number | string): number
+  w: (n) ->
+    if $.isNumber n then return n
+    n = $.replace n, '%', ''
+    return $.round Client.width * n * 0.01
 
 # execute
 Point = new Point()

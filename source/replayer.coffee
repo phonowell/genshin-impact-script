@@ -1,5 +1,4 @@
 ### interface
-type Fn = () => unknown
 type Item = [number, string, string]
 ###
 
@@ -75,7 +74,7 @@ class Replayer
     if delay < 1 then delay = 1 # to make it works
     Timer.add token, delay, =>
       if ($.includes key, 'l-button') and position
-        $.move Point.new $.split position, ','
+        $.move Point.create $.split position, ','
       @fire key
       @next list, i + 1, callback
 

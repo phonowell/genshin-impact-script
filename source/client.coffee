@@ -1,10 +1,9 @@
 ### interface
-type Fn = () => unknown
 type Level = 'high' | 'low' | 'normal'
-type Position = [number, number]
 ###
 
 # function
+
 class Client extends KeyBinding
 
   height: 0
@@ -89,6 +88,7 @@ class Client extends KeyBinding
   # init(): void
   init: ->
 
+    unless Config.detectPath() then return
     @watch()
 
     @on 'leave', =>

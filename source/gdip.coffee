@@ -1,11 +1,8 @@
 import '../../gis-static/lib/Gdip_All.ahk'
 import '../../gis-static/lib/Gdip_PixelSearch.ahk'
 
-### interface
-type Point = [number, number]
-###
-
 # function
+
 class Gdip
 
   cache:
@@ -41,8 +38,8 @@ class Gdip
     Gdip_Shutdown @cache.pToken
     @cache.pToken = 0
 
-  # findColor(color: number, start: Point, end: Point): Point
-  findColor: (color, start = '', end = '') ->
+  # findColor(color: number, a?: Area): Point
+  findColor: (color, a = '') ->
 
     unless @screenshot()
       Indicator.setCount 'gdip/error'
@@ -50,10 +47,14 @@ class Gdip
 
     Indicator.setCount 'gdip/findColor'
 
-    unless start then start = [0, 0]
-    unless end then end = [Client.width, Client.height]
-    [x, y] = start
-    [w, h] = [end[0] - x, end[1] - y]
+    unless a then a = [0, 0, Client.width, Client.height]
+    a = Area.create a
+    [x, y, w, h] = [
+      a[0]
+      a[1]
+      a[2] - a[0]
+      a[3] - a[1]
+    ]
 
     key = "#{x}|#{y}|#{w}|#{h}"
     pArea = @cache.pArea[key]

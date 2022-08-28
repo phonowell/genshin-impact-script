@@ -1,6 +1,5 @@
 ### interface
 type Slot = 1 | 2 | 3 | 4 | 5
-type Timestamp = number
 ###
 
 # function
@@ -34,32 +33,35 @@ class Skill
     Timer.remove token
 
     {current, name} = Party
-    {preswingE} = Character.get name
 
-    delay = (@max preswingE) * 1e3 + 400
-    interval = 100
-    limit = delay + 600
+    interval = 15
+    limit = 1e3
 
     tsCheck = $.now()
-    Timer.add token, delay, => Timer.loop token, interval, =>
+    Timer.loop token, interval, =>
 
-      start = Point.new ['86%', '90%']
-      end = Point.new ['90%', '93%']
+      a = [
+        '86%', '90%'
+        '90%', '93%'
+      ]
 
       if name == 'mona' || name == 'kamisato_ayaka'
-        start = Point.new ['81%', '90%']
-        end = Point.new ['85%', '93%']
+        a = [
+          '81%', '90%'
+          '85%', '93%'
+        ]
 
-      p = ColorManager.find 0xFFFFFF, start, end
-      if Point.isValid p
+      diff = $.now() - tsCheck
+
+      if ColorManager.findAll 0xFFFFFF, a
         Timer.remove token
-        console.log "#{token}: #{name} passed"
+        console.log "#{token}: #{name} passed in #{diff} ms"
         return
 
-      unless $.now() - tsCheck >= limit then return
+      unless diff >= limit then return
       Timer.remove token
 
-      console.log "#{token}: #{name} failed"
+      console.log "#{token}: #{name} failed after #{diff} ms"
 
       @listCountDown[current] = 1
       @listDuration[current] = 1
@@ -91,14 +93,13 @@ class Skill
   endEAsDefault: ->
 
     {current, name} = Party
-    {cdE, durationE, preswingE} = Character.get name
+    {cdE, durationE} = Character.get name
 
     cd = @correctCD cdE[0]
-    correction = preswingE[0] * 1e3
     duration = durationE[0] * 1e3
     record = @listRecord[current]
 
-    @listCountDown[current] = record + cd + correction
+    @listCountDown[current] = record + cd
     if duration then @listDuration[current] = record + duration
 
     @listCache[current] = [cd, duration]
@@ -109,14 +110,13 @@ class Skill
   endEAsHolding: ->
 
     {current, name} = Party
-    {cdE, durationE, preswingE} = Character.get name
+    {cdE, durationE} = Character.get name
 
     cd = @correctCD cdE[1]
-    correction = preswingE[1] * 1e3
     duration = durationE[1] * 1e3
     record = @listRecord[current]
 
-    @listCountDown[current] = record + cd + correction
+    @listCountDown[current] = record + cd
     if duration then @listDuration[current] = record + duration
 
     @listCache[current] = [cd, duration]
@@ -127,15 +127,14 @@ class Skill
   endEAsType1: ->
 
     {current, name} = Party
-    {cdE, durationE, preswingE} = Character.get name
+    {cdE, durationE} = Character.get name
 
     cd = @correctCD cdE[1]
-    correction = preswingE[1] * 1e3
     duration = durationE[1] * 1e3
     now = $.now()
     record = @listRecord[current]
 
-    @listCountDown[current] = now + cd + correction
+    @listCountDown[current] = now + cd
     if duration then @listDuration[current] = now + duration
 
     @listCache[current] = [cd, duration]
@@ -150,14 +149,13 @@ class Skill
       return
 
     name = Party.listMember[current]
-    {durationE, preswingE} = Character.get name
+    {durationE} = Character.get name
 
     now = $.now()
     cd = (@correctCD 30e3 - (@listDuration[current] - now) + 6e3 - 1e3) / 1e3
-    correction = preswingE[0] * 1e3
     duration = durationE[0] * 1e3
 
-    @listCountDown[current] = now + cd + correction
+    @listCountDown[current] = now + cd
     @listDuration[current] = 0
 
     @listCache[current] = [cd, duration]
@@ -168,14 +166,13 @@ class Skill
   endEAsType3: ->
 
     {current, name} = Party
-    {cdE, durationE, preswingE} = Character.get name
+    {cdE, durationE} = Character.get name
 
     duration = durationE[1] * 1e3
     cd = (@correctCD cdE[1]) + duration
-    correction = preswingE[1] * 1e3
     record = @listRecord[current]
 
-    @listCountDown[current] = record + cd + correction
+    @listCountDown[current] = record + cd
     if duration then @listDuration[current] = record + duration
 
     @listCache[current] = [cd, duration]
@@ -229,7 +226,7 @@ class Skill
 
     cd = @listCountDown[current]
     now = $.now()
-    if cd and cd - now > 1e3 then return
+    if cd and cd - now > 500 then return
 
     if @listRecord[current] then return
     @listRecord[current] = now
@@ -271,13 +268,13 @@ class Skill
     if n == Party.current then tagCurrent = ' 🎮'
 
     if @listCountDown[n]
-      progress = @renderProgress @listCache[n][0] - (@listCountDown[n] - now) * 0.001, @listCache[n][0], 'floor'
+      progress = @renderProgress @listCache[n][0] - (@listCountDown[n] - now), @listCache[n][0], 'floor'
       formatted = @format now - @listCountDown[n]
       $.push listMessage, "#{progress} #{formatted}#{tagCurrent}"
     else $.push listMessage, "◾️◾️◾️◾️◾️#{tagCurrent}"
 
     if @listDuration[n]
-      progress = @renderProgress (@listDuration[n] - now) * 0.001, @listCache[n][1], 'ceil'
+      progress = @renderProgress @listDuration[n] - now, @listCache[n][1], 'ceil'
       formatted = @format @listDuration[n] - now
       $.push listMessage, "#{progress} [#{formatted}]"
 

@@ -4,6 +4,7 @@ type Slot = 0 | 1 | 2 | 3 | 4 | 5
 ###
 
 # function
+
 class Hud
 
   lifetime: 5e3
@@ -29,14 +30,14 @@ class Hud
   makePosition: (n) ->
 
     if Client.isFullScreen
-      left = Point.vw 80
+      left = Point.w '80%'
     else left = Client.width
 
     unless n then n = Party.total + 1
 
     return [
       left
-      Point.vh [37, 32, 28, 23, 19][Party.total - 1] + 9 * (n - 1) - 1
+      Point.h "#{[37, 32, 28, 23, 19][Party.total - 1] + 9 * (n - 1) - 1}%"
     ]
 
   # render(n: Slot, msg: string): void

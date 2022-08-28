@@ -1,8 +1,9 @@
 ### interface
-type Point = [number, number] | [string, string]
 type Shape = 0 | 1 | 2 # return, return, pull
 ###
+
 # function
+
 class Fishing
 
   isActive: false
@@ -27,7 +28,7 @@ class Fishing
     p2 = @findColor color, [start[0], p1[1] + 5], end
     unless p2 then return 0
 
-    if p1[0] - p2[0] > (Point.vw 2) then return 1
+    if p1[0] - p2[0] > (Point.w '2%') then return 1
     return 2
 
   # checkStart(): boolean
@@ -35,7 +36,7 @@ class Fishing
 
   # findColor(color: string, start: Point, end: Point): Point | false
   findColor: (color, start, end) ->
-    p = ColorManager.find color, (Point.new start), Point.new end
+    p = ColorManager.find color, (Point.create start), Point.create end
     if Point.isValid p then return p
     return false
 
