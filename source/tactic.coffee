@@ -114,7 +114,7 @@ class Tactic
 
   # doJump(callback: Fn): void
   doJump: (callback) ->
-    Movement.jump()
+    Jumper.jump()
     unless Movement.isMoving
       @delay 450, callback
     else @delay 550, callback

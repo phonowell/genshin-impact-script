@@ -9,6 +9,25 @@ class Picker
     @init()
     @watch()
 
+  # checkShape(p: Point): boolean
+  checkShape: (p) ->
+    if !p then return false
+
+    [x, y] = p
+    c1 = ColorManager.format ColorManager.get [x, y + 1]
+    c2 = ColorManager.format ColorManager.get [x + 1, y]
+
+    # 0xFFFFFF, 0xFFFFFF chat, cook, gear
+    if c1 == '0xFFFFFF' and c2 == '0xFFFFFF' then return true
+
+    # 0xFFFFFF, 0xFEFEFE magnifier
+    if c1 == '0xFFFFFF' and c2 == '0xFEFEFE' then return true
+
+    # 0xF8F9F9, 0xFDFEFE hook
+    if c1 == '0xF8F9F9' and c2 == '0xFDFEFE' then return true
+
+    return false
+
   # click(p: Point): void
   click: (p) ->
     p = Point.create p
@@ -35,16 +54,10 @@ class Picker
 
     if color == 0xFFFFFF
       p = ColorManager.findAny 0xFFFFFF, [
-        ['61%', y]
-        ['63%', y + 20]
+        '61%', y - Point.h 1
+        '63%', y
       ]
-      if p
-        [x1, y1] = p
-
-        # check shape
-        if (ColorManager.get [x1, y1 + 1]) == 0xFFFFFF
-          if (ColorManager.get [x1 + 1, y1]) == 0xFFFFFF
-            return
+      if @checkShape p then return
 
     $.press 'f'
 

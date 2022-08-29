@@ -33,6 +33,7 @@ import 'menu'
 import 'skill'
 import 'player'
 import 'movement'
+import 'jumper'
 
 import 'picker'
 import 'tactic'

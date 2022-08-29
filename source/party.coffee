@@ -146,12 +146,12 @@ class Party extends EmitterShellX
 
     vTop = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
 
-    [left, right] = [90, 96]
-    if isNarrow then [left, right] = [96, 99]
+    [left, right] = [92, 96]
+    if isNarrow then [left, right] = [96, 98]
 
     return [
-      ["#{left}%", "#{vTop - 4}%"]
-      ["#{right}%", "#{vTop + 4}%"]
+      "#{left}%", "#{vTop - 5}%"
+      "#{right}%", "#{vTop + 5}%"
     ]
 
   # removeBuff(name: string): void

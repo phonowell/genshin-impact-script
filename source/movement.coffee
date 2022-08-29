@@ -5,7 +5,6 @@ class Movement extends KeyBinding
   isForwarding: false
   isMoving: false
   count: 0
-  tsJump: 0
 
   constructor: ->
     super()
@@ -39,25 +38,6 @@ class Movement extends KeyBinding
     # forward
     $.on 'alt + w', => Timer.add 'forward', 100, @toggleForward
     @on 'walk:start', @stopForward
-
-    # jump
-    @registerEvent 'jump', 'space'
-    @on 'jump:start', => @tsJump = $.now()
-    @on 'jump:end', =>
-
-      now = $.now()
-      diff = now - @tsJump
-      @tsJump = now
-
-      unless (Config.get 'better-jump') and Scene.is 'normal' then return
-      unless diff < 350 then return
-
-      Timer.add 'jump', 350 - diff, Movement.jump
-
-  # jump(): void
-  jump: ->
-    $.press 'space'
-    @tsJump = $.now()
 
   # sprite(): void
   sprite: -> $.click 'right'

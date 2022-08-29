@@ -13,7 +13,10 @@ class Fishing
     $.on 'f11', @toggle
 
   # checkIsFishing(): boolean
-  checkIsFishing: -> return !!(@findColor 0xFFFFFF, ['94%', '94%'], ['98%', '97%'])
+  checkIsFishing: -> return ColorManager.findAll 0xFFFFFF, [
+    '94%', '94%'
+    '98%', '97%'
+  ]
 
   # checkShapre(): Shape
   checkShape: ->
@@ -22,23 +25,20 @@ class Fishing
     start = ['35%', '8%']
     end = ['65%', '18%']
 
-    p1 = @findColor color, start, end
+    p1 = ColorManager.findAny color, [start, end]
     unless p1 then return 0
 
-    p2 = @findColor color, [start[0], p1[1] + 5], end
+    p2 = ColorManager.findAny color, [[start[0], p1[1] + 5], end]
     unless p2 then return 0
 
     if p1[0] - p2[0] > (Point.w '2%') then return 1
     return 2
 
   # checkStart(): boolean
-  checkStart: -> return !(@findColor 0xFFE92C, ['82%', '87%'], ['87%', '97%'])
-
-  # findColor(color: string, start: Point, end: Point): Point | false
-  findColor: (color, start, end) ->
-    p = ColorManager.find color, (Point.create start), Point.create end
-    if Point.isValid p then return p
-    return false
+  checkStart: -> return !ColorManager.findAll 0xFFE92C, [
+    '82%', '87%'
+    '87%', '97%'
+  ]
 
   # next(): void
   next: ->
