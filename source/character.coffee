@@ -173,7 +173,12 @@ class Character
 
       @data[name].constellation = @pickFromFile name, 'constellation'
       @data[name].onLongPress = @pickFromFile name, 'on-long-press'
+      @data[name].onSideButton1 = @pickFromFile name, 'on-side-button-1'
+      @data[name].onSideButton2 = @pickFromFile name, 'on-side-button-2'
       @data[name].onSwitch = @pickFromFile name, 'on-switch'
+
+      if name == 'traveler'
+        @data[name].vision = @pickFromFile name, 'vision'
 
   # makeValueIntoArray: (value: number | number[]): number[]
   makeValueIntoArray: (value) -> switch $.type value

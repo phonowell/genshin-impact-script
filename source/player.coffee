@@ -9,15 +9,8 @@ class Player extends KeyBinding
 
   constructor: ->
     super()
-
     @aboutSkill()
     @aboutSwitch()
-
-    # attack
-    @registerEvent 'attack', 'l-button'
-
-    # others
-    @registerEvent 'pick', 'f', 'prevent'
 
   # aboutSkill(): void
   aboutSkill: ->

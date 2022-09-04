@@ -1,11 +1,11 @@
 # function
 
-class Picker
+class Picker extends KeyBinding
 
-  isPicking: false
   tsPick: 0
 
   constructor: ->
+    super()
     @init()
     @watch()
 
@@ -16,15 +16,18 @@ class Picker
     [x, y] = p
     c1 = ColorManager.format ColorManager.get [x, y + 1]
     c2 = ColorManager.format ColorManager.get [x + 1, y]
+    # console.log "test: #{c1} #{c2}"
 
     # 0xFFFFFF, 0xFFFFFF chat, cook, gear
-    if c1 == '0xFFFFFF' and c2 == '0xFFFFFF' then return true
+    if c1 == 0xFFFFFF and c2 == 0xFFFFFF then return true
 
     # 0xFFFFFF, 0xFEFEFE magnifier
-    if c1 == '0xFFFFFF' and c2 == '0xFEFEFE' then return true
+    if c1 == 0xFFFFFF and c2 == 0xFEFEFE then return true
 
-    # 0xF8F9F9, 0xFDFEFE hook
-    if c1 == '0xF8F9F9' and c2 == '0xFDFEFE' then return true
+    # 0xF8F9F9, 0xFDFDFE hook
+    # 0xFBFBFB, 0xFFFFFF hook
+    if c1 == 0xF8F9F9 and c2 == 0xFDFDFE then return true
+    if c1 == 0xFBFBFB and c2 == 0xFFFFFF then return true
 
     return false
 
@@ -39,7 +42,7 @@ class Picker
   # find(): void
   find: ->
 
-    if @isPicking then return
+    if @isPressed['f'] then return
     unless Scene.is 'normal', 'unknown' then return
 
     p = ColorManager.findAny 0x323232, [
@@ -64,8 +67,13 @@ class Picker
   # findTitleColor(y: number): string | false
   findTitleColor: (y) ->
 
-    listColor = [0xFFFFFF, 0xCCCCCC, 0xACFF45, 0x4FF4FF, 0xF998FF]
-    p = ColorManager.findAny listColor, [
+    p = ColorManager.findAny [
+      0xFFFFFF
+      0xCCCCCC
+      0xACFF45
+      0x4FF4FF
+      0xF998FF
+    ], [
       '63%', y
       '65%', y + 20
     ]
@@ -76,35 +84,34 @@ class Picker
   # init(): void
   init: ->
 
-    $.on 'alt + f', @toggle
-
-    # why?
-    # sometimes pick:end event fired before pick:start event
-    # very strange
-    fn = =>
-      unless @isPicking
-        @isPicking = true
-        console.log 'picker/is-picking: true'
-        $.press 'f'
-      else
-        @isPicking = false
-        console.log 'picker/is-picking: false'
+    @registerEvent 'pick', 'f'
+    @on 'pick:start', =>
       @tsPick = $.now()
+      console.log 'picker/is-picking: true'
 
-    Player.on 'pick:start', fn
-    Player.on 'pick:end', fn
+    @on 'pick:end', =>
+      @tsPick = $.now()
+      console.log 'picker/is-picking: false'
 
   # listen(): void
   listen: ->
     diff = $.now() - @tsPick
     unless diff > 350 then return
-    unless @isPicking then return
+    unless @isPressed['f'] then return
     if @skip() then return
     unless Scene.is 'normal', 'unknown' then return
     $.press 'f'
 
   # next(): void
   next: ->
+
+    unless Config.get 'better-pickup'
+      @listen()
+      return
+
+    if @isPressed['f']
+      @listen()
+      return
 
     if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'event'
       @skip()
@@ -120,14 +127,17 @@ class Picker
     unless Scene.is 'event' then return false
 
     Idle.setTimer() # avoid idle
-    $.press 'space'
+    if @isPressed['f'] then $.press 'f'
+    else $.press 'space'
 
-    listColor = [0x806200, 0xFFCC32, 0xFFFFFF]
-    p = ColorManager.findAny listColor, [
+    p = ColorManager.findAny [
+      0x806200
+      0xFFCC32
+      0xFFFFFF
+    ], [
       '65%', '40%'
       '70%', '80%'
     ]
-
     unless p then return true
 
     @click p
@@ -139,12 +149,8 @@ class Picker
     interval = 100
     token = 'picker/watch'
 
-    fn = =>
-      if (Config.get 'better-pickup') and !@isPicking then @next()
-      else @listen()
-
     Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', -> Timer.loop token, interval, fn
+    Client.on 'activate', => Timer.loop token, interval, @next
 
 # execute
 Picker = new Picker()

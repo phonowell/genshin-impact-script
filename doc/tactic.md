@@ -8,6 +8,10 @@ Tactics can save a lot of repetitive actions, by simply long pressing your left 
 
 Note that since version `0.0.35`, tactics need to be configured in `character.ini`
 
+自版本`0.0.40`起，可以使用`on-side-button-1`与`on-side-button-2`项配置侧键动作
+
+Since version `0.0.40`, side button actions can be configured using the `on-side-button-1` and `on-side-button-2` items
+
 ## 快速开始 Quick start
 
 首先，来个例子：

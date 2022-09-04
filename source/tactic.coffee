@@ -20,17 +20,15 @@ tt - aim twice
 
 # function
 
-class Tactic
+class Tactic extends KeyBinding
 
   intervalLong: 100
   intervalShort: 50
   isActive: false
-  isPressed: false
 
   constructor: ->
-    Player.on 'attack:start', => @start Character.get Party.name, 'onLongPress'
-    Player.on 'attack:end', @stop
-    Party.on 'switch', @stop
+    super()
+    @init()
 
   # atDuration(cbA: Fn, cbB: Fn, isNot: boolean = false): void
   atDuration: (cbA, cbB, isNot = false) ->
@@ -63,9 +61,7 @@ class Tactic
     else @delay @intervalShort, cb[1]
 
   # delay(time: number, callback: Fn): void
-  delay: (time, callback) ->
-    unless @isActive then return
-    Timer.add 'tactic/next', time, callback
+  delay: (time, callback) -> Timer.add 'tactic/next', time, callback
 
   # doAim(callback: Fn): void
   doAim: (callback) ->
@@ -83,8 +79,7 @@ class Tactic
   doAttack: (isCharged, callback) ->
 
     if isCharged
-      $.click 'left:down'
-      @isPressed = true
+      $.press 'l-button:down'
 
       delay = 400
       {name} = Party
@@ -98,8 +93,7 @@ class Tactic
           if name == 'xingqiu' then delay = 600
 
       @delay delay, =>
-        $.click 'left:up'
-        @isPressed = false
+        $.press 'l-button:up'
 
         if Movement.isMoving and Party.name == 'klee'
           @delay 200, => @jump callback
@@ -109,7 +103,7 @@ class Tactic
 
       return
 
-    $.click 'left'
+    $.press 'l-button'
     @delay 200, callback
 
   # doJump(callback: Fn): void
@@ -154,10 +148,13 @@ class Tactic
   # execute(list: string[], g: number = 0, i: number = 0, isOnce = false): void
   execute: (list, g = 0, i = 0, isOnce = false) ->
 
+    unless @isActive then return
+
     item = @get list, g, i
     console.log "tactic/execute: #{item}"
     unless item
       unless isOnce then @execute list
+      else @stop()
       return
 
     next = => @execute list, g, i + 1, isOnce
@@ -217,6 +214,26 @@ class Tactic
     if i >= $.length group then return ''
     return group[i]
 
+  # init(): void
+  init: ->
+
+    @registerEvent 'attack', 'l-button'
+    @on 'attack:start', =>
+      @start Character.get Party.name, 'onLongPress'
+    @on 'attack:end', @stop
+
+    @registerEvent 'side-button-1', 'x-button-1'
+    @on 'side-button-1:start', =>
+      @start Character.get Party.name, 'onSideButton1'
+    @on 'side-button-1:end', @stop
+
+    @registerEvent 'side-button-2', 'x-button-2'
+    @on 'side-button-2:start', =>
+      @start Character.get Party.name, 'onSideButton2'
+    @on 'side-button-2:end', @stop
+
+    Party.on 'switch', @stop
+
   # start(list: string, isOnce = false): void
   start: (list, isOnce = false) ->
 
@@ -228,7 +245,6 @@ class Tactic
     unless list then return
 
     @isActive = true
-    $.click 'left:up'
 
     @execute list, 0, 0, isOnce
 

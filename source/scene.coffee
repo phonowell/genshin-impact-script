@@ -88,10 +88,16 @@ class Scene extends EmitterShellX
   ]
 
   # checkIsNormal(): boolean
-  checkIsNormal: -> return ColorManager.findAll 0xFFFFFF, [
-    '95%', '2%'
-    '97%', '6%'
-  ]
+  checkIsNormal: ->
+    if ColorManager.findAll 0xFFFFFF, [
+      '95%', '2%'
+      '97%', '6%'
+    ] then return true
+    if ColorManager.findAll 0xFFFFFF, [
+      '2%', '17%'
+      '4%', '21%'
+    ] then return true
+    return false
 
   # freeze(name: Name, subname: string, time: number): void
   freeze: (name, subname, time) ->

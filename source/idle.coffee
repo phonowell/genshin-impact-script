@@ -9,7 +9,7 @@ class Idle extends KeyBinding
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
     'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
     'space'
-    'l-button', 'm-button', 'r-button'
+    'l-button', 'm-button', 'r-button', 'x-button-1', 'x-button-2'
   ]
   token: 'idle/pressing'
 

@@ -191,24 +191,7 @@ class Party extends EmitterShellX
 
     for n in [1, 2, 3, 4, 5]
       if n > @total then break
-
-      name = @getNameViaSlot n
-      $.push @listMember, name
-
-      nameOutput = Character.get name, 'name'
-      if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
-        nameOutput = $.replace nameOutput, ' ', '\n'
-
-      # constellation
-      nameOutput = "#{nameOutput} [C#{Character.get name, 'constellation'}]"
-
-      # current
-      if !@current and @checkCurrent n
-        @current = n
-        @name = name
-        nameOutput = "#{nameOutput} 🎮"
-
-      Hud.render n, nameOutput
+      @subScan n
 
     @emit 'change'
 
@@ -219,6 +202,33 @@ class Party extends EmitterShellX
     Indicator.setCost token, 'end'
     console.log "#{token}: completed in #{Indicator.getCost token} ms"
     Timer.add 200, => @isBusy = false
+
+  # subScan(n: number): void
+  subScan: (n) ->
+
+    name = @getNameViaSlot n
+    $.push @listMember, name
+
+    nameOutput = Character.get name, 'name'
+    if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
+      nameOutput = $.replace nameOutput, ' ', '\n'
+
+    # vision
+    if name == 'traveler'
+      vision = Character.get name, 'vision'
+      if vision then nameOutput = "#{nameOutput} [#{vision}]"
+
+    # constellation
+    constellation = Character.get name, 'constellation'
+    if constellation then nameOutput = "#{nameOutput} [C#{constellation}]"
+
+    # current
+    if !@current and @checkCurrent n
+      @current = n
+      @name = name
+      nameOutput = "#{nameOutput} 🎮"
+
+    Hud.render n, nameOutput
 
   # switchTo(n: Slot): void
   switchTo: (n) ->
