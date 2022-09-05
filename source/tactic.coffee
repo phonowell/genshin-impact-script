@@ -145,20 +145,27 @@ class Tactic extends KeyBinding
     Skill.useQ()
     @delay @intervalLong, callback
 
-  # execute(list: string[], g: number = 0, i: number = 0, isOnce = false): void
-  execute: (list, g = 0, i = 0, isOnce = false) ->
+  # execute(list: string[][], g: number = 0, i: number = 0, callback: Fn): void
+  execute: (list, g = 0, i = 0, callback = '') ->
 
     unless @isActive then return
+    unless Scene.is 'normal' then return
 
     item = @get list, g, i
     console.log "tactic/execute: #{item}"
+
+    # end of lines
     unless item
-      unless isOnce then @execute list
-      else @stop()
+      unless callback
+        @execute list
+        return
+
+      @stop()
+      if callback then callback()
       return
 
-    next = => @execute list, g, i + 1, isOnce
-    nextGroup = => @execute list, g + 1, 0, isOnce
+    next = => @execute list, g, i + 1, callback
+    nextGroup = => @execute list, g + 1, 0, callback
 
     map =
       '!@e': => @atDuration next, nextGroup, 'not'
@@ -178,8 +185,8 @@ class Tactic extends KeyBinding
       't': => @doAim next
       'tt': => @doAimTwice next
 
-    callback = map[item]
-    unless callback then callback = do =>
+    cb = map[item]
+    unless cb then cb = do =>
 
       if $.startsWith item, '#' then return nextGroup
 
@@ -187,9 +194,9 @@ class Tactic extends KeyBinding
         $.press SubStr item, 2
         @delay @intervalShort, next
 
-      if ($.type item) == 'number' then return => @delay item, next
+      if $.isNumber item then return => @delay item, next
 
-    if callback then callback()
+    cb()
 
   # format(ipt: string): string[]
   format: (ipt) ->
@@ -234,19 +241,20 @@ class Tactic extends KeyBinding
 
     Party.on 'switch', @stop
 
-  # start(list: string, isOnce = false): void
-  start: (list, isOnce = false) ->
+  # start(list: string, callback: Fn): void
+  start: (list, callback = '') ->
 
     @stop()
 
-    unless Scene.is 'normal' then return
+    unless Scene.is 'normal'
+      if callback then callback()
+      return
 
     list = @format list
     unless list then return
 
     @isActive = true
-
-    @execute list, 0, 0, isOnce
+    @execute list, 0, 0, callback
 
   # stop(): void
   stop: ->

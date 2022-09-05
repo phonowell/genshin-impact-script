@@ -2,7 +2,7 @@
 
 class Upgrader
 
-  target: '0.0.41'
+  target: '0.0.42'
 
   # check(): void
   check: ->

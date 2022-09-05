@@ -56,7 +56,7 @@ class Player extends KeyBinding
         Skill.endE()
         return
 
-      Tactic.start onSwitch, true
+      Tactic.start onSwitch, $.noop
 
   # getOnSwitch(): string
   getOnSwitch: ->

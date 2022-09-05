@@ -16,43 +16,7 @@ class Party extends EmitterShellX
 
   constructor: ->
     super()
-
-    @on 'change', =>
-      console.log "party/member: #{$.join ($.tail @listMember), ', '}"
-      n = 0
-      for name in @listMember
-        unless name then continue
-        unless (Character.get name, 'vision') == 'anemo' then continue
-        n++
-      if n >= 2 then @addBuff 'impetuous winds'
-      else @removeBuff 'impetuous winds'
-      if ($.length @listBuff) then console.log "party/buff: #{$.join @listBuff, ','}"
-
-    @on 'switch', (n) =>
-
-      last = @current
-      @current = n
-
-      nameLast = @listMember[last]
-      @name = @listMember[@current]
-
-      unless nameLast then nameLast = 'unknown'
-      unless @name then @name = 'unknown'
-
-      console.log "party: [#{last}]#{nameLast} -> [#{@current}]#{@name}"
-
-      @tsSwitch = $.now()
-
-      {typeE} = Character.get nameLast
-      if typeE == 2 then Skill.endEAsType2 last
-
-    $.on 'f12', =>
-      @scan()
-      Character.load()
-
-    $.on 'alt + f12', =>
-      @reset()
-      Hud.render 0, 'party reset'
+    @init()
 
   # addBuff(name: string): void
   addBuff: (name) ->
@@ -140,6 +104,46 @@ class Party extends EmitterShellX
 
   # hasBuff(name: string): boolean
   hasBuff: (name) -> return $.includes @listBuff, name
+
+  # init(): void
+  init: ->
+
+    @on 'change', =>
+      console.log "party/member: #{$.join ($.tail @listMember), ', '}"
+      n = 0
+      for name in @listMember
+        unless name then continue
+        unless (Character.get name, 'vision') == 'anemo' then continue
+        n++
+      if n >= 2 then @addBuff 'impetuous winds'
+      else @removeBuff 'impetuous winds'
+      if ($.length @listBuff) then console.log "party/buff: #{$.join @listBuff, ','}"
+
+    @on 'switch', (n) =>
+
+      last = @current
+      @current = n
+
+      nameLast = @listMember[last]
+      @name = @listMember[@current]
+
+      unless nameLast then nameLast = 'unknown'
+      unless @name then @name = 'unknown'
+
+      console.log "party: [#{last}]#{nameLast} -> [#{@current}]#{@name}"
+
+      @tsSwitch = $.now()
+
+      {typeE} = Character.get nameLast
+      if typeE == 2 then Skill.endEAsType2 last
+
+    $.on 'f12', =>
+      @scan()
+      Character.load()
+
+    $.on 'alt + f12', =>
+      @reset()
+      Hud.render 0, 'party reset'
 
   # makeArea(n: Slot, isNarrow: boolean = false): Area
   makeArea: (n, isNarrow = false) ->

@@ -5,7 +5,6 @@ class Console
   listContent: []
 
   constructor: ->
-    unless Config.get 'debug' then return
     @watch()
 
   # add(msg: string): void
@@ -39,12 +38,13 @@ class Console
   # log<T>(ipt: T): T
   log: (ipt) ->
 
+    unless Config.get 'debug' then return ipt
+
     if ($.type ipt) == 'array'
       for msg in ipt
         @add msg
     else @add ipt
 
-    @render()
     return ipt
 
   # render(): void
@@ -63,6 +63,8 @@ class Console
 
   # watch
   watch: ->
+
+    unless Config.get 'debug' then return
 
     interval = 500
     token = 'console/watch'

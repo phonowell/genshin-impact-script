@@ -43,4 +43,5 @@ import 'upgrader'
 import 'recorder'
 import 'replayer'
 
+import 'alice'
 import 'end'
