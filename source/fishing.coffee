@@ -70,11 +70,9 @@ class Fishing
     Timer.remove 'fishing/notice'
 
     if @isActive
-      Scene.is 'fishing'
       Timer.loop 'fishing/watch', 100, @watch
       Hud.render 0, 'auto fish [ON]'
     else
-      Scene.is 'unknown'
       Hud.render 0, 'auto fish [OFF]'
 
   # watch(): void

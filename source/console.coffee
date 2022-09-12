@@ -45,10 +45,12 @@ class Console
         @add msg
     else @add ipt
 
+    @render()
     return ipt
 
   # render(): void
-  render: ->
+  render: $.throttle 500, =>
+    unless Client.isActive then return
     list = $.map @listContent, (item) -> return item[1]
     text = $.trim ($.join list, '\n'), ' \n'
     [left, top] = [0 - Client.left, Client.height * 0.5]
@@ -56,6 +58,7 @@ class Console
 
   # update(): void
   update: ->
+    unless Client.isActive then return
     now = $.now()
     len = $.length @listContent
     @listContent = $.filter @listContent, (item) -> return item[0] >= now

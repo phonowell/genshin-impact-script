@@ -95,11 +95,16 @@ class Picker extends KeyBinding
 
   # listen(): void
   listen: ->
+
     diff = $.now() - @tsPick
-    unless diff > 350 then return
+    unless diff > 150 then return
+
     unless @isPressed['f'] then return
+
     if @skip() then return
+
     unless Scene.is 'normal', 'unknown' then return
+
     $.press 'f'
 
   # next(): void

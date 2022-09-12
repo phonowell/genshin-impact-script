@@ -30,12 +30,7 @@ class Config
       @write 'basic/process', 'GenshinImpact.exe'
       return
 
-    msg = $.join [
-      'Are you from the CELESTIA or IRMINSUL server?'
-      'If you are not sure, please select NO.'
-    ], '\n'
-
-    $.confirm msg, (answer) =>
+    $.confirm (Dictionary.get 'ask_for_server'), (answer) =>
 
       unless answer then @write 'basic/process', 'GenshinImpact.exe'
       else @write 'basic/process', 'Yuanshen.exe'

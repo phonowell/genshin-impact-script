@@ -1,6 +1,6 @@
 # function
 
-class KeyBinding extends EmitterShellX
+class KeyBinding extends EmitterShell
 
   isFired: {}
   isPressed: {}

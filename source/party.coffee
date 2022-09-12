@@ -4,7 +4,7 @@ type Slot = 1 | 2 | 3 | 4 | 5
 
 # function
 
-class Party extends EmitterShellX
+class Party extends EmitterShell
 
   current: 0
   isBusy: false
@@ -213,7 +213,7 @@ class Party extends EmitterShellX
     name = @getNameViaSlot n
     $.push @listMember, name
 
-    nameOutput = Character.get name, 'name'
+    nameOutput = Dictionary.get name
     if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
       nameOutput = $.replace nameOutput, ' ', '\n'
 

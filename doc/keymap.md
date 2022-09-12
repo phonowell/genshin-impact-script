@@ -12,6 +12,7 @@ All keys use the game's default keys, but need to `Switch Walk/Run` bound to `Ri
 | `Ctrl + F5`                                            | 重新载入<br>Reload                                               |
 | `F11`                                                  | 进入/退出自动钓鱼模式<br>Enter/exit auto fishing mode            |
 | `F12`                                                  | 扫描小队<br>Scan party                                           |
+| `~`                                                    | 切换角色并使用元素战技<br>Switch character and use E skill             |
 | `1~5`                                                  | 切换角色<br>Switch character                                     |
 | `Alt + 1~5`                                            | 切换角色并使用元素爆发<br>Switch character and use Q skill       |
 | `Alt + W`                                              | 进入/退出自动前进模式<br>Enter/exit auto forward mode            |

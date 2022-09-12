@@ -145,23 +145,30 @@ class Tactic extends KeyBinding
     Skill.useQ()
     @delay @intervalLong, callback
 
+  # end(list: string[][], callback: Fn): void
+  end: (list, callback = '') ->
+    unless callback
+      @execute list
+      return
+
+    @stop()
+    callback()
+
   # execute(list: string[][], g: number = 0, i: number = 0, callback: Fn): void
   execute: (list, g = 0, i = 0, callback = '') ->
 
-    unless @isActive then return
-    unless Scene.is 'normal' then return
+    unless @isActive
+      @stop()
+      return
+
+    unless Scene.is 'normal'
+      @stop()
+      return
 
     item = @get list, g, i
-    console.log "tactic/execute: #{item}"
 
-    # end of lines
     unless item
-      unless callback
-        @execute list
-        return
-
-      @stop()
-      if callback then callback()
+      @end list, callback
       return
 
     next = => @execute list, g, i + 1, callback
@@ -251,7 +258,9 @@ class Tactic extends KeyBinding
       return
 
     list = @format list
-    unless list then return
+    unless list
+      if callback then callback()
+      return
 
     @isActive = true
     @execute list, 0, 0, callback

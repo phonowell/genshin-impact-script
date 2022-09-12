@@ -2,12 +2,12 @@
 
 class Upgrader
 
-  target: '0.0.42'
+  target: 43
 
   # check(): void
   check: ->
 
-    $.get "https://github.com/phonowell/genshin-impact-script/releases/tag/#{@target}", (result) =>
+    $.get "https://github.com/phonowell/genshin-impact-script/releases/tag/0.0.#{@target}", (result) =>
 
       unless result
         Timer.add 600e3, @check
@@ -15,12 +15,7 @@ class Upgrader
 
       if result == 'Not Found' then return
 
-      msg = $.join [
-        "Found new version: v#{@target}"
-        'Upgrade right now?'
-      ], '\n'
-
-      $.confirm msg, (answer) ->
+      $.confirm (Dictionary.get 'found_new_version'), (answer) ->
         unless answer then return
         $.open 'https://github.com/phonowell/genshin-impact-script/releases'
 

@@ -9,6 +9,7 @@ import __chongyun__ from '../../genshin-character-data/source/chongyun.yaml'
 import __collei__ from '../../genshin-character-data/source/collei.yaml'
 import __diluc__ from '../../genshin-character-data/source/diluc.yaml'
 import __diona__ from '../../genshin-character-data/source/diona.yaml'
+import __dori__ from '../../genshin-character-data/source/dori.yaml'
 import __eula__ from '../../genshin-character-data/source/eula.yaml'
 import __fischl__ from '../../genshin-character-data/source/fischl.yaml'
 import __ganyu__ from '../../genshin-character-data/source/ganyu.yaml'
@@ -81,8 +82,15 @@ class Character
     if target then return @read "#{name}/#{key}", 0
 
     # like hu tao
-    target = @read $.toLowerCase @data[name].name
-    if target then return @read "#{$.toLowerCase @data[name].name}/#{key}", 0
+    nameDict = $.toLowerCase Dictionary.data[name][0]
+    target = @read nameDict
+    if target then return @read "#{nameDict}/#{key}", 0
+
+    # like 胡桃
+    if A_language == '0804'
+      nameDict = $.toLowerCase Dictionary.get name
+      target = @read nameDict
+      if target then return @read "#{nameDict}/#{key}", 0
 
     # weapon
     target = @read @data[name].weapon
@@ -109,6 +117,7 @@ class Character
     $.mixin data, collei: __collei__
     $.mixin data, diluc: __diluc__
     $.mixin data, diona: __diona__
+    $.mixin data, dori: __dori__
     $.mixin data, eula: __eula__
     $.mixin data, fischl: __fischl__
     $.mixin data, ganyu: __ganyu__
@@ -160,7 +169,6 @@ class Character
         color: @makeValueIntoArray char['color']
         durationE: @padArray @makeValueIntoArray char['duration-e']
         durationQ: char['duration-q']
-        name: char['name']
         star: char['star']
         # typeE: 0 | 1 | 2 | 3
         # 0: default

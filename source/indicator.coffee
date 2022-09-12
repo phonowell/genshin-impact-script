@@ -1,6 +1,6 @@
 # function
 
-class Indicator extends EmitterShellX
+class Indicator extends EmitterShell
 
   cacheCost: {} # Record<string, number[]>
   cacheCount: {} # Record<string, number>

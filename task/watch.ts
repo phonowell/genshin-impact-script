@@ -37,7 +37,7 @@ class Compiler {
 const main = () => {
   process.on('uncaughtException', (e) => console.error(e))
   const compiler = new Compiler()
-  watch('./source/**/*.coffee', () =>
+  watch(['./source/**/*.coffee', './source/**/*.yaml'], () =>
     compiler.list.add('./source/index.coffee')
   )
 }

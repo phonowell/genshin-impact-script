@@ -8,6 +8,7 @@ $ = $
 
 # import
 
+import 'dictionary'
 import 'config'
 import 'key-binding'
 import 'point'

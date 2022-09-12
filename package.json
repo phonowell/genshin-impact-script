@@ -5,18 +5,18 @@
   },
   "dependencies": {
     "coffee-ahk": "^0.0.43",
-    "fire-keeper": "^0.0.206",
+    "fire-keeper": "^0.0.208",
     "lodash": "^4.17.21",
-    "shell-ahk": "^0.0.18",
+    "shell-ahk": "^0.0.20",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.3"
   },
   "description": "",
   "devDependencies": {
-    "@types/lodash": "^4.14.184",
-    "@types/node": "^18.7.14",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1"
+    "@types/lodash": "^4.14.185",
+    "@types/node": "^18.7.16",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2"
   },
   "homepage": "https://github.com/phonowell/genshin-impact-script",
   "keywords": [
@@ -38,5 +38,5 @@
     "watch": "npm run alice watch"
   },
   "url": "https://github.com/phonowell/genshin-impact-script",
-  "version": "0.0.41"
+  "version": "0.0.42"
 }

@@ -4,7 +4,7 @@ class Idle extends KeyBinding
 
   listKey: [
     'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
+    'Sc029', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
     'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
     'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
@@ -37,12 +37,9 @@ class Idle extends KeyBinding
       if state then $.push list, key
 
     if $.length list
-      console.log "#{@token}: #{$.join list, ', '}"
       unless Client.isActive then Client.emit 'activate'
       @clearTimer()
-    else
-      console.log "#{@token}: -"
-      @setTimer()
+    else @setTimer()
 
   # setTimer(): void
   setTimer: ->

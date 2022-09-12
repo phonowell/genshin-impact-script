@@ -17,7 +17,9 @@ const main = async () => {
 }
 
 const pack = async (source: string, target: string) => {
-  const { version } = await $.read<{ version: string }>('./package.json')
+  const pkg = await $.read<{ version: string }>('./package.json')
+  if (!pkg) return
+  const { version } = pkg
 
   const buffer = await $.read<Buffer>(`./source/${source}.ahk`)
   const dir = `./dist/${target}_${version}`
@@ -26,6 +28,7 @@ const pack = async (source: string, target: string) => {
 
   await $.copy(
     [
+      './data/character.ini',
       './data/config.ini',
       './data/readme.url',
       './source/off.ico',

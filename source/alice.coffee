@@ -1,69 +1,46 @@
 class Alice
 
-  isActive: false
+  map: {}
 
   constructor: ->
-    $.on 'Sc029', =>
-      unless @isActive then @start()
-      else @stop()
-    @watch()
+    @init()
 
-  # check(): void
-  check: ->
-    unless Scene.is 'normal' then return
-    unless @isActive then return
-    if Tactic.isActive then return
-    @next()
+  # init(): void
+  init: ->
+    Party.on 'change', @prepare
+    $.on 'Sc029', @next
 
   # next(): void
   next: ->
 
-    unless Scene.is 'normal' then return
+    list = $.keys @map
+    list = $.map list, (it) -> return $.subString it, 1
+    list = $.filter list, (n) -> return n != Party.current
+    $.unshift list, Party.current
 
-    isIdle = true
+    for n in list
 
-    if $.now() - Party.tsSwitch > 1e3
-      isIdle = @nextSub()
+      cd = Skill.listCountDown[n]
+      if cd then continue
 
-    if isIdle then Tactic.start 'a', $.noop
+      @switchTo n, => Tactic.start @map["p#{n}"], $.noop
+      break
 
-  # nextSub(): boolean
-  nextSub: ->
+  # prepare(): void
+  prepare: ->
 
-    isIdle = true
+    @map = {}
 
     for n in [1, 2, 3, 4, 5]
-
       if n > Party.total then break
 
       name = Party.listMember[n]
       unless name then continue
 
-      onLongPress = Character.get name, 'onLongPress'
-      unless onLongPress then continue
-      unless $.includes onLongPress, 'e' then continue
-      if $.includes onLongPress, 'q' then continue
+      lines = Character.get name, 'onSwitch'
+      unless lines then continue
 
-      cd = Skill.listCountDown[n]
-      if cd then continue
-
-      isIdle = false
-      @switchTo n, -> Tactic.start onLongPress, $.noop
-      break
-
-    return isIdle
-
-  # start(): void
-  start: ->
-    Tactic.stop()
-    @isActive = true
-    Hud.render 0, 'hosting [on]'
-
-  # stop(): void
-  stop: ->
-    Tactic.stop()
-    @isActive = false
-    Hud.render 0, 'hosting [off]'
+      @map["p#{n}"] = lines
 
   # switchTo(n: number, callback: Fn): void
   switchTo: (n, callback = '') ->
@@ -72,7 +49,7 @@ class Alice
     Party.switchTo n
 
     interval = 50
-    limit = 10e3
+    limit = 5e3
     token = 'alice/switchTo'
 
     Timer.remove token
@@ -86,20 +63,11 @@ class Alice
         return
 
       unless $.now() - tsCheck >= limit
-        $.press n
         Party.switchTo n
         return
 
       Timer.remove token
-
-  # watch(): void
-  watch: ->
-
-    interval = 500
-    token = 'alice/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @check
+      $.beep()
 
 # execute
 Alice = new Alice()

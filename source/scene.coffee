@@ -11,7 +11,7 @@ type Name = 'event'
 
 # function
 
-class Scene extends EmitterShellX
+class Scene extends EmitterShell
 
   isFrozen: false
   name: 'unknown'
