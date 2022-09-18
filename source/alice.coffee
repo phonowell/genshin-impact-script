@@ -13,6 +13,9 @@ class Alice
   # next(): void
   next: ->
 
+    unless $.length @map then return
+    unless Scene.is 'normal' then return
+
     list = $.keys @map
     list = $.map list, (it) -> return $.subString it, 1
     list = $.filter list, (n) -> return n != Party.current

@@ -320,8 +320,8 @@ class Skill
     interval = 200
     token = 'skill/watch'
 
-    Client.on 'leave', -> Timer.remove token
-    Client.on 'enter', => Timer.loop token, interval, @update
+    Client.on 'idle', -> Timer.remove token
+    Client.on 'activate', => Timer.loop token, interval, @update
 
 # execute
 Skill = new Skill()

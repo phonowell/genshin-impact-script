@@ -30,7 +30,7 @@ class Hud
   makePosition: (n) ->
 
     if Client.isFullScreen
-      left = Point.w '80%'
+      left = Point.w '77%'
     else left = Client.width
 
     unless n then n = Party.total + 1

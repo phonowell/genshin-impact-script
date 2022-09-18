@@ -9,17 +9,12 @@ class Config
     unless @detectRegion() then return
     @load()
 
-  # detectPath(): boolean | undefined
+  # detectPath(): void
   detectPath: ->
-
-    if @read 'basic/path' then return true
-
     name = "ahk_exe #{@get 'basic/process'}"
     __path__ = __path__
     `WinGet, __path__, ProcessPath, % name`
     @write 'basic/path', __path__
-
-    $.reload()
 
   # detectRegion(): boolean | undefined
   detectRegion: ->

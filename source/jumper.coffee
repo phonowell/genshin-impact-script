@@ -2,6 +2,7 @@
 
 class Jumper extends KeyBinding
 
+  flagIsNormal: false
   isBreaking: false
   tsJump: 0
 
@@ -33,18 +34,28 @@ class Jumper extends KeyBinding
       Timer.remove 'jumper/break'
       @isBreaking = false
 
+  # checkIsVeryNormal(): boolean
+  checkIsVeryNormal: -> return ColorManager.findAll [0xFFFFFF, 0x323232], [
+    '94%', '80%'
+    '95%', '82%'
+  ]
+
   # init(): void
   init: ->
 
     @registerEvent 'jump', 'space'
-    @on 'jump:start', => @tsJump = $.now()
+
+    @on 'jump:start', =>
+      @flagIsNormal = (Scene.is 'normal', 'unknown') and @checkIsVeryNormal()
+      @tsJump = $.now()
+
     @on 'jump:end', =>
 
       now = $.now()
       diff = now - @tsJump
       @tsJump = now
 
-      unless (Config.get 'better-jump') and Scene.is 'normal' then return
+      unless (Config.get 'better-jump') and @flagIsNormal then return
       unless diff < 350 then return
 
       Timer.add 'jump', 350 - diff, @jump

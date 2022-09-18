@@ -20,8 +20,13 @@ class Client extends KeyBinding
 
     `Menu, Tray, Icon, on.ico,, 1`
 
-    unless $.isExisted Config.get 'basic/process'
-      if Config.get 'basic/path' then $.open Config.get 'basic/path'
+    unless $.isExist Config.get 'basic/process'
+      if Config.get 'basic/path'
+        try $.open $.join [
+          Config.get 'basic/path'
+          Config.get 'basic/arguments'
+        ], ' '
+        catch then $.alert Dictionary.get 'invalid_path'
 
     $.wait (Config.get 'basic/process'), @init
 
@@ -88,7 +93,7 @@ class Client extends KeyBinding
   # init(): void
   init: ->
 
-    unless Config.detectPath() then return
+    Config.detectPath()
     @watch()
 
     @on 'leave', =>
@@ -187,7 +192,7 @@ class Client extends KeyBinding
     $.setStyle (Config.get 'basic/process'), -0x00040000 # border
     $.setStyle (Config. get 'basic/process'), -0x00C00000 # caption
     if @isFullScreen then return
-    @setPosition [1, 1]
+    @setPosition()
 
   # suspend: (isSuspend: boolean): void
   suspend: (isSuspend) ->

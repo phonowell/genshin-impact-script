@@ -2,7 +2,7 @@
 
 class Upgrader
 
-  target: 43
+  target: 44
 
   # check(): void
   check: ->

@@ -1,11 +1,11 @@
 ### interface
-type Group = [string] | [Name, string]
 type Name = 'event'
   | 'fishing'
   | 'half-menu'
   | 'menu'
   | 'mini-menu'
   | 'normal'
+  | 'playing'
   | 'unknown'
 ###
 
@@ -25,20 +25,36 @@ class Scene extends EmitterShell
       console.log "scene: #{@name}/#{@subname}"
       @tsChange = $.now()
 
+  # aboutHalfMenu(): [Name, Name] | null
+  aboutHalfMenu: ->
+    unless @checkIsHalfMenu() then return null
+    if @checkIsChat() then return ['half-menu', 'chat']
+    return ['half-menu', 'unknown']
+
+  # aboutMenu(): [Name, Name] | null
+  aboutMenu: ->
+    unless @checkIsMenu() then return null
+    if @checkIsMap() then return ['menu', 'map']
+    if @checkIsPlaying() then return ['menu', 'playing']
+    return ['menu', 'unknown']
+
+  # aboutNormal(): [Name, Name] | null
+  aboutNormal: ->
+    unless @checkIsNormal() then return null
+    if @checkIsDomain() then return ['normal', 'domain']
+    return ['normal', 'unknown']
+
   # check(): [Name, string]
   check: ->
 
-    if @checkIsMenu()
-      if @checkIsMap() then return ['menu', 'map']
-      return ['menu', 'unknown']
+    result = @aboutMenu()
+    if result then return result
 
-    if @checkIsHalfMenu()
-      if @checkIsChat() then return ['half-menu', 'chat']
-      return ['half-menu', 'unknown']
+    result = @aboutHalfMenu()
+    if result then return result
 
-    if @checkIsNormal()
-      if @checkIsDomain() then return ['normal', 'domain']
-      return ['normal', 'unknown']
+    result = @aboutNormal()
+    if result then return result
 
     if @checkIsEvent() then return ['event', 'unknown']
     if @checkIsMiniMenu() then return ['mini-menu', 'unknown']
@@ -98,6 +114,12 @@ class Scene extends EmitterShell
       '4%', '21%'
     ] then return true
     return false
+
+  # checkIsPlaying(): boolean
+  checkIsPlaying: -> return ColorManager.findAll [0xFFFFFF, 0xFFE92C], [
+    '9%', '2%'
+    '11%', '6%'
+  ]
 
   # freeze(name: Name, subname: string, time: number): void
   freeze: (name, subname, time) ->

@@ -109,7 +109,13 @@ class Party extends EmitterShell
   init: ->
 
     @on 'change', =>
-      console.log "party/member: #{$.join ($.tail @listMember), ', '}"
+      list = $.tail @listMember
+
+      unless $.length list
+        Hud.render 0, Dictionary.get 'no_members'
+        return
+
+      console.log "party/member: #{$.join list, ', '}"
       n = 0
       for name in @listMember
         unless name then continue
@@ -143,7 +149,7 @@ class Party extends EmitterShell
 
     $.on 'alt + f12', =>
       @reset()
-      Hud.render 0, 'party reset'
+      @emit 'change'
 
   # makeArea(n: Slot, isNarrow: boolean = false): Area
   makeArea: (n, isNarrow = false) ->
