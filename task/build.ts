@@ -10,10 +10,8 @@ const compile = (source: string) =>
 
 const main = async () => {
   await compile('index')
-  // await compile('slim')
   await clean()
   await pack('index', 'GIS')
-  // await pack('slim', 'GISS')
 }
 
 const pack = async (source: string, target: string) => {
@@ -34,7 +32,7 @@ const pack = async (source: string, target: string) => {
       './source/off.ico',
       './source/on.ico',
     ],
-    dir
+    dir,
   )
 }
 

@@ -1,13 +1,19 @@
-class Console
+# @ts-check
 
-  isChanged: false
-  lifetime: 10e3
-  listContent: []
+class ConsoleG
 
   constructor: ->
+
+    ###* @type import('./type/console').ConsoleG['isChanged'] ###
+    @isChanged = false
+    ###* @type import('./type/console').ConsoleG['lifetime'] ###
+    @lifetime = 10e3
+    ###* @type import('./type/console').ConsoleG['listContent'] ###
+    @listContent = []
+
     @watch()
 
-  # add(msg: string): void
+  ###* @type import('./type/console').ConsoleG['add'] ###
   add: (msg) ->
 
     id = ''
@@ -31,43 +37,43 @@ class Console
 
     if hasId then return
     $.push @listContent, [tsOutdate, msg, id]
+    return
 
-  # hide(): void
-  hide: -> `ToolTip,, 0, 0, 20`
+  ###* @type import('./type/console').ConsoleG['hide'] ###
+  hide: ->
+    Native 'ToolTip,, 0, 0, 20'
+    return
 
-  # log<T>(ipt: T): T
-  log: (ipt) ->
-
-    unless Config.get 'debug' then return ipt
-
-    if ($.type ipt) == 'array'
-      for msg in ipt
-        @add msg
-    else @add ipt
-
+  ###* @type import('./type/console').ConsoleG['log'] ###
+  log: (ipt...) ->
+    unless Config.get 'debug/enable' then return
+    @add $.join ($.map ipt, $.toString), ' '
     @render()
-    return ipt
+    return
 
-  # render(): void
-  render: $.throttle 500, =>
+  ###* @type import('./type/console').ConsoleG['render'] ###
+  render: $.throttle =>
     unless Client.isActive then return
-    list = $.map @listContent, (item) -> return item[1]
+    list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
-    [left, top] = [0 - Client.left, Client.height * 0.5]
-    `ToolTip, % text, % left, % top, 20`
+    [x, y] = [0 - Client.x, Client.height * 0.5]
+    $.noop text, x, y
+    Native 'ToolTip, % text, % x, % y, 20'
+    return
+  , 500
 
-  # update(): void
+  ###* @type import('./type/console').ConsoleG['update'] ###
   update: ->
     unless Client.isActive then return
     now = $.now()
     len = $.length @listContent
-    @listContent = $.filter @listContent, (item) -> return item[0] >= now
+    @listContent = $.filter @listContent, (item) -> item[0] >= now
     if len != $.length @listContent then @render()
 
-  # watch
+  ###* @type import('./type/console').ConsoleG['watch'] ###
   watch: ->
 
-    unless Config.get 'debug' then return
+    unless Config.get 'debug/enable' then return
 
     interval = 500
     token = 'console/watch'
@@ -80,5 +86,4 @@ class Console
       Timer.loop token, interval, @update
       @update()
 
-# execute
-console = new Console()
+console = new ConsoleG()

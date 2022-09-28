@@ -1,20 +1,24 @@
-# function
+# @ts-check
 
-class Jumper extends KeyBinding
-
-  flagIsNormal: false
-  isBreaking: false
-  tsJump: 0
+class JumperG extends KeyBinding
 
   constructor: ->
     super()
+
+    ###* @type import('./type/jumper').JumperG['flagIsNormal'] ###
+    @flagIsNormal = false
+    ###* @type import('./type/jumper').JumperG['isBreaking'] ###
+    @isBreaking = false
+    ###* @type import('./type/jumper').JumperG['tsJump'] ###
+    @tsJump = 0
+
     @init()
     @watch()
 
-  # check(): void
+  ###* @type import('./type/jumper').JumperG['check'] ###
   check: ->
 
-    unless Config.get 'better-jump' then return
+    unless Config.get 'better-jump/enable' then return
     if @isBreaking then return
     unless Scene.is 'normal' then return
 
@@ -34,19 +38,13 @@ class Jumper extends KeyBinding
       Timer.remove 'jumper/break'
       @isBreaking = false
 
-  # checkIsVeryNormal(): boolean
-  checkIsVeryNormal: -> return ColorManager.findAll [0xFFFFFF, 0x323232], [
-    '94%', '80%'
-    '95%', '82%'
-  ]
-
-  # init(): void
+  ###* @type import('./type/jumper').JumperG['init'] ###
   init: ->
 
     @registerEvent 'jump', 'space'
 
     @on 'jump:start', =>
-      @flagIsNormal = (Scene.is 'normal', 'unknown') and @checkIsVeryNormal()
+      @flagIsNormal = Scene.is 'normal', 'not-domain', 'not-busy'
       @tsJump = $.now()
 
     @on 'jump:end', =>
@@ -55,17 +53,18 @@ class Jumper extends KeyBinding
       diff = now - @tsJump
       @tsJump = now
 
-      unless (Config.get 'better-jump') and @flagIsNormal then return
+      unless (Config.get 'better-jump/enable') and @flagIsNormal then return
       unless diff < 350 then return
 
       Timer.add 'jump', 350 - diff, @jump
 
-  # jump(): void
+  ###* @type import('./type/jumper').JumperG['jump'] ###
   jump: ->
     $.press 'space'
     @tsJump = $.now()
+    return
 
-  # watch(): void
+  ###* @type import('./type/jumper').JumperG['watch'] ###
   watch: ->
 
     interval = 300
@@ -74,5 +73,4 @@ class Jumper extends KeyBinding
     Client.on 'idle', -> Timer.remove token
     Client.on 'activate', => Timer.loop token, interval, @check
 
-# execute
-Jumper = new Jumper()
+Jumper = new JumperG()

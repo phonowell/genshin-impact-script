@@ -1,8 +1,8 @@
-# function
+# @ts-check
 
-class Point
+class PointG
 
-  # create(ipt: (number | string)[]): Position
+  ###* @type import('./type/point').PointG['create'] ###
   create: (ipt) ->
 
     unless $.isArray ipt then throw new Error 'point/create: invalid ipt'
@@ -12,23 +12,24 @@ class Point
       @h ipt[1]
     ]
 
-  # h(n: number | string): number
+  ###* @type import('./type/point').PointG['h'] ###
   h: (n) ->
     if $.isNumber n then return n
     n = $.replace n, '%', ''
-    return $.round Client.height * n * 0.01
+    return $.Math.round Client.height * ($.toNumber n) * 0.01
 
-  # isValid(p: Point): boolean
+  ###* @type import('./type/point').PointG['isValid'] ###
   isValid: (p) ->
     unless $.isArray p then return false
-    unless p[0] >= 0 and p[1] >= 0 then return false
+    [x, y] = p
+    unless ($.isNumber x) and x >= 0 then return false
+    unless ($.isNumber y) and y >= 0 then return false
     return true
 
-  # w(n: number | string): number
+  ###* @type import('./type/point').PointG['w'] ###
   w: (n) ->
     if $.isNumber n then return n
     n = $.replace n, '%', ''
-    return $.round Client.width * n * 0.01
+    return $.Math.round Client.width * ($.toNumber n) * 0.01
 
-# execute
-Point = new Point()
+Point = new PointG()

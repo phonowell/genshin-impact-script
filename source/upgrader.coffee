@@ -1,10 +1,12 @@
-# function
+# @ts-check
 
-class Upgrader
+class UpgraderG
 
-  target: 44
+  constructor: ->
+    ###* @type import('./type/upgrader').UpgraderG['target'] ###
+    @target = 45
 
-  # check(): void
+  ###* @type import('./type/upgrader').UpgraderG['check'] ###
   check: ->
 
     $.get "https://github.com/phonowell/genshin-impact-script/releases/tag/0.0.#{@target}", (result) =>
@@ -19,5 +21,4 @@ class Upgrader
         unless answer then return
         $.open 'https://github.com/phonowell/genshin-impact-script/releases'
 
-# execute
-Upgrader = new Upgrader()
+Upgrader = new UpgraderG()

@@ -1,20 +1,29 @@
-# function
+# @ts-check
 
-class Movement extends KeyBinding
-
-  isForwarding: false
-  isMoving: false
-  count: 0
+class MovementG extends KeyBinding
 
   constructor: ->
     super()
+
+    ###* @type import('./type/movement').MovementG['count'] ###
+    @count =
+      forward: 0
+      move: 0
+    ###* @type import('./type/movement').MovementG['isForwarding'] ###
+    @isForwarding = false
+    ###* @type import('./type/movement').MovementG['isMoving'] ###
+    @isMoving = false
+    ###* @type import('./type/movement').MovementG['ts'] ###
+    @ts =
+      forward: 0
+
     @init()
 
-  # init(): void
+  ###* @type import('./type/movement').MovementG['init'] ###
   init: ->
 
     # shift
-    @registerEvent 'shift', 'l-shift', 'prevent'
+    @registerEvent 'shift', 'l-shift', true
     @on 'shift:start', -> $.click 'right:down'
     @on 'shift:end', -> $.click 'right:up'
 
@@ -24,50 +33,62 @@ class Movement extends KeyBinding
 
     @on 'walk:start', =>
       unless @count then @emit 'move:start'
-      if @count >= 4 then return
-      @count++
+      if @count.move >= 4 then return
+      @count.move++
 
     @on 'walk:end', =>
-      if @count == 1 then @emit 'move:end'
-      if @count <= 0 then return
-      @count--
+      if @count.move == 1 then @emit 'move:end'
+      if @count.move <= 0 then return
+      @count.move--
 
     @on 'move:start', => @isMoving = true
     @on 'move:end', => @isMoving = false
 
     # forward
-    $.on 'alt + w', => Timer.add 'forward', 100, @toggleForward
-    @on 'walk:start', @stopForward
+    @on 'walk:start', @toggleForward
 
-  # sprite(): void
-  sprite: -> $.click 'right'
+  ###* @type import('./type/movement').MovementG['sprint'] ###
+  sprint: -> $.click 'right'
 
-  # startForward(): void
+  ###* @type import('./type/movement').MovementG['startForward'] ###
   startForward: ->
-
-    unless Scene.is 'normal' then return
-    if @isForwarding then return
-
     @isForwarding = true
     Hud.render 0, 'auto forward [ON]'
-
     $.press 'w:down'
 
-  # stopForward(): void
-  stopForward: (key) ->
-
-    unless @isForwarding then return
-    if key == 'a' or key == 'd' then return
-
+  ###* @type import('./type/movement').MovementG['stopForward'] ###
+  stopForward: ->
     @isForwarding = false
     Hud.render 0, 'auto forward [OFF]'
-
     $.press 'w:up'
 
-  # toggleForward(): void
-  toggleForward: ->
-    if @isForwarding then @stopForward()
-    else @startForward()
+  ###* @type import('./type/movement').MovementG['toggleForward'] ###
+  toggleForward: (key) ->
 
-# execute
-Movement = new Movement()
+    unless Scene.is 'normal' then return
+
+    if @isForwarding
+      if key == 'w' || key == 's'
+        @stopForward()
+        return
+      return
+
+    if key == 'w'
+
+      now = $.now()
+      diff = now - @ts.forward
+      unless diff < 500
+        @count.forward = 0
+        @ts.forward = now
+        return
+
+      @count.forward++
+      @ts.forward = now
+
+      if @count.forward >= 2
+        @count.forward = 0
+        Timer.add 100, @startForward
+        return
+      return
+
+Movement = new MovementG()

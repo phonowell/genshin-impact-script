@@ -1,95 +1,64 @@
-### interface
-type Slot = 1 | 2 | 3 | 4 | 5
-###
+# @ts-check
 
-# function
-
-class Skill
-
-  listCache: {}
-  listCountDown: {}
-  listDuration: {}
-  listQ: {}
-  listRecord: {}
+class SkillG extends KeyBinding
 
   constructor: ->
+    super()
+
+    ###* @type import('./type/skill').SkillG['listCache'] ###
+    @listCache = {}
+    ###* @type import('./type/skill').SkillG['listCountDown'] ###
+    @listCountDown = {}
+    ###* @type import('./type/skill').SkillG['listDuration'] ###
+    @listDuration = {}
+    ###* @type import('./type/skill').SkillG['listQ'] ###
+    @listQ = {}
+    ###* @type import('./type/skill').SkillG['listRecord'] ###
+    @listRecord = {}
+    ###* @type import('./type/skill').SkillG['tsUseE'] ###
+    @tsUseE = 0
+
     @reset()
+    @aboutBinding()
     @watch()
 
-  # cancelCheck(): void
-  cancelCheck: ->
+  ###* @type import('./type/skill').SkillG['aboutBinding'] ###
+  aboutBinding: ->
+    @registerEvent 'use-e', 'e'
+    @registerEvent 'use-q', 'q'
+    @on 'use-e:start', @startE
+    @on 'use-e:end', @endE
+    @on 'use-q:start', @useQ
+    return
 
-    token = 'skill/check'
-    Timer.remove token
-
-    {current, name} = Party
-    unless @listCountDown[current] then return
-    console.log "#{token}: #{name} cancelled"
-
-  # check(): void
-  check: ->
-
-    token = 'skill/check'
-    Timer.remove token
-
-    {current, name} = Party
-
-    interval = 15
-    limit = 1e3
-
-    tsCheck = $.now()
-    Timer.loop token, interval, =>
-
-      a = [
-        '86%', '90%'
-        '90%', '93%'
-      ]
-
-      if name == 'mona' || name == 'kamisato_ayaka'
-        a = [
-          '81%', '90%'
-          '85%', '93%'
-        ]
-
-      diff = $.now() - tsCheck
-
-      if ColorManager.findAll 0xFFFFFF, a
-        Timer.remove token
-        console.log "#{token}: #{name} passed in #{diff} ms"
-        return
-
-      unless diff >= limit then return
-      Timer.remove token
-
-      console.log "#{token}: #{name} failed after #{diff} ms"
-
-      @listCountDown[current] = 1
-      @listDuration[current] = 1
-
-  # correctCD(cd: number): number
+  ###* @type import('./type/skill').SkillG['correctCD'] ###
   correctCD: (cd) ->
-    unless Party.hasBuff 'impetuous winds' then return cd * 1e3
+    unless Buff.has 'impetuous winds' then return cd * 1e3
     return cd * 1e3 * 0.95
 
-  # endE(): void
+  ###* @type import('./type/skill').SkillG['endE'] ###
   endE: ->
 
     {current, name} = Party
-    unless name then return
+    unless current then return
 
     unless @listRecord[current] then return
 
     {typeE} = Character.get name
     switch typeE
       when 1 then @endEAsType1()
-      when 2 then @endEAsType2 current
-      when 3 then @endEAsType3()
+      when 2 then @endEAsType2()
+      when 3 then @endEAsType3 current
+      when 4 then @endEAsType4()
       else
-        isHolding = $.now() - @listRecord[current] > 500
+        isHolding = $.now() - @listRecord[current] >= 1e3
         unless isHolding then @endEAsDefault()
         else @endEAsHolding()
 
-  # endEAsDefault(): void
+    @tsUseE = $.now()
+    return
+
+  ###* @type import('./type/skill').SkillG['endEAsDefault'] ###
   endEAsDefault: ->
 
     {current, name} = Party
@@ -104,9 +73,9 @@ class Skill
 
     @listCache[current] = [cd, duration]
     @listRecord[current] = 0
-    @check()
+    return
 
-  # endEAsHolding(): void
+  ###* @type import('./type/skill').SkillG['endEAsHolding'] ###
   endEAsHolding: ->
 
     {current, name} = Party
@@ -121,9 +90,9 @@ class Skill
 
     @listCache[current] = [cd, duration]
     @listRecord[current] = 0
-    @check()
+    return
 
-  # endEAsType1(): void
+  ###* @type import('./type/skill').SkillG['endEAsType1'] ###
   endEAsType1: ->
 
     {current, name} = Party
@@ -132,23 +101,29 @@ class Skill
     cd = @correctCD cdE[1]
     duration = durationE[1] * 1e3
     now = $.now()
-    record = @listRecord[current]
 
     @listCountDown[current] = now + cd
     if duration then @listDuration[current] = now + duration
 
     @listCache[current] = [cd, duration]
     @listRecord[current] = 0
-    @check()
+    return
 
-  # endEAsType2(current: Slot): void
-  endEAsType2: (current) ->
+  ###* @type import('./type/skill').SkillG['endEAsType2'] ###
+  endEAsType2: ->
+    {current} = Party
+    unless @listDuration[current]
+      @endEAsDefault()
+      return
+
+  ###* @type import('./type/skill').SkillG['endEAsType3'] ###
+  endEAsType3: (current) ->
 
     unless @listDuration[current]
       @endEAsDefault()
       return
 
-    name = Party.listMember[current]
+    name = Party.list[current]
     {durationE} = Character.get name
 
     now = $.now()
@@ -160,10 +135,10 @@ class Skill
 
     @listCache[current] = [cd, duration]
     @listRecord[current] = 0
-    @check()
+    return
 
-  # endEAsType3(): void
-  endEAsType3: ->
+  ###* @type import('./type/skill').SkillG['endEAsType4'] ###
+  endEAsType4: ->
 
     {current, name} = Party
     {cdE, durationE} = Character.get name
@@ -177,114 +152,116 @@ class Skill
 
     @listCache[current] = [cd, duration]
     @listRecord[current] = 0
-    # @check()
+    return
 
-  # format(n: number): string
-  format: (n) ->
-    if ($.abs n) > 1e3 then return "#{$.floor n * 0.001}s"
-    return "#{Round n * 0.001, 1}s"
+  ###* @type import('./type/skill').SkillG['freeze'] ###
+  freeze: ->
+    {name} = Party
+    unless name then return
 
-  # hide(n: Slot): void
-  hide: (n) ->
-    unless Config.get 'skill-timer' then return
-    Hud.render n, ''
+    {star} = Character.get name
+    unless star == 5 then return
 
-  # max(list: [number, number]): number
-  max: (list) ->
-    if list[0] >= list[1] then return list[0]
-    return list[1]
+    Scene.freezeAs ['normal', 'using-q'], 1500
 
-  # render(n: Slot, message: string): void
-  render: (n, message) ->
-    unless Config.get 'skill-timer' then return
-    Hud.render n, message
+  ###* @type import('./type/skill').SkillG['isEUsed'] ###
+  isEUsed: ->
 
-  # renderProgress(n: number, m: number, method = 'round'): string
-  renderProgress: (n, m, method = 'round') ->
-    listChar = ['◾️', '◽️', '⬛']
-    percent = $[method] n * 5 / m
-    listResult = []
-    for i in [1, 2, 3, 4, 5]
-      if percent > i then $.push listResult, listChar[0]
-      else if percent == i then $.push listResult, listChar[2]
-      else $.push listResult, listChar[1]
-    return $.join listResult, ''
-
-  # reset(): void
-  reset: -> for n in [1, 2, 3, 4, 5]
-    @listCache = [0, 0]
-    @listCountDown[n] = 0
-    @listDuration[n] = 0
-    @listQ[n] = 0
-    @listRecord[n] = 0
-
-  # startE(): void
-  startE: ->
+    if Timer.has 'party/is-current-as' then return
+    if Timer.has 'party/wait-for' then return
+    unless Scene.is 'normal', 'not-busy', 'not-using-q' then return
+    unless $.now() - @tsUseE > 500 then return
 
     {current, name} = Party
     unless name then return
 
-    cd = @listCountDown[current]
-    now = $.now()
-    if cd and cd - now > 500 then return
+    {typeE} = Character.get name
+    if typeE == 2 then return
 
-    if @listRecord[current] then return
-    @listRecord[current] = now
+    unless @listCountDown[current] then return
 
-  # switchQ(key: Key): void
-  switchQ: (key) ->
+    @isEUsed2()
 
-    unless Scene.is 'normal' then return
+  ###* @type import('./type/skill').SkillG['isEUsed2'] ###
+  isEUsed2: ->
+    {current} = Party
 
-    $.press "alt + #{key}"
-    Party.switchTo key
+    if ColorManager.findAll 0xFFFFFF, @makeArea1()
+      a = @makeArea2()
+      unless $.length a then return
+      unless ColorManager.findAll 0x00DCF9, a then return
+      else
+        @listCountDown[current] = 1
+        return
 
-    unless Party.current then return
-    @listQ[Party.current] = $.now()
+    @listCountDown[current] = 1
+    @listDuration[current] = 1
+    return
 
-    @cancelCheck()
+  ###* @type import('./type/skill').SkillG['makeArea1'] ###
+  makeArea1: ->
+    {name} = Party
+    {typeSprint} = Character.get name
+    if typeSprint == 1 then return ['81%', '90%', '85%', '93%']
+    return ['86%', '90%', '90%', '93%']
 
-  # update(): void
-  update: ->
+  ###* @type import('./type/skill').SkillG['makeArea2'] ###
+  makeArea2: ->
+    listName = [
+      'amber'
+      'ganyu'
+      'klee'
+      'shenhe'
+      'sucrose'
+      'xiao'
+      'yae_miko'
+      'yelan'
+    ]
+    unless $.includes listName, Party.name then return []
+    return ['87%', '87%', '89%', '89%']
 
-    interval = 200
-    unless Timer.checkInterval 'skill/throttle', interval then return
-
-    now = $.now()
+  ###* @type import('./type/skill').SkillG['reset'] ###
+  reset: ->
     for n in [1, 2, 3, 4, 5]
-      @updateItem n, now
+      @listCache[n] = [0, 0]
+      @listCountDown[n] = 0
+      @listDuration[n] = 0
+      @listQ[n] = 0
+      @listRecord[n] = 0
+    return
 
-  # update(n: Slot, now: number): void
-  updateItem: (n, now) ->
+  ###* @type import('./type/skill').SkillG['startE'] ###
+  startE: ->
 
-    unless @listCountDown[n] or @listDuration[n] then return
+    {current} = Party
+    unless current then return
 
-    if now >= @listCountDown[n] then @listCountDown[n] = 0
-    if now >= @listDuration[n] then @listDuration[n] = 0
+    if @listCountDown[current] then return
+    if @listRecord[current] then return
+    @listRecord[current] = $.now()
+    return
 
-    listMessage = []
+  ###* @type import('./type/skill').SkillG['switchQ'] ###
+  switchQ: (n) ->
 
-    tagCurrent = ''
-    if n == Party.current then tagCurrent = ' 🎮'
-
-    if @listCountDown[n]
-      progress = @renderProgress @listCache[n][0] - (@listCountDown[n] - now), @listCache[n][0], 'floor'
-      formatted = @format now - @listCountDown[n]
-      $.push listMessage, "#{progress} #{formatted}#{tagCurrent}"
-    else $.push listMessage, "◾️◾️◾️◾️◾️#{tagCurrent}"
-
-    if @listDuration[n]
-      progress = @renderProgress @listDuration[n] - now, @listCache[n][1], 'ceil'
-      formatted = @format @listDuration[n] - now
-      $.push listMessage, "#{progress} [#{formatted}]"
-
-    unless ($.abs @listCountDown[n]) + @listDuration[n]
-      @hide n
+    unless Scene.is 'normal', 'not-busy'
+      $.press "alt + #{n}"
       return
 
-    @render n, $.join listMessage, '\n'
+    if Party.current == n
+      @useQ()
+      return
 
-  # useE(isHolding: boolean = false): void
+    $.press "alt + #{n}"
+    Party.emit 'switch', n
+    @freeze()
+
+    {current, name} = Party
+    unless current then return
+    @listQ[current] = $.now()
+    return
+
+  ###* @type import('./type/skill').SkillG['useE'] ###
   useE: (isHolding = false) ->
 
     unless Scene.is 'normal' then return
@@ -299,29 +276,25 @@ class Skill
       $.press 'e:up'
       @endE()
 
-  # useQ(): void
+  ###* @type import('./type/skill').SkillG['useQ'] ###
   useQ: ->
 
-    unless Scene.is 'normal' then return
+    unless Scene.is 'normal', 'not-busy' then return
 
     $.press 'q'
+    @freeze()
 
     {current, name} = Party
     unless current then return
     @listQ[current] = $.now()
+    return
 
-    if (Character.get name, 'star') == 5
-      @cancelCheck()
-      Scene.freeze 'normal', '5-star-q', 1500
-
-  # watch(): void
+  ###* @type import('./type/skill').SkillG['watch'] ###
   watch: ->
-
-    interval = 200
-    token = 'skill/watch'
-
+    [interval, token] = [200, 'skill/watch']
     Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @update
+    Client.on 'activate', => Timer.loop token, interval, =>
+      Dashboard.update()
+      if Timer.checkInterval 'skill/is-e-used', 1e3 then @isEUsed()
 
-# execute
-Skill = new Skill()
+Skill = new SkillG()

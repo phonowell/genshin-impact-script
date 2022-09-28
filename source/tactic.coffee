@@ -1,5 +1,7 @@
-# !@e - not at e duration
+# @ts-check
+
 ### keywords
+!@e - not at e duration
 !@e? - e is not ready
 !@m - not at movement
 # - ignore
@@ -18,20 +20,22 @@ t - aim
 tt - aim twice
 ###
 
-# function
-
-class Tactic extends KeyBinding
-
-  intervalLong: 100
-  intervalShort: 50
-  isActive: false
+class TacticG extends KeyBinding
 
   constructor: ->
     super()
+
+    ###* @type import('./type/tactic').TacticG['intervalLong'] ###
+    @intervalLong = 100
+    ###* @type import('./type/tactic').TacticG['intervalShort'] ###
+    @intervalShort = 50
+    ###* @type import('./type/tactic').TacticG['isActive'] ###
+    @isActive = false
+
     @init()
 
-  # atDuration(cbA: Fn, cbB: Fn, isNot: boolean = false): void
-  atDuration: (cbA, cbB, isNot = false) ->
+  ###* @type import('./type/tactic').TacticG['atDuration'] ###
+  atDuration: (cbA, cbB, isNot) ->
 
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
@@ -40,8 +44,8 @@ class Tactic extends KeyBinding
       @delay @intervalShort, cb[0]
     else @delay @intervalShort, cb[1]
 
-  # atMovement: (cbA: Fn, cbB: Fn, isNot: boolean = false): void
-  atMovement: (cbA, cbB, isNot = false) ->
+  ###* @type import('./type/tactic').TacticG['atMovement'] ###
+  atMovement: (cbA, cbB, isNot) ->
 
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
@@ -50,8 +54,8 @@ class Tactic extends KeyBinding
       @delay @intervalShort, cb[0]
     else @delay @intervalShort, cb[1]
 
-  # atReady(cbA: Fn, cb: Fn, isNot: boolean = false): void
-  atReady: (cbA, cbB, isNot = false) ->
+  ###* @type import('./type/tactic').TacticG['atReady'] ###
+  atReady: (cbA, cbB, isNot) ->
 
     cb = [cbA, cbB]
     if isNot then cb = [cbB, cbA]
@@ -60,22 +64,22 @@ class Tactic extends KeyBinding
       @delay @intervalShort, cb[0]
     else @delay @intervalShort, cb[1]
 
-  # delay(time: number, callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['delay'] ###
   delay: (time, callback) -> Timer.add 'tactic/next', time, callback
 
-  # doAim(callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doAim'] ###
   doAim: (callback) ->
     $.press 'r'
     @delay @intervalLong, callback
 
-  # doAimTwice(callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doAimTwice'] ###
   doAimTwice: (callback) ->
     $.press 'r'
     @delay @intervalLong, =>
       $.press 'r'
       @delay @intervalLong, callback
 
-  # doAttack(isCharged: boolean, callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doAttack'] ###
   doAttack: (isCharged, callback) ->
 
     if isCharged
@@ -96,7 +100,7 @@ class Tactic extends KeyBinding
         $.press 'l-button:up'
 
         if Movement.isMoving and Party.name == 'klee'
-          @delay 200, => @jump callback
+          @delay 200, => @doJump callback
           return
 
         @delay @intervalLong, callback
@@ -106,19 +110,19 @@ class Tactic extends KeyBinding
     $.press 'l-button'
     @delay 200, callback
 
-  # doJump(callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doJump'] ###
   doJump: (callback) ->
     Jumper.jump()
     unless Movement.isMoving
       @delay 450, callback
     else @delay 550, callback
 
-  # doSprint(callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doSprint'] ###
   doSprint: (callback) ->
-    Movement.sprite()
+    Movement.sprint()
     @delay @intervalLong, callback
 
-  # doUseE(isHolding: boolean, callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doUseE'] ###
   doUseE: (isHolding, callback) ->
 
     if Skill.listCountDown[Party.current]
@@ -128,7 +132,7 @@ class Tactic extends KeyBinding
     Skill.useE isHolding
     @delay @intervalLong, callback
 
-  # doUseEE(callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doUseEE'] ###
   doUseEE: (callback) ->
 
     if Skill.listCountDown[Party.current]
@@ -140,22 +144,23 @@ class Tactic extends KeyBinding
       Skill.useE()
       @delay @intervalLong, callback
 
-  # doUseQ(callback: Fn): void
+  ###* @type import('./type/tactic').TacticG['doUseQ'] ###
   doUseQ: (callback) ->
     Skill.useQ()
     @delay @intervalLong, callback
 
-  # end(list: string[][], callback: Fn): void
-  end: (list, callback = '') ->
+  ###* @type import('./type/tactic').TacticG['end'] ###
+  end: (list, callback = undefined) ->
     unless callback
       @execute list
       return
 
     @stop()
     callback()
+    return
 
-  # execute(list: string[][], g: number = 0, i: number = 0, callback: Fn): void
-  execute: (list, g = 0, i = 0, callback = '') ->
+  ###* @type import('./type/tactic').TacticG['execute'] ###
+  execute: (list, g = 0, i = 0, callback = undefined) ->
 
     unless @isActive
       @stop()
@@ -168,19 +173,19 @@ class Tactic extends KeyBinding
     item = @get list, g, i
 
     unless item
-      @end list, callback
+      @delay @intervalLong, => @end list, callback
       return
 
     next = => @execute list, g, i + 1, callback
     nextGroup = => @execute list, g + 1, 0, callback
 
     map =
-      '!@e': => @atDuration next, nextGroup, 'not'
-      '!@e?': => @atReady next, nextGroup, 'not'
-      '!@m': => @atMovement next, nextGroup, 'not'
-      '@e': => @atDuration next, nextGroup, 0
-      '@e?': => @atReady next, nextGroup, 0
-      '@m': => @atMovement next, nextGroup, 0
+      '!@e': => @atDuration next, nextGroup, true
+      '!@e?': => @atReady next, nextGroup, true
+      '!@m': => @atMovement next, nextGroup, true
+      '@e': => @atDuration next, nextGroup, false
+      '@e?': => @atReady next, nextGroup, false
+      '@m': => @atMovement next, nextGroup, false
       'a': => @doAttack false, next
       'a~': => @doAttack true, next
       'e': => @doUseE false, next
@@ -198,17 +203,18 @@ class Tactic extends KeyBinding
       if $.startsWith item, '#' then return nextGroup
 
       if $.startsWith item, '$' then return =>
-        $.press SubStr item, 2
+        $.press $.subString item, 1
         @delay @intervalShort, next
 
-      if $.isNumber item then return => @delay item, next
+      if $.isNumber item then return => @delay ($.toNumber item), next
+      return $.noop
 
     cb()
 
-  # format(ipt: string): string[]
+  ###* @type import('./type/tactic').TacticG['format'] ###
   format: (ipt) ->
 
-    unless ipt then return 0
+    unless ipt then return []
 
     ipt = $.replace ipt, ' ', ''
     listAll = []
@@ -221,35 +227,38 @@ class Tactic extends KeyBinding
 
     return listAll
 
-  # get(list: string[], g: number = 0, i: number = 0): string
+  ###* @type import('./type/tactic').TacticG['get'] ###
   get: (list, g = 0, i = 0) ->
     if g >= $.length list then return ''
     group = list[g]
     if i >= $.length group then return ''
     return group[i]
 
-  # init(): void
+  ###* @type import('./type/tactic').TacticG['init'] ###
   init: ->
 
     @registerEvent 'attack', 'l-button'
     @on 'attack:start', =>
+      unless Party.name then return
       @start Character.get Party.name, 'onLongPress'
     @on 'attack:end', @stop
 
     @registerEvent 'side-button-1', 'x-button-1'
     @on 'side-button-1:start', =>
+      unless Party.name then return
       @start Character.get Party.name, 'onSideButton1'
     @on 'side-button-1:end', @stop
 
     @registerEvent 'side-button-2', 'x-button-2'
     @on 'side-button-2:start', =>
+      unless Party.name then return
       @start Character.get Party.name, 'onSideButton2'
     @on 'side-button-2:end', @stop
 
     Party.on 'switch', @stop
 
-  # start(list: string, callback: Fn): void
-  start: (list, callback = '') ->
+  ###* @type import('./type/tactic').TacticG['start'] ###
+  start: (line, callback = undefined) ->
 
     @stop()
 
@@ -257,18 +266,17 @@ class Tactic extends KeyBinding
       if callback then callback()
       return
 
-    list = @format list
-    unless list
+    list = @format line
+    unless $.length list
       if callback then callback()
       return
 
     @isActive = true
     @execute list, 0, 0, callback
 
-  # stop(): void
+  ###* @type import('./type/tactic').TacticG['stop'] ###
   stop: ->
     @isActive = false
     Timer.remove 'tactic/next'
 
-# execute
-Tactic = new Tactic()
+Tactic = new TacticG()

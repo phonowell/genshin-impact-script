@@ -1,27 +1,23 @@
-# function
+# @ts-check
 
-class Area
+class AreaG
 
-  # create(ipt: (number | string)[] | (number | string)[][]): Area
+  ###* @type import('./type/area').AreaG['create'] ###
   create: (ipt) ->
 
     unless $.isArray ipt
-      throw new Error 'area/create: invalid ipt'
+      throw new Error "area/create: invalid ipt 1: #{$.toString ipt}"
 
-    len = $.length ipt
-
-    if len >= 4 then return [
+    if @isTuple4 ipt then return [
       Point.w ipt[0]
       Point.h ipt[1]
       Point.w ipt[2]
       Point.h ipt[3]
     ]
 
-    if len >= 2
+    if @isTuple2 ipt
 
       [p1, p2] = ipt
-      unless (Point.isValid p1) and Point.isValid p2
-        throw new Error 'area/create: invalid ipt'
 
       return [
         Point.w p1[0]
@@ -30,14 +26,22 @@ class Area
         Point.h p2[1]
       ]
 
-    throw new Error 'area/create: invalid ipt'
+    throw new Error "area/create: invalid ipt 0: #{$.toString ipt}"
 
-  # isValid(r: Area): boolean
+  ###* @type import('./type/area').AreaG['isTuple4'] ###
+  isTuple4: (ipt) -> ($.length ipt) >= 4
+
+  ###* @type import('./type/area').AreaG['isTuple2'] ###
+  isTuple2: (ipt) -> ($.length ipt) >= 2
+
+  ###* @type import('./type/area').AreaG['isValid'] ###
   isValid: (a) ->
     unless $.isArray a then return false
-    unless a[0] >= 0 and a[1] >= 0 then return false
-    unless a[2] >= a[0] and a[3] >= a[1] then return false
+    [x, y, x2, y2] = a
+    unless ($.isNumber x) and x >= 0 then return false
+    unless ($.isNumber y) and y >= 0 then return false
+    unless ($.isNumber x2) and x2 >= x then return false
+    unless ($.isNumber y2) and y2 >= y then return false
     return true
 
-# execute
-Area = new Area()
+Area = new AreaG()

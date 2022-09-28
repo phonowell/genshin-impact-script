@@ -1,34 +1,34 @@
-# function
+# @ts-check
 
-class Idle extends KeyBinding
-
-  listKey: [
-    'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
-    'Sc029', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
-    'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
-    'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
-    'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
-    'space'
-    'l-button', 'm-button', 'r-button', 'x-button-1', 'x-button-2'
-  ]
-  token: 'idle/pressing'
+class IdleG extends KeyBinding
 
   constructor: ->
     super()
-    @init()
 
-  # clearTimer
-  clearTimer: -> Timer.remove @token
+    ###* @type import('./type/idle').IdleG['listKey'] ###
+    @listKey = [
+      'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
+      'Sc029', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
+      'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
+      'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
+      'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
+      'space'
+      'left', 'right', 'up', 'down'
+      'l-button', 'm-button', 'r-button', 'x-button-1', 'x-button-2'
+    ]
+    ###* @type import('./type/idle').IdleG['token'] ###
+    @token = 'idle/pressing'
 
-  # init(): void
-  init: ->
     for key in @listKey
       @registerEvent 'press', key
 
     @on 'press:start', @main
     @on 'press:end', @main
 
-  # main(): void
+  ###* @type import('./type/idle').IdleG['clearTimer'] ###
+  clearTimer: -> Timer.remove @token
+
+  ###* @type import('./type/idle').IdleG['main'] ###
   main: ->
 
     list = []
@@ -41,16 +41,15 @@ class Idle extends KeyBinding
       @clearTimer()
     else @setTimer()
 
-  # setTimer(): void
+  ###* @type import('./type/idle').IdleG['setTimer'] ###
   setTimer: ->
 
-    time = Config.get 'idle/use-time'
+    time = $.toNumber Config.get 'idle/use-time'
     unless time then return
 
     Timer.add @token, time * 1e3, ->
-      if Client.isSuspend then return
+      if Client.isSuspended then return
       if Scene.is 'unknown' then return
       Client.emit 'idle'
 
-# execute
-Idle = new Idle()
+Idle = new IdleG()

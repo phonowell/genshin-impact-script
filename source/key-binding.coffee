@@ -1,12 +1,18 @@
-# function
+# @ts-check
 
 class KeyBinding extends EmitterShell
 
-  isFired: {}
-  isPressed: {}
-  map: {} # Record<string, string[]>
+  constructor: ->
+    super()
 
-  # registerEvent(name: string, key: string, isPrevented: boolean): void
+    ###* @type import('./type/key-binding').KeyBinding['isFired'] ###
+    @isFired = {}
+    ###* @type import('./type/key-binding').KeyBinding['isPressed'] ###
+    @isPressed = {}
+    ###* @type import('./type/key-binding').KeyBinding['map'] ###
+    @map = {}
+
+  ###* @type import('./type/key-binding').KeyBinding['registerEvent'] ###
   registerEvent: (name, key, isPrevented = false) ->
 
     unless name then throw new Error 'KeyBinding/registerEvent: name is required'
@@ -17,8 +23,6 @@ class KeyBinding extends EmitterShell
 
     $.on "#{key}.#{name}", =>
 
-      # unless name == 'press' then console.log "#{key}-down as #{name}"
-
       if @isPressed[key] then return
       @isPressed[key] = true
 
@@ -28,8 +32,6 @@ class KeyBinding extends EmitterShell
       @isFired[key] = true
 
     $.on "#{key}:up.#{name}", =>
-
-      # unless name == 'press' then console.log "#{key}-up as #{name}"
 
       fn = =>
 
@@ -45,7 +47,7 @@ class KeyBinding extends EmitterShell
       if @isFired[key] then fn()
       else Timer.add 50, fn
 
-  # unregisterEvent(name: string, key: string): void
+  ###* @type import('./type/key-binding').KeyBinding['unregisterEvent'] ###
   unregisterEvent: (name, key) ->
 
     unless name then throw new Error 'KeyBinding/unregisterEvent: name is required'
@@ -55,6 +57,6 @@ class KeyBinding extends EmitterShell
     unless group then throw new Error "KeyBinding/unregisterEvent: no such event '#{name}'"
     unless $.includes group, key then throw new Error "KeyBinding/unregisterEvent: no such key '#{key}' in event '#{name}'"
 
-    @map[name] = $.filter group, (k) -> return k != key
+    @map[name] = $.filter group, (k) -> k != key
     $.off "#{key}.#{name}"
     $.off "#{key}:up.#{name}"

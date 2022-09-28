@@ -1,3 +1,5 @@
+# @ts-check
+
 import __albedo__ from '../../genshin-character-data/source/albedo.yaml'
 import __aloy__ from '../../genshin-character-data/source/aloy.yaml'
 import __amber__ from '../../genshin-character-data/source/amber.yaml'
@@ -5,8 +7,10 @@ import __arataki_itto__ from '../../genshin-character-data/source/arataki_itto.y
 import __barbara__ from '../../genshin-character-data/source/barbara.yaml'
 import __beidou__ from '../../genshin-character-data/source/beidou.yaml'
 import __bennett__ from '../../genshin-character-data/source/bennett.yaml'
+import __candace__ from '../../genshin-character-data/source/candace.yaml'
 import __chongyun__ from '../../genshin-character-data/source/chongyun.yaml'
 import __collei__ from '../../genshin-character-data/source/collei.yaml'
+import __cyno__ from '../../genshin-character-data/source/cyno.yaml'
 import __diluc__ from '../../genshin-character-data/source/diluc.yaml'
 import __diona__ from '../../genshin-character-data/source/diona.yaml'
 import __dori__ from '../../genshin-character-data/source/dori.yaml'
@@ -26,6 +30,7 @@ import __kujou_sara__ from '../../genshin-character-data/source/kujou_sara.yaml'
 import __kuki_shinobu__ from '../../genshin-character-data/source/kuki_shinobu.yaml'
 import __lisa__ from '../../genshin-character-data/source/lisa.yaml'
 import __mona__ from '../../genshin-character-data/source/mona.yaml'
+import __nilou__ from '../../genshin-character-data/source/nilou.yaml'
 import __ningguang__ from '../../genshin-character-data/source/ningguang.yaml'
 import __noelle__ from '../../genshin-character-data/source/noelle.yaml'
 import __qiqi__ from '../../genshin-character-data/source/qiqi.yaml'
@@ -53,59 +58,32 @@ import __yoimiya__ from '../../genshin-character-data/source/yoimiya.yaml'
 import __yun_jin__ from '../../genshin-character-data/source/yun_jin.yaml'
 import __zhongli__ from '../../genshin-character-data/source/zhongli.yaml'
 
-# function
+class CharacterG
 
-class Character
+  constructor: ->
 
-  data: {}
-  source: 'character.ini'
+    ###* @type import('./type/character').CharacterG['data'] ###
+    @data = {}
+    ###* @type import('./type/character').CharacterG['source'] ###
+    @source = 'character.ini'
 
-  constructor: -> @load()
+    @load()
 
-  # get(name: string, key?: string): unknown
-  get: (name, key = '') ->
+  ###* @type import('./type/character').CharacterG['get'] ###
+  get: (name, key = undefined) ->
     unless name then return ''
     unless key then return @data[name]
     return @data[name][key]
 
-  # padArray(list: [number] | [number, number]): [number, number]
-  padArray: (list) ->
-    if ($.length list) == 2 then return list
-    $.push list, list[0]
-    return list
+  ###* @type import('./type/character').CharacterG['isTuple'] ###
+  isTuple: (ipt) -> ($.length ipt) == 2
 
-  # pickFromFile(name: string, key: string): string | undefined
-  pickFromFile: (name, key) ->
-
-    # like hu_tao
-    target = @read name
-    if target then return @read "#{name}/#{key}", 0
-
-    # like hu tao
-    nameDict = $.toLowerCase Dictionary.data[name][0]
-    target = @read nameDict
-    if target then return @read "#{nameDict}/#{key}", 0
-
-    # like 胡桃
-    if A_language == '0804'
-      nameDict = $.toLowerCase Dictionary.get name
-      target = @read nameDict
-      if target then return @read "#{nameDict}/#{key}", 0
-
-    # weapon
-    target = @read @data[name].weapon
-    if target then return @read "#{@data[name].weapon}/#{key}", 0
-
-    # all
-    target = @read 'all'
-    if target then return @read "all/#{key}", 0
-
-    return 0
-
-  # load(): void
+  ###* @type import('./type/character').CharacterG['load'] ###
   load: ->
 
+    ###* @type import('./type/character').dataRaw ###
     data = {}
+
     $.mixin data, albedo: __albedo__
     $.mixin data, aloy: __aloy__
     $.mixin data, amber: __amber__
@@ -113,8 +91,10 @@ class Character
     $.mixin data, barbara: __barbara__
     $.mixin data, beidou: __beidou__
     $.mixin data, bennett: __bennett__
+    $.mixin data, candace: __candace__
     $.mixin data, chongyun: __chongyun__
     $.mixin data, collei: __collei__
+    $.mixin data, cyno: __cyno__
     $.mixin data, diluc: __diluc__
     $.mixin data, diona: __diona__
     $.mixin data, dori: __dori__
@@ -134,6 +114,7 @@ class Character
     $.mixin data, kuki_shinobu: __kuki_shinobu__
     $.mixin data, lisa: __lisa__
     $.mixin data, mona: __mona__
+    $.mixin data, nilou: __nilou__
     $.mixin data, ningguang: __ningguang__
     $.mixin data, noelle: __noelle__
     $.mixin data, qiqi: __qiqi__
@@ -166,40 +147,77 @@ class Character
       @data[name] =
         cdE: @padArray @makeValueIntoArray char['cd-e']
         cdQ: char['cd-q']
-        color: @makeValueIntoArray char['color']
+        color: char['color']
+        constellation: 0
         durationE: @padArray @makeValueIntoArray char['duration-e']
         durationQ: char['duration-q']
+        onLongPress: ''
+        onSideButton1: ''
+        onSideButton2: ''
+        onSwitch: ''
         star: char['star']
-        # typeE: 0 | 1 | 2 | 3
-        # 0: default
-        # 1: like jean, amber, beidou
-        # 2: tartaglia
-        # 3: like sayu & yelan
         typeE: char['type-e']
+        typeSprint: char['type-sprint']
         vision: char.vision
         weapon: char.weapon
 
-      @data[name].constellation = @pickFromFile name, 'constellation'
-      @data[name].onLongPress = @pickFromFile name, 'on-long-press'
-      @data[name].onSideButton1 = @pickFromFile name, 'on-side-button-1'
-      @data[name].onSideButton2 = @pickFromFile name, 'on-side-button-2'
-      @data[name].onSwitch = @pickFromFile name, 'on-switch'
+      @data[name].constellation = $.toNumber @pickFromFile name, 'constellation'
+      @data[name].onLongPress = $.toString @pickFromFile name, 'on-long-press'
+      @data[name].onSideButton1 = $.toString @pickFromFile name, 'on-side-button-1'
+      @data[name].onSideButton2 = $.toString @pickFromFile name, 'on-side-button-2'
+      @data[name].onSwitch = $.toString @pickFromFile name, 'on-switch'
 
       if name == 'traveler'
-        @data[name].vision = @pickFromFile name, 'vision'
+        @data[name].vision = $.toString @pickFromFile name, 'vision'
+    return
 
-  # makeValueIntoArray: (value: number | number[]): number[]
-  makeValueIntoArray: (value) -> switch $.type value
-    when 'array' then return value
-    when 'number' then return [value]
-    else return [0]
+  ###* @type import('./type/character').CharacterG['makeValueIntoArray'] ###
+  makeValueIntoArray: (value) ->
+    if $.isNumber value then return [value]
+    if $.isArray value then return value
+    return [0]
 
-  # read(ipt: string, defaultValue?: string): void
+  ###* @type import('./type/character').CharacterG['padArray'] ###
+  padArray: (list) ->
+    if @isTuple list then return list
+    return [list[0], list[0]]
+
+  ###* @type import('./type/character').CharacterG['pickFromFile'] ###
+  pickFromFile: (name, key) ->
+
+    # like hu_tao
+    target = @read name
+    if target then return @read "#{name}/#{key}", 0
+
+    # like hu tao
+    nameDict = $.toLowerCase Dictionary.data[name][0]
+    target = @read nameDict
+    if target then return @read "#{nameDict}/#{key}", 0
+
+    # like 胡桃
+    if A_language == '0804'
+      nameDict = $.toLowerCase Dictionary.get name
+      target = @read nameDict
+      if target then return @read "#{nameDict}/#{key}", 0
+
+    # weapon
+    target = @read @data[name].weapon
+    if target then return @read "#{@data[name].weapon}/#{key}", 0
+
+    # all
+    target = @read 'all'
+    if target then return @read "all/#{key}", 0
+
+    return 0
+
+  # read(ipt: string, defaultValue?: string): string
+  ###* @type import('./type/character').CharacterG['read'] ###
   read: (ipt, defaultValue = '') ->
     [section, key] = $.split ipt, '/'
-    if key then `IniRead, result, % this.source, % section, % key, % defaultValue`
-    else `IniRead, result, % this.source, % section`
-    return $.toLowerCase `result`
+    result = ''
+    $.noop result, section, key, defaultValue
+    if key then Native 'IniRead, result, % this.source, % section, % key, % defaultValue'
+    else Native 'IniRead, result, % this.source, % section'
+    return $.toLowerCase result
 
-# execute
-Character = new Character()
+Character = new CharacterG()

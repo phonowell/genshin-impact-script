@@ -1,27 +1,19 @@
-# function
+# @ts-check
 
-class Recorder extends KeyBinding
-
-  file: ''
-  isActive: false
-  list: []
-  listWatch: [
-    'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
-    'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
-    'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
-    'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
-    'space'
-    'l-button', 'm-button', 'r-button'
-  ]
-  ts: 0
+class RecorderG extends KeyBinding
 
   constructor: ->
     super()
 
-    `FileCreateDir, replay`
+    ###* @type import('./type/recorder').RecorderG['isActive'] ###
+    @isActive = false
+    ###* @type import('./type/recorder').RecorderG['list'] ###
+    @list = []
+    ###* @type import('./type/recorder').RecorderG['ts'] ###
+    @ts = 0
 
-    Client.on 'leave', @stop
+    Native 'FileCreateDir, replay'
+    Client.on 'idle', @stop
 
     @on 'record:start', (key) => @record "#{key}:down"
     @on 'record:end', (key) => @record "#{key}:up"
@@ -30,15 +22,12 @@ class Recorder extends KeyBinding
       unless @isActive then @start()
       else @stop()
 
-  # log(message: string): void
-  log: (message) -> Hud.render 0, message
-
-  # record(key: string): void
+  ###* @type import('./type/recorder').RecorderG['record'] ###
   record: (key) ->
 
     unless @isActive then return
 
-    @log key
+    Hud.render 0, key
 
     now = $.now()
     delay = now - @ts
@@ -48,18 +37,20 @@ class Recorder extends KeyBinding
     if $.includes key, 'l-button'
       [x, y] = $.getPosition()
       position = $.join [
-        "#{$.round x * 100 / Client.width}%"
-        "#{$.round y * 100 / Client.height}%"
+        "#{$.Math.round x * 100 / Client.width}%"
+        "#{$.Math.round y * 100 / Client.height}%"
       ], ','
 
     $.push @list, {delay, key, position}
+    return
 
-  # reset(): void
+  ###* @type import('./type/recorder').RecorderG['reset'] ###
   reset: ->
     @list = []
     @ts = $.now()
+    return
 
-  # save(): void
+  ###* @type import('./type/recorder').RecorderG['save'] ###
   save: ->
 
     unless $.length @list then return
@@ -71,42 +62,44 @@ class Recorder extends KeyBinding
       line = $.trim $.join [delay, key, position], ' '
       result = "#{result}#{line}\n"
 
-    file = $.file 'replay/0.txt'
-    file.save result
+    f = $.file 'replay/0.txt'
+    f.write result
 
-  # start(): void
+  ###* @type import('./type/recorder').RecorderG['start'] ###
   start: ->
 
     if Replayer.isActive
-      $.beep 2
+      Sound.beep 2
       return
 
     if @isActive then return
+    @isActive = true
 
-    for key in @listWatch
+    for key in Idle.listKey
       @registerEvent 'record', key
       @registerEvent 'record', "alt + #{key}"
+      @registerEvent 'record', "ctrl + #{key}"
 
-    @isActive = true
     @reset()
 
-    $.beep()
-    @log 'start recording'
+    Sound.beep()
+    Hud.render 0, 'start recording'
 
-  # stop(): void
+  ###* @type import('./type/recorder').RecorderG['stop'] ###
   stop: ->
 
     unless @isActive then return
+    @isActive = false
 
-    for key in @listWatch
+    for key in Idle.listKey
       @unregisterEvent 'record', key
       @unregisterEvent 'record', "alt + #{key}"
+      @unregisterEvent 'record', "ctrl + #{key}"
 
-    @isActive = false
     @save()
 
-    $.beep()
-    @log 'end recording'
+    Sound.beep()
+    Hud.render 0, 'end recording'
 
 # export
-Recorder = new Recorder()
+Recorder = new RecorderG()

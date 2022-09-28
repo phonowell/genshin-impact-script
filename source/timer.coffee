@@ -1,14 +1,17 @@
-# function
+# @ts-check
 
-class Timer
+class TimerG
 
-  cacheTimer: {}
-  cacheTs: {}
+  constructor: ->
+    ###* @type import('./type/timer').TimerG['cacheTimer'] ###
+    @cacheTimer = {}
+    ###* @type import('./type/timer').TimerG['cacheTs'] ###
+    @cacheTs = {}
 
-  # add(id?: string, time?: number, fn?: Fn): void
+  ###* @type import('./type/timer').TimerG['add'] ###
   add: (args...) ->
 
-    if Client.isSuspend then return
+    if Client.isSuspended then return
     [id, time, fn] = @pick args
 
     hasId = !!id
@@ -19,7 +22,9 @@ class Timer
     result = $.setTimeout fn, time
     if hasId then @cacheTimer[id] = result
 
-  # checkInterval(id: string, time: number): boolean
+    return
+
+  ###* @type import('./type/timer').TimerG['checkInterval'] ###
   checkInterval: (id, time) ->
 
     now = $.now()
@@ -34,42 +39,51 @@ class Timer
     @cacheTs[id] = now
     return true
 
-  # has(id: string): boolean
+  ###* @type import('./type/timer').TimerG['has'] ###
   has: (id) ->
     if @cacheTimer[id] then return true
     else return false
 
-  # loop(id?: string, time?: number, fn?: Fn): void
+  ###* @type import('./type/timer').TimerG['isTuple'] ###
+  isTuple: (ipt) ->
+    unless ($.length ipt) == 3 then return false
+    unless $.isString ipt[0] then return false
+    unless $.isNumber ipt[1] then return false
+    unless $.isFunction ipt[2] then return false
+    return true
+
+  ###* @type import('./type/timer').TimerG['loop'] ###
   loop: (args...) ->
 
-    if Client.isSuspend then return
+    if Client.isSuspended then return
     [id, time, fn] = @pick args
 
     hasId = !!id
 
-    if hasId and @cacheTimer[id] then $.clearInterval @cahce[id]
+    if hasId and @cacheTimer[id] then $.clearInterval @cacheTimer[id]
     unless time then return
 
     result = $.setInterval fn, time
     if hasId then @cacheTimer[id] = result
+    return
 
-  # pick(args: unknown[]): [string, number, Fn]
+  ###* @type import('./type/timer').TimerG['pick'] ###
   pick: (args) ->
-    len = $.length args
-    if len == 1 then return [args[0], 0, 0]
-    else if len == 2 then return ['', args[0], args[1]]
-    else return args
+    if @isTuple args then return args
+    return ['', args[0], args[1]]
 
-  # reset(): void
-  reset: -> for id, t of @cacheTimer
-    $.clearTimeout t
-    @cacheTimer[id] = 0
+  ###* @type import('./type/timer').TimerG['reset'] ###
+  reset: ->
+    for id, t of @cacheTimer
+      $.clearTimeout t
+      $.delete @cacheTimer, id
+    return
 
-  # remove(id: string): void
+  ###* @type import('./type/timer').TimerG['remove'] ###
   remove: (id) ->
     unless @has id then return
     $.clearTimeout @cacheTimer[id]
-    @cacheTimer[id] = 0
+    $.delete @cacheTimer, id
+    return
 
-# execute
-Timer = new Timer()
+Timer = new TimerG()

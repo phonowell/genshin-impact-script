@@ -1,29 +1,36 @@
-# function
+# @ts-check
 
-class Config
-
-  data: {}
-  source: 'config.ini'
+class ConfigG
 
   constructor: ->
+
+    ###* @type import('./type/config').ConfigG['data'] ###
+    @data = {}
+    ###* @type import('./type/config').ConfigG['source'] ###
+    @source = 'config.ini'
+
     unless @detectRegion() then return
     @load()
 
-  # detectPath(): void
+  ###* @type import('./type/config').ConfigG['detectRegion'] ###
   detectPath: ->
     name = "ahk_exe #{@get 'basic/process'}"
-    __path__ = __path__
-    `WinGet, __path__, ProcessPath, % name`
-    @write 'basic/path', __path__
 
-  # detectRegion(): boolean | undefined
+    $.noop name
+    path = ''
+    Native 'WinGet, path, ProcessPath, % name'
+
+    @write 'basic/path', path
+    return
+
+  ###* @type import('./type/config').ConfigG['detectRegion'] ###
   detectRegion: ->
 
     if @read 'basic/process' then return true
 
     unless A_language == '0804'
       @write 'basic/process', 'GenshinImpact.exe'
-      return
+      return undefined
 
     $.confirm (Dictionary.get 'ask_for_server'), (answer) =>
 
@@ -32,80 +39,84 @@ class Config
 
       $.reload()
 
-  # get(ipt: string): boolean
-  get: (ipt) -> return @data[ipt]
+    return undefined
 
-  # load(): void
+  ###* @type import('./type/config').ConfigG['get'] ###
+  get: (ipt) -> @data[ipt]
+
+  ###* @type import('./type/config').ConfigG['load'] ###
   load: ->
 
     # debug
-    @register 'debug'
+    @register 'debug/enable'
 
     # basic
     @register 'basic/path'
     @set 'basic/process', @read 'basic/process', 'GenshinImpact.exe'
 
     # better-jump
-    @register 'better-jump', 'alt + space'
+    @register 'better-jump/enable', 'alt + space'
 
     # better-pickup
-    @register 'better-pickup', 'alt + f'
+    @register 'better-pickup/enable', 'alt + f'
     @register 'better-pickup/use-fast-pickup'
     @register 'better-pickup/use-quick-skip'
 
     # idle
-    @set 'idle/use-time', @read 'idle/use-time', 60
+    @set 'idle/use-time', @read 'idle/use-time', '60'
     @register 'idle/use-mouse-move-out'
 
     # skill-timer
-    @register 'skill-timer'
+    @register 'skill-timer/enable'
 
     # sound
     @register 'sound/use-beep'
     @register 'sound/use-mute-when-idle'
 
+    # controller
+    @register 'controller/enable'
+
     # misc
     @register 'misc/use-transparency-when-idle'
 
-  # read(ipt: string, defaultValue?: string): void
+  ###* @type import('./type/config').ConfigG['read'] ###
   read: (ipt, defaultValue = '') ->
-    [section, key] = @split ipt
-    `IniRead, result, % this.source, % section, % key, % A_Space`
-    unless `result` then return $.toLowerCase defaultValue
-    return $.toLowerCase `result`
-
-  # register(ipt: string, hotkey?: string): void
-  register: (ipt, hotkey = '') ->
-    @set ipt, @read ipt, 0
-    if hotkey then $.on hotkey, => @toggle ipt
-
-  # set(ipt: string, value: boolean): void
-  set: (ipt, value) -> @data[ipt] = value
-
-  # split(ipt: string): [string, string]
-  split: (ipt) ->
-    unless ipt then throw new Error 'invalid ipt'
     [section, key] = $.split ipt, '/'
-    unless section then throw new Error "invalid ipt: #{ipt}"
-    unless key then key = 'enable'
-    return [section, key]
+    $.noop section, key
+    result = ''
+    Native 'IniRead, result, % this.source, % section, % key, % A_Space'
+    unless result then return $.toLowerCase defaultValue
+    return $.toLowerCase result
 
-  # toggle(ipt: string): void
+  ###* @type import('./type/config').ConfigG['register'] ###
+  register: (ipt, key = '') ->
+    @set ipt, @read ipt, '0'
+    if key then $.on key, => @toggle ipt
+    return
+
+  ###* @type import('./type/config').ConfigG['set'] ###
+  set: (ipt, value) ->
+    @data[ipt] = value
+    return
+
+  ###* @type import('./type/config').ConfigG['toggle'] ###
   toggle: (ipt) ->
     if @get ipt
-      @set ipt, false
-      @write ipt, 0
+      @set ipt, $.toString false
+      @write ipt, '0'
       Hud.render 0, "#{ipt}: OFF"
     else
-      @set ipt, true
-      @write ipt, 1
+      @set ipt, $.toString true
+      @write ipt, '1'
       Hud.render 0, "#{ipt}: ON"
+    return
 
-  # write(ipt: string, value: string): void
+  ###* @type import('./type/config').ConfigG['write'] ###
   write: (ipt, value) ->
-    [section, key] = @split ipt
+    [section, key] = $.split ipt, '/'
     value = " #{value}"
-    `IniWrite, % value, % this.source, % section, % key`
+    $.noop section, key
+    Native 'IniWrite, % value, % this.source, % section, % key'
+    return
 
-# execute
-Config = new Config()
+Config = new ConfigG()

@@ -1,24 +1,27 @@
+# @ts-check
+
 ### interface
 type Shape = 0 | 1 | 2 # return, return, pull
 ###
 
-# function
-
-class Fishing
-
-  isActive: false
-  isPulling: false
+class FishingG
 
   constructor: ->
+
+    ###* @type import('./type/fishing').FishingG['isActive'] ###
+    @isActive = false
+    ###* @type import('./type/fishing').FishingG['isPulling'] ###
+    @isPulling = false
+
     $.on 'f11', @toggle
 
-  # checkIsFishing(): boolean
-  checkIsFishing: -> return ColorManager.findAll 0xFFFFFF, [
+  ###* @type import('./type/fishing').FishingG['checkIsFishing'] ###
+  checkIsFishing: -> ColorManager.findAll 0xFFFFFF, [
     '94%', '94%'
     '98%', '97%'
   ]
 
-  # checkShapre(): Shape
+  ###* @type import('./type/fishing').FishingG['checkShape'] ###
   checkShape: ->
 
     color = 0xFFFFC0
@@ -34,48 +37,52 @@ class Fishing
     if p1[0] - p2[0] > (Point.w '2%') then return 1
     return 2
 
-  # checkStart(): boolean
-  checkStart: -> return !ColorManager.findAll 0xFFE92C, [
+  ###* @type import('./type/fishing').FishingG['checkStart'] ###
+  checkStart: -> not ColorManager.findAll 0xFFE92C, [
     '82%', '87%'
     '87%', '97%'
   ]
 
-  # next(): void
+  ###* @type import('./type/fishing').FishingG['next'] ###
   next: ->
 
     @isPulling = false
 
-    Timer.add 'fishing', 2e3, =>
+    Timer.add 'fishing/next', 2e3, =>
       $.press 'l-button'
-      Timer.add 'fishing', 1e3, @start
+      Timer.add 'fishing/next', 1e3, @start
 
-  # pull(): void
+  ###* @type import('./type/fishing').FishingG['pull'] ###
   pull: ->
     @isPulling = true
     $.press 'l-button:down'
     Timer.add 50, -> $.press 'l-button:up'
 
-  # start(): void
+  ###* @type import('./type/fishing').FishingG['start'] ###
   start: ->
     Timer.add 'fishing/notice', 60e3, -> Sound.beep 3
     $.press 'l-button'
 
-  # toggle(): void
+  ###* @type import('./type/fishing').FishingG['toggle'] ###
   toggle: ->
 
-    @isActive = !@isActive
+    unless @isActive
+      unless Scene.is 'normal', 'busy'
+        Sound.beep()
+        return
+      @isActive = true
+    else @isActive = false
 
     Timer.remove 'fishing/watch'
-    Timer.remove 'fishing'
+    Timer.remove 'fishing/next'
     Timer.remove 'fishing/notice'
 
     if @isActive
-      Timer.loop 'fishing/watch', 100, @watch
+      Timer.loop 'fishing/watch', 50, @watch
       Hud.render 0, 'auto fish [ON]'
-    else
-      Hud.render 0, 'auto fish [OFF]'
+    else Hud.render 0, 'auto fish [OFF]'
 
-  # watch(): void
+  ###* @type import('./type/fishing').FishingG['watch'] ###
   watch: ->
 
     unless @checkIsFishing() then return
@@ -96,5 +103,4 @@ class Fishing
 
     @pull()
 
-# execute
-Fishing = new Fishing()
+Fishing = new FishingG()

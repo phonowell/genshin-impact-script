@@ -1,109 +1,148 @@
-### interface
-type Name = 'event'
-  | 'fishing'
-  | 'half-menu'
-  | 'menu'
-  | 'mini-menu'
-  | 'normal'
-  | 'playing'
-  | 'unknown'
-###
+# @ts-check
 
-# function
-
-class Scene extends EmitterShell
-
-  isFrozen: false
-  name: 'unknown'
-  subname: 'unknown'
-  tsChange: 0
+class SceneG extends EmitterShell
 
   constructor: ->
     super()
 
+    ###* @type import('./type/scene').SceneG['cache'] ###
+    @cache = {}
+    ###* @type import('./type/scene').SceneG['isFrozen'] ###
+    @isFrozen = false
+    ###* @type import('./type/scene').SceneG['list'] ###
+    @list = []
+    ###* @type import('./type/scene').SceneG['tsChange'] ###
+    @tsChange = 0
+
     @on 'change', =>
-      console.log "scene: #{@name}/#{@subname}"
+      unless $.length @list
+        console.log 'scene: unknown'
+      else console.log "scene: #{$.join @list, ', '}"
       @tsChange = $.now()
 
-  # aboutHalfMenu(): [Name, Name] | null
+  ###* @type import('./type/scene').SceneG['aboutHalfMenu'] ###
   aboutHalfMenu: ->
-    unless @checkIsHalfMenu() then return null
-    if @checkIsChat() then return ['half-menu', 'chat']
-    return ['half-menu', 'unknown']
+    unless @checkIsHalfMenu() then return []
+    list = @makeListName 'half-menu'
 
-  # aboutMenu(): [Name, Name] | null
+    if @checkIsChat()
+      $.push list, 'chat'
+      return list
+
+    return list
+
+  ###* @type import('./type/scene').SceneG['aboutMenu'] ###
   aboutMenu: ->
-    unless @checkIsMenu() then return null
-    if @checkIsMap() then return ['menu', 'map']
-    if @checkIsPlaying() then return ['menu', 'playing']
-    return ['menu', 'unknown']
+    unless @checkIsMenu() then return []
+    list = @makeListName 'menu'
 
-  # aboutNormal(): [Name, Name] | null
+    if @checkIsMap()
+      $.push list, 'map'
+      return list
+
+    if @checkIsParty()
+      $.push list, 'party'
+      return list
+
+    if @checkIsPlaying()
+      $.push list, 'playing'
+      return list
+
+    return list
+
+  ###* @type import('./type/scene').SceneG['aboutNormal'] ###
   aboutNormal: ->
-    unless @checkIsNormal() then return null
-    if @checkIsDomain() then return ['normal', 'domain']
-    return ['normal', 'unknown']
+    unless @checkIsNormal() then return []
+    list = @makeListName 'normal'
 
-  # check(): [Name, string]
+    if @checkIsBusy() then $.push list, 'busy'
+    if @checkIsDomain() then $.push list, 'domain'
+    if @checkIsMulti() then $.push list, 'multi'
+
+    return list
+
+  ###* @type import('./type/scene').SceneG['check'] ###
   check: ->
 
-    result = @aboutMenu()
-    if result then return result
+    if @checkIsLoading() then return ['loading']
 
-    result = @aboutHalfMenu()
-    if result then return result
+    list = @aboutMenu()
+    if $.length list then return list
 
-    result = @aboutNormal()
-    if result then return result
+    list = @aboutHalfMenu()
+    if $.length list then return list
 
-    if @checkIsEvent() then return ['event', 'unknown']
-    if @checkIsMiniMenu() then return ['mini-menu', 'unknown']
+    list = @aboutNormal()
+    if $.length list then return list
 
-    return ['unknown', 'unknown']
+    if @checkIsEvent() then return ['event']
+    if @checkIsMiniMenu() then return ['mini-menu']
 
-  # checkIsChat(): boolean
-  checkIsChat: -> return ColorManager.findAll [0x3B4255, 0xECE5D8], [
-    '58%', '2%'
-    '60%', '6%'
+    return []
+
+  ###* @type import('./type/scene').SceneG['checkIsBusy'] ###
+  checkIsBusy: -> not ColorManager.findAll [0xFFFFFF, 0x323232], [
+    '94%', '80%'
+    '95%', '82%'
   ]
 
-  # checkIsDomain(): boolean
-  checkIsDomain: -> return ColorManager.findAll 0xFFFFFF, [
-    '1%', '9%'
-    '3%', '13%'
-  ]
+  ###* @type import('./type/scene').SceneG['checkIsChat'] ###
+  checkIsChat: -> @throttle 'chat', 2e3, ->
+    ColorManager.findAll [0x3B4255, 0xECE5D8], [
+      '58%', '2%'
+      '60%', '6%'
+    ]
 
-  # checkIsEvent(): boolean
-  checkIsEvent: -> return ColorManager.findAll 0xFFC300, [
+  ###* @type import('./type/scene').SceneG['checkIsDomain'] ###
+  checkIsDomain: -> @throttle 'domain', 2e3, ->
+    ColorManager.findAll 0xFFFFFF, [
+      '1%', '9%'
+      '3%', '13%'
+    ]
+
+  ###* @type import('./type/scene').SceneG['checkIsEvent'] ###
+  checkIsEvent: -> ColorManager.findAll 0xFFC300, [
     '45%', '79%'
     '55%', '82%'
   ]
 
-  # checkIsHalfMenu(): boolean
-  checkIsHalfMenu: -> return ColorManager.findAll [0x3B4255, 0xECE5D8], [
+  ###* @type import('./type/scene').SceneG['checkIsHalfMenu'] ###
+  checkIsHalfMenu: -> ColorManager.findAll [0x3B4255, 0xECE5D8], [
     '1%', '3%'
     '3%', '6%'
   ]
 
-  # checkIsMap(): boolean
-  checkIsMap: -> return ColorManager.findAll 0xEDE5DA, [
-    '1%', '38%'
-    '2%', '40%'
-  ]
+  ###* @type import('./type/scene').SceneG['checkIsLoading'] ###
+  checkIsLoading: -> @throttle 'loading', 2e3, ->
+    $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get ['0%', '0%']
 
-  # checkIsMenu(): boolean
-  checkIsMenu: -> return ColorManager.findAll [0x3B4255, 0xECE5D8], [
+  ###* @type import('./type/scene').SceneG['checkIsMap'] ###
+  checkIsMap: -> @throttle 'map', 1e3, ->
+    ColorManager.findAll 0xEDE5DA, [
+      '1%', '38%'
+      '2%', '40%'
+    ]
+
+  ###* @type import('./type/scene').SceneG['checkIsMenu'] ###
+  checkIsMenu: -> ColorManager.findAll [0x3B4255, 0xECE5D8], [
     '95%', '3%'
     '97%', '6%'
   ]
 
-  # checkIsMiniMenu(): boolean
-  checkIsMiniMenu: -> return ColorManager.findAll 0xECE5D8, [
+  ###* @type import('./type/scene').SceneG['checkIsMiniMenu'] ###
+  checkIsMiniMenu: -> ColorManager.findAll 0xECE5D8, [
     '97%', '1%'
     '98%', '5%'
   ]
 
-  # checkIsNormal(): boolean
+  ###* @type import("./type/scene").SceneG['checkIsMulti'] ###
+  checkIsMulti: -> @throttle 'multi', 5e3, ->
+    !!ColorManager.findAny [0x006699, 0x408000], [
+      '18%', '2%'
+      '20%', '6%'
+    ]
+
+  ###* @type import('./type/scene').SceneG['checkIsNormal'] ###
   checkIsNormal: ->
     if ColorManager.findAll 0xFFFFFF, [
       '95%', '2%'
@@ -115,40 +154,64 @@ class Scene extends EmitterShell
     ] then return true
     return false
 
-  # checkIsPlaying(): boolean
-  checkIsPlaying: -> return ColorManager.findAll [0xFFFFFF, 0xFFE92C], [
-    '9%', '2%'
-    '11%', '6%'
-  ]
+  ###* @type import('./type/scene').SceneG['checkIsParty'] ###
+  checkIsParty: -> @throttle 'party', 5e3, ->
+    ColorManager.findAll 0xFFFFFF, [
+      '41%', '3%'
+      '59%', '6%'
+    ]
 
-  # freeze(name: Name, subname: string, time: number): void
-  freeze: (name, subname, time) ->
+  ###* @type import('./type/scene').SceneG['checkIsPlaying'] ###
+  checkIsPlaying: -> @throttle 'playing', 5e3, ->
+    ColorManager.findAll [0xFFFFFF, 0xFFE92C], [
+      '9%', '2%'
+      '11%', '6%'
+    ]
 
-    unless @is name, subname
-      @name = name
-      @subname = subname
-      @emit 'change'
-
+  ###* @type import('./type/scene').SceneG['freezeAs'] ###
+  freezeAs: (listName, time) ->
     @isFrozen = true
-    Timer.add 'scene/unfreeze', time, => @isFrozen = false
+    @list = listName
+    @emit 'change'
+    Timer.add 'scene/freeze-as', time, => @isFrozen = false
+    return
 
-  # is(name: Name, subname?: string): boolean
-  is: (name, subname = '') ->
+  ###* @type import('./type/scene').SceneG['is'] ###
+  is: (names...) ->
+
     @update()
-    unless subname then return name == @name
-    return name == @name and subname == @subname
+    if $.includes names, 'unknown' then return ($.length @list) == 0
 
-  # update(): void
+    for name in names
+
+      if $.startsWith name, 'not-'
+        name2 = $.subString name, 4
+        if $.includes @list, name2 then return false
+        continue
+
+      unless $.includes @list, name then return false
+      continue
+
+    return true
+
+  ###* @type import('./type/scene').SceneG['makeListName'] ###
+  makeListName: (names...) -> names
+
+  ###* @type import('./type/scene').SceneG['throttle'] ###
+  throttle: (name, time, callback) ->
+    unless Timer.checkInterval "scene/#{name}", time
+      return @cache[name]
+    return @cache[name] = callback()
+
+  ###* @type import('./type/scene').SceneG['update'] ###
   update: ->
 
     if @isFrozen then return
-    if @name == 'fishing' then return
+    if $.includes @list, 'fishing' then return
 
-    [name, subname] = @check()
-    if name == @name and subname == @subname then return
-    @name = name
-    @subname = subname
+    list = @check()
+    if $.eq list, @list then return
+    @list = list
     @emit 'change'
 
-# execute
-Scene = new Scene()
+Scene = new SceneG()

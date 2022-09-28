@@ -1,17 +1,18 @@
-# function
+# @ts-check
 
-class Picker extends KeyBinding
-
-  tsPick: 0
+class PickerG extends KeyBinding
 
   constructor: ->
     super()
+
+    ###* @type import('./type/picker').PickerG['tsPick'] ###
+    @tsPick = 0
+
     @init()
     @watch()
 
-  # checkShape(p: Point): boolean
+  ###* @type import('./type/picker').PickerG['checkShape'] ###
   checkShape: (p) ->
-    if !p then return false
 
     [x, y] = p
     c1 = ColorManager.format ColorManager.get [x, y + 1]
@@ -31,26 +32,26 @@ class Picker extends KeyBinding
 
     return false
 
-  # click(p: Point): void
+  ###* @type import('./type/picker').PickerG['click'] ###
   click: (p) ->
-    p = Point.create p
-    old = $.getPosition()
-    $.move p
+    p0 = $.getPosition()
+    p1 = Point.create p
+    $.move p1
     $.click()
-    Timer.add 50, -> $.move old
+    Timer.add 50, -> $.move p0
 
-  # find(): void
+  ###* @type import('./type/picker').PickerG['find'] ###
   find: ->
 
     if @isPressed['f'] then return
-    unless Scene.is 'normal', 'unknown' then return
+    unless Scene.is 'normal', 'not-domain' then return
 
     p = ColorManager.findAny 0x323232, [
       '57%', '30%'
       '59%', '70%'
     ]
     unless p then return
-    [x, y] = p
+    [_x, y] = p
 
     color = @findTitleColor y
     unless color then return
@@ -60,11 +61,11 @@ class Picker extends KeyBinding
         '61%', y - Point.h 1
         '63%', y
       ]
-      if @checkShape p then return
+      if p and @checkShape [p[0], p[1]] then return
 
     $.press 'f'
 
-  # findTitleColor(y: number): string | false
+  ###* @type import('./type/picker').PickerG['findTitleColor'] ###
   findTitleColor: (y) ->
 
     p = ColorManager.findAny [
@@ -81,7 +82,7 @@ class Picker extends KeyBinding
     if p then return p[2]
     else return 0
 
-  # init(): void
+  ###* @type import('./type/picker').PickerG['init'] ###
   init: ->
 
     @registerEvent 'pick', 'f'
@@ -93,7 +94,7 @@ class Picker extends KeyBinding
       @tsPick = $.now()
       console.log 'picker/is-picking: false'
 
-  # listen(): void
+  ###* @type import('./type/picker').PickerG['listen'] ###
   listen: ->
 
     diff = $.now() - @tsPick
@@ -103,14 +104,14 @@ class Picker extends KeyBinding
 
     if @skip() then return
 
-    unless Scene.is 'normal', 'unknown' then return
+    unless Scene.is 'normal', 'not-domain' then return
 
     $.press 'f'
 
-  # next(): void
+  ###* @type import('./type/picker').PickerG['next'] ###
   next: ->
 
-    unless Config.get 'better-pickup'
+    unless Config.get 'better-pickup/enable'
       @listen()
       return
 
@@ -122,11 +123,11 @@ class Picker extends KeyBinding
       @skip()
       return
 
-    if (Config.get 'better-pickup/use-fast-pickup') and Scene.is 'normal', 'unknown'
+    if (Config.get 'better-pickup/use-fast-pickup') and Scene.is 'normal', 'not-domain'
       @find()
       return
 
-  # skip(): boolean
+  ###* @type import('./type/picker').PickerG['skip'] ###
   skip: ->
 
     unless Scene.is 'event' then return false
@@ -148,7 +149,7 @@ class Picker extends KeyBinding
     @click p
     return true
 
-  # watch(): void
+  ###* @type import('./type/picker').PickerG['watch'] ###
   watch: ->
 
     interval = 100
@@ -157,5 +158,4 @@ class Picker extends KeyBinding
     Client.on 'idle', -> Timer.remove token
     Client.on 'activate', => Timer.loop token, interval, @next
 
-# execute
-Picker = new Picker()
+Picker = new PickerG()

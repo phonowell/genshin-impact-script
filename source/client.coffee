@@ -1,96 +1,60 @@
-### interface
-type Level = 'high' | 'low' | 'normal'
-###
+# @ts-check
 
-# function
-
-class Client extends KeyBinding
-
-  height: 0
-  isActive: false
-  isFullScreen: false
-  isSuspend: false
-  left: 0
-  position: [1, 1]
-  top: 0
-  width: 0
+class ClientG extends KeyBinding
 
   constructor: ->
     super()
 
-    `Menu, Tray, Icon, on.ico,, 1`
+    ###* @type import('./type/client').ClientG['height'] ###
+    @height = 0
+    ###* @type import('./type/client').ClientG['isActive'] ###
+    @isActive = false
+    ###* @type import('./type/client').ClientG['isFullScreen'] ###
+    @isFullScreen = false
+    ###* @type import('./type/client').ClientG['isSuspended'] ###
+    @isSuspended = false
+    ###* @type import('./type/client').ClientG['position'] ###
+    @position = [1, 1]
+    ###* @type import('./type/client').ClientG['width'] ###
+    @width = 0
+    ###* @type import('./type/client').ClientG['window'] ###
+    @window = $.window $.toString Config.get 'basic/process'
+    ###* @type import('./type/client').ClientG['x'] ###
+    @x = 0
+    ###* @type import('./type/client').ClientG['y'] ###
+    @y = 0
 
-    unless $.isExist Config.get 'basic/process'
+    Native 'Menu, Tray, Icon, on.ico,, 1'
+
+    unless @window.isExists()
       if Config.get 'basic/path'
         try $.open $.join [
-          Config.get 'basic/path'
-          Config.get 'basic/arguments'
+          $.toString Config.get 'basic/path'
+          $.toString Config.get 'basic/arguments'
         ], ' '
         catch then $.alert Dictionary.get 'invalid_path'
 
-    $.wait (Config.get 'basic/process'), @init
+    @window.wait @init
 
-  # blur(): void
-  blur: ->
-    unless Config.get 'idle/use-mouse-move-out' then return
+  ###* @type import('./type/client').ClientG['getState'] ###
+  getState: ->
+    {x, y, width, height} = @window.getBounds()
+    [@x, @y] = [x, y]
+    [@width, @height] = [width, height]
+    @isFullScreen = @window.isFullScreen()
+    return
+
+  ###* @type import('./type/client').ClientG['getTaskBarBounds'] ###
+  getTaskBarBounds: ->
+    [x, y, w, h] = [0, 0, 0, 0]
+
     name = 'ahk_class Shell_TrayWnd'
-    `WinActivate, % name`
+    $.noop name
+    Native 'WinGetPos, x, y, w, h, % name'
 
-  # checkIsActive(): boolean
-  checkIsActive: -> return $.isActive Config.get 'basic/process'
+    return [x, y, w, h]
 
-  # checkMousePosition(): boolean
-  checkMousePosition: ->
-
-    [x, y] = $.getPosition()
-
-    if x < 0
-      # $.move [0, y]
-      return false
-
-    if x >= @width
-      # $.move [@width - 1, y]
-      return false
-
-    if y < 0
-      # $.move [x, 0]
-      return false
-
-    if y >= @height
-      # $.move [x, @height - 1]
-      return false
-
-    return true
-
-  # focus(): void
-  focus: -> $.activate Config.get 'basic/process'
-
-  # getSize(): void
-  getSize: ->
-
-    name = "ahk_exe #{Config.get 'basic/process'}"
-    `WinGetPos, __left__, __top__, __width__, __height__, % name`
-
-    @left = __left__
-    @top = __top__
-    @width = __width__
-    @height = __height__
-
-    for key in ['left', 'top', 'width', 'height']
-      unless @[key]
-        @[key] = 0
-
-    if @left == 0 and @top == 0 and @width == A_ScreenWidth and @height == A_ScreenHeight
-      @isFullScreen = true
-    else @isFullScreen = false
-
-  # getTaskBarSize(): void
-  getTaskBarSize: ->
-    name = 'ahk_class Shell_TrayWnd'
-    `WinGetPos, __left__, __top__, __width__, __height__, % name`
-    return [__left__, __top__, __width__, __height__]
-
-  # init(): void
+  ###* @type import('./type/client').ClientG['init'] ###
   init: ->
 
     Config.detectPath()
@@ -98,25 +62,25 @@ class Client extends KeyBinding
 
     @on 'leave', =>
       console.log 'client: leave'
-      `Menu, Tray, Icon, off.ico`
+      Native 'Menu, Tray, Icon, off.ico'
       @suspend true
-      @setPriority 'low'
+      @window.setPriority 'low'
       @emit 'idle'
 
     @on 'enter', =>
       console.log 'client: enter'
-      `Menu, Tray, Icon, on.ico`
+      Native 'Menu, Tray, Icon, on.ico'
       @suspend false
-      @setPriority 'normal'
-      @getSize()
+      @window.setPriority 'normal'
+      @getState()
       @setStyle()
-      Timer.add 1e3, @getSize
+      Timer.add 1e3, @getState
       @emit 'activate'
 
     @on 'activate', =>
       @isActive = true
       console.log 'client: activate'
-      unless @checkMousePosition() then $.move [@width * 0.5, @height * 0.5]
+      unless @isMouseInside() then $.move [@width * 0.5, @height * 0.5]
 
     @on 'idle', =>
       @isActive = false
@@ -125,18 +89,16 @@ class Client extends KeyBinding
     $.on 'alt + f4', => Sound.beep 2, =>
       @reset()
       if Config.get 'basic/path'
-        $.minimize Config.get 'basic/process'
-        $.close Config.get 'basic/process'
+        @window.minimize()
+        @window.close()
         Sound.unmute()
       $.exit()
 
-    $.on 'ctrl + f5', -> Sound.beep 3, =>
-      @reset()
-      $.reload()
+    $.on 'ctrl + f5', -> Sound.beep 3, $.reload
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
-      @getSize()
+      @getState()
       @setStyle()
 
     for direction in ['left', 'right', 'up', 'down']
@@ -159,76 +121,89 @@ class Client extends KeyBinding
         @position = [x, y]
         @setPosition()
 
-  # reset(): void
-  reset: ->
-    @setPriority 'normal'
-    Timer.reset()
+    return
 
-  # setPosition(): void
+  ###* @type import('./type/client').ClientG['isMouseInside'] ###
+  isMouseInside: ->
+    [x, y] = $.getPosition()
+    if x < 0 then return false
+    if x >= @width then return false
+    if y < 0 then return false
+    if y >= @height then return false
+    return true
+
+  ###* @type import('./type/client').ClientG['reset'] ###
+  reset: ->
+    @window.setPriority 'normal'
+    Timer.reset()
+    return
+
+  ###* @type import('./type/client').ClientG['setPosition'] ###
   setPosition: ->
 
     [x, y] = @position
-    width = ($.round @width / 80) * 80
-    height = $.round width / 16 * 9
+    width = ($.Math.round @width / 80) * 80
+    height = $.Math.round width / 16 * 9
 
+    left = 0
     switch x
       when 0 then left = 0
       when 1 then left = (A_ScreenWidth - width) * 0.5
       when 2 then left = A_ScreenWidth - width
 
+    top = 0
     switch y
       when 0 then top = 0
       when 1 then top = (A_ScreenHeight - height) * 0.5
       when 2
-        [l, t, w, h] = @getTaskBarSize()
+        [_l, _t, _w, h] = @getTaskBarBounds()
         top = A_ScreenHeight - height - h
 
     name = "ahk_exe #{Config.get 'basic/process'}"
-    `WinMove, % name,, % left, % top, % width, % height`
-    @getSize()
+    $.noop name, left, top, width, height
+    Native 'WinMove, % name,, % left, % top, % width, % height'
+    @getState()
 
-  # setStyle(): void
+  ###* @type import('./type/client').ClientG['setStyle'] ###
   setStyle: ->
-    $.setStyle (Config.get 'basic/process'), -0x00040000 # border
-    $.setStyle (Config. get 'basic/process'), -0x00C00000 # caption
+    @window.setStyle -0x00040000 # border
+    @window.setStyle -0x00C00000 # caption
     if @isFullScreen then return
     @setPosition()
 
-  # suspend: (isSuspend: boolean): void
-  suspend: (isSuspend) ->
+  ###* @type import('./type/client').ClientG['suspend'] ###
+  suspend: (isSuspended) ->
 
-    if isSuspend
-      if @isSuspend then return
-      @isSuspend = true
+    if isSuspended
+      if @isSuspended then return
+      @isSuspended = true
       $.suspend true
-      @resetTimer()
       return
 
-    unless isSuspend
-      unless @isSuspend then return
-      @isSuspend = false
+    unless isSuspended
+      unless @isSuspended then return
+      @isSuspended = false
       $.suspend false
       return
 
-  # setPriority(level: Level): void
-  setPriority: (level) ->
-    p = Config.get 'basic/process'
-    `Process, Priority, % p, % level`
-
-  # update(): void
+  ###* @type import('./type/client').ClientG['update'] ###
   update: ->
 
-    unless @checkIsActive()
-      unless @isSuspend then @emit 'leave'
+    unless @window.isActive()
+      unless @isSuspended then @emit 'leave'
       return
 
-    if @isSuspend then @emit 'enter'
-    if @isActive and !@checkMousePosition() then @blur()
+    if @isSuspended then @emit 'enter'
 
-  # watch(): void
+    # blur
+    unless @isActive then return
+    unless Config.get 'idle/use-mouse-move-out' then return
+    if @isMouseInside() then return
+    @window.blur()
+
+  ###* @type import('./type/client').ClientG['watch'] ###
   watch: ->
     interval = 100
     Timer.loop interval, @update
 
-# execute
-Client = new Client()
+Client = new ClientG()

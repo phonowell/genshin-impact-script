@@ -1,116 +1,115 @@
-### interface
-type Item = [number, string, string]
-###
+# @ts-check
 
-# function
-
-class Replayer
-
-  isActive: false
-  listTrigger: [
-    'f11', 'f12'
-    '1', '2', '3', '4', '5'
-    'w'
-    'a', 's', 'd', 'f'
-    'l-button', 'm-button', 'r-button'
-  ]
+class ReplayerG
 
   constructor: ->
 
-    for key in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    ###* @type import('./type/replayer').ReplayerG['isActive'] ###
+    @isActive = false
+    ###* @type import('./type/replayer').ReplayerG['token'] ###
+    @token = 'replayer/next'
 
-      $.on "ctrl + numpad-#{key}", =>
-        if @isActive then @stop()
-        @start key
+    Client.on 'idle', @stop
 
-  # execute(list: string[], callback: Fn): void
-  execute: (list, callback) ->
+    for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      $.on "ctrl + numpad-#{n}", => @start $.toString n
 
+  ###* @type import('./type/replayer').ReplayerG['asMark'] ###
+  asMark: (list, callback) ->
+
+    # @input a
     if list[0] == '@input'
       value = list[1]
-      `Send, % value`
+      Native 'Send, % value'
       callback()
       return
 
+    # @paste a
+    if list[0] == '@paste'
+      value = list[1]
+      ClipBoard = value
+      Timer.add 50, ->
+        $.press 'ctrl + v'
+        Timer.add 50, ->
+          ClipBoard = ''
+          $.noop ClipBoard
+          callback()
+      return
+
+    # @run a
     if list[0] == '@run' or list[0] == '@play'
       value = list[1]
       @start value, callback
       return
 
+    # @sleep 100
     if list[0] == '@sleep'
-      value = list[1]
-      Timer.add value, callback
+      n = $.toNumber list[1]
+      Timer.add n, callback
       return
 
-  # fire(key: string): void
-  fire: (key) ->
-
-    if $.includes @listTrigger, $.replace(($.split key, ':')[0], 'alt + ', '')
-      $.trigger key
-      return
-
-    $.press key
-
-  # log(message: string): void
-  log: (message) -> Hud.render 0, message
-
-  # next(list: Item[], i: number, callback?: Fn): void
-  next: (list, i, callback = '') ->
+  ###* @type import('./type/replayer').ReplayerG['next'] ###
+  next: (list, i, callback = undefined) ->
 
     if i >= $.length list
-      @isActive = false
+      @stop()
       if callback then callback()
-      @log 'end replaying'
       return
-
-    console.log "replay: #{$.join list[i], ' '}"
-    token = 'replayer/next'
 
     if $.startsWith list[i][0], '@'
-      Timer.add token, 50, => @execute list[i], => @next list, i + 1, callback
+      Timer.add @token, 50, =>
+        @asMark list[i], =>
+          @next list, i + 1, callback
       return
 
-    [delay, key, position] = list[i]
+    [stringDelay, key, position] = list[i]
+    delay = $.toNumber stringDelay
+
     if delay < 1 then delay = 1 # to make it works
-    Timer.add token, delay, =>
+    Timer.add @token, delay, =>
       if ($.includes key, 'l-button') and position
         $.move Point.create $.split position, ','
-      @fire key
+      $.trigger key
       @next list, i + 1, callback
 
-  # start(key = '0', callback?: Fn): void
-  start: (key = '0', callback = '') ->
+  ###* @type import('./type/replayer').ReplayerG['start'] ###
+  start: (key = '0', callback = undefined) ->
 
     @stop()
 
+    if @isActive then return
+    @isActive = true
+
     if Recorder.isActive
-      $.beep()
+      Sound.beep 2
       return
 
-    file = $.file "replay/#{key}.txt"
-    content = file.load()
+    f = $.file "replay/#{key}.txt"
+    content = f.read()
     unless content then return
 
     list = []
     for item in $.split content, '\n'
+
       item = $.trim item
       unless item then continue
+
       if $.startsWith item, '#' then continue
-      item = RegExReplace item, '\s+', ' '
+
+      item = $.replace item, '\s+', ' '
       $.push list, $.split item, ' '
 
-    @isActive = true
     @next list, 0, callback
-    @log 'start replaying'
+    Hud.render 0, 'start replaying'
 
-  # stop(): void
+  ###* @type import('./type/replayer').ReplayerG['stop'] ###
   stop: ->
 
     unless @isActive then return
     @isActive = false
 
-    Timer.remove 'replayer/next'
-    @log 'stop replaying'
+    Timer.remove @token
+    Hud.render 0, 'stop replaying'
 
 # export
-Replayer = new Replayer()
+Replayer = new ReplayerG()

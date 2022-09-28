@@ -1,58 +1,66 @@
-### interface
-type Point = [number, number]
-type Slot = 0 | 1 | 2 | 3 | 4 | 5
-###
+# @ts-check
 
-# function
-
-class Hud
-
-  lifetime: 5e3
-  map: {}
-  mapLast: {}
+class HudG
 
   constructor: ->
-    Client.on 'leave', @hideAll
+
+    ###* @type import('./type/hud').HudG['lifetime'] ###
+    @lifetime = 5e3
+    ###* @type import('./type/hud').HudG['map'] ###
+    @map = {}
+    ###* @type import('./type/hud').HudG['mapLast'] ###
+    @mapLast = {}
+
+    Client.on 'idle', @hideAll
     @watch()
 
-  # hide: (n: Slot, isForce: boolean = false): void
-  hide: (n, isForce = false) ->
+  ###* @type import('./type/hud').HudG['hide'] ###
+  hide: (n, isForce) ->
     unless @mapLast[n] or isForce then return
     @mapLast[n] = ''
     id = n + 1
-    `ToolTip,, 0, 0, % id`
 
-  # hideAll(): void
-  hideAll: -> for n in [0, 1, 2, 3, 4, 5]
-    @hide n, true
+    $.noop id
+    Native 'ToolTip,, 0, 0, % id'
+    return
 
-  # makePosition: (n: Slot): Point
+  ###* @type import('./type/hud').HudG['hideAll'] ###
+  hideAll: ->
+    for n in [0, 1, 2, 3, 4, 5]
+      @hide n, true
+    return
+
+  ###* @type import('./type/hud').HudG['makePosition'] ###
   makePosition: (n) ->
 
     if Client.isFullScreen
       left = Point.w '77%'
     else left = Client.width
 
-    unless n then n = Party.total + 1
+    [a, b] = [Party.size - 1, n - 1]
+    unless Party.size then a = 3
+    unless n then b = 4
 
     return [
       left
-      Point.h "#{[37, 32, 28, 23, 19][Party.total - 1] + 9 * (n - 1) - 1}%"
+      Point.h "#{[37, 32, 28, 23, 19][a] + 9 * b - 1}%"
     ]
 
-  # render(n: Slot, msg: string): void
-  render: (n, msg) -> @map[n] = [
-    $.now() + @lifetime
-    msg
-  ]
+  ###* @type import('./type/hud').HudG['render'] ###
+  render: (n, msg) ->
+    @map[n] = [
+      $.now() + @lifetime
+      msg
+    ]
+    return
 
-  # reset(): void
+  ###* @type import('./type/hud').HudG['reset'] ###
   reset: ->
     @map = {}
     @mapLast = {}
     @hideAll()
 
-  # update(): void
+  ###* @type import('./type/hud').HudG['update'] ###
   update: ->
 
     interval = 200
@@ -65,11 +73,11 @@ class Hud
       [time, msg] = @map[n]
 
       unless msg
-        @hide n
+        @hide n, false
         continue
 
       unless now < time
-        @hide n
+        @hide n, false
         continue
 
       if msg == @mapLast[n] then continue
@@ -77,9 +85,12 @@ class Hud
 
       [x, y] = @makePosition n
       id = n + 1
-      `ToolTip, % msg, % x, % y, % id`
+      $.noop x, y, id
+      Native 'ToolTip, % msg, % x, % y, % id'
 
-  # watch(): void
+    return
+
+  ###* @type import('./type/hud').HudG['watch'] ###
   watch: ->
 
     interval = 200
@@ -88,5 +99,4 @@ class Hud
     Client.on 'idle', -> Timer.remove token
     Client.on 'activate', => Timer.loop token, interval, @update
 
-# execute
-Hud = new Hud()
+Hud = new HudG()

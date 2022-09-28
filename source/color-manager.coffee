@@ -1,26 +1,25 @@
-class ColorManager
+# @ts-check
 
-  constructor: ->
-    @init()
+class ColorManagerG
 
-  # find(color: number, start: Point, end: Point): Point
-  find: Gdip.findColor
+  ###* @type import('./type/color-manager').ColorManagerG['find'] ###
+  find: (color, a) -> Gdip.findColor color, Area.create a
 
-  # findAll(listColor: number | number[], a: Area): Boolean
+  ###* @type import('./type/color-manager').ColorManagerG['findAll'] ###
   findAll: (listColor, a) ->
 
-    unless $.isArray listColor
-      listColor = [listColor]
+    listColor2 = [0]
+    if $.isArray listColor
+      listColor2 = listColor
+    else listColor2 = [listColor]
 
-    a = Area.create a
-
-    for color in listColor
+    for color in listColor2
       p = @find color, a
       unless Point.isValid p then return false
 
     return true
 
-  # findAny(listColor: number | number[], a: Area): Point | 0
+  ###* @type import('./type/color-manager').ColorManagerG['findAny'] ###
   findAny: (listColor, a) ->
 
     unless $.isArray listColor
@@ -32,43 +31,26 @@ class ColorManager
       p = @find color, a
       if Point.isValid p then return [p[0], p[1], color]
 
-    return 0
+    return undefined
 
-  # format(n: string): string
-  format: (n) -> return $.replace "0x#{(Format '{:p}', n)}", '0x00', '0x'
+  ###* @type import('./type/color-manager').ColorManagerG['format'] ###
+  format: (n) -> $.toNumber $.replace "0x#{(Format '{:p}', n)}", '0x00', '0x'
 
-  # init(): void
-  init: ->
+  ###* @type import('./type/color-manager').ColorManagerG['get'] ###
+  get: (p) -> Gdip.getColor Point.create p
 
-    unless Config.get 'debug' then return
-
-    $.on 'alt + f9', =>
-      Sound.beep()
-      @pick()
-
-    $.on 'f8', ->
-      a = [
-        ['95%', '3%']
-        ['97%', '6%']
-      ]
-      result = ColorManager.findAll 0x3B4255, a
-      console.log $.join (Area.create a), ', '
-      console.log result
-
-  # get(p: Point): number
-  get: Gdip.getColor
-
-  # pick(): void
+  ###* @type import('./type/color-manager').ColorManagerG['pick'] ###
   pick: ->
 
-    color = @format @get()
+    color = @format @get $.getPosition()
     [x, y] = $.getPosition()
 
-    x1 = $.round (x * 100) / Client.width
-    y1 = $.round (y * 100) / Client.height
+    x1 = $.Math.round (x * 100) / Client.width
+    y1 = $.Math.round (y * 100) / Client.height
 
     console.log "color-manager: #{x1}, #{y1} / #{color}"
     ClipBoard = color
+    $.noop ClipBoard
 
 # export
-ColorManager = new ColorManager()
+ColorManager = new ColorManagerG()

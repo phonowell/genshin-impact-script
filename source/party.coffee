@@ -1,89 +1,166 @@
-### interface
-type Slot = 1 | 2 | 3 | 4 | 5
-###
+# @ts-check
 
-# function
-
-class Party extends EmitterShell
-
-  current: 0
-  isBusy: false
-  listBuff: []
-  listMember: ['']
-  name: ''
-  total: 4
-  tsSwitch: 0
+class PartyG extends KeyBinding
 
   constructor: ->
     super()
-    @init()
 
-  # addBuff(name: string): void
-  addBuff: (name) ->
-    if $.includes @listBuff, name then return
-    $.push @listBuff, name
+    ###* @type import('./type/party').PartyG['current'] ###
+    @current = 0
+    ###* @type import('./type/party').PartyG['list'] ###
+    @list = [''] # '' is a placeholder, don't remove it
+    ###* @type import('./type/party').PartyG['listOnSwitch'] ###
+    @listOnSwitch = []
+    ###* @type import('./type/party').PartyG['listSlot'] ###
+    @listSlot = [1, 2, 3, 4, 5]
+    ###* @type import('./type/party').PartyG['name'] ###
+    @name = ''
+    ###* @type import('./type/party').PartyG['size'] ###
+    @size = 0
 
-  # checkCurrent(n: Slot): boolean
-  checkCurrent: (n) -> return !ColorManager.findAll 0x323232, @makeArea n, 'narrow'
+    @aboutBinding1()
+    @aboutBinding2()
+    # @watch()
 
-  # checkCurrentAs(n: Slot, callback: Fn): void
-  checkCurrentAs: (n, callback) ->
+  ###* @type import('./type/party').PartyG['aboutBinding1'] ###
+  aboutBinding1: ->
 
-    interval = 15
-    limit = 500
-    token = 'party/check-current-as'
+    for slot in @listSlot
+      @registerEvent 'press', $.toString slot
+      $.on "alt + #{slot}", =>
+        unless @size
+          $.press "alt + #{slot}"
+          return
+        Skill.switchQ slot
 
-    Timer.remove token
+    @on 'press:start', (key) =>
 
-    name = @listMember[n]
-    unless name
-      Timer.add token, interval, callback
-      return
+      Timer.remove 'party/is-current-as'
+      Timer.remove 'party/wait-for'
 
-    tsCheck = $.now()
-    Timer.loop token, interval, =>
+      unless Scene.is 'normal' then return
 
-      diff = $.now() - tsCheck
+      n = $.toNumber key
+      unless n <= @size then return
 
-      if @checkCurrent n
-        Timer.remove token
-        callback()
-        console.log "#{token}: #{name} passed in #{diff} ms"
+      @isCurrentAs n, =>
+        @tsSwitch = $.now()
+        @emit 'switch', n
+        @emit 'switch:start'
+      , -> Sound.beep 2
+
+    @on 'press:end', (key) =>
+
+      unless Scene.is 'normal' then return
+
+      n = $.toNumber key
+      unless n <= @size then return
+
+      @waitFor n, => @emit 'switch:end'
+
+    @on 'switch:start', =>
+      onSwitch = @listOnSwitch[@current]
+      unless onSwitch then return
+
+      if onSwitch == 'e'
+        $.trigger 'e:down'
         return
 
-      unless diff >= limit then return
-      Timer.remove token
+    @on 'switch:end', =>
+      onSwitch = @listOnSwitch[@current]
+      unless onSwitch then return
 
-      Sound.beep()
-      console.log "#{token}: #{name} failed after #{diff} ms"
+      if onSwitch == 'e'
+        $.trigger 'e:up'
+        return
 
-  # countMember(): void
+      Tactic.start onSwitch, $.noop
+
+  ###* @type import('./type/party').PartyG['aboutBinding2'] ###
+  aboutBinding2: ->
+
+    @on 'change', =>
+
+      unless @size then return
+      console.log "party/member: #{$.join ($.tail @list), ', '}"
+
+      for name in @list
+
+        unless name
+          $.push @listOnSwitch, ''
+          continue
+
+        {onSwitch} = Character.get name
+        unless onSwitch
+          $.push @listOnSwitch, ''
+          continue
+
+        $.push @listOnSwitch, onSwitch
+      console.log "party/on-switch: #{$.join ($.tail @listOnSwitch), ', '}"
+
+      Buff.pick()
+
+    @on 'switch', (n) =>
+
+      last = @current
+      @current = $.toNumber n
+
+      nameLast = @list[last]
+      @name = @list[@current]
+
+      unless nameLast then nameLast = 'unknown'
+      unless @name then @name = 'unknown'
+
+      console.log $.join [
+        'party:'
+        "[#{last}]#{nameLast}"
+        '->'
+        "[#{@current}]#{@name}"
+        @listOnSwitch[@current]
+      ], ' '
+
+      {typeE} = Character.get nameLast
+      if typeE == 3 then Skill.endEAsType3 last
+
+    $.on 'f12', =>
+      @scan()
+      Character.load()
+
+    $.on 'alt + f12', =>
+      @reset()
+      @emit 'change'
+      Hud.render 0, Dictionary.get 'party_is_cleared'
+
+  ###* @type import('./type/party').PartyG['countMember'] ###
   countMember: ->
 
-    start = ['97%', '15%']
-    end = ['98%', '65%']
+    a = Area.create [
+      '97%', '15%'
+      '98%', '65%'
+    ]
 
     result = 0
 
-    for n in [1, 2, 3, 4, 5]
-      p = ColorManager.findAny 0xFFFFFF, [start, end]
+    for n in @listSlot
+      p = ColorManager.findAny 0xFFFFFF, a
       unless p then break
       result++
-      start[1] = p[1] + Point.h '5%'
+      a[1] = p[1] + Point.h '5%'
 
-    @total = result + 1
+    @size = result + 1
+    return
 
-  # getIndexBy(name: string): Slot
-  getIndexBy: (name) ->
-    unless @has name then return 0
-    for n in [1, 2, 3, 4, 5]
-      if @listMember[n] == name
-        return n
+  # ###* @type import('./type/party').PartyG['findCurrent'] ###
+  # findCurrent: ->
+  #   for n in @listSlot
+  #     unless @isCurrent n then continue
+  #     return n
+  #   return 0
 
-  # getNameViaSlot(n: Slot): string
+  ###* @type import('./type/party').PartyG['getNameViaSlot'] ###
   getNameViaSlot: (n) ->
 
-    a = @makeArea n
+    a = @makeArea n, false
 
     for name, char of Character.data
 
@@ -99,99 +176,65 @@ class Party extends EmitterShell
 
     return ''
 
-  # has(name: string): boolean
-  has: (name) -> return $.includes @listMember, name
+  ###* @type import('./type/party').PartyG['has'] ###
+  has: (name) -> $.includes @list, name
 
-  # hasBuff(name: string): boolean
-  hasBuff: (name) -> return $.includes @listBuff, name
+  ###* @type import('./type/party').PartyG['isCurrent'] ###
+  isCurrent: (n) -> not ColorManager.findAll 0xFFFFFF, @makeArea n, true
 
-  # init(): void
-  init: ->
+  ###* @type import('./type/party').PartyG['isCurrentAs'] ###
+  isCurrentAs: (n, cbDone, cbFail = undefined) ->
+    [interval, limit, token] = [25, 500, 'party/is-current-as']
 
-    @on 'change', =>
-      list = $.tail @listMember
+    tsCheck = $.now()
+    Timer.loop token, interval, =>
 
-      unless $.length list
-        Hud.render 0, Dictionary.get 'no_members'
+      unless Scene.is 'normal' then return
+      diff = $.now() - tsCheck
+
+      if @isCurrent n
+        Timer.remove token
+        cbDone()
+        console.log "#{token}: [#{n}] passed in #{diff} ms"
         return
 
-      console.log "party/member: #{$.join list, ', '}"
-      n = 0
-      for name in @listMember
-        unless name then continue
-        unless (Character.get name, 'vision') == 'anemo' then continue
-        n++
-      if n >= 2 then @addBuff 'impetuous winds'
-      else @removeBuff 'impetuous winds'
-      if ($.length @listBuff) then console.log "party/buff: #{$.join @listBuff, ','}"
+      unless diff >= limit then return
+      Timer.remove token
+      if cbFail then cbFail()
+      console.log "#{token}: [#{n}] failed after #{diff} ms"
 
-    @on 'switch', (n) =>
-
-      last = @current
-      @current = n
-
-      nameLast = @listMember[last]
-      @name = @listMember[@current]
-
-      unless nameLast then nameLast = 'unknown'
-      unless @name then @name = 'unknown'
-
-      console.log "party: [#{last}]#{nameLast} -> [#{@current}]#{@name}"
-
-      @tsSwitch = $.now()
-
-      {typeE} = Character.get nameLast
-      if typeE == 2 then Skill.endEAsType2 last
-
-    $.on 'f12', =>
-      @scan()
-      Character.load()
-
-    $.on 'alt + f12', =>
-      @reset()
-      @emit 'change'
-
-  # makeArea(n: Slot, isNarrow: boolean = false): Area
+  ###* @type import('./type/party').PartyG['makeArea'] ###
   makeArea: (n, isNarrow = false) ->
 
-    vTop = [37, 32, 28, 23, 19][@total - 1] + 9 * (n - 1)
+    top = [37, 32, 28, 23, 19][@size - 1] + 9 * (n - 1)
 
     [left, right] = [92, 96]
     if isNarrow then [left, right] = [96, 98]
 
     return [
-      "#{left}%", "#{vTop - 5}%"
-      "#{right}%", "#{vTop + 5}%"
+      "#{left}%", "#{top - 5}%"
+      "#{right}%", "#{top + 5}%"
     ]
 
-  # removeBuff(name: string): void
-  removeBuff: (name) ->
-    unless $.includes @listBuff, name then return
-    @listBuff = $.filter @listBuff, (it) -> return it != name
-
-  # reset(): void
+  ###* @type import('./type/party').PartyG['reset'] ###
   reset: ->
     @current = 0
-    @listBuff = []
-    @listMember = ['']
+    @list = ['']
+    @listOnSwitch = []
     @name = ''
-    @total = 4
+    @size = 0
+    return
 
-  # scan(): void
+  ###* @type import('./type/party').PartyG['scan'] ###
   scan: ->
 
     token = 'party/scan'
     Indicator.setCost token, 'start'
 
-    unless Scene.is 'normal'
-      Sound.beep()
-      console.log "invalid scene: #{Scene.name}/#{Scene.subname}"
-      return
-
-    if @isBusy
+    unless Scene.is 'normal', 'not-busy', 'not-multi'
+      Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
       Sound.beep()
       return
-    @isBusy = true
 
     @reset()
     @countMember()
@@ -199,25 +242,22 @@ class Party extends EmitterShell
     Skill.reset()
     Hud.reset()
 
-    for n in [1, 2, 3, 4, 5]
-      if n > @total then break
-      @subScan n
+    for n in @listSlot
+      if n > @size then break
+      @scanSlot n
 
     @emit 'change'
 
-    unless @current
-      $.press 1
-      @switchTo 1
+    unless @current then $.trigger '1'
 
     Indicator.setCost token, 'end'
     console.log "#{token}: completed in #{Indicator.getCost token} ms"
-    Timer.add 200, => @isBusy = false
 
-  # subScan(n: number): void
-  subScan: (n) ->
+  ###* @type import('./type/party').PartyG['scanSlot'] ###
+  scanSlot: (n) ->
 
     name = @getNameViaSlot n
-    $.push @listMember, name
+    $.push @list, name
 
     nameOutput = Dictionary.get name
     if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
@@ -233,21 +273,40 @@ class Party extends EmitterShell
     if constellation then nameOutput = "#{nameOutput} [C#{constellation}]"
 
     # current
-    if !@current and @checkCurrent n
+    if !@current and @isCurrent n
       @current = n
       @name = name
       nameOutput = "#{nameOutput} 🎮"
 
     Hud.render n, nameOutput
 
-  # switchTo(n: Slot): void
-  switchTo: (n) ->
-    unless n then return
-    unless n <= @total then return
-    @checkCurrentAs n, => @emit 'switch', n, @current
+  ###* @type import('./type/party').PartyG['waitFor'] ###
+  waitFor: (n, callback) ->
+    [interval, limit, token] = [25, 1e3, 'party/wait-for']
+    tsCheck = $.now()
+    Timer.loop token, interval, =>
 
-  # switchBy(name: string): void
-  switchBy: (name) -> @switchTo @getIndexBy name
+      if Timer.has 'is-current-as' then return
 
-# execute
-Party = new Party()
+      if n == @current
+        Timer.remove token
+        callback()
+        return
+
+      unless $.now() - tsCheck >= limit then return
+      Timer.remove token
+
+  # ###* @type import('./type/party').PartyG['watch'] ###
+  # watch: ->
+  #   [interval, token] = [1e3, 'party/watch']
+  #   Client.on 'idle', -> Timer.remove token
+  #   Client.on 'activate', => Timer.loop token, interval, =>
+  #     if Timer.has 'party/is-current-as' then return
+  #     if Timer.has 'party/wait-for' then return
+  #     unless Scene.is 'normal', 'not-busy', 'not-multi' then return
+  #     if @isCurrent @current then return
+
+  #     n = @findCurrent()
+  #     if n and n <= @size then @emit 'switch', n
+
+Party = new PartyG()

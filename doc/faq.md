@@ -8,4 +8,8 @@
 
 “我永远喜欢凝光光”
 
+“I love Ningguang forever”
+
 加群前请先给我点星
+
+Please star this repo before joining the group

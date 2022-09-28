@@ -1,16 +1,20 @@
-# function
+# @ts-check
 
-class Indicator extends EmitterShell
-
-  cacheCost: {} # Record<string, number[]>
-  cacheCount: {} # Record<string, number>
-  cacheTs: {} # Record<string, number>
+class IndicatorG extends EmitterShell
 
   constructor: ->
     super()
+
+    ###* @type import('./type/indicator').IndicatorG['cacheCost'] ###
+    @cacheCost = {} # Record<string, number[]>
+    ###* @type import('./type/indicator').IndicatorG['cacheCount'] ###
+    @cacheCount = {} # Record<string, number>
+    ###* @type import('./type/indicator').IndicatorG['cacheTs'] ###
+    @cacheTs = {} # Record<string, number>
+
     @watch()
 
-  # clear(): void
+  ###* @type import('./type/indicator').IndicatorG['clear'] ###
   clear: ->
 
     @emit 'update'
@@ -19,10 +23,11 @@ class Indicator extends EmitterShell
       @cacheCost[name] = [@getCost name]
 
     @cacheCount = {}
+    return
 
-  # getCost(name: string): number
+  ###* @type import('./type/indicator').IndicatorG['getCost'] ###
   getCost: (name) ->
-    unless name then return
+    unless name then return 0
 
     group = @cacheCost[name]
     unless group then group = []
@@ -30,16 +35,16 @@ class Indicator extends EmitterShell
     len = $.length group
     unless len then return 0
 
-    return $.round ($.sum group) / len
+    return $.Math.round ($.sum group) / len
 
-  # getCount(name: string): number
+  ###* @type import('./type/indicator').IndicatorG['getCount'] ###
   getCount: (name) ->
-    unless name then return
+    unless name then return 0
     vn = @cacheCount[name]
     unless vn then vn = 0
     return vn
 
-  # setCost(name: string, step = 'start'| 'end'): void
+  ###* @type import('./type/indicator').IndicatorG['setCost'] ###
   setCost: (name, step) ->
     unless name then return
 
@@ -53,16 +58,18 @@ class Indicator extends EmitterShell
 
     $.push group, now - @cacheTs[name]
     @cacheCost[name] = group
+    return
 
-  # setCount(name: string): void
+  ###* @type import('./type/indicator').IndicatorG['setCount'] ###
   setCount: (name) ->
     unless name then return
 
     vn = @cacheCount[name]
     unless vn then vn = 0
     @cacheCount[name] = vn + 1
+    return
 
-  # watch(): void
+  ###* @type import('./type/indicator').IndicatorG['watch'] ###
   watch: ->
 
     interval = 1e3
@@ -71,5 +78,4 @@ class Indicator extends EmitterShell
     Client.on 'idle', -> Timer.remove token
     Client.on 'activate', => Timer.loop token, interval, @clear
 
-# execute
-Indicator = new Indicator()
+Indicator = new IndicatorG()
