@@ -5,6 +5,7 @@ export class HudG {
   constructor()
   private hide(n: number, isForce: boolean): void
   private hideAll(): void
+  init(): void
   private makePosition(n: number): [number, number]
   render(n: number, msg: string): void
   reset(): void

@@ -18,10 +18,6 @@ class PartyG extends KeyBinding
     ###* @type import('./type/party').PartyG['size'] ###
     @size = 0
 
-    @aboutBinding1()
-    @aboutBinding2()
-    # @watch()
-
   ###* @type import('./type/party').PartyG['aboutBinding1'] ###
   aboutBinding1: ->
 
@@ -96,7 +92,7 @@ class PartyG extends KeyBinding
           continue
 
         $.push @listOnSwitch, onSwitch
-      console.log "party/on-switch: #{$.join ($.tail @listOnSwitch), ', '}"
+      # console.log "party/on-switch: #{$.join ($.tail @listOnSwitch), ', '}"
 
       Buff.pick()
 
@@ -150,13 +146,6 @@ class PartyG extends KeyBinding
     @size = result + 1
     return
 
-  # ###* @type import('./type/party').PartyG['findCurrent'] ###
-  # findCurrent: ->
-  #   for n in @listSlot
-  #     unless @isCurrent n then continue
-  #     return n
-  #   return 0
-
   ###* @type import('./type/party').PartyG['getNameViaSlot'] ###
   getNameViaSlot: (n) ->
 
@@ -178,6 +167,12 @@ class PartyG extends KeyBinding
 
   ###* @type import('./type/party').PartyG['has'] ###
   has: (name) -> $.includes @list, name
+
+  ###* @type import('./type/party').PartyG['init'] ###
+  init: ->
+    unless Config.get 'skill-timer/enable' then return
+    @aboutBinding1()
+    @aboutBinding2()
 
   ###* @type import('./type/party').PartyG['isCurrent'] ###
   isCurrent: (n) -> not ColorManager.findAll 0xFFFFFF, @makeArea n, true
@@ -295,18 +290,5 @@ class PartyG extends KeyBinding
 
       unless $.now() - tsCheck >= limit then return
       Timer.remove token
-
-  # ###* @type import('./type/party').PartyG['watch'] ###
-  # watch: ->
-  #   [interval, token] = [1e3, 'party/watch']
-  #   Client.on 'idle', -> Timer.remove token
-  #   Client.on 'activate', => Timer.loop token, interval, =>
-  #     if Timer.has 'party/is-current-as' then return
-  #     if Timer.has 'party/wait-for' then return
-  #     unless Scene.is 'normal', 'not-busy', 'not-multi' then return
-  #     if @isCurrent @current then return
-
-  #     n = @findCurrent()
-  #     if n and n <= @size then @emit 'switch', n
 
 Party = new PartyG()

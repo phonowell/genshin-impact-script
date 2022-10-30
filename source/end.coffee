@@ -1,57 +1,91 @@
 # @ts-check
 
-do ->
+$.setTimeout ->
 
-  # report(): void
-  report = ->
-    {isFullScreen, x, y, width, height} = Client
-    $.forEach [
-      "client/is-fullscreen: #{isFullScreen}"
-      "client/position: #{x}, #{y}"
-      "client/size: #{width}, #{height}"
-    ], (msg) -> console.log msg
+  do -> # init
+    Dictionary.init()
+    Config.init()
 
-  # execute
+    Client.init()
+    console.init()
+    Idle.init()
+    Indicator.init()
 
-  Client.window.focus()
+    Character.init()
+    Gdip.init()
+    Sound.init()
+    Transparent.init()
 
-  Timer.add 200, ->
-    Client.emit 'enter'
-    report()
+    Scene.init()
+    Party.init()
+    Hud.init()
 
-  Timer.add 1e3, Upgrader.check
+    Camera.init()
+    Menu2.init()
+    Skill.init()
+    Movement.init()
+    Jumper.init()
 
-# auto scan
-do ->
+    Picker.init()
+    Tactic.init()
+    Fishing.init()
 
-  unless Config.get 'skill-timer/enable' then return
+    Recorder.init()
+    Replayer.init()
 
-  token = 'change.auto-scan'
+    Controller.init()
+    # Alice.init()
 
-  autoScan = ->
-    unless Scene.is 'normal', 'not-busy', 'not-multi' then return
-    Scene.off token
-    Party.scan()
+  do -> # client
 
-  addListener = ->
-    Scene.off token
-    Scene.on token, autoScan
+    report = ->
+      {isFullScreen, x, y, width, height} = Client
+      $.forEach [
+        "client/is-fullscreen: #{isFullScreen}"
+        "client/position: #{x}, #{y}"
+        "client/size: #{width}, #{height}"
+      ], (msg) -> console.log msg
 
-  Scene.on 'change', ->
-    unless Scene.is 'party' then return
+    Client.window.focus()
+
+    Timer.add 200, ->
+      Client.emit 'enter'
+      report()
+
+    Timer.add 1e3, Upgrader.check
+
+  do -> # auto scan
+
+    unless Config.get 'skill-timer/enable' then return
+
+    token = 'change.auto-scan'
+
+    autoScan = ->
+      unless Scene.is 'normal', 'not-busy', 'not-multi' then return
+      Scene.off token
+      Party.scan()
+
+    addListener = ->
+      Scene.off token
+      Scene.on token, autoScan
+
+    Scene.on 'change', ->
+      unless Scene.is 'party' then return
+      addListener()
+
     addListener()
 
-  addListener()
+  do -> # clear party
 
-# clear party
-do ->
+    unless Config.get 'skill-timer/enable' then return
 
-  Scene.on 'change', ->
-    unless Party.size then return
-    unless Scene.is 'multi' then return
-    $.trigger 'alt + f12'
+    Scene.on 'change', ->
+      unless Party.size then return
+      unless Scene.is 'multi' then return
+      $.trigger 'alt + f12'
 
-# pick color
-do ->
-  unless Config.get 'debug/enable' then return
-  $.on 'alt + f9', ColorManager.pick
+  do -> # debug
+    unless Config.get 'debug/enable' then return
+    $.on 'alt + f9', ColorManager.pick
+
+, 200

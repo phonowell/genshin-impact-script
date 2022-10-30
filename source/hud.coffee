@@ -11,9 +11,6 @@ class HudG
     ###* @type import('./type/hud').HudG['mapLast'] ###
     @mapLast = {}
 
-    Client.on 'idle', @hideAll
-    @watch()
-
   ###* @type import('./type/hud').HudG['hide'] ###
   hide: (n, isForce) ->
     unless @mapLast[n] or isForce then return
@@ -29,6 +26,11 @@ class HudG
     for n in [0, 1, 2, 3, 4, 5]
       @hide n, true
     return
+
+  ###* @type import('./type/hud').HudG['init'] ###
+  init: ->
+    Client.on 'idle', @hideAll
+    @watch()
 
   ###* @type import('./type/hud').HudG['makePosition'] ###
   makePosition: (n) ->

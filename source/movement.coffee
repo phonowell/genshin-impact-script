@@ -17,8 +17,6 @@ class MovementG extends KeyBinding
     @ts =
       forward: 0
 
-    @init()
-
   ###* @type import('./type/movement').MovementG['init'] ###
   init: ->
 

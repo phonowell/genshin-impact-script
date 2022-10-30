@@ -17,6 +17,7 @@ export class GdipG {
     a: [number, number, number, number],
   ): [number, number]
   getColor(p: [number, number]): number
+  init(): void
   private report(): void
   private rgb2argb(rgb: number): number
   private screenshot(): boolean

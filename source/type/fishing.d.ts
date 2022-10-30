@@ -7,6 +7,7 @@ export class FishingG {
   private checkIsFishing(): boolean
   private checkShape(): Shape
   private checkStart(): boolean
+  init(): void
   private next(): void
   private pull(): void
   private start(): void

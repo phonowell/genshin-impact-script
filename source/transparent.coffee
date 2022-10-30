@@ -1,8 +1,8 @@
 # @ts-check
 class TransparentG
 
-  constructor: ->
-
+  ###* @type import('./type/transparent').TransparentG['init'] ###
+  init: ->
     n = $.toNumber Config.get 'misc/use-transparency-when-idle'
     unless n then return
 

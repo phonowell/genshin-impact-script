@@ -9,6 +9,7 @@ export class RecorderG extends KeyBinding {
   private list: Item[]
   private ts: number
   constructor()
+  init(): void
   private record(key: string): void
   private reset(): void
   private save(): void

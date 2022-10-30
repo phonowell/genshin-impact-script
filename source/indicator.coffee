@@ -12,8 +12,6 @@ class IndicatorG extends EmitterShell
     ###* @type import('./type/indicator').IndicatorG['cacheTs'] ###
     @cacheTs = {} # Record<string, number>
 
-    @watch()
-
   ###* @type import('./type/indicator').IndicatorG['clear'] ###
   clear: ->
 
@@ -43,6 +41,9 @@ class IndicatorG extends EmitterShell
     vn = @cacheCount[name]
     unless vn then vn = 0
     return vn
+
+  ###* @type import('./type/indicator').IndicatorG['init'] ###
+  init: -> @watch()
 
   ###* @type import('./type/indicator').IndicatorG['setCost'] ###
   setCost: (name, step) ->

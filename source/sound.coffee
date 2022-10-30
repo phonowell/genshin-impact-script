@@ -5,15 +5,9 @@ import '../../gis-static/lib/ShiftAppVolume.ahk'
 class SoundG
 
   constructor: ->
-
+  
     ###* @type import('./type/sound').SoundG['index'] ###
     @index = 0
-
-    if Config.get 'sound/use-mute-when-idle'
-      Client.on 'idle', @mute
-      Client.on 'activate', @unmute
-
-    @unmute()
 
   ###* @type import('./type/sound').SoundG['beep'] ###
   beep: (n = 1, callback = undefined) ->
@@ -35,6 +29,14 @@ class SoundG
       if @index >= n
         Timer.remove 'sound/beep'
         if $.isFunction callback then callback()
+
+  ###* @type import('./type/sound').SoundG['init'] ###
+  init: ->
+    if Config.get 'sound/use-mute-when-idle'
+      Client.on 'idle', @mute
+      Client.on 'activate', @unmute
+
+    @unmute()
 
   ###* @type import('./type/sound').SoundG['mute'] ###
   mute: -> ShiftAppVolumeTopped ($.toString Config.get 'basic/process'), 0

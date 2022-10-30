@@ -15,7 +15,7 @@ export class PartyG extends KeyBinding {
   // private findCurrent(): number
   private getNameViaSlot(n: number): string
   has(name: string): boolean
-  private init(): void
+  init(): void
   private isCurrent(n: number): boolean
   private isCurrentAs(n: number, cbDone: Fn, cbFail?: Fn): void
   private makeArea(n: number, isNarrow: boolean): AreaLike

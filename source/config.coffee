@@ -9,9 +9,6 @@ class ConfigG
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 
-    unless @detectRegion() then return
-    @load()
-
   ###* @type import('./type/config').ConfigG['detectRegion'] ###
   detectPath: ->
     name = "ahk_exe #{@get 'basic/process'}"
@@ -43,6 +40,11 @@ class ConfigG
 
   ###* @type import('./type/config').ConfigG['get'] ###
   get: (ipt) -> @data[ipt]
+
+  ###* @type import('./type/config').ConfigG['init'] ###
+  init: ->
+    unless @detectRegion() then return
+    @load()
 
   ###* @type import('./type/config').ConfigG['load'] ###
   load: ->

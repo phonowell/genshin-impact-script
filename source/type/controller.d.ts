@@ -9,7 +9,7 @@ export class ControllerG extends EmitterShell {
   private aboutStickX(stick: 'left' | 'right', value: number): void
   private aboutStickY(stick: 'left' | 'right', value: number): void
   private aboutTrigger(trigger: 'left' | 'right', value: number): void
-  private init(): void
+  init(): void
   private registerCross(): void
   private registerLeftStick(): void
   private registerRightStick(): void

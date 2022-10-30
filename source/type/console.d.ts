@@ -5,6 +5,7 @@ export class ConsoleG {
   constructor()
   private add(msg: string): void
   private hide(): void
+  init(): void
   log(...ipt: unknown[]): void
   private render(): void
   private update(): void

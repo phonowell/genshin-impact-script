@@ -67,13 +67,14 @@ class CharacterG
     ###* @type import('./type/character').CharacterG['source'] ###
     @source = 'character.ini'
 
-    @load()
-
   ###* @type import('./type/character').CharacterG['get'] ###
   get: (name, key = undefined) ->
     unless name then return ''
     unless key then return @data[name]
     return @data[name][key]
+
+  ###* @type import('./type/character').CharacterG['init'] ###
+  init: -> @load()
 
   ###* @type import('./type/character').CharacterG['isTuple'] ###
   isTuple: (ipt) -> ($.length ipt) == 2

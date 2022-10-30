@@ -18,10 +18,6 @@ class SkillG extends KeyBinding
     ###* @type import('./type/skill').SkillG['tsUseE'] ###
     @tsUseE = 0
 
-    @reset()
-    @aboutBinding()
-    @watch()
-
   ###* @type import('./type/skill').SkillG['aboutBinding'] ###
   aboutBinding: ->
     @registerEvent 'use-e', 'e'
@@ -163,6 +159,13 @@ class SkillG extends KeyBinding
     unless star == 5 then return
 
     Scene.freezeAs ['normal', 'using-q'], 1500
+
+  ###* @type import('./type/skill').SkillG['init'] ###
+  init: ->
+    unless Config.get 'skill-timer/enable' then return
+    @reset()
+    @aboutBinding()
+    @watch()
 
   ###* @type import('./type/skill').SkillG['isEUsed'] ###
   isEUsed: ->

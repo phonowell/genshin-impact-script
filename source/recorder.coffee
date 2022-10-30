@@ -12,6 +12,8 @@ class RecorderG extends KeyBinding
     ###* @type import('./type/recorder').RecorderG['ts'] ###
     @ts = 0
 
+  ###* @type import('./type/recorder').RecorderG['init'] ###
+  init: ->
     Native 'FileCreateDir, replay'
     Client.on 'idle', @stop
 

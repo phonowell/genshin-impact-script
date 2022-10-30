@@ -8,9 +8,6 @@ class PickerG extends KeyBinding
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
 
-    @init()
-    @watch()
-
   ###* @type import('./type/picker').PickerG['checkShape'] ###
   checkShape: (p) ->
 
@@ -84,6 +81,7 @@ class PickerG extends KeyBinding
 
   ###* @type import('./type/picker').PickerG['init'] ###
   init: ->
+    @watch()
 
     @registerEvent 'pick', 'f'
     @on 'pick:start', =>

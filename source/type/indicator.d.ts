@@ -6,6 +6,7 @@ export class IndicatorG extends EmitterShell {
   private clear():void
   getCost(name: string): number
   getCount(name: string): number
+  init(): void
   setCost(name: string, step: 'start' | 'end'): void
   setCount(name: string): void
   watch(): void

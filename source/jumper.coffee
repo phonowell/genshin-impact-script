@@ -12,9 +12,6 @@ class JumperG extends KeyBinding
     ###* @type import('./type/jumper').JumperG['tsJump'] ###
     @tsJump = 0
 
-    @init()
-    @watch()
-
   ###* @type import('./type/jumper').JumperG['check'] ###
   check: ->
 
@@ -40,6 +37,7 @@ class JumperG extends KeyBinding
 
   ###* @type import('./type/jumper').JumperG['init'] ###
   init: ->
+    @watch()
 
     @registerEvent 'jump', 'space'
 

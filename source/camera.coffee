@@ -12,8 +12,6 @@ class CameraG extends KeyBinding
     ###* @type import('./type/camera').CameraG['listKey'] ###
     @listKey = ['left', 'right', 'up', 'down']
 
-    @init()
-
   ###* @type import('./type/camera'). CameraG['init'] ###
   init: ->
 

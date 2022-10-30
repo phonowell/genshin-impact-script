@@ -13,8 +13,6 @@ class FishingG
     ###* @type import('./type/fishing').FishingG['isPulling'] ###
     @isPulling = false
 
-    $.on 'f11', @toggle
-
   ###* @type import('./type/fishing').FishingG['checkIsFishing'] ###
   checkIsFishing: -> ColorManager.findAll 0xFFFFFF, [
     '94%', '94%'
@@ -42,6 +40,9 @@ class FishingG
     '82%', '87%'
     '87%', '97%'
   ]
+
+  ###* @type import('./type/fishing').FishingG['init'] ###
+  init: -> $.on 'f11', @toggle
 
   ###* @type import('./type/fishing').FishingG['next'] ###
   next: ->

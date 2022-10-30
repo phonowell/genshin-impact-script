@@ -3,7 +3,7 @@ export class CameraG extends KeyBinding {
   private isWatching: boolean
   private listKey: ['left', 'right', 'up', 'down']
   constructor()
-  private init(): void
+  init(): void
   move(): void
   private watch(): void
 }

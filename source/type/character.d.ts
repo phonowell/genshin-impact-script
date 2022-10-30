@@ -53,6 +53,7 @@ export class CharacterG {
     name: string,
     key?: T,
   ): T extends string ? Item[T] : Item
+  init(): void
   private isTuple(ipt: number[]): ipt is [number, number]
   load(): void
   private makeValueIntoArray(value: number | number[]): number[]

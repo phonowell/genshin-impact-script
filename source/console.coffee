@@ -11,8 +11,6 @@ class ConsoleG
     ###* @type import('./type/console').ConsoleG['listContent'] ###
     @listContent = []
 
-    @watch()
-
   ###* @type import('./type/console').ConsoleG['add'] ###
   add: (msg) ->
 
@@ -43,6 +41,9 @@ class ConsoleG
   hide: ->
     Native 'ToolTip,, 0, 0, 20'
     return
+
+  ###* @type import('./type/console').ConsoleG['init'] ###
+  init: -> @watch()
 
   ###* @type import('./type/console').ConsoleG['log'] ###
   log: (ipt...) ->

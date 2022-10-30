@@ -3,6 +3,7 @@ export class IdleG extends KeyBinding {
   private token: string
   constructor()
   private clearTimer(): void
+  init(): void
   private main(): void
   private setTimer(): void
 }

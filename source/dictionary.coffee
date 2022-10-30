@@ -11,8 +11,6 @@ class DictionaryG
     ###* @type import('./type/dictionary').DictionaryG['data'] ###
     @data = {}
 
-    @load()
-
   ###* @type import('./type/dictionary').DictionaryG['get'] ###
   get: (name) ->
 
@@ -25,6 +23,9 @@ class DictionaryG
       when '0411' then message = group[2]
 
     return $.replace message, '<br>', '\n'
+
+  ###* @type import('./type/dictionary').DictionaryG['init'] ###
+  init: -> @load()
 
   ###* @type import('./type/dictionary').DictionaryG['load'] ###
   load: ->

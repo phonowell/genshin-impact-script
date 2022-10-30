@@ -19,14 +19,16 @@ class IdleG extends KeyBinding
     ###* @type import('./type/idle').IdleG['token'] ###
     @token = 'idle/pressing'
 
+  ###* @type import('./type/idle').IdleG['clearTimer'] ###
+  clearTimer: -> Timer.remove @token
+
+  ###* @type import('./type/idle').IdleG['init'] ###
+  init: ->
     for key in @listKey
       @registerEvent 'press', key
 
     @on 'press:start', @main
     @on 'press:end', @main
-
-  ###* @type import('./type/idle').IdleG['clearTimer'] ###
-  clearTimer: -> Timer.remove @token
 
   ###* @type import('./type/idle').IdleG['main'] ###
   main: ->

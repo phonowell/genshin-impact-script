@@ -31,8 +31,6 @@ class ControllerG extends EmitterShell
     ###* @type import('./type/controller').ControllerG['ts'] ###
     @ts = {}
 
-    @init()
-
   ###* @type import('./type/controller').ControllerG['aboutButton'] ###
   aboutButton: (value) ->
 

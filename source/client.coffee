@@ -18,23 +18,11 @@ class ClientG extends KeyBinding
     ###* @type import('./type/client').ClientG['width'] ###
     @width = 0
     ###* @type import('./type/client').ClientG['window'] ###
-    @window = $.window $.toString Config.get 'basic/process'
+    @window = $.window ''
     ###* @type import('./type/client').ClientG['x'] ###
     @x = 0
     ###* @type import('./type/client').ClientG['y'] ###
     @y = 0
-
-    Native 'Menu, Tray, Icon, on.ico,, 1'
-
-    unless @window.isExists()
-      if Config.get 'basic/path'
-        try $.open $.join [
-          $.toString Config.get 'basic/path'
-          $.toString Config.get 'basic/arguments'
-        ], ' '
-        catch then $.alert Dictionary.get 'invalid_path'
-
-    @window.wait @init
 
   ###* @type import('./type/client').ClientG['getState'] ###
   getState: ->
@@ -56,6 +44,31 @@ class ClientG extends KeyBinding
 
   ###* @type import('./type/client').ClientG['init'] ###
   init: ->
+    @window = $.window $.toString Config.get 'basic/process'
+
+    Native 'Menu, Tray, Icon, on.ico,, 1'
+
+    unless @window.isExists()
+      if Config.get 'basic/path'
+        try $.open $.join [
+          $.toString Config.get 'basic/path'
+          $.toString Config.get 'basic/arguments'
+        ], ' '
+        catch then $.alert Dictionary.get 'invalid_path'
+
+    @window.wait @main
+
+  ###* @type import('./type/client').ClientG['isMouseInside'] ###
+  isMouseInside: ->
+    [x, y] = $.getPosition()
+    if x < 0 then return false
+    if x >= @width then return false
+    if y < 0 then return false
+    if y >= @height then return false
+    return true
+
+  ###* @type import('./type/client').ClientG['main'] ###
+  main: ->
 
     Config.detectPath()
     @watch()
@@ -122,15 +135,6 @@ class ClientG extends KeyBinding
         @setPosition()
 
     return
-
-  ###* @type import('./type/client').ClientG['isMouseInside'] ###
-  isMouseInside: ->
-    [x, y] = $.getPosition()
-    if x < 0 then return false
-    if x >= @width then return false
-    if y < 0 then return false
-    if y >= @height then return false
-    return true
 
   ###* @type import('./type/client').ClientG['reset'] ###
   reset: ->

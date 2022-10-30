@@ -9,11 +9,6 @@ class ReplayerG
     ###* @type import('./type/replayer').ReplayerG['token'] ###
     @token = 'replayer/next'
 
-    Client.on 'idle', @stop
-
-    for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-      $.on "ctrl + numpad-#{n}", => @start $.toString n
-
   ###* @type import('./type/replayer').ReplayerG['asMark'] ###
   asMark: (list, callback) ->
 
@@ -47,6 +42,15 @@ class ReplayerG
       n = $.toNumber list[1]
       Timer.add n, callback
       return
+
+  ###* @type import('./type/replayer').ReplayerG['init'] ###
+  init: ->
+    Client.on 'idle', @stop
+
+    for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      $.on "ctrl + numpad-#{n}", => @start $.toString n
+
+    return
 
   ###* @type import('./type/replayer').ReplayerG['next'] ###
   next: (list, i, callback = undefined) ->

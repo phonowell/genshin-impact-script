@@ -22,6 +22,7 @@ export class ConfigG {
   detectPath(): void
   detectRegion(): true | void
   get(ipt: Key): string | number
+  init(): void
   private load(): void
   private read(ipt: Key, defaultValue?: string): string | number
   private register(ipt: Key, key?: string): void

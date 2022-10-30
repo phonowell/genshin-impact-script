@@ -5,5 +5,6 @@ export class MenuG extends KeyBinding {
   private asMap(): void
   private asMiniMenu(): void
   private click(p: PointLike): void
+  init(): void
   private isMenu(): boolean
 }

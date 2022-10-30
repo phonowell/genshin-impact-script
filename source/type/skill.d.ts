@@ -18,6 +18,7 @@ export class SkillG extends KeyBinding {
   endEAsType3(current: number): void
   private endEAsType4(): void
   private freeze(): void
+  init(): void
   private isEUsed(): void
   private isEUsed2(): void
   private makeArea1(): AreaLike

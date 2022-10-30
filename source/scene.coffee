@@ -14,12 +14,6 @@ class SceneG extends EmitterShell
     ###* @type import('./type/scene').SceneG['tsChange'] ###
     @tsChange = 0
 
-    @on 'change', =>
-      unless $.length @list
-        console.log 'scene: unknown'
-      else console.log "scene: #{$.join @list, ', '}"
-      @tsChange = $.now()
-
   ###* @type import('./type/scene').SceneG['aboutHalfMenu'] ###
   aboutHalfMenu: ->
     unless @checkIsHalfMenu() then return []
@@ -175,6 +169,14 @@ class SceneG extends EmitterShell
     @emit 'change'
     Timer.add 'scene/freeze-as', time, => @isFrozen = false
     return
+
+  ###* @type import('./type/scene').SceneG['init'] ###
+  init: ->
+    @on 'change', =>
+      unless $.length @list
+        console.log 'scene: unknown'
+      else console.log "scene: #{$.join @list, ', '}"
+      @tsChange = $.now()
 
   ###* @type import('./type/scene').SceneG['is'] ###
   is: (names...) ->

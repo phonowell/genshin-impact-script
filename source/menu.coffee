@@ -2,22 +2,7 @@
 
 class MenuG extends KeyBinding
 
-  constructor: ->
-    super()
-
-    unless Config.get 'better-pickup/use-quick-skip' then return
-
-    # r-button
-    @registerEvent 'right-click', 'r-button'
-    @on 'right-click', =>
-      unless @isMenu() then return
-      $.press 'esc'
-
-    # space
-    @registerEvent 'space', 'space'
-    @on 'space', =>
-      @asMap()
-      @asMiniMenu()
+  constructor: -> super()
 
   ###* @type import('./type/menu').MenuG['asMap'] ###
   asMap: ->
@@ -55,6 +40,22 @@ class MenuG extends KeyBinding
     $.move p1
     $.click()
     Timer.add 50, -> $.move p0
+
+  ###* @type import('./type/menu').MenuG['init'] ###
+  init: ->
+    unless Config.get 'better-pickup/use-quick-skip' then return
+
+    # r-button
+    @registerEvent 'right-click', 'r-button'
+    @on 'right-click', =>
+      unless @isMenu() then return
+      $.press 'esc'
+
+    # space
+    @registerEvent 'space', 'space'
+    @on 'space', =>
+      @asMap()
+      @asMiniMenu()
 
   ###* @type import('./type/menu').MenuG['isMenu'] ###
   isMenu: ->

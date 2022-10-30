@@ -13,8 +13,9 @@ export class ClientG extends KeyBinding {
   constructor()
   private getState(): void
   private getTaskBarBounds(): [number, number, number, number]
-  private init(): void
+  init(): void
   private isMouseInside(): boolean
+  private main(): void
   private reset(): void
   private setPosition(): void
   private setStyle(): void

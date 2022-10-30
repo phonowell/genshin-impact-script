@@ -34,6 +34,10 @@ import { TransparentG } from './transparent'
 import { UpgraderG } from './upgrader'
 
 declare global {
+  class Console {
+    init(): void
+  }
+
   class EmitterShell {
     constructor()
     on: ES['on']

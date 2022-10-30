@@ -32,8 +32,6 @@ class TacticG extends KeyBinding
     ###* @type import('./type/tactic').TacticG['isActive'] ###
     @isActive = false
 
-    @init()
-
   ###* @type import('./type/tactic').TacticG['atDuration'] ###
   atDuration: (cbA, cbB, isNot) ->
 

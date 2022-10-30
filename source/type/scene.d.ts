@@ -40,6 +40,7 @@ export class SceneG extends EmitterShell {
   private checkIsParty(): boolean
   private checkIsPlaying(): boolean
   freezeAs(listName: Name[], time: number): void
+  init(): void
   is(...names: (Name | NameNot | 'unknown')[]): boolean
   private makeListName(...names: Name[]): Name[]
   private throttle(name: Name, time: number, callback: () => boolean): boolean

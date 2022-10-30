@@ -15,9 +15,6 @@ class GdipG
       pBitmap: 0
       pToken: 0
 
-    @start()
-    if Config.get 'debug/enable' then Indicator.on 'update', @report
-
   ###* @type import('./type/gdip').GdipG['argb2rgb'] ###
   argb2rgb: (argb) -> argb - 0xFF000000
 
@@ -101,6 +98,11 @@ class GdipG
     @cache.getColor[key] = result
     Indicator.setCount 'gdip/getColor2'
     return result
+
+  ###* @type import('./type/gdip').GdipG['init'] ###
+  init: ->
+    @start()
+    if Config.get 'debug/enable' then Indicator.on 'update', @report
 
   ###* @type import('./type/gdip').GdipG['report'] ###
   report: ->
