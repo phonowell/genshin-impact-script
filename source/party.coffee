@@ -119,8 +119,8 @@ class PartyG extends KeyBinding
       if typeE == 3 then Skill.endEAsType3 last
 
     $.on 'f12', =>
-      @scan()
       Character.load()
+      @scan()
 
     $.on 'alt + f12', =>
       @reset()
@@ -226,7 +226,7 @@ class PartyG extends KeyBinding
     token = 'party/scan'
     Indicator.setCost token, 'start'
 
-    unless Scene.is 'normal', 'not-busy', 'not-multi'
+    unless Scene.is 'normal', 'not-busy', 'not-multi', 'not-using-q'
       Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
       Sound.beep()
       return

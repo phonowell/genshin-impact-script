@@ -104,7 +104,7 @@ class ReplayerG
       $.push list, $.split item, ' '
 
     @next list, 0, callback
-    Hud.render 0, 'start replaying'
+    Hud.render 0, Dictionary.get 'start_replaying'
 
   ###* @type import('./type/replayer').ReplayerG['stop'] ###
   stop: ->
@@ -113,7 +113,7 @@ class ReplayerG
     @isActive = false
 
     Timer.remove @token
-    Hud.render 0, 'stop replaying'
+    Hud.render 0, Dictionary.get 'end_replaying'
 
 # export
 Replayer = new ReplayerG()

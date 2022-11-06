@@ -65,6 +65,7 @@ declare global {
   const Gdip_GetPixel: (bitmap: number, x: number, y: number) => number
   const Gdip_Shutdown: (token: number) => void
   const Gdip_Startup: () => number
+  const GetKeyState: (key: string, type: string) => boolean
   const Native: (...args: unknown[]) => unknown
   const Round: (a: number, b: number) => number
   const ShiftAppVolumeTopped: (app: string, volume: number) => void
@@ -75,14 +76,14 @@ declare global {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ) => number
 
   const Gdip_PixelSearch: (
     area: number,
     color: number,
     x: number,
-    y: number,
+    y: number
   ) => number
 
   const XInput_GetState: (target: number) => {
@@ -126,6 +127,37 @@ declare global {
   const Timer: TimerG
   const Transparent: TransparentG
   const Upgrader: UpgraderG
+  const alice: undefined
+  const area: undefined
+  const buff: undefined
+  const camera: undefined
+  const character: undefined
+  const client: undefined
+  const colorManager: undefined
+  const config: undefined
+  const controller: undefined
+  const dashboard: undefined
+  const dictionary: undefined
+  const fishing: undefined
+  const gdip: undefined
+  const hud: undefined
+  const idle: undefined
+  const indicator: undefined
+  const jumper: undefined
+  const menu2: undefined
+  const movement: undefined
+  const party: undefined
+  const picker: undefined
+  const point: undefined
+  const recorder: undefined
+  const replayer: undefined
+  const scene: undefined
+  const skill: undefined
+  const sound: undefined
+  const tactic: undefined
+  const timer: undefined
+  const transparent: undefined
+  const upgrader: undefined
 }
 
 export type AreaLike = (number | string)[] | (number | string)[][]

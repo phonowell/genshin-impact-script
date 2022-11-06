@@ -40,6 +40,8 @@ class SkillG extends KeyBinding
 
     unless @listRecord[current] then return
 
+    unless Scene.is 'normal' then return
+
     {typeE} = Character.get name
     switch typeE
       when 1 then @endEAsType1()
@@ -47,7 +49,7 @@ class SkillG extends KeyBinding
       when 3 then @endEAsType3 current
       when 4 then @endEAsType4()
       else
-        isHolding = $.now() - @listRecord[current] >= 1e3
+        isHolding = $.now() - @listRecord[current] >= 500
         unless isHolding then @endEAsDefault()
         else @endEAsHolding()
 
@@ -239,9 +241,13 @@ class SkillG extends KeyBinding
     {current} = Party
     unless current then return
 
-    if @listCountDown[current] then return
+    unless Scene.is 'normal' then return
+
+    now = $.now()
+    cd = @listCountDown[current]
+    if cd and cd - now > 500  then return
     if @listRecord[current] then return
-    @listRecord[current] = $.now()
+    @listRecord[current] = now
     return
 
   ###* @type import('./type/skill').SkillG['switchQ'] ###
@@ -265,12 +271,12 @@ class SkillG extends KeyBinding
     return
 
   ###* @type import('./type/skill').SkillG['useE'] ###
-  useE: (isHolding = false) ->
+  useE: (isHolding = false, callback = undefined) ->
 
     unless Scene.is 'normal' then return
 
     delay = 50
-    if isHolding then delay = 1e3
+    if isHolding then delay = 800
 
     $.press 'e:down'
     @startE()
@@ -278,6 +284,7 @@ class SkillG extends KeyBinding
     Timer.add 'skill/use', delay, =>
       $.press 'e:up'
       @endE()
+      if callback then callback()
 
   ###* @type import('./type/skill').SkillG['useQ'] ###
   useQ: ->

@@ -1,4 +1,4 @@
-import { AreaLike } from './global'
+import { AreaLike, Fn } from './global'
 
 export class SkillG extends KeyBinding {
   listCache: Record<number, [number, number]>
@@ -26,7 +26,7 @@ export class SkillG extends KeyBinding {
   reset(): void
   startE(): void
   switchQ(n: number): void
-  useE(isHolding?: boolean): void
+  useE(isHolding?: boolean, callback?: Fn): void
   useQ(): void
   private watch(): void
 }

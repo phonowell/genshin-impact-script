@@ -2,6 +2,14 @@
 
 class PointG
 
+  ###* @type import('./type/point').PointG['click'] ###
+  click: (p) ->
+    p0 = $.getPosition()
+    p1 = @create p
+    $.move p1
+    $.click()
+    Timer.add 50, -> $.move p0
+
   ###* @type import('./type/point').PointG['create'] ###
   create: (ipt) ->
 

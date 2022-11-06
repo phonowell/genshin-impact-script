@@ -20,11 +20,6 @@ class MovementG extends KeyBinding
   ###* @type import('./type/movement').MovementG['init'] ###
   init: ->
 
-    # shift
-    @registerEvent 'shift', 'l-shift', true
-    @on 'shift:start', -> $.click 'right:down'
-    @on 'shift:end', -> $.click 'right:up'
-
     # walk
     for key in ['w', 'a', 's', 'd']
       @registerEvent 'walk', key
@@ -34,7 +29,12 @@ class MovementG extends KeyBinding
       if @count.move >= 4 then return
       @count.move++
 
-    @on 'walk:end', =>
+    @on 'walk:end', (key) =>
+
+      if @isForwarding and key == 'w'
+        $.press 'w:down'
+        return
+
       if @count.move == 1 then @emit 'move:end'
       if @count.move <= 0 then return
       @count.move--
@@ -44,6 +44,44 @@ class MovementG extends KeyBinding
 
     # forward
     @on 'walk:start', @toggleForward
+
+    # aim
+    @registerEvent 'aim', 'r'
+    @on 'aim:start', => @onAim 'start'
+    @on 'aim:end', => @onAim 'end'
+
+    # unhold
+    @registerEvent 'unhold', 'l-button'
+    @on 'unhold:start', => @onUnhold 'start'
+    @on 'unhold:end', => @onUnhold 'end'
+
+    Scene.on 'change', =>
+      if Scene.is 'normal' then return
+      if Scene.is 'unknown' then return
+      unless @isForwarding then return
+      @stopForward()
+
+  ###* @type import('./type/movement').MovementG['onAim'] ###
+  onAim: (step) ->
+
+    unless Scene.is 'normal' then return
+
+    {name} = Party
+    unless name then return
+
+    weapon = Character.get name, 'weapon'
+    if weapon == 'bow' then return
+
+    if step == 'start' then $.press 't:down'
+    else $.press 't:up'
+
+  ###* @type import('./type/movement').MovementG['onUnhold'] ###
+  onUnhold: (step) ->
+
+    unless Scene.is 'normal', 'busy' then return
+
+    if step == 'start' then $.press 'x:down'
+    else $.press 'x:up'
 
   ###* @type import('./type/movement').MovementG['sprint'] ###
   sprint: -> $.click 'right'
@@ -63,12 +101,10 @@ class MovementG extends KeyBinding
   ###* @type import('./type/movement').MovementG['toggleForward'] ###
   toggleForward: (key) ->
 
-    unless Scene.is 'normal' then return
+    unless Scene.is 'normal', 'not-domain', 'not-using-q' then return
 
     if @isForwarding
-      if key == 'w' || key == 's'
-        @stopForward()
-        return
+      if key == 's' then @stopForward()
       return
 
     if key == 'w'

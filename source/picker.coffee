@@ -29,14 +29,6 @@ class PickerG extends KeyBinding
 
     return false
 
-  ###* @type import('./type/picker').PickerG['click'] ###
-  click: (p) ->
-    p0 = $.getPosition()
-    p1 = Point.create p
-    $.move p1
-    $.click()
-    Timer.add 50, -> $.move p0
-
   ###* @type import('./type/picker').PickerG['find'] ###
   find: ->
 
@@ -83,7 +75,9 @@ class PickerG extends KeyBinding
   init: ->
     @watch()
 
+    @registerEvent 'l-button', 'l-button'
     @registerEvent 'pick', 'f'
+
     @on 'pick:start', =>
       @tsPick = $.now()
       console.log 'picker/is-picking: true'
@@ -129,6 +123,7 @@ class PickerG extends KeyBinding
   skip: ->
 
     unless Scene.is 'event' then return false
+    if @isPressed['l-button'] then return false # enable camera
 
     Idle.setTimer() # avoid idle
     if @isPressed['f'] then $.press 'f'
@@ -144,7 +139,7 @@ class PickerG extends KeyBinding
     ]
     unless p then return true
 
-    @click p
+    Point.click p
     return true
 
   ###* @type import('./type/picker').PickerG['watch'] ###

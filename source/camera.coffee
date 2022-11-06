@@ -19,22 +19,23 @@ class CameraG extends KeyBinding
       @registerEvent 'press', key
 
     @on 'press:start', =>
+      unless Scene.is 'normal' then return
       unless @count then @emit 'move:start'
       if @count >= 4 then return
       @count++
+
     @on 'press:end', =>
+      unless Scene.is 'normal' then return
       if @count == 1 then @emit 'move:end'
       if @count <= 0 then return
       @count--
 
     @on 'move:start', @watch
+
     @on 'move:end', @watch
 
   ###* @type import('./type/camera').CameraG['move'] ###
   move: ->
-
-    unless Scene.is 'normal' then return
-    vMax = 30
 
     if @isPressed['left'] then x = -1
     else if @isPressed['right'] then x = 1
@@ -45,8 +46,11 @@ class CameraG extends KeyBinding
     else y = 0
 
     if x == 0 and y == 0 then return
+    x *= 2
+    y *= 2
 
     count = 0
+    vMax = 10
     while count < vMax
       count++
       Native 'DllCall("mouse_event", "UInt", 0x01, "UInt", x, "UInt", y)'

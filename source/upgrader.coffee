@@ -4,7 +4,7 @@ class UpgraderG
 
   constructor: ->
     ###* @type import('./type/upgrader').UpgraderG['target'] ###
-    @target = 46
+    @target = 47
 
   ###* @type import('./type/upgrader').UpgraderG['check'] ###
   check: ->

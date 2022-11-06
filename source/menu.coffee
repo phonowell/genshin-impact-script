@@ -13,8 +13,8 @@ class MenuG extends KeyBinding
       '2%', '4%'
       '3%', '7%'
     ]
-    unless p then @click ['96%', '94%']
-    else @click p
+    unless p then Point.click ['96%', '94%']
+    else Point.click p
 
   ###* @type import('./type/menu').MenuG['asMiniMenu'] ###
   asMiniMenu: ->
@@ -29,17 +29,7 @@ class MenuG extends KeyBinding
       $.press 'esc'
       return
 
-    @click p
-
-  ###* @type import('./type/menu').MenuG['click'] ###
-  click: (p) ->
-    [p0, p1] = [
-      $.getPosition()
-      Point.create p
-    ]
-    $.move p1
-    $.click()
-    Timer.add 50, -> $.move p0
+    Point.click p
 
   ###* @type import('./type/menu').MenuG['init'] ###
   init: ->

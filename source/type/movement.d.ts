@@ -9,7 +9,9 @@ export class MovementG extends KeyBinding {
     forward: number
   }
   constructor()
-  private init(): void
+  init(): void
+  private onAim(step: 'start' | 'end'): void
+  private onUnhold(step: 'start' | 'end'): void
   sprint(): void
   private startForward(): void
   private stopForward(): void

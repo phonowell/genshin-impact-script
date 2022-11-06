@@ -5,5 +5,5 @@ export class IdleG extends KeyBinding {
   private clearTimer(): void
   init(): void
   private main(): void
-  private setTimer(): void
+  setTimer(): void
 }

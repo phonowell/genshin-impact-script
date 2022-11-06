@@ -18,6 +18,7 @@ export type Shell = {
   forEach: SA.ForEach
   get: SA.Get
   getPosition: SA.GetPosition
+  getState: SA.GetState
   getType: SA.GetType
   includes: SA.Includes
   isArray: SA.IsArray

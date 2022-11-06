@@ -108,7 +108,7 @@ class SceneG extends EmitterShell
 
   ###* @type import('./type/scene').SceneG['checkIsLoading'] ###
   checkIsLoading: -> @throttle 'loading', 2e3, ->
-    $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get ['0%', '0%']
+    $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get ['0%', '50%']
 
   ###* @type import('./type/scene').SceneG['checkIsMap'] ###
   checkIsMap: -> @throttle 'map', 1e3, ->

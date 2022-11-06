@@ -21,7 +21,7 @@ export class TacticG extends KeyBinding {
   private execute(list: string[][], g?: number, i?: number, callback?: Fn)
   private format(str: string): string[][]
   private get(list: string[][], g?: number, i?: number): string
-  private init(): void
+  init(): void
   start(line: string, callback?: Fn): void
   private stop(): void
 }

@@ -42,7 +42,7 @@ class JumperG extends KeyBinding
     @registerEvent 'jump', 'space'
 
     @on 'jump:start', =>
-      @flagIsNormal = Scene.is 'normal', 'not-domain', 'not-busy'
+      @flagIsNormal = Scene.is 'normal', 'not-busy', 'not-domain', 'not-using-q'
       @tsJump = $.now()
 
     @on 'jump:end', =>

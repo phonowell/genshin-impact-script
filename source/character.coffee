@@ -30,6 +30,7 @@ import __kujou_sara__ from '../../genshin-character-data/source/kujou_sara.yaml'
 import __kuki_shinobu__ from '../../genshin-character-data/source/kuki_shinobu.yaml'
 import __lisa__ from '../../genshin-character-data/source/lisa.yaml'
 import __mona__ from '../../genshin-character-data/source/mona.yaml'
+import __nahida__ from '../../genshin-character-data/source/nahida.yaml'
 import __nilou__ from '../../genshin-character-data/source/nilou.yaml'
 import __ningguang__ from '../../genshin-character-data/source/ningguang.yaml'
 import __noelle__ from '../../genshin-character-data/source/noelle.yaml'
@@ -115,6 +116,7 @@ class CharacterG
     $.mixin data, kuki_shinobu: __kuki_shinobu__
     $.mixin data, lisa: __lisa__
     $.mixin data, mona: __mona__
+    $.mixin data, nahida: __nahida__
     $.mixin data, nilou: __nilou__
     $.mixin data, ningguang: __ningguang__
     $.mixin data, noelle: __noelle__

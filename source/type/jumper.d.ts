@@ -4,7 +4,7 @@ export class JumperG extends KeyBinding {
   private tsJump: number
   constructor()
   private check(): void
-  private init(): void
+  init(): void
   jump(): void
   private watch(): void
 }

@@ -1,91 +1,111 @@
 # @ts-check
 
-$.setTimeout ->
+aboutCaps = ->
+  Client.on 'activate', -> Native 'SetCapsLockState, Off'
+  $.on 'CapsLock', -> $.beep()
 
-  do -> # init
-    Dictionary.init()
-    Config.init()
+aboutClient = ->
+  report = ->
+    {isFullScreen, x, y, width, height} = Client
+    $.forEach [
+      "client/is-fullscreen: #{isFullScreen}"
+      "client/position: #{x}, #{y}"
+      "client/size: #{width}, #{height}"
+    ], (msg) -> console.log msg
 
-    Client.init()
-    console.init()
-    Idle.init()
-    Indicator.init()
+  Client.window.focus()
 
-    Character.init()
-    Gdip.init()
-    Sound.init()
-    Transparent.init()
+  Timer.add 200, ->
+    Client.emit 'enter'
+    report()
 
-    Scene.init()
-    Party.init()
-    Hud.init()
+  Timer.add 1e3, Upgrader.check
 
-    Camera.init()
-    Menu2.init()
-    Skill.init()
-    Movement.init()
-    Jumper.init()
+aboutDebug = ->
+  unless Config.get 'debug/enable' then return
+  $.on 'alt + f9', ColorManager.pick
 
-    Picker.init()
-    Tactic.init()
-    Fishing.init()
+aboutSkillTimer = ->
 
-    Recorder.init()
-    Replayer.init()
+  unless Config.get 'skill-timer/enable' then return
 
-    Controller.init()
-    # Alice.init()
+  # auto scan
 
-  do -> # client
+  token = 'change.auto-scan'
 
-    report = ->
-      {isFullScreen, x, y, width, height} = Client
-      $.forEach [
-        "client/is-fullscreen: #{isFullScreen}"
-        "client/position: #{x}, #{y}"
-        "client/size: #{width}, #{height}"
-      ], (msg) -> console.log msg
+  autoScan = ->
+    unless Scene.is 'normal', 'not-busy', 'not-multi', 'not-using-q' then return
+    Scene.off token
+    Party.scan()
 
-    Client.window.focus()
+  addListener = ->
+    Scene.off token
+    Scene.on token, autoScan
 
-    Timer.add 200, ->
-      Client.emit 'enter'
-      report()
-
-    Timer.add 1e3, Upgrader.check
-
-  do -> # auto scan
-
-    unless Config.get 'skill-timer/enable' then return
-
-    token = 'change.auto-scan'
-
-    autoScan = ->
-      unless Scene.is 'normal', 'not-busy', 'not-multi' then return
-      Scene.off token
-      Party.scan()
-
-    addListener = ->
-      Scene.off token
-      Scene.on token, autoScan
-
-    Scene.on 'change', ->
-      unless Scene.is 'party' then return
-      addListener()
-
+  Scene.on 'change', ->
+    unless Scene.is 'party' then return
     addListener()
 
-  do -> # clear party
+  addListener()
 
-    unless Config.get 'skill-timer/enable' then return
+  # clear party
 
-    Scene.on 'change', ->
-      unless Party.size then return
-      unless Scene.is 'multi' then return
-      $.trigger 'alt + f12'
+  Scene.on 'change', ->
+    unless Party.size then return
+    unless Scene.is 'multi' then return
+    $.trigger 'alt + f12'
 
-  do -> # debug
-    unless Config.get 'debug/enable' then return
-    $.on 'alt + f9', ColorManager.pick
+boot = (callback) ->
 
-, 200
+  list = [
+    Dictionary
+    Config
+
+    Client
+    console
+    Idle
+    Indicator
+
+    Character
+    Gdip
+    Sound
+    Transparent
+
+    Scene
+    Party
+    Hud
+
+    Camera
+    Menu2
+    Skill
+    Movement
+    Jumper
+
+    Picker
+    Tactic
+    Fishing
+
+    Recorder
+    Replayer
+
+    Controller
+    # Alice
+  ]
+
+  for m in list
+    unless $.isFunction m.init
+      $.setTimeout ->
+        boot callback
+      , 100
+      return
+
+  $.forEach list, (m) -> m.init()
+  callback()
+  return
+
+# boot
+boot ->
+  aboutCaps()
+  aboutClient()
+  aboutSkillTimer()
+  aboutDebug()

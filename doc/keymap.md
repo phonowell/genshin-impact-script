@@ -17,7 +17,7 @@ to be bound to `Right Ctrl`
 | `1~5`                                                  | 切换角色<br>Switch character                                     |
 | `Alt + 1~5`                                            | 切换角色并使用元素爆发<br>Switch character and use Q skill       |
 | 三击`W`<br>Triple click `W`                            | 进入自动前进模式<br>Enter auto forwarding                        |
-| `W`/`S`                                                | 退出自动前进模式<br>Exit auto forwarding                         |
+| `S`                                                    | 退出自动前进模式<br>Exit auto forwarding                         |
 | 长按`F`<br>Long press `F`                              | 快速拾取物品/跳过对话<br>Pick up items or quickly skip dialogues |
 | `Alt + F`                                              | 进入/退出自动拾取模式<br>Enter/exit auto-pickup mode             |
 | `Alt + Space`                                          | 启用/停用改良跳跃<br>Enable/disable better-jump                  |

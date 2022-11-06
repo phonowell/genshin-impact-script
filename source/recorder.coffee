@@ -85,7 +85,7 @@ class RecorderG extends KeyBinding
     @reset()
 
     Sound.beep()
-    Hud.render 0, 'start recording'
+    Hud.render 0, Dictionary.get 'start_recording'
 
   ###* @type import('./type/recorder').RecorderG['stop'] ###
   stop: ->
@@ -101,7 +101,7 @@ class RecorderG extends KeyBinding
     @save()
 
     Sound.beep()
-    Hud.render 0, 'end recording'
+    Hud.render 0, Dictionary.get 'end_recording'
 
 # export
 Recorder = new RecorderG()

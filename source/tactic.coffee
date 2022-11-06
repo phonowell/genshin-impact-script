@@ -96,11 +96,6 @@ class TacticG extends KeyBinding
 
       @delay delay, =>
         $.press 'l-button:up'
-
-        if Movement.isMoving and Party.name == 'klee'
-          @delay 200, => @doJump callback
-          return
-
         @delay @intervalLong, callback
 
       return
@@ -127,8 +122,7 @@ class TacticG extends KeyBinding
       @delay @intervalShort, callback
       return
 
-    Skill.useE isHolding
-    @delay @intervalLong, callback
+    Skill.useE isHolding, callback
 
   ###* @type import('./type/tactic').TacticG['doUseEE'] ###
   doUseEE: (callback) ->
@@ -138,9 +132,7 @@ class TacticG extends KeyBinding
       return
 
     Skill.useE()
-    @delay 600, =>
-      Skill.useE()
-      @delay @intervalLong, callback
+    @delay 600, -> Skill.useE false, callback
 
   ###* @type import('./type/tactic').TacticG['doUseQ'] ###
   doUseQ: (callback) ->

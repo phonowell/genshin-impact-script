@@ -57,7 +57,7 @@ class ConsoleG
     unless Client.isActive then return
     list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
-    [x, y] = [0 - Client.x, Client.height * 0.5]
+    [x, y] = [0 - Client.x, Point.h '55%']
     $.noop text, x, y
     Native 'ToolTip, % text, % x, % y, 20'
     return
