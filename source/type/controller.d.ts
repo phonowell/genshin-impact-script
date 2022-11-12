@@ -1,6 +1,21 @@
 export class ControllerG extends EmitterShell {
-  private cache: Record<string, number>
+  private cache: {
+    n: Record<string, number>
+    s: Record<string, string>
+  }
   private isPressed: Record<string, boolean>
+  private listLeftStick: [
+    ['left-stick-left', 'a', 'left'],
+    ['left-stick-right', 'd', 'right'],
+    ['left-stick-up', 'w', 'up'],
+    ['left-stick-down', 's', 'down']
+  ]
+  private listRightStick: [
+    ['right-stick-left', 'left'],
+    ['right-stick-right', 'right'],
+    ['right-stick-up', 'up'],
+    ['right-stick-down', 'down']
+  ]
   private mapButton: Record<string, number>
   private thresholdStick: 1e4
   private ts: Record<string, number>

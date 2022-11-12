@@ -47,6 +47,8 @@ import './upgrader'
 import './recorder'
 import './replayer'
 
+import './alice'
 import './controller'
-# import './alice'
-import './end'
+import './cursor'
+
+import './misc'

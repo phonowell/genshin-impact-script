@@ -48,7 +48,7 @@ class ColorManagerG
     x1 = $.Math.round (x * 100) / Client.width
     y1 = $.Math.round (y * 100) / Client.height
 
-    console.log "color-manager: #{x1}, #{y1} / #{color}"
+    console.log "#color-manager: #{x1}, #{y1} / #{color}"
     ClipBoard = color
     $.noop ClipBoard
 

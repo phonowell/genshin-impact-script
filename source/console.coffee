@@ -15,10 +15,11 @@ class ConsoleG
   add: (msg) ->
 
     id = ''
-    if $.includes msg, ':'
+    if ($.startsWith msg, '#') and $.includes msg, ':'
       [id, string] = $.split msg, ':'
       if ($.length msg) > 40
         msg = "#{id}:\n  #{$.trim string}"
+      msg = $.subString msg, 1
 
     tsOutdate = $.now() + @lifetime
 

@@ -8,9 +8,9 @@ aboutClient = ->
   report = ->
     {isFullScreen, x, y, width, height} = Client
     $.forEach [
-      "client/is-fullscreen: #{isFullScreen}"
-      "client/position: #{x}, #{y}"
-      "client/size: #{width}, #{height}"
+      "#client/is-fullscreen: #{isFullScreen}"
+      "#client/position: #{x}, #{y}"
+      "#client/size: #{width}, #{height}"
     ], (msg) -> console.log msg
 
   Client.window.focus()
@@ -88,8 +88,8 @@ boot = (callback) ->
     Recorder
     Replayer
 
+    Alice
     Controller
-    # Alice
   ]
 
   for m in list

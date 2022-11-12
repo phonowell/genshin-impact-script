@@ -23,9 +23,10 @@ class MovementG extends KeyBinding
     # walk
     for key in ['w', 'a', 's', 'd']
       @registerEvent 'walk', key
+      @registerEvent 'sprint-walk', "shift + #{key}", true
 
     @on 'walk:start', =>
-      unless @count then @emit 'move:start'
+      unless @count.move then @emit 'move:start'
       if @count.move >= 4 then return
       @count.move++
 
@@ -39,8 +40,23 @@ class MovementG extends KeyBinding
       if @count.move <= 0 then return
       @count.move--
 
+    # move
     @on 'move:start', => @isMoving = true
     @on 'move:end', => @isMoving = false
+
+    # sprint
+    @on 'sprint-walk:start', (key) ->
+      unless Scene.is 'normal'
+        $.press "#{key}:down"
+        return
+      key2 = $.trim $.replace ($.replace key, 'shift', ''), '+', ''
+      $.press "#{key2}:down"
+    @on 'sprint-walk:end', (key) ->
+      unless Scene.is 'normal'
+        $.press "#{key}:up"
+        return
+      key2 = $.trim $.replace ($.replace key, 'shift', ''), '+', ''
+      $.press "#{key2}:up"
 
     # forward
     @on 'walk:start', @toggleForward
@@ -64,13 +80,10 @@ class MovementG extends KeyBinding
   ###* @type import('./type/movement').MovementG['onAim'] ###
   onAim: (step) ->
 
-    unless Scene.is 'normal' then return
+    unless Scene.is 'normal', 'not-domain' then return
 
-    {name} = Party
-    unless name then return
-
-    weapon = Character.get name, 'weapon'
-    if weapon == 'bow' then return
+    if (Character.get Party.name, 'weapon') == 'bow'
+      unless Scene.is 'busy', 'not-aiming' then return
 
     if step == 'start' then $.press 't:down'
     else $.press 't:up'
@@ -78,7 +91,7 @@ class MovementG extends KeyBinding
   ###* @type import('./type/movement').MovementG['onUnhold'] ###
   onUnhold: (step) ->
 
-    unless Scene.is 'normal', 'busy' then return
+    unless Scene.is 'normal', 'busy', 'not-aiming' then return
 
     if step == 'start' then $.press 'x:down'
     else $.press 'x:up'
@@ -107,22 +120,23 @@ class MovementG extends KeyBinding
       if key == 's' then @stopForward()
       return
 
-    if key == 'w'
+    unless key == 'w'
+      @count.forward = 0
+      return
 
-      now = $.now()
-      diff = now - @ts.forward
-      unless diff < 500
-        @count.forward = 0
-        @ts.forward = now
-        return
-
-      @count.forward++
+    now = $.now()
+    diff = now - @ts.forward
+    unless diff < 500
+      @count.forward = 0
       @ts.forward = now
+      return
 
-      if @count.forward >= 2
-        @count.forward = 0
-        Timer.add 100, @startForward
-        return
+    @count.forward++
+    @ts.forward = now
+
+    if @count.forward >= 2
+      @count.forward = 0
+      Timer.add 100, @startForward
       return
 
 Movement = new MovementG()

@@ -78,7 +78,7 @@ class PartyG extends KeyBinding
     @on 'change', =>
 
       unless @size then return
-      console.log "party/member: #{$.join ($.tail @list), ', '}"
+      console.log "#party/member: #{$.join ($.tail @list), ', '}"
 
       for name in @list
 
@@ -92,7 +92,7 @@ class PartyG extends KeyBinding
           continue
 
         $.push @listOnSwitch, onSwitch
-      # console.log "party/on-switch: #{$.join ($.tail @listOnSwitch), ', '}"
+      # console.log "#party/on-switch: #{$.join ($.tail @listOnSwitch), ', '}"
 
       Buff.pick()
 
@@ -108,7 +108,7 @@ class PartyG extends KeyBinding
       unless @name then @name = 'unknown'
 
       console.log $.join [
-        'party:'
+        '#party:'
         "[#{last}]#{nameLast}"
         '->'
         "[#{@current}]#{@name}"
@@ -190,13 +190,13 @@ class PartyG extends KeyBinding
       if @isCurrent n
         Timer.remove token
         cbDone()
-        console.log "#{token}: [#{n}] passed in #{diff} ms"
+        console.log "##{token}: [#{n}] passed in #{diff} ms"
         return
 
       unless diff >= limit then return
       Timer.remove token
       if cbFail then cbFail()
-      console.log "#{token}: [#{n}] failed after #{diff} ms"
+      console.log "##{token}: [#{n}] failed after #{diff} ms"
 
   ###* @type import('./type/party').PartyG['makeArea'] ###
   makeArea: (n, isNarrow = false) ->
@@ -246,7 +246,7 @@ class PartyG extends KeyBinding
     unless @current then $.trigger '1'
 
     Indicator.setCost token, 'end'
-    console.log "#{token}: completed in #{Indicator.getCost token} ms"
+    console.log "##{token}: completed in #{Indicator.getCost token} ms"
 
   ###* @type import('./type/party').PartyG['scanSlot'] ###
   scanSlot: (n) ->
@@ -277,11 +277,11 @@ class PartyG extends KeyBinding
 
   ###* @type import('./type/party').PartyG['waitFor'] ###
   waitFor: (n, callback) ->
-    [interval, limit, token] = [25, 1e3, 'party/wait-for']
+    [interval, limit, token] = [15, 1e3, 'party/wait-for']
     tsCheck = $.now()
     Timer.loop token, interval, =>
 
-      if Timer.has 'is-current-as' then return
+      if Timer.has 'party/is-current-as' then return
 
       if n == @current
         Timer.remove token

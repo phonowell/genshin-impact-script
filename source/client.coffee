@@ -74,14 +74,14 @@ class ClientG extends KeyBinding
     @watch()
 
     @on 'leave', =>
-      console.log 'client: leave'
+      console.log '#client: leave'
       Native 'Menu, Tray, Icon, off.ico'
       @suspend true
       @window.setPriority 'low'
       @emit 'idle'
 
     @on 'enter', =>
-      console.log 'client: enter'
+      console.log '#client: enter'
       Native 'Menu, Tray, Icon, on.ico'
       @suspend false
       @window.setPriority 'normal'
@@ -92,12 +92,12 @@ class ClientG extends KeyBinding
 
     @on 'activate', =>
       @isActive = true
-      console.log 'client: activate'
+      console.log '#client: activate'
       unless @isMouseInside() then $.move [@width * 0.5, @height * 0.5]
 
     @on 'idle', =>
       @isActive = false
-      console.log 'client: idle'
+      console.log '#client: idle'
 
     $.on 'alt + f4', => Sound.beep 2, =>
       @reset()

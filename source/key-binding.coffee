@@ -17,6 +17,8 @@ class KeyBinding extends EmitterShell
 
     unless name then throw new Error 'KeyBinding/registerEvent: name is required'
     unless key then throw new Error 'KeyBinding/registerEvent: key is required'
+    if isPrevented
+      console.log "key-binding/registerEvent: #{key}.#{name} is prevented"
 
     unless @map[name] then @map[name] = []
     $.push @map[name], key

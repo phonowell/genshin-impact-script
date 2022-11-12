@@ -10,7 +10,6 @@ class AliceG
   ###* @type import('./type/alice').AliceG['init'] ###
   init: ->
     Party.on 'change', @prepare
-    # $.on 'Sc029', @next
 
   ###* @type import('./type/alice').AliceG['next'] ###
   next: ->

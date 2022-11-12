@@ -37,6 +37,8 @@ class CameraG extends KeyBinding
   ###* @type import('./type/camera').CameraG['move'] ###
   move: ->
 
+    unless Scene.is 'normal' then return
+
     if @isPressed['left'] then x = -1
     else if @isPressed['right'] then x = 1
     else x = 0

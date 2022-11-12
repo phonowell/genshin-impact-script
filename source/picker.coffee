@@ -14,7 +14,6 @@ class PickerG extends KeyBinding
     [x, y] = p
     c1 = ColorManager.format ColorManager.get [x, y + 1]
     c2 = ColorManager.format ColorManager.get [x + 1, y]
-    # console.log "test: #{c1} #{c2}"
 
     # 0xFFFFFF, 0xFFFFFF chat, cook, gear
     if c1 == 0xFFFFFF and c2 == 0xFFFFFF then return true
@@ -80,11 +79,11 @@ class PickerG extends KeyBinding
 
     @on 'pick:start', =>
       @tsPick = $.now()
-      console.log 'picker/is-picking: true'
+      console.log '#picker/is-picking: true'
 
     @on 'pick:end', =>
       @tsPick = $.now()
-      console.log 'picker/is-picking: false'
+      console.log '#picker/is-picking: false'
 
   ###* @type import('./type/picker').PickerG['listen'] ###
   listen: ->

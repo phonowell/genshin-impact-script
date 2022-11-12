@@ -49,7 +49,9 @@ class SceneG extends EmitterShell
     unless @checkIsNormal() then return []
     list = @makeListName 'normal'
 
-    if @checkIsBusy() then $.push list, 'busy'
+    if @checkIsBusy()
+      $.push list, 'busy'
+      if @checkIsAiming() then $.push list, 'aiming'
     if @checkIsDomain() then $.push list, 'domain'
     if @checkIsMulti() then $.push list, 'multi'
 
@@ -73,6 +75,11 @@ class SceneG extends EmitterShell
     if @checkIsMiniMenu() then return ['mini-menu']
 
     return []
+
+  ###* @type import('./type/scene').SceneG['checkIsAiming'] ###
+  checkIsAiming: ->
+    unless (Character.get Party.name, 'weapon') == 'bow' then return false
+    return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
 
   ###* @type import('./type/scene').SceneG['checkIsBusy'] ###
   checkIsBusy: -> not ColorManager.findAll [0xFFFFFF, 0x323232], [
@@ -174,8 +181,8 @@ class SceneG extends EmitterShell
   init: ->
     @on 'change', =>
       unless $.length @list
-        console.log 'scene: unknown'
-      else console.log "scene: #{$.join @list, ', '}"
+        console.log '#scene: unknown'
+      else console.log "#scene: #{$.join @list, ', '}"
       @tsChange = $.now()
 
   ###* @type import('./type/scene').SceneG['is'] ###

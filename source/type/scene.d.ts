@@ -1,4 +1,5 @@
 type Name =
+  | 'aiming'
   | 'busy'
   | 'chat'
   | 'domain'
@@ -26,6 +27,7 @@ export class SceneG extends EmitterShell {
   private aboutMenu(): Name[]
   private aboutNormal(): Name[]
   private check(): Name[]
+  private checkIsAiming(): boolean
   private checkIsBusy(): boolean
   private checkIsChat(): boolean
   private checkIsDomain(): boolean

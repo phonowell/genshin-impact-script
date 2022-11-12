@@ -8,9 +8,26 @@ class ControllerG extends EmitterShell
     super()
 
     ###* @type import('./type/controller').ControllerG['cache'] ###
-    @cache = {}
+    @cache = {
+      n: {}
+      s: {}
+    }
     ###* @type import('./type/controller').ControllerG['isPressed'] ###
     @isPressed = {}
+    ###* @type import('./type/controller').ControllerG['listLeftStick'] ###
+    @listLeftStick = [
+      ['left-stick-left', 'a', 'left']
+      ['left-stick-right', 'd', 'right']
+      ['left-stick-up', 'w', 'up']
+      ['left-stick-down', 's', 'down']
+    ]
+    ###* @type import('./type/controller').ControllerG['listRightStick'] ###
+    @listRightStick = [
+      ['right-stick-left', 'left']
+      ['right-stick-right', 'right']
+      ['right-stick-up', 'up']
+      ['right-stick-down', 'down']
+    ]
     ###* @type import('./type/controller').ControllerG['mapButton'] ###
     @mapButton = {
       a: 4096
@@ -106,8 +123,20 @@ class ControllerG extends EmitterShell
     @registerLeftStick()
     @registerRightStick()
 
-    @on 'button-a:down', -> $.trigger 'f:down'
-    @on 'button-a:up', -> $.trigger 'f:up'
+    @on 'button-a:down', =>
+      if Scene.is 'normal'
+        @cache.s['button-a'] = 'normal'
+        $.trigger 'f:down'
+        return
+      @cache.s['button-a'] = ''
+      $.press 'l-button:down'
+    @on 'button-a:up', =>
+      if @cache.s['button-a'] == 'normal'
+        @cache.s['button-a'] = ''
+        $.trigger 'f:up'
+        return
+      @cache.s['button-a'] = ''
+      $.press 'l-button:up'
     @on 'button-b:down', -> $.trigger 'r-button:down'
     @on 'button-b:up', -> $.trigger 'r-button:up'
     @on 'button-x:down', -> $.trigger 'l-button:down'
@@ -133,74 +162,85 @@ class ControllerG extends EmitterShell
   ###* @type import('./type/controller').ControllerG['registerCross'] ###
   registerCross: ->
 
-    delay = 200
+    delay = 300
+    name = 'party/current'
     token = 'controller/switch'
 
-    @on 'button-up:down', =>
-      @ts['button-up'] = $.now()
-      unless Party.current then return
-      if @cache['party/current'] < 1
-        @cache['party/current'] = Party.current
-      return
-
     @on 'button-up:up', =>
+
       unless Party.current then return
-      @cache['party/current']--
-      if @cache['party/current'] < 1
-        @cache['party/current'] = Party.size
+      unless Scene.is 'normal' then return
+
+      unless @cache.n[name] then @cache.n[name] = Party.current
+
+      @cache.n[name]--
+      if @cache.n[name] < 1
+        @cache.n[name] = Party.size
 
       Timer.add token, delay, =>
-        $.trigger $.toString @cache['party/current']
-        @cache['party/current'] = 0
-
-    @on 'button-down:down', =>
-      @ts['button-down'] = $.now()
-      unless Party.current then return
-      if @cache['party/current'] < 1
-        @cache['party/current'] = Party.current
-      return
+        $.trigger "#{@cache.n[name]}:down"
+        Timer.add 100, => $.trigger "#{@cache.n[name]}:up"
+        @cache.n[name] = 0
 
     @on 'button-down:up', =>
+
       unless Party.current then return
-      @cache['party/current']++
-      if @cache['party/current'] > Party.size
-        @cache['party/current'] = 1
+      unless Scene.is 'normal' then return
+
+      unless @cache.n[name] then @cache.n[name] = Party.current
+
+      @cache.n[name]++
+      if @cache.n[name] > Party.size
+        @cache.n[name] = 1
 
       Timer.add token, delay, =>
-        $.trigger $.toString @cache['party/current']
-        @cache['party/current'] = 0
+        $.trigger "#{@cache.n[name]}:down"
+        Timer.add 100, => $.trigger "#{@cache.n[name]}:up"
+        @cache.n[name] = 0
+
+    @on 'button-left:up', ->
+      $.trigger 'm:down'
+      Timer.add 100, -> $.trigger 'm:up'
+
+    @on 'button-right:up', Alice.next
 
   ###* @type import('./type/controller').ControllerG['registerLeftStick'] ###
   registerLeftStick: ->
 
-    list = [
-      ['left-stick-left', 'a']
-      ['left-stick-right', 'd']
-      ['left-stick-up', 'w']
-      ['left-stick-down', 's']
-    ]
+    for group in @listLeftStick
+      [button, key, key2] = group
 
-    for group in list
-      [button, key] = group
-      @on "#{button}:down", -> $.press "#{key}:down"
-      @on "#{button}:up", -> $.press "#{key}:up"
+      @on "#{button}:down", ->
+        if Scene.is 'normal'
+          $.press "#{key}:down"
+          return
+        Cursor.start key2, 20
+
+      @on "#{button}:up", ->
+        if Scene.is 'normal'
+          $.press "#{key}:up"
+          return
+        Cursor.end key2, 20
 
     return
 
   ###* @type import('./type/controller').ControllerG['registerRightStick'] ###
   registerRightStick: ->
 
-    list = [
-      ['right-stick-left', 'left']
-      ['right-stick-right', 'right']
-      ['right-stick-up', 'up']
-      ['right-stick-down', 'down']
-    ]
-
-    for group in list
+    for group in @listRightStick
       [button, key] = group
-      @on "#{button}:down", -> $.trigger "#{key}:down"
-      @on "#{button}:up", -> $.trigger "#{key}:up"
+
+      @on "#{button}:down", ->
+        if Scene.is 'normal'
+          $.trigger "#{key}:down"
+          return
+        Cursor.start key, 10
+
+      @on "#{button}:up", ->
+        if Scene.is 'normal'
+          $.trigger "#{key}:up"
+          return
+        Cursor.end key, 10
 
     return
 
@@ -231,7 +271,7 @@ class ControllerG extends EmitterShell
     @aboutTrigger 'left', bLeftTrigger
     @aboutTrigger 'right', bRightTrigger
 
-    console.log "controller/button: #{wButtons}"
+    console.log "#controller/button: #{wButtons}"
 
   ###* @type import('./type/controller').ControllerG['watch'] ###
   watch: ->

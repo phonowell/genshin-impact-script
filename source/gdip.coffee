@@ -109,22 +109,22 @@ class GdipG
 
     token = 'gdip/error'
     count = Indicator.getCount token
-    if count then console.log "#{token}: #{count}"
+    if count then console.log "##{token}: #{count}"
 
     token = 'gdip/findColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/findColor2'
-    if count then console.log "#{token}: #{count} / #{count2}"
+    if count then console.log "##{token}: #{count} / #{count2}"
 
     token = 'gdip/getColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/getColor2'
-    if count then console.log "#{token}: #{count} / #{count2}"
+    if count then console.log "##{token}: #{count} / #{count2}"
 
     token = 'gdip/screenshot'
     count = Indicator.getCount token
     cost = Indicator.getCost token
-    if count then console.log "#{token}: #{count} / #{cost} ms"
+    if count then console.log "##{token}: #{count} / #{cost} ms"
 
   ###* @type import('./type/gdip').GdipG['rgb2argb'] ###
   rgb2argb: (rgb) -> rgb + 0xFF000000

@@ -23,6 +23,6 @@ class BuffG
     else @list = []
 
     if $.length @list
-      console.log 'buff/list:', $.join @list, ','
+      console.log '#buff/list:', $.join @list, ','
 
 Buff = new BuffG()

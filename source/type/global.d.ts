@@ -7,6 +7,7 @@ import { ClientG } from './client'
 import { ColorManagerG } from './color-manager'
 import { ConfigG } from './config'
 import { ControllerG } from './controller'
+import { CursorG } from './cursor'
 import { DashboardG } from './dashboard'
 import { DictionaryG } from './dictionary'
 import { EmitterShell as ES } from 'node_modules/shell-ahk/dist/type/emitterShell'
@@ -105,6 +106,7 @@ declare global {
   const ColorManager: ColorManagerG
   const Config: ConfigG
   const Controller: ControllerG
+  const Cursor: CursorG
   const Dashboard: DashboardG
   const Dictionary: DictionaryG
   const Fishing: FishingG
@@ -136,6 +138,7 @@ declare global {
   const colorManager: undefined
   const config: undefined
   const controller: undefined
+  const cursor: undefined
   const dashboard: undefined
   const dictionary: undefined
   const fishing: undefined
