@@ -2,4 +2,4 @@
 
 你懂的。
 
-You knew that.
+You know.

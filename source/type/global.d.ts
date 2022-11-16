@@ -25,6 +25,7 @@ import { PickerG } from './picker'
 import { PointG } from './point'
 import { RecorderG } from './recorder'
 import { ReplayerG } from './replayer'
+import { Scene2G } from './scene2'
 import { SceneG } from './scene'
 import { Shell } from './shell'
 import { SkillG } from './skill'
@@ -122,6 +123,7 @@ declare global {
   const Point: PointG
   const Recorder: RecorderG
   const Replayer: ReplayerG
+  const Scene2: Scene2G
   const Scene: SceneG
   const Skill: SkillG
   const Sound: SoundG
@@ -154,6 +156,7 @@ declare global {
   const point: undefined
   const recorder: undefined
   const replayer: undefined
+  const scene2: undefined
   const scene: undefined
   const skill: undefined
   const sound: undefined

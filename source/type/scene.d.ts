@@ -1,4 +1,4 @@
-type Name =
+export type Name =
   | 'aiming'
   | 'busy'
   | 'chat'
@@ -23,28 +23,8 @@ export class SceneG extends EmitterShell {
   private list: Name[]
   private tsChange: number
   constructor()
-  private aboutHalfMenu(): Name[]
-  private aboutMenu(): Name[]
-  private aboutNormal(): Name[]
-  private check(): Name[]
-  private checkIsAiming(): boolean
-  private checkIsBusy(): boolean
-  private checkIsChat(): boolean
-  private checkIsDomain(): boolean
-  private checkIsEvent(): boolean
-  private checkIsHalfMenu(): boolean
-  private checkIsLoading(): boolean
-  private checkIsMap(): boolean
-  private checkIsMenu(): boolean
-  private checkIsMiniMenu(): boolean
-  private checkIsMulti(): boolean
-  private checkIsNormal(): boolean
-  private checkIsParty(): boolean
-  private checkIsPlaying(): boolean
   freezeAs(listName: Name[], time: number): void
   init(): void
   is(...names: (Name | NameNot | 'unknown')[]): boolean
-  private makeListName(...names: Name[]): Name[]
-  private throttle(name: Name, time: number, callback: () => boolean): boolean
   private update(): void
 }

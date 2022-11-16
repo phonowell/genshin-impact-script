@@ -6,10 +6,10 @@
 
 ## 加群口令是什么 What is the code word to join the QQ group
 
-“我永远喜欢凝光光”
+“我永远喜欢凝光光”。
 
-“I love Ningguang forever”
+“I love Ningguang forever”.
 
-加群前请先给我点星
+加群前请先给我点星。
 
-Please star this repo before joining the group
+Please give me a star before joining the group.

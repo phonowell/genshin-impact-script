@@ -1,18 +1,18 @@
 # 自定义动作 Tactic
 
-自定义动作能够省去大量重复操作，只需要长按左键即可
+自定义动作能够省去大量重复操作，只需要长按左键即可。
 
 Tactics can save a lot of repetitive actions, by simply long pressing your left
-button
+button.
 
-注意，自版本`0.0.35`起，自定义动作需在`character.ini`中配置
+注意，自版本`0.0.35`起，自定义动作需在`character.ini`中配置。
 
-Note that since version `0.0.35`, tactics must be configured in `character.ini`
+Note that since version `0.0.35`, tactics must be configured in `character.ini`.
 
-自版本`0.0.40`起，可以使用`on-side-button-1`与`on-side-button-2`项配置侧键动作
+自版本`0.0.40`起，可以使用`on-side-button-1`与`on-side-button-2`项配置侧键动作。
 
 Since version `0.0.40`, you can use `on-side-button-1` and `on-side-button-2` to
-configure side button actions
+configure side button actions.
 
 ## 快速开始 Quick start
 
@@ -54,9 +54,9 @@ Let's get familiar with these keywords:
 | `tt`              | 快速瞄准两次<br>Quick aim twice                           |
 | 数字<br>Numbers   | 延时，单位为`毫秒`<br>Representing time delay, in `ms`    |
 
-不同指令间使用`,`分隔，不同组之间使用`;`分隔
+不同指令间使用`,`分隔，不同组之间使用`;`分隔。
 
-Separate different commands with `,`, and different groups with `;`
+Separate different commands with `,`, and different groups with `;`.
 
 所以回看示例，小艾咪的自定义动作就是这样：
 
@@ -95,16 +95,16 @@ Hu Tao's logic is a bit more complicated, with two groups:
   When E skill is not effective, loop normal attack, and use E skill when it's
   ready
 
-`@e`是一个特殊的标记，只有在元素战技生效时才会继续向后执行；否则就会跳到下一组
+`@e`是一个特殊的标记，只有在元素战技生效时才会继续向后执行；否则就会跳到下一组。
 
 `@e` is a special marker, and only when E skill is effective will the following
-commands be executed; otherwise, it will jump to the next group
+commands be executed; otherwise, it will jump to the next group.
 
 剩下的两个例子都比较简单。可莉将循环使用普通攻击加重击，而钟离则会在普通攻击中不
-断开盾
+断开盾。
 
 The other two examples are pretty simple. Klee will loop normal attack & charged
-attack, while Zhongli will keep his shield up while attacking
+attack, while Zhongli will keep his shield up while attacking.
 
 ## 抄作业 Recommended
 
@@ -144,10 +144,10 @@ on-long-press = a, a~
 on-long-press = a, e~
 ```
 
-上述配置并非最优方案，如果你有更好的方案，随时`issue`
+上述配置并非最优方案，如果你有更好的方案，随时`issue`。
 
 The above configuration is not the optimal solution, if you have a better idea,
-feel free to `issue`
+feel free to `issue`.
 
 ## 通配符 Wildcard
 
@@ -179,11 +179,12 @@ on-long-press = a, e
 ## 原生按键 Raw key
 
 自版本`0.0.38`起，可以通过`$`后跟按键名来调用键盘的上的按键，例如`$w`即代表按
-下`w`键
+下`w`键。
 
 Since version `0.0.38`, you can use `$` followed by the key name to call the key
-on the keyboard, for example, `$w` means pressing the `w` key
+on the keyboard, for example, `$w` means pressing the `w` key.
 
-类似的，`$l-button:down, 1000, $l-button:up`表示长按左键
+类似的，`$l-button:down, 1000, $l-button:up`表示长按左键。
 
-Similarly, `$l-button:down, 1000, $l-button:up` means long press the left button
+Similarly, `$l-button:down, 1000, $l-button:up` means long press the left
+button.

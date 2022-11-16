@@ -1,9 +1,9 @@
 # 按键 Keymap
 
-所有按键采用游戏默认键位，但需要将`切换走/跑`绑定至`右Ctrl`
+所有按键采用游戏默认键位，但需要将`切换走/跑`绑定至`右Ctrl`。
 
 All keys use the default key bindings in the game, but `Switch Walk/Run` needs
-to be bound to `Right Ctrl`
+to be bound to `Right Ctrl`.
 
 | 按键<br>Key                                            | 功能<br>Function                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------- |
