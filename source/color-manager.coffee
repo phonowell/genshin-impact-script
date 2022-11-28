@@ -45,8 +45,8 @@ class ColorManagerG
     color = @format @get $.getPosition()
     [x, y] = $.getPosition()
 
-    x1 = $.Math.round (x * 100) / Client.width
-    y1 = $.Math.round (y * 100) / Client.height
+    x1 = $.Math.round (x * 100) / Window2.bounds.width
+    y1 = $.Math.round (y * 100) / Window2.bounds.height
 
     console.log "#color-manager: #{x1}, #{y1} / #{color}"
     ClipBoard = color

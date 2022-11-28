@@ -28,6 +28,7 @@ import __keqing__ from '../../genshin-character-data/source/keqing.yaml'
 import __klee__ from '../../genshin-character-data/source/klee.yaml'
 import __kujou_sara__ from '../../genshin-character-data/source/kujou_sara.yaml'
 import __kuki_shinobu__ from '../../genshin-character-data/source/kuki_shinobu.yaml'
+import __layla__ from '../../genshin-character-data/source/layla.yaml'
 import __lisa__ from '../../genshin-character-data/source/lisa.yaml'
 import __mona__ from '../../genshin-character-data/source/mona.yaml'
 import __nahida__ from '../../genshin-character-data/source/nahida.yaml'
@@ -36,7 +37,7 @@ import __ningguang__ from '../../genshin-character-data/source/ningguang.yaml'
 import __noelle__ from '../../genshin-character-data/source/noelle.yaml'
 import __qiqi__ from '../../genshin-character-data/source/qiqi.yaml'
 import __raiden_shogun__ from '../../genshin-character-data/source/raiden_shogun.yaml'
-import __rezor__ from '../../genshin-character-data/source/rezor.yaml'
+import __razor__ from '../../genshin-character-data/source/razor.yaml'
 import __rosaria__ from '../../genshin-character-data/source/rosaria.yaml'
 import __sangonomiya_kokomi__ from '../../genshin-character-data/source/sangonomiya_kokomi.yaml'
 import __sayu__ from '../../genshin-character-data/source/sayu.yaml'
@@ -65,6 +66,24 @@ class CharacterG
 
     ###* @type import('./type/character').CharacterG['data'] ###
     @data = {}
+    ###* @type import('./type/character').CharacterG['listVision'] ###
+    @listVision = [
+      'anemo'
+      'cryo'
+      'dendro'
+      'electro'
+      'geo'
+      'hydro'
+      'pyro'
+    ]
+    ###* @type import('./type/character').CharacterG['listWeapon'] ###
+    @listWeapon = [
+      'bow'
+      'catalyst'
+      'claymore'
+      'polearm'
+      'sword'
+    ]
     ###* @type import('./type/character').CharacterG['source'] ###
     @source = 'character.ini'
 
@@ -77,11 +96,29 @@ class CharacterG
   ###* @type import('./type/character').CharacterG['init'] ###
   init: -> @load()
 
+  ###* @type import('./type/character').CharacterG['is'] ###
+  is: (name, keyword) ->
+
+    if keyword == '5-star'
+      return (@get name, 'star') == 5
+
+    if $.includes @listVision, keyword
+      return (@get name, 'vision') == keyword
+
+    if $.includes @listWeapon, keyword
+      return (@get name, 'weapon') == keyword
+
+    return false
+
   ###* @type import('./type/character').CharacterG['isTuple'] ###
   isTuple: (ipt) -> ($.length ipt) == 2
 
   ###* @type import('./type/character').CharacterG['load'] ###
   load: ->
+
+    # line below for moudles sorting
+    # do not remove
+    Dictionary.noop()
 
     ###* @type import('./type/character').dataRaw ###
     data = {}
@@ -114,6 +151,7 @@ class CharacterG
     $.mixin data, klee: __klee__
     $.mixin data, kujou_sara: __kujou_sara__
     $.mixin data, kuki_shinobu: __kuki_shinobu__
+    $.mixin data, layla: __layla__
     $.mixin data, lisa: __lisa__
     $.mixin data, mona: __mona__
     $.mixin data, nahida: __nahida__
@@ -122,7 +160,7 @@ class CharacterG
     $.mixin data, noelle: __noelle__
     $.mixin data, qiqi: __qiqi__
     $.mixin data, raiden_shogun: __raiden_shogun__
-    $.mixin data, rezor: __rezor__
+    $.mixin data, razor: __razor__
     $.mixin data, rosaria: __rosaria__
     $.mixin data, sangonomiya_kokomi: __sangonomiya_kokomi__
     $.mixin data, sayu: __sayu__

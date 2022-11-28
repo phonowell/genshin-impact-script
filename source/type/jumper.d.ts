@@ -1,5 +1,4 @@
 export class JumperG extends KeyBinding {
-  private flagIsNormal: boolean
   private isBreaking: boolean
   private tsJump: number
   constructor()

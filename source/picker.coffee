@@ -1,10 +1,14 @@
 # @ts-check
 
+import __shape__ from '../../gis-static/data/shape-forbidden.yaml'
+
 class PickerG extends KeyBinding
 
   constructor: ->
     super()
 
+    ###* @type import('./type/picker').PickerG['listShapeForbidden'] ###
+    @listShapeForbidden = __shape__.list
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
 
@@ -15,17 +19,11 @@ class PickerG extends KeyBinding
     c1 = ColorManager.format ColorManager.get [x, y + 1]
     c2 = ColorManager.format ColorManager.get [x + 1, y]
 
-    # 0xFFFFFF, 0xFFFFFF chat, cook, gear
-    if c1 == 0xFFFFFF and c2 == 0xFFFFFF then return true
+    for shape in @listShapeForbidden
+      if c1 == shape[0] and c2 == shape[1]
+        return true
 
-    # 0xFFFFFF, 0xFEFEFE magnifier
-    if c1 == 0xFFFFFF and c2 == 0xFEFEFE then return true
-
-    # 0xF8F9F9, 0xFDFDFE hook
-    # 0xFBFBFB, 0xFFFFFF hook
-    if c1 == 0xF8F9F9 and c2 == 0xFDFDFE then return true
-    if c1 == 0xFBFBFB and c2 == 0xFFFFFF then return true
-
+    # console.log "#{c1} #{c2}"
     return false
 
   ###* @type import('./type/picker').PickerG['find'] ###

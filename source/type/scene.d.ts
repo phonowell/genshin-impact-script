@@ -1,3 +1,5 @@
+import { Fn } from './global'
+
 export type Name =
   | 'aiming'
   | 'busy'
@@ -27,4 +29,5 @@ export class SceneG extends EmitterShell {
   init(): void
   is(...names: (Name | NameNot | 'unknown')[]): boolean
   private update(): void
+  useEffect(fn: () => Fn, listDeps: (Name | NameNot | 'unknown')[]): void
 }

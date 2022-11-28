@@ -2,14 +2,10 @@
 
 class UpgraderG
 
-  constructor: ->
-    ###* @type import('./type/upgrader').UpgraderG['target'] ###
-    @target = 49
-
   ###* @type import('./type/upgrader').UpgraderG['check'] ###
   check: ->
 
-    $.get "https://github.com/phonowell/genshin-impact-script/releases/tag/0.0.#{@target}", (result) =>
+    $.get "https://github.com/phonowell/genshin-impact-script/releases/tag/0.0.#{Client.version}", (result) =>
 
       unless result
         Timer.add 600e3, @check

@@ -35,9 +35,9 @@ class HudG
   ###* @type import('./type/hud').HudG['makePosition'] ###
   makePosition: (n) ->
 
-    if Client.isFullScreen
+    if Window2.isFullScreen
       left = Point.w '77%'
-    else left = Client.width
+    else left = Window2.bounds.width
 
     [a, b] = [Party.size - 1, n - 1]
     unless Party.size then a = 3

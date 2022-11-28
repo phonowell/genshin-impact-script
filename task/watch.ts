@@ -1,45 +1,18 @@
-import c2a from 'coffee-ahk'
-import sleep from 'fire-keeper/dist/sleep'
+import beep from 'node-beep'
+import build from './build'
 import watch from 'fire-keeper/dist/watch'
+import { debounce } from 'lodash'
 
 // function
 
-class Compiler {
-  delay = 1e3
-  interval = 5e3
-  isBusy = false
-  list: Set<string> = new Set()
-
-  constructor() {
-    setInterval(this.next.bind(this), this.interval)
-  }
-
-  async next() {
-    if (!this.list.size) return
-    if (this.isBusy) return
-
-    this.isBusy = true
-
-    const source = [...this.list][0]
-    this.list.delete(source)
-
-    await c2a(source, {
-      salt: 'genshin',
-    })
-      .catch((e) => console.error(e))
-      .finally(async () => {
-        await sleep(this.delay)
-        this.isBusy = false
-      })
-  }
-}
+const build2 = debounce(async () => {
+  await build()
+  beep()
+}, 5e3)
 
 const main = () => {
   process.on('uncaughtException', (e) => console.error(e))
-  const compiler = new Compiler()
-  watch(['./source/**/*.coffee', './source/**/*.yaml'], () =>
-    compiler.list.add('./source/index.coffee')
-  )
+  watch(['./source/*.coffee', '!./source/misc.coffee'], build2)
 }
 
 // export

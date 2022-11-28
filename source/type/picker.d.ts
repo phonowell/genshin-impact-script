@@ -1,4 +1,5 @@
 export class PickerG extends KeyBinding {
+  private listShapeForbidden: [number, number][]
   private tsPick: number
   constructor()
   private checkShape(p: [number, number]): boolean

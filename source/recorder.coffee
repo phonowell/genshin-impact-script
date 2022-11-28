@@ -39,8 +39,8 @@ class RecorderG extends KeyBinding
     if $.includes key, 'l-button'
       [x, y] = $.getPosition()
       position = $.join [
-        "#{$.Math.round x * 100 / Client.width}%"
-        "#{$.Math.round y * 100 / Client.height}%"
+        "#{$.Math.round x * 100 / Window2.bounds.width}%"
+        "#{$.Math.round y * 100 / Window2.bounds.height}%"
       ], ','
 
     $.push @list, {delay, key, position}

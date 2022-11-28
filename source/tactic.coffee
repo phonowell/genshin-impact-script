@@ -227,25 +227,55 @@ class TacticG extends KeyBinding
   ###* @type import('./type/tactic').TacticG['init'] ###
   init: ->
 
-    @registerEvent 'attack', 'l-button'
-    @on 'attack:start', =>
-      unless Party.name then return
-      @start Character.get Party.name, 'onLongPress'
-    @on 'attack:end', @stop
+    Scene.useEffect =>
 
-    @registerEvent 'side-button-1', 'x-button-1'
-    @on 'side-button-1:start', =>
-      unless Party.name then return
-      @start Character.get Party.name, 'onSideButton1'
-    @on 'side-button-1:end', @stop
+      @registerEvent 'attack', 'l-button'
+      @on 'attack:start', =>
+        unless Party.name then return
+        @start Character.get Party.name, 'onLongPress'
+      @on 'attack:end', @stop
 
-    @registerEvent 'side-button-2', 'x-button-2'
-    @on 'side-button-2:start', =>
-      unless Party.name then return
-      @start Character.get Party.name, 'onSideButton2'
-    @on 'side-button-2:end', @stop
+      return =>
+        @unregisterEvent 'attack', 'l-button'
+        @off 'attack:start'
+        @off 'attack:end'
 
-    Party.on 'switch', @stop
+    , ['normal']
+
+    Scene.useEffect =>
+
+      @registerEvent 'side-button-1', 'x-button-1'
+      @on 'side-button-1:start', =>
+        unless Party.name then return
+        @start Character.get Party.name, 'onSideButton1'
+      @on 'side-button-1:end', @stop
+
+      return =>
+        @unregisterEvent 'side-button-1', 'x-button-1'
+        @off 'side-button-1:start'
+        @off 'side-button-1:end'
+
+    , ['normal']
+
+    Scene.useEffect =>
+
+      @registerEvent 'side-button-2', 'x-button-2'
+      @on 'side-button-2:start', =>
+        unless Party.name then return
+        @start Character.get Party.name, 'onSideButton2'
+      @on 'side-button-2:end', @stop
+
+      return =>
+        @unregisterEvent 'side-button-2', 'x-button-2'
+        @off 'side-button-2:start'
+        @off 'side-button-2:end'
+
+    , ['normal']
+
+    Scene.useEffect =>
+      Party.on 'switch.tactic', @stop
+      return -> Party.off 'switch.tactic'
+    , ['normal']
 
   ###* @type import('./type/tactic').TacticG['start'] ###
   start: (line, callback = undefined) ->
@@ -255,6 +285,9 @@ class TacticG extends KeyBinding
     unless Scene.is 'normal'
       if callback then callback()
       return
+
+    if Movement.isForwarding
+      Movement.stopForward()
 
     list = @format line
     unless $.length list

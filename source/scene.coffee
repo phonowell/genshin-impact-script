@@ -24,6 +24,11 @@ class SceneG extends EmitterShell
 
   ###* @type import('./type/scene').SceneG['init'] ###
   init: ->
+
+    Client.on 'idle', =>
+      @list = []
+      @emit 'change'
+
     @on 'change', =>
       unless $.length @list
         console.log '#scene: unknown'
@@ -58,5 +63,23 @@ class SceneG extends EmitterShell
     if $.eq list, @list then return
     @list = list
     @emit 'change'
+
+  ###* @type import('./type/scene').SceneG['useEffect'] ###
+  useEffect: (fn, list) ->
+
+    data = {
+      callback: $.noop
+      isHooked: false
+    }
+
+    @on 'change', =>
+      if @is list...
+        unless data.isHooked
+          data.isHooked = true
+          data.callback = fn()
+      else
+        if data.isHooked
+          data.isHooked = false
+          data.callback()
 
 Scene = new SceneG()

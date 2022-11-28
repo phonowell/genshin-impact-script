@@ -20,6 +20,7 @@ import { JumperG } from './jumper'
 import { KeyBinding as KB } from './key-binding'
 import { MenuG } from './menu'
 import { MovementG } from './movement'
+import { Party2G } from './party2'
 import { PartyG } from './party'
 import { PickerG } from './picker'
 import { PointG } from './point'
@@ -34,6 +35,7 @@ import { TacticG } from './tactic'
 import { TimerG } from './timer'
 import { TransparentG } from './transparent'
 import { UpgraderG } from './upgrader'
+import { WindowG } from './window'
 
 declare global {
   class Console {
@@ -69,6 +71,7 @@ declare global {
   const Gdip_Startup: () => number
   const GetKeyState: (key: string, type: string) => boolean
   const Native: (...args: unknown[]) => unknown
+  const OnExit: (fn: Fn) => void
   const Round: (a: number, b: number) => number
   const ShiftAppVolumeTopped: (app: string, volume: number) => void
   const XInput_Init: () => void
@@ -118,6 +121,7 @@ declare global {
   const Jumper: JumperG
   const Menu2: MenuG
   const Movement: MovementG
+  const Party2: Party2G
   const Party: PartyG
   const Picker: PickerG
   const Point: PointG
@@ -131,6 +135,7 @@ declare global {
   const Timer: TimerG
   const Transparent: TransparentG
   const Upgrader: UpgraderG
+  const Window2: WindowG
   const alice: undefined
   const area: undefined
   const buff: undefined
@@ -151,6 +156,7 @@ declare global {
   const jumper: undefined
   const menu2: undefined
   const movement: undefined
+  const party2: Party2G
   const party: undefined
   const picker: undefined
   const point: undefined
@@ -164,6 +170,7 @@ declare global {
   const timer: undefined
   const transparent: undefined
   const upgrader: undefined
+  const window2: undefined
 }
 
 export type AreaLike = (number | string)[] | (number | string)[][]

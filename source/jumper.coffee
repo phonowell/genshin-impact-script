@@ -5,8 +5,6 @@ class JumperG extends KeyBinding
   constructor: ->
     super()
 
-    ###* @type import('./type/jumper').JumperG['flagIsNormal'] ###
-    @flagIsNormal = false
     ###* @type import('./type/jumper').JumperG['isBreaking'] ###
     @isBreaking = false
     ###* @type import('./type/jumper').JumperG['tsJump'] ###
@@ -15,9 +13,7 @@ class JumperG extends KeyBinding
   ###* @type import('./type/jumper').JumperG['check'] ###
   check: ->
 
-    unless Config.get 'better-jump/enable' then return
     if @isBreaking then return
-    unless Scene.is 'normal' then return
 
     unless ColorManager.findAll 0xF05C4A, [
       '73%', '48%'
@@ -37,24 +33,32 @@ class JumperG extends KeyBinding
 
   ###* @type import('./type/jumper').JumperG['init'] ###
   init: ->
+
+    Scene.useEffect =>
+
+      unless (Config.get 'better-jump/enable') then return $.noop
+
+      @registerEvent 'jump', 'space'
+
+      @on 'jump:start', => @tsJump = $.now()
+
+      @on 'jump:end', =>
+
+        now = $.now()
+        diff = now - @tsJump
+        @tsJump = now
+
+        unless diff < 350 then return
+        Timer.add 'jumper/jump', 350 - diff, @jump
+
+      return =>
+        @unregisterEvent 'jump', 'space'
+        @off 'jump:start'
+        @off 'jump:end'
+
+    , ['normal', 'not-busy', 'not-domain']
+
     @watch()
-
-    @registerEvent 'jump', 'space'
-
-    @on 'jump:start', =>
-      @flagIsNormal = Scene.is 'normal', 'not-busy', 'not-domain', 'not-using-q'
-      @tsJump = $.now()
-
-    @on 'jump:end', =>
-
-      now = $.now()
-      diff = now - @tsJump
-      @tsJump = now
-
-      unless (Config.get 'better-jump/enable') and @flagIsNormal then return
-      unless diff < 350 then return
-
-      Timer.add 'jump', 350 - diff, @jump
 
   ###* @type import('./type/jumper').JumperG['jump'] ###
   jump: ->
@@ -63,12 +67,11 @@ class JumperG extends KeyBinding
     return
 
   ###* @type import('./type/jumper').JumperG['watch'] ###
-  watch: ->
-
-    interval = 300
-    token = 'jumper/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @check
+  watch: -> Scene.useEffect =>
+    unless Config.get 'better-jump/enable' then return $.noop
+    [interval, token] = [300, 'jumper/watch']
+    Timer.loop token, interval, @check
+    return -> Timer.remove token
+  , ['normal']
 
 Jumper = new JumperG()

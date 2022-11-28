@@ -70,10 +70,16 @@ class Scene2G
     return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
 
   ###* @type import('./type/scene2').Scene2G['checkIsBusy'] ###
-  checkIsBusy: -> not ColorManager.findAll [0xFFFFFF, 0x323232], [
-    '94%', '80%'
-    '95%', '82%'
-  ]
+  checkIsBusy: ->
+    # unless ColorManager.findAny [0x96D722, 0xFF6666], [
+    #   '88%', '25%'
+    #   '89%', '53%'
+    # ] then return true
+    unless ColorManager.findAll [0xFFFFFF, 0x323232], [
+      '94%', '80%'
+      '95%', '82%'
+    ] then return true
+    return false
 
   ###* @type import('./type/scene2').Scene2G['checkIsChat'] ###
   checkIsChat: -> @throttle 'chat', 2e3, ->
@@ -103,7 +109,7 @@ class Scene2G
 
   ###* @type import('./type/scene2').Scene2G['checkIsLoading'] ###
   checkIsLoading: -> @throttle 'loading', 2e3, ->
-    $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get ['0%', '50%']
+    $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get [Window2.bounds.width - 1, '50%']
 
   ###* @type import('./type/scene2').Scene2G['checkIsMap'] ###
   checkIsMap: -> @throttle 'map', 1e3, ->

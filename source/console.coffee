@@ -55,10 +55,10 @@ class ConsoleG
 
   ###* @type import('./type/console').ConsoleG['render'] ###
   render: $.throttle =>
-    unless Client.isActive then return
+    if Client.isSuspended then return
     list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
-    [x, y] = [0 - Client.x, Point.h '55%']
+    [x, y] = [0 - Window2.bounds.x, Point.h '50%']
     $.noop text, x, y
     Native 'ToolTip, % text, % x, % y, 20'
     return
@@ -66,7 +66,7 @@ class ConsoleG
 
   ###* @type import('./type/console').ConsoleG['update'] ###
   update: ->
-    unless Client.isActive then return
+    if Client.isSuspended then return
     now = $.now()
     len = $.length @listContent
     @listContent = $.filter @listContent, (item) -> item[0] >= now

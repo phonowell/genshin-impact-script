@@ -4,7 +4,7 @@ export class Scene2G {
   private aboutHalfMenu(): Name[]
   private aboutMenu(): Name[]
   private aboutNormal(): Name[]
-  private check(): Name[]
+  check(): Name[]
   private checkIsAiming(): boolean
   private checkIsBusy(): boolean
   private checkIsChat(): boolean

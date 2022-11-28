@@ -40,4 +40,7 @@ class DictionaryG
     @data = data
     return
 
+  ###* @type import('./type/dictionary').DictionaryG['noop'] ###
+  noop: -> undefined
+
 Dictionary = new DictionaryG()

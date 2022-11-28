@@ -139,7 +139,7 @@ class GdipG
     Indicator.setCount token
     Indicator.setCost token, 'start'
 
-    {x, y, width, height} = Client
+    {x, y, width, height} = Window2.bounds
     pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
     unless pBitmap then return false
 

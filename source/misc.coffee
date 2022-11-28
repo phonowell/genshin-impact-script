@@ -6,14 +6,14 @@ aboutCaps = ->
 
 aboutClient = ->
   report = ->
-    {isFullScreen, x, y, width, height} = Client
+    {x, y, width, height} = Window2.bounds
     $.forEach [
-      "#client/is-fullscreen: #{isFullScreen}"
+      "#client/is-fullscreen: #{Window2.isFullScreen}"
       "#client/position: #{x}, #{y}"
       "#client/size: #{width}, #{height}"
     ], (msg) -> console.log msg
 
-  Client.window.focus()
+  Window2.focus()
 
   Timer.add 200, ->
     Client.emit 'enter'
@@ -34,7 +34,7 @@ aboutSkillTimer = ->
   token = 'change.auto-scan'
 
   autoScan = ->
-    unless Scene.is 'normal', 'not-busy', 'not-multi', 'not-using-q' then return
+    unless Scene.is 'normal', 'not-busy', 'not-multi' then return
     Scene.off token
     Party.scan()
 
@@ -47,6 +47,7 @@ aboutSkillTimer = ->
     addListener()
 
   addListener()
+  Scene.emit token
 
   # clear party
 
@@ -58,38 +59,35 @@ aboutSkillTimer = ->
 boot = (callback) ->
 
   list = [
-    Dictionary
-    Config
-
+    # ---start---
     Client
+    Config
     console
+    Dictionary
+    Fishing
+    Hud
     Idle
     Indicator
-
-    Character
-    Gdip
-    Sound
-    Transparent
-
-    Scene
-    Party
-    Hud
-
-    Camera
     Menu2
-    Skill
-    Movement
-    Jumper
-
+    Party
     Picker
-    Tactic
-    Fishing
-
     Recorder
     Replayer
-
+    Scene
+    Skill
+    Sound
+    Tactic
+    Transparent
+    Window2
     Alice
+    Camera
+    Character
     Controller
+    Gdip
+    Jumper
+    Movement
+    Party2
+    # ---end---
   ]
 
   for m in list
@@ -109,3 +107,9 @@ boot ->
   aboutClient()
   aboutSkillTimer()
   aboutDebug()
+
+# exit
+OnExit ->
+  Sound.unmute()
+  Timer.reset()
+  Window2.window.setPriority 'normal'

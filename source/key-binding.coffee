@@ -17,8 +17,8 @@ class KeyBinding extends EmitterShell
 
     unless name then throw new Error 'KeyBinding/registerEvent: name is required'
     unless key then throw new Error 'KeyBinding/registerEvent: key is required'
-    if isPrevented
-      console.log "key-binding/registerEvent: #{key}.#{name} is prevented"
+    # if isPrevented
+    #   console.log "key-binding/registerEvent: #{key}.#{name} is prevented"
 
     unless @map[name] then @map[name] = []
     $.push @map[name], key
@@ -56,8 +56,8 @@ class KeyBinding extends EmitterShell
     unless key then throw new Error 'KeyBinding/unregisterEvent: key is required'
 
     group = @map[name]
-    unless group then throw new Error "KeyBinding/unregisterEvent: no such event '#{name}'"
-    unless $.includes group, key then throw new Error "KeyBinding/unregisterEvent: no such key '#{key}' in event '#{name}'"
+    unless group then return
+    unless $.includes group, key then return
 
     @map[name] = $.filter group, (k) -> k != key
     $.off "#{key}.#{name}"

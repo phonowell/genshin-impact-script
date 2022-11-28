@@ -4,4 +4,5 @@ export class DictionaryG {
   get(name: string): string
   init(): void
   private load(): void
+  noop(): void
 }

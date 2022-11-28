@@ -35,10 +35,11 @@ class CursorG
     if @map['down'] then y += d
 
     margin = 10
+    {width, height} = Window2.bounds
     if x < margin then x = margin
-    if x > Client.width - margin then x = Client.width - margin
+    if x > width - margin then x = width - margin
     if y < margin then y = margin
-    if y > Client.height - margin then y = Client.height - margin
+    if y > height - margin then y = height - margin
 
     $.move [x, y]
 
