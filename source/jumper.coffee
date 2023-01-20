@@ -34,9 +34,9 @@ class JumperG extends KeyBinding
   ###* @type import('./type/jumper').JumperG['init'] ###
   init: ->
 
-    Scene.useEffect =>
+    unless (Config.get 'better-jump/enable') then return
 
-      unless (Config.get 'better-jump/enable') then return $.noop
+    Scene.useExact ['free', 'not-domain'], =>
 
       @registerEvent 'jump', 'space'
 
@@ -56,8 +56,6 @@ class JumperG extends KeyBinding
         @off 'jump:start'
         @off 'jump:end'
 
-    , ['normal', 'not-busy', 'not-domain']
-
     @watch()
 
   ###* @type import('./type/jumper').JumperG['jump'] ###
@@ -67,11 +65,10 @@ class JumperG extends KeyBinding
     return
 
   ###* @type import('./type/jumper').JumperG['watch'] ###
-  watch: -> Scene.useEffect =>
-    unless Config.get 'better-jump/enable' then return $.noop
+  watch: -> Scene.useExact ['normal'], =>
+    unless (Status2.has 'cryo') or (Status2.has 'hydro') then return $.noop
     [interval, token] = [300, 'jumper/watch']
     Timer.loop token, interval, @check
     return -> Timer.remove token
-  , ['normal']
 
 Jumper = new JumperG()

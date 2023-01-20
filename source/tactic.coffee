@@ -227,7 +227,7 @@ class TacticG extends KeyBinding
   ###* @type import('./type/tactic').TacticG['init'] ###
   init: ->
 
-    Scene.useEffect =>
+    Scene.useExact ['single'], =>
 
       @registerEvent 'attack', 'l-button'
       @on 'attack:start', =>
@@ -240,9 +240,7 @@ class TacticG extends KeyBinding
         @off 'attack:start'
         @off 'attack:end'
 
-    , ['normal']
-
-    Scene.useEffect =>
+    Scene.useExact ['single'], =>
 
       @registerEvent 'side-button-1', 'x-button-1'
       @on 'side-button-1:start', =>
@@ -255,9 +253,7 @@ class TacticG extends KeyBinding
         @off 'side-button-1:start'
         @off 'side-button-1:end'
 
-    , ['normal']
-
-    Scene.useEffect =>
+    Scene.useExact ['single'], =>
 
       @registerEvent 'side-button-2', 'x-button-2'
       @on 'side-button-2:start', =>
@@ -270,12 +266,9 @@ class TacticG extends KeyBinding
         @off 'side-button-2:start'
         @off 'side-button-2:end'
 
-    , ['normal']
-
-    Scene.useEffect =>
+    Scene.useExact ['single'], =>
       Party.on 'switch.tactic', @stop
       return -> Party.off 'switch.tactic'
-    , ['normal']
 
   ###* @type import('./type/tactic').TacticG['start'] ###
   start: (line, callback = undefined) ->

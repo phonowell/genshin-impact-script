@@ -18,11 +18,11 @@ class MovementG extends KeyBinding
       forward: 0
 
   ###* @type import('./type/movement').MovementG['aboutAim'] ###
-  aboutAim: -> Scene.useEffect =>
+  aboutAim: -> Scene.useExact ['normal', 'not-domain'], =>
 
     checkIsReadyToAim = ->
       unless Character.is Party.name, 'bow' then return false
-      return Scene.is 'not-busy'
+      return Scene.is 'free'
 
     @registerEvent 'aim', 'r'
 
@@ -39,10 +39,8 @@ class MovementG extends KeyBinding
       @off 'aim:start'
       @off 'aim:end'
 
-  , ['normal', 'not-domain']
-
   ###* @type import('./type/movement').MovementG['aboutMove'] ###
-  aboutMove: -> Scene.useEffect =>
+  aboutMove: -> Scene.useExact ['normal'], =>
 
     @on 'move:start', => @isMoving = true
     @on 'move:end', => @isMoving = false
@@ -51,10 +49,8 @@ class MovementG extends KeyBinding
       @off 'move:start'
       @off 'move:end'
 
-  , ['normal']
-
   ###* @type import('./type/movement').MovementG['aboutSprint'] ###
-  aboutSprint: -> Scene.useEffect =>
+  aboutSprint: -> Scene.useExact ['normal'], =>
 
     getRaw = (key) -> $.trim $.replace ($.replace key, 'shift', ''), '+', ''
 
@@ -70,10 +66,8 @@ class MovementG extends KeyBinding
       @off 'sprint-walk:start'
       @off 'sprint-walk:end'
 
-  , ['normal']
-
   ###* @type import('./type/movement').MovementG['aboutUnhold'] ###
-  aboutUnhold: -> Scene.useEffect =>
+  aboutUnhold: -> Scene.useExact ['normal', 'not-aiming', 'not-free'], =>
 
     @registerEvent 'unhold', 'l-button'
     @on 'unhold:start', -> $.press 'x:down'
@@ -84,10 +78,8 @@ class MovementG extends KeyBinding
       @off 'unhold:start'
       @off 'unhold:end'
 
-  , ['busy', 'not-aiming']
-
   ###* @type import('./type/movement').MovementG['aboutWalk'] ###
-  aboutWalk: -> Scene.useEffect =>
+  aboutWalk: -> Scene.useExact ['normal'], =>
 
     for key in ['w', 'a', 's', 'd']
       @registerEvent 'walk', key
@@ -114,8 +106,6 @@ class MovementG extends KeyBinding
         @unregisterEvent 'walk', key
       @off 'walk:start'
       @off 'walk:end'
-
-  , ['normal']
 
   ###* @type import('./type/movement').MovementG['init'] ###
   init: ->

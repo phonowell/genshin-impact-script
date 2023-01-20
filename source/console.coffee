@@ -54,15 +54,19 @@ class ConsoleG
     return
 
   ###* @type import('./type/console').ConsoleG['render'] ###
-  render: $.throttle =>
+  render: ->
+
     if Client.isSuspended then return
+    unless Timer.hasElapsed 'console/render', 300 then return
+
     list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
     [x, y] = [0 - Window2.bounds.x, Point.h '50%']
+
     $.noop text, x, y
     Native 'ToolTip, % text, % x, % y, 20'
+
     return
-  , 500
 
   ###* @type import('./type/console').ConsoleG['update'] ###
   update: ->
@@ -77,15 +81,15 @@ class ConsoleG
 
     unless Config.get 'debug/enable' then return
 
-    interval = 500
-    token = 'console/watch'
+    Client.useActive =>
 
-    Client.on 'idle', =>
-      Timer.remove token
-      @hide()
+      [interval, token] = [500, 'console/watch']
 
-    Client.on 'activate', =>
       Timer.loop token, interval, @update
       @update()
+
+      return =>
+        Timer.remove token
+        @hide()
 
 console = new ConsoleG()

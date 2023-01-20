@@ -15,15 +15,17 @@ class ClientG extends KeyBinding
 
     Native 'Menu, Tray, Icon, on.ico,, 1'
 
-    @on 'activate', ->
+    @useActive =>
+
       console.log '#client: activate'
       Native 'Menu, Tray, Icon, on.ico'
-      Client.suspend false
+      @suspend false
 
-    @on 'idle', ->
-      console.log '#client: idle'
-      Native 'Menu, Tray, Icon, off.ico'
-      Client.suspend true
+      return =>
+
+        console.log '#client: idle'
+        Native 'Menu, Tray, Icon, off.ico'
+        @suspend true
 
     $.on 'alt + f4', -> Sound.beep 2, ->
       Window2.close()
@@ -47,5 +49,23 @@ class ClientG extends KeyBinding
       @isSuspended = false
       $.suspend false
       return
+
+  ###* @type import('./type/client').ClientG['useActive'] ###
+  useActive: (fn) ->
+
+    data = {
+      callback: $.noop
+      isFired: false
+    }
+
+    @on 'activate', ->
+      if data.isFired then return
+      data.isFired = true
+      data.callback = fn()
+
+    @on 'idle', ->
+      unless data.isFired then return
+      data.isFired = false
+      data.callback()
 
 Client = new ClientG()

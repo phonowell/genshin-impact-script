@@ -3,7 +3,7 @@ export class MovementG extends KeyBinding {
     forward: number
     move: number
   }
-  private isForwarding: boolean
+  isForwarding: boolean
   isMoving: boolean
   private ts: {
     forward: number
@@ -17,6 +17,6 @@ export class MovementG extends KeyBinding {
   init(): void
   sprint(): void
   private startForward(): void
-  private stopForward(): void
+  stopForward(): void
   private toggleForward(key: string): void
 }

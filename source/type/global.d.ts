@@ -31,6 +31,7 @@ import { SceneG } from './scene'
 import { Shell } from './shell'
 import { SkillG } from './skill'
 import { SoundG } from './sound'
+import { Status2G } from './status'
 import { TacticG } from './tactic'
 import { TimerG } from './timer'
 import { TransparentG } from './transparent'
@@ -131,6 +132,7 @@ declare global {
   const Scene: SceneG
   const Skill: SkillG
   const Sound: SoundG
+  const Status2: Status2G
   const Tactic: TacticG
   const Timer: TimerG
   const Transparent: TransparentG
@@ -166,6 +168,7 @@ declare global {
   const scene: undefined
   const skill: undefined
   const sound: undefined
+  const status2: undefined
   const tactic: undefined
   const timer: undefined
   const transparent: undefined

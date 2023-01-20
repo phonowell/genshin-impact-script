@@ -12,7 +12,10 @@ const build2 = debounce(async () => {
 
 const main = () => {
   process.on('uncaughtException', (e) => console.error(e))
-  watch(['./source/*.coffee', '!./source/misc.coffee'], build2)
+  watch(
+    ['./source/*.coffee', '!./source/index.coffee', '!./source/misc.coffee'],
+    build2
+  )
 }
 
 // export

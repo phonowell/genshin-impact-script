@@ -156,13 +156,8 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['freeze'] ###
   freeze: ->
-    {name} = Party
-    unless name then return
-
-    {star} = Character.get name
-    unless star == 5 then return
-
-    Scene.freezeAs ['normal', 'busy', 'using-q'], 1500
+    unless Character.is Party.name, '5-star' then return
+    # Scene.freezeAs ['normal', 'single', 'using-q'], 1500
 
   ###* @type import('./type/skill').SkillG['init'] ###
   init: ->
@@ -174,7 +169,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['isEUsed'] ###
   isEUsed: ->
 
-    unless Scene.is 'normal', 'not-busy' then return
+    unless Scene.is 'free' then return
     unless $.now() - @tsUseE > 500 then return
 
     {current, name} = Party
@@ -189,6 +184,7 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['isEUsed2'] ###
   isEUsed2: ->
+
     {current} = Party
 
     if ColorManager.findAll 0xFFFFFF, @makeArea1()
@@ -242,7 +238,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['switchQ'] ###
   switchQ: (slot) ->
 
-    unless Scene.is 'normal', 'not-busy'
+    unless Scene.is 'free'
       $.press "alt + #{slot}"
       return
 
@@ -253,10 +249,6 @@ class SkillG extends KeyBinding
     $.press "alt + #{slot}"
     Party.emit 'switch', slot
     @freeze()
-
-    {current, name} = Party
-    unless current then return
-    return
 
   ###* @type import('./type/skill').SkillG['useE'] ###
   useE: (isHolding = false, callback = undefined) ->
@@ -277,7 +269,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['useQ'] ###
   useQ: ->
 
-    unless Scene.is 'normal', 'not-busy' then return
+    unless Scene.is 'free' then return
 
     $.press 'q'
     @freeze()
@@ -287,11 +279,11 @@ class SkillG extends KeyBinding
     return
 
   ###* @type import('./type/skill').SkillG['watch'] ###
-  watch: ->
+  watch: -> Scene.useExact ['single'], =>
     [interval, token] = [200, 'skill/watch']
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, =>
+    Timer.loop token, interval, =>
       Dashboard.update()
-      if Timer.checkInterval 'skill/is-e-used', 1e3 then @isEUsed()
+      if Timer.hasElapsed 'skill/is-e-used', 1e3 then @isEUsed()
+    return -> Timer.remove token
 
 Skill = new SkillG()

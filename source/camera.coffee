@@ -15,7 +15,7 @@ class CameraG extends KeyBinding
   ###* @type import('./type/camera'). CameraG['init'] ###
   init: ->
 
-    Scene.useEffect =>
+    Scene.useExact ['normal'], =>
 
       for key in @listKey
         @registerEvent 'press', key
@@ -40,8 +40,6 @@ class CameraG extends KeyBinding
         @off 'press:end'
         @off 'move:start'
         @off 'move:end'
-
-    , ['normal']
 
   ###* @type import('./type/camera').CameraG['move'] ###
   move: ->

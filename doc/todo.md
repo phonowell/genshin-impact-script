@@ -1,0 +1,8 @@
+- 开伞bug
+- 切人bug
+- 手柄切人无效
+- 进本自动scan无效
+- tactic换组延时
+- 冰buff的tactic延时
+- 冰水buff和被控制状态确认
+- dashboard当前角色标记

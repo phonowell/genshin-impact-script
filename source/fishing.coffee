@@ -68,7 +68,7 @@ class FishingG
   toggle: ->
 
     unless @isActive
-      unless Scene.is 'normal', 'busy'
+      unless Scene.is 'normal', 'not-free'
         Sound.beep()
         return
       @isActive = true

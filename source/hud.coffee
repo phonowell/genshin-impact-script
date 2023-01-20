@@ -28,9 +28,7 @@ class HudG
     return
 
   ###* @type import('./type/hud').HudG['init'] ###
-  init: ->
-    Client.on 'idle', @hideAll
-    @watch()
+  init: -> @watch()
 
   ###* @type import('./type/hud').HudG['makePosition'] ###
   makePosition: (n) ->
@@ -66,7 +64,7 @@ class HudG
   update: ->
 
     interval = 200
-    unless Timer.checkInterval 'hud/throttle', interval then return
+    unless Timer.hasElapsed 'hud/throttle', interval then return
 
     now = $.now()
 
@@ -93,12 +91,11 @@ class HudG
     return
 
   ###* @type import('./type/hud').HudG['watch'] ###
-  watch: ->
-
-    interval = 200
-    token = 'hud/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @update
+  watch: -> Client.useActive =>
+    [interval, token] = [200, 'hud/watch']
+    Timer.loop token, interval, @update
+    return =>
+      Timer.remove token
+      @hideAll()
 
 Hud = new HudG()

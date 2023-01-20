@@ -34,7 +34,7 @@ aboutSkillTimer = ->
   token = 'change.auto-scan'
 
   autoScan = ->
-    unless Scene.is 'normal', 'not-busy', 'not-multi' then return
+    unless Scene.is 'free', 'single' then return
     Scene.off token
     Party.scan()
 
@@ -53,7 +53,8 @@ aboutSkillTimer = ->
 
   Scene.on 'change', ->
     unless Party.size then return
-    unless Scene.is 'multi' then return
+    unless Scene.is 'normal' then return
+    if Scene.is 'single' then return
     $.trigger 'alt + f12'
 
 boot = (callback) ->
@@ -68,25 +69,27 @@ boot = (callback) ->
     Hud
     Idle
     Indicator
-    Menu2
-    Party
     Picker
     Recorder
     Replayer
     Scene
     Skill
     Sound
+    Status2
     Tactic
     Transparent
     Window2
-    Alice
+    Buff
     Camera
     Character
-    Controller
     Gdip
     Jumper
+    Menu2
     Movement
+    Party
     Party2
+    Alice
+    Controller
     # ---end---
   ]
 

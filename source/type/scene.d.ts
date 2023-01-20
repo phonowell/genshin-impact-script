@@ -2,32 +2,33 @@ import { Fn } from './global'
 
 export type Name =
   | 'aiming'
-  | 'busy'
   | 'chat'
   | 'domain'
   | 'event'
   | 'fishing'
+  | 'free'
   | 'half-menu'
   | 'loading'
   | 'map'
   | 'menu'
   | 'mini-menu'
-  | 'multi'
   | 'normal'
   | 'party'
   | 'playing'
-  | 'using-q'
+  | 'single'
 type NameNot = `not-${Name}`
+type NamePossible = Name | NameNot | 'unknown'
 
 export class SceneG extends EmitterShell {
-  private cache: Record<Name, boolean>
-  private isFrozen: boolean
+  cache: Record<Name, boolean>
   private list: Name[]
-  private tsChange: number
   constructor()
-  freezeAs(listName: Name[], time: number): void
   init(): void
-  is(...names: (Name | NameNot | 'unknown')[]): boolean
+  is(...names: NamePossible[]): boolean
   private update(): void
-  useEffect(fn: () => Fn, listDeps: (Name | NameNot | 'unknown')[]): void
+  useExact(
+    listDeps: NamePossible[] | (() => boolean),
+    fn: () => Fn
+  ): void
+  private watch(): void
 }

@@ -274,12 +274,9 @@ class ControllerG extends EmitterShell
     console.log "#controller/button: #{wButtons}"
 
   ###* @type import('./type/controller').ControllerG['watch'] ###
-  watch: ->
-
-    interval = 50
-    token = 'controller/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @update
+  watch: -> Client.useActive =>
+    [interval, token] = [50, 'controller/watch']
+    Timer.loop token, interval, @update
+    return -> Timer.remove token
 
 Controller = new ControllerG()

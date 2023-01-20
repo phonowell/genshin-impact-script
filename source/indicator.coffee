@@ -71,12 +71,9 @@ class IndicatorG extends EmitterShell
     return
 
   ###* @type import('./type/indicator').IndicatorG['watch'] ###
-  watch: ->
-
-    interval = 1e3
-    token = 'indicator/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @clear
+  watch: -> Client.useActive =>
+    [interval, token] = [1e3, 'indicator/watch']
+    Timer.loop token, interval, @clear
+    return -> Timer.remove token
 
 Indicator = new IndicatorG()

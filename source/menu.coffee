@@ -7,8 +7,6 @@ class MenuG extends KeyBinding
   ###* @type import('./type/menu').MenuG['asMap'] ###
   asMap: ->
 
-    unless Scene.is 'map' then return
-
     p = ColorManager.findAny 0x2F2E2C, [
       '2%', '4%'
       '3%', '7%'
@@ -18,8 +16,6 @@ class MenuG extends KeyBinding
 
   ###* @type import('./type/menu').MenuG['asMiniMenu'] ###
   asMiniMenu: ->
-
-    unless Scene.is 'mini-menu' then return
 
     p = ColorManager.findAny 0xFFCC33, [
       '76%', '92%'
@@ -33,19 +29,38 @@ class MenuG extends KeyBinding
 
   ###* @type import('./type/menu').MenuG['init'] ###
   init: ->
+
     unless Config.get 'better-pickup/use-quick-skip' then return
 
     # r-button
-    @registerEvent 'right-click', 'r-button'
-    @on 'right-click', =>
-      unless @isMenu() then return
-      $.press 'esc'
+    Scene.useExact @isMenu, =>
 
-    # space
-    @registerEvent 'space', 'space'
-    @on 'space', =>
-      @asMap()
-      @asMiniMenu()
+      @registerEvent 'right-click', 'r-button'
+      @on 'right-click', -> $.press 'esc'
+
+      return =>
+        @unregisterEvent 'right-click', 'r-button'
+        @off 'right-click'
+
+    # space for map
+    Scene.useExact ['map'], =>
+
+      @registerEvent 'space', 'space'
+      @on 'space', @asMap
+
+      return =>
+        @unregisterEvent 'space', 'space'
+        @off 'space'
+
+    # space for mini-menu
+    Scene.useExact ['mini-menu'], =>
+
+      @registerEvent 'space', 'space'
+      @on 'space', @asMiniMenu
+
+      return =>
+        @unregisterEvent 'space', 'space'
+        @off 'space'
 
   ###* @type import('./type/menu').MenuG['isMenu'] ###
   isMenu: ->

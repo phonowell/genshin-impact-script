@@ -15,6 +15,8 @@ class PartyG extends KeyBinding
     @name = ''
     ###* @type import('./type/party').PartyG['size'] ###
     @size = 0
+    ###* @type import('./type/party').PartyG['tsSwitch'] ###
+    @tsSwitch = 0
 
   ###* @type import('./type/party').PartyG['countMember'] ###
   countMember: ->
@@ -66,42 +68,55 @@ class PartyG extends KeyBinding
 
   ###* @type import('./type/party').PartyG['init'] ###
   init: ->
+
     unless Config.get 'skill-timer/enable' then return
 
-    @on 'change', =>
+    Scene.useExact ['single'], =>
 
-      unless @size then return
-      console.log "#party/member: #{$.join ($.tail @list), ', '}"
+      @on 'change', =>
 
-      Buff.pick()
+        unless @size then return
 
-    @on 'switch', (key) =>
+        list = $.tail @list
+        if $.includes list, '' then $.beep()
+        console.log "#party/member: #{$.join list, ', '}"
 
-      slot = $.toNumber key
-      unless @isSlotValidate slot then return
+        Buff.update()
 
-      last = @current
-      @current = slot
+      @on 'switch', (key) =>
 
-      nameLast = @list[last]
-      @name = @list[@current]
+        slot = $.toNumber key
+        unless @isSlotValid slot then return
 
-      unless nameLast then nameLast = 'unknown'
-      unless @name then @name = 'unknown'
+        last = @current
+        @current = slot
 
-      console.log $.join [
-        '#party:'
-        "[#{last}]#{nameLast}"
-        '->'
-        "[#{@current}]#{@name}"
-      ], ' '
+        nameLast = @list[last]
+        @name = @list[@current]
 
-      {typeE} = Character.get nameLast
-      if typeE == 3 then Skill.endEAsType3 last
+        unless nameLast then nameLast = 'unknown'
+        unless @name then @name = 'unknown'
 
-    $.on 'f12', =>
-      Character.load()
-      @scan()
+        @tsSwitch = $.now()
+
+        console.log $.join [
+          '#party:'
+          "[#{last}]#{nameLast}"
+          '->'
+          "[#{@current}]#{@name}"
+        ], ' '
+
+        {typeE} = Character.get nameLast
+        if typeE == 3 then Skill.endEAsType3 last
+
+      $.on 'f12', =>
+        Character.load()
+        @scan()
+
+      return =>
+        @off 'change'
+        @off 'switch'
+        $.off 'f12'
 
     $.on 'alt + f12', =>
       @reset()
@@ -119,8 +134,8 @@ class PartyG extends KeyBinding
 
     return true
 
-  ###* @type import("./type/party").PartyG['isSlotValidate'] ###
-  isSlotValidate: (slot) ->
+  ###* @type import("./type/party").PartyG['isSlotValid'] ###
+  isSlotValid: (slot) ->
     unless slot > 0 then return false
     unless slot <= @size then return false
     return true
@@ -153,7 +168,7 @@ class PartyG extends KeyBinding
     token = 'party/scan'
     Indicator.setCost token, 'start'
 
-    unless Scene.is 'normal', 'not-busy', 'not-multi'
+    unless Scene.is 'free', 'single'
       Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
       Sound.beep()
       return

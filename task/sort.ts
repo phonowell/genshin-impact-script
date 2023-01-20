@@ -1,6 +1,15 @@
 import $ from 'fire-keeper'
 import capitalize from 'lodash/capitalize'
 
+// variable
+
+const mapTrans: Record<string, string> = {
+  console: 'console',
+  menu: 'Menu2',
+  status: 'Status2',
+  window: 'Window2',
+}
+
 // function
 
 const getContentByFunc = (content: string, name: string) => {
@@ -67,15 +76,23 @@ const getDepends = (listCont: string[], listName: string[]) => {
 }
 
 const getList = async () => {
-  const listA = await $.glob('./source/*.coffee')
+  const listA = await $.glob([
+    './source/*.coffee',
+    '!./source/index.coffee',
+    '!./source/misc.coffee',
+  ])
 
   const listB: [string, string[], string[]][] = []
+  const listC: string[] = []
+
   for (const source of listA) {
     const content = await $.read<string>(source)
     if (!content) continue
     if (content.includes('init: ->')) {
       listB.push([getName(source), getContents(content.replace(/\r/g, '')), []])
+      continue
     }
+    listC.push($.getBasename(source))
   }
 
   const listName = listB.map((item) => item[0])
@@ -84,24 +101,48 @@ const getList = async () => {
     item[2].push(...getDepends(item[1], listName))
   }
 
-  return listB
+  return [listB, listC] as const
 }
 
 const getName = (source: string) => {
   const basename = $.getBasename(source)
-  if (basename === 'console') return 'console'
-  if (basename === 'menu') return 'Menu2'
-  if (basename === 'window') return 'Window2'
+  if (mapTrans[basename]) return mapTrans[basename]
   return capitalize(basename)
 }
 
-const main = async () => {
-  const listA = await getList()
-  const listB = sort(listA)
-  await save(listB)
+const getName2 = (name: string) => {
+  const listKey = Object.keys(mapTrans)
+  const listValue = Object.values(mapTrans)
+  const index = listValue.indexOf(name)
+  if (index !== -1) return listKey[index]
+  return name.toLowerCase()
 }
 
-const save = async (listName: string[]) => {
+const main = async () => {
+  const [listA, listB] = await getList()
+  const listC = sort(listA)
+  await saveIndex([...listB, ...listC])
+  await saveMisc(listC)
+}
+
+const saveIndex = async (listName: string[]) => {
+  const source = './source/index.coffee'
+
+  const content = await $.read<string>(source)
+  if (!content) return
+
+  const result = content.replace(
+    /# ---start---[\s\S]*# ---end---/,
+    [
+      '# ---start---',
+      ...listName.map((name) => `import './${getName2(name)}'`),
+      '# ---end---',
+    ].join('\n')
+  )
+  await $.write(source, result)
+}
+
+const saveMisc = async (listName: string[]) => {
   const source = './source/misc.coffee'
 
   const content = await $.read<string>(source)

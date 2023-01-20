@@ -5,8 +5,8 @@ export class PartyG extends KeyBinding {
   list: string[]
   listSlot: [1, 2, 3, 4, 5]
   name: string
-  private order: string
   size: number
+  tsSwitch: number
   constructor()
   private countMember(): void
   findCurrent(): number
@@ -14,7 +14,7 @@ export class PartyG extends KeyBinding {
   has(name: string): boolean
   init(): void
   isCurrent(n: number): boolean
-  isSlotValidate(slot: number): boolean
+  isSlotValid(slot: number): boolean
   private makeArea(n: number, isNarrow: boolean): AreaLike
   reset(): void
   scan(): void

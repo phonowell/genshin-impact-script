@@ -6,8 +6,9 @@ class TransparentG
     n = $.toNumber Config.get 'misc/use-transparency-when-idle'
     unless n then return
 
-    Client.on 'idle', => @set 100 - n
-    Client.on 'activate', => @set 100
+    Client.useActive =>
+      @set 100
+      return => @set 100 - n
 
   ###* @type import('./type/transparent').TransparentG['set'] ###
   set: (n) ->

@@ -5,13 +5,8 @@ class Party2G extends KeyBinding
   constructor: ->
     super()
 
-    ###* @type import('./type/party2').Party2G['isPressed2'] ###
-    @isPressed2 = false
-    ###* @type import('./type/party2').Party2G['tsSwitch'] ###
-    @tsSwitch = 0
-
   ###* @type import('./type/party2').Party2G['aboutPress'] ###
-  aboutPress: -> Scene.useEffect =>
+  aboutPress: -> Scene.useExact ['free', 'single'], =>
 
     for slot in Party.listSlot
       @registerEvent 'press', $.toString slot
@@ -21,28 +16,17 @@ class Party2G extends KeyBinding
       Timer.remove 'party2/is-current-as'
       Timer.remove 'party2/wait-for'
 
-      if @isPressed2 then return
-      @isPressed2 = true
-
-      now = $.now()
-      unless now - @tsSwitch > 900 then return
-      @tsSwitch = now
-
       n = $.toNumber key
-      unless Party.isSlotValidate n then return
+      unless Party.isSlotValid n then return
 
       @isCurrentAs n, =>
         Party.emit 'switch', n
         @emit 'switch:start'
-      , -> Sound.beep 2
 
     @on 'press:end', (key) =>
 
-      unless @isPressed2 then return
-      @isPressed2 = false
-
       n = $.toNumber key
-      unless Party.isSlotValidate n then return
+      unless Party.isSlotValid n then return
 
       @waitFor n, => @emit 'switch:end'
 
@@ -52,10 +36,8 @@ class Party2G extends KeyBinding
       @off 'press:start'
       @off 'press:end'
 
-  , ['normal', 'not-busy']
-
   ###* @type import('./type/party2').Party2G['aboutPressAlt'] ###
-  aboutPressAlt: -> Scene.useEffect ->
+  aboutPressAlt: -> Scene.useExact ['free', 'single'], ->
 
     for slot in Party.listSlot
       $.on "alt + #{slot}", ->
@@ -68,10 +50,8 @@ class Party2G extends KeyBinding
       for slot in Party.listSlot
         $.off "alt + #{slot}"
 
-  , ['normal', 'not-busy']
-
   ###* @type import('./type/party2').Party2G['aboutSwitch'] ###
-  aboutSwitch: -> Scene.useEffect =>
+  aboutSwitch: -> Scene.useExact ['free', 'single'], =>
 
     @on 'switch:start', ->
 
@@ -97,8 +77,6 @@ class Party2G extends KeyBinding
       @off 'switch:start'
       @off 'switch:end'
 
-  , ['normal', 'not-busy']
-
   ###* @type import('./type/party2').Party2G['init'] ###
   init: ->
     unless Config.get 'skill-timer/enable' then return
@@ -108,7 +86,8 @@ class Party2G extends KeyBinding
     @watch()
 
   ###* @type import('./type/party2').Party2G['isCurrentAs'] ###
-  isCurrentAs: (slot, cbDone, cbFail = undefined) ->
+  isCurrentAs: (slot, callback) ->
+
     [delay, limit, interval, token] = [100, 500, 25, 'party2/is-current-as']
     if slot == Party.current then delay = 25
 
@@ -119,17 +98,26 @@ class Party2G extends KeyBinding
 
       if Party.isCurrent slot
         Timer.remove token
-        cbDone()
+        callback()
         console.log "##{token}: [#{slot}] passed in #{diff} ms"
         return
 
       unless diff > limit then return
       Timer.remove token
-      if cbFail then cbFail()
       console.log "##{token}: [#{slot}] failed after #{diff} ms"
+
+      # @retry slot
+
+  ###* @type import('./type/party2').Party2G['retry'] ###
+  retry: (slot) ->
+    token = 'party2/retry'
+    # $.press slot
+    $.trigger "#{slot}:down"
+    Timer.add token, 50, -> $.trigger "#{slot}:up"
 
   ###* @type import('./type/party2').Party2G['waitFor'] ###
   waitFor: (slot, callback) ->
+
     [limit, interval, token] = [500, 15, 'party2/wait-for']
 
     tsCheck = $.now()
@@ -146,28 +134,26 @@ class Party2G extends KeyBinding
       Timer.remove token
 
   ###* @type import('./type/party2').Party2G['watch'] ###
-  watch: -> Scene.useEffect =>
+  watch: -> Scene.useExact ['free', 'single'], =>
 
-    [interval, token] = [1e3, 'party2/watch']
+    [interval, token] = [200, 'party2/watch']
 
     Timer.loop token, interval, =>
 
       unless Party.size then return
-      unless Scene.is 'normal', 'not-busy' then return
-      unless $.now() - @tsSwitch > 1e3 then return
+      unless Scene.is 'free' then return
+      unless $.now() - Party.tsSwitch > 1e3 then return
       if Party.isCurrent Party.current then return
 
       slot = Party.findCurrent()
-      unless Party.isSlotValidate slot then return
+      unless Party.isSlotValid slot then return
       if slot == Party.current then return
 
       $.beep()
-      console.log Party.current, slot
+      console.log '#party2/watch:', 'should be', Party.current, 'but got', slot
 
-      Party.emit 'switch', slot
+      @retry slot
 
     return -> Timer.remove token
-
-  , ['normal', 'not-busy']
 
 Party2 = new Party2G()

@@ -5,8 +5,8 @@ export class TimerG {
   cacheTs: Record<string, number>
   constructor()
   add(...args: [string, number, Fn] | [number, Fn]): void
-  checkInterval(id: string, time: number): boolean
   has(id: string): boolean
+  hasElapsed(id: string, time: number): boolean
   private isTuple(ipt: unknown[]): ipt is [string, number, Fn]
   loop(...args: [string, number, Fn] | [number, Fn]): void
   private pick(args: [string, number, Fn] | [number, Fn]): [string, number, Fn]

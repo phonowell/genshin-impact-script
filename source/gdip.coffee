@@ -135,7 +135,7 @@ class GdipG
     token = 'gdip/screenshot'
     interval = $.max [100, $.min [200, (Indicator.getCost token) * 3]]
 
-    if @cache.pBitmap and not Timer.checkInterval 'gdip/throttle', interval then return true
+    if @cache.pBitmap and not Timer.hasElapsed 'gdip/throttle', interval then return true
     Indicator.setCount token
     Indicator.setCost token, 'start'
 

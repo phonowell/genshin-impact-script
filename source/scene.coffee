@@ -7,33 +7,18 @@ class SceneG extends EmitterShell
 
     ###* @type import('./type/scene').SceneG['cache'] ###
     @cache = {}
-    ###* @type import('./type/scene').SceneG['isFrozen'] ###
-    @isFrozen = false
     ###* @type import('./type/scene').SceneG['list'] ###
     @list = []
-    ###* @type import('./type/scene').SceneG['tsChange'] ###
-    @tsChange = 0
-
-  ###* @type import('./type/scene').SceneG['freezeAs'] ###
-  freezeAs: (listName, time) ->
-    @isFrozen = true
-    @list = listName
-    @emit 'change'
-    Timer.add 'scene/freeze-as', time, => @isFrozen = false
-    return
 
   ###* @type import('./type/scene').SceneG['init'] ###
   init: ->
 
-    Client.on 'idle', =>
-      @list = []
-      @emit 'change'
+    @watch()
 
     @on 'change', =>
       unless $.length @list
         console.log '#scene: unknown'
       else console.log "#scene: #{$.join @list, ', '}"
-      @tsChange = $.now()
 
   ###* @type import('./type/scene').SceneG['is'] ###
   is: (names...) ->
@@ -56,30 +41,48 @@ class SceneG extends EmitterShell
   ###* @type import('./type/scene').SceneG['update'] ###
   update: ->
 
-    if @isFrozen then return
+    # do not use @is() here
+    # because it will cause infinite loop
     if $.includes @list, 'fishing' then return
+
+    unless Timer.hasElapsed 'scene/update', 100 then return
 
     list = Scene2.check()
     if $.eq list, @list then return
     @list = list
     @emit 'change'
 
-  ###* @type import('./type/scene').SceneG['useEffect'] ###
-  useEffect: (fn, list) ->
+  ###* @type import('./type/scene').SceneG['useExact'] ###
+  useExact: (list, fn) ->
 
     data = {
       callback: $.noop
-      isHooked: false
+      isFired: false
     }
 
     @on 'change', =>
-      if @is list...
-        unless data.isHooked
-          data.isHooked = true
+
+      isValid = false
+      if $.isArray list then isValid = @is list...
+      else isValid = list()
+
+      if isValid
+        unless data.isFired
+          data.isFired = true
           data.callback = fn()
       else
-        if data.isHooked
-          data.isHooked = false
+        if data.isFired
+          data.isFired = false
           data.callback()
+
+  ###* @type import('./type/scene').SceneG['watch'] ###
+  watch: -> Client.useActive =>
+    [interval, token] = [200, 'scene/watch']
+    Timer.loop token, interval, @update
+    return =>
+      Timer.remove token
+
+      @list = []
+      @emit 'change'
 
 Scene = new SceneG()

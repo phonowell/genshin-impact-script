@@ -24,8 +24,13 @@ class TimerG
 
     return
 
-  ###* @type import('./type/timer').TimerG['checkInterval'] ###
-  checkInterval: (id, time) ->
+  ###* @type import('./type/timer').TimerG['has'] ###
+  has: (id) ->
+    if @cacheTimer[id] then return true
+    else return false
+
+  ###* @type import('./type/timer').TimerG['hasElapsed'] ###
+  hasElapsed: (id, time) ->
 
     now = $.now()
 
@@ -38,11 +43,6 @@ class TimerG
 
     @cacheTs[id] = now
     return true
-
-  ###* @type import('./type/timer').TimerG['has'] ###
-  has: (id) ->
-    if @cacheTimer[id] then return true
-    else return false
 
   ###* @type import('./type/timer').TimerG['isTuple'] ###
   isTuple: (ipt) ->

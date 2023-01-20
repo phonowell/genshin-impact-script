@@ -140,12 +140,9 @@ class PickerG extends KeyBinding
     return true
 
   ###* @type import('./type/picker').PickerG['watch'] ###
-  watch: ->
-
-    interval = 100
-    token = 'picker/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @next
+  watch: -> Client.useActive =>
+    [interval, token] = [100, 'picker/watch']
+    Timer.loop token, interval, @next
+    return -> Timer.remove token
 
 Picker = new PickerG()

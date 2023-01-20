@@ -5,7 +5,7 @@ import '../../gis-static/lib/ShiftAppVolume.ahk'
 class SoundG
 
   constructor: ->
-  
+
     ###* @type import('./type/sound').SoundG['index'] ###
     @index = 0
 
@@ -32,11 +32,14 @@ class SoundG
 
   ###* @type import('./type/sound').SoundG['init'] ###
   init: ->
-    if Config.get 'sound/use-mute-when-idle'
-      Client.on 'idle', @mute
-      Client.on 'activate', @unmute
 
-    @unmute()
+    unless Config.get 'sound/use-mute-when-idle'
+      @unmute()
+      return
+
+    Client.useActive =>
+      @unmute()
+      return @mute
 
   ###* @type import('./type/sound').SoundG['mute'] ###
   mute: -> ShiftAppVolumeTopped ($.toString Config.get 'basic/process'), 0
