@@ -20,7 +20,6 @@ type NameNot = `not-${Name}`
 type NamePossible = Name | NameNot | 'unknown'
 
 export class SceneG extends EmitterShell {
-  cache: Record<Name, boolean>
   private list: Name[]
   constructor()
   init(): void

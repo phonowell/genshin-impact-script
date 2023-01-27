@@ -1,9 +1,33 @@
 # @ts-check
 
-class ColorManagerG
+class ColorManagerG extends EmitterShell
+
+  constructor: ->
+    super()
+
+    ###* @type import('./type/color-manager').ColorManagerG['cache'] ###
+    @cache = {
+      find: {}
+      get: {}
+    }
+
+  ###* @type import('./type/color-manager').ColorManagerG['clearCache'] ###
+  clearCache: ->
+    @cache.find = {}
+    @cache.get = {}
+    return
 
   ###* @type import('./type/color-manager').ColorManagerG['find'] ###
-  find: (color, a) -> Gdip.findColor color, Area.create a
+  find: (color, a) ->
+
+    a2 = Area.create a
+    token = "#{color}|#{$.join a2, ','}"
+
+    if @cache.find[token]
+      Indicator.setCount 'gdip/findColor3'
+      return @cache.find[token]
+
+    return @cache.find[token] = Gdip.findColor color, a2
 
   ###* @type import('./type/color-manager').ColorManagerG['findAll'] ###
   findAll: (listColor, a) ->
@@ -37,7 +61,29 @@ class ColorManagerG
   format: (n) -> $.toNumber $.replace "0x#{(Format '{:p}', n)}", '0x00', '0x'
 
   ###* @type import('./type/color-manager').ColorManagerG['get'] ###
-  get: (p) -> Gdip.getColor Point.create p
+  get: (p) ->
+
+    p2 = Point.create p
+    token = $.join p2, ','
+
+    if @cache.get[token]
+      Indicator.setCount 'gdip/getColor3'
+      return @cache.get[token]
+    return @cache.get[token] = Gdip.getColor p2
+
+  ###* @type import('./type/color-manager').ColorManagerG['init'] ###
+  init: ->
+
+    Client.useActive =>
+      @next()
+      return -> Timer.remove 'color-manager/next'
+
+  ###* @type import('./type/color-manager').ColorManagerG['next'] ###
+  next: ->
+    Gdip.screenshot()
+    @clearCache()
+    @emit 'update'
+    Timer.add 'color-manager/next', 100, @next
 
   ###* @type import('./type/color-manager').ColorManagerG['pick'] ###
   pick: ->

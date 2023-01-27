@@ -20,6 +20,6 @@ export class GdipG {
   init(): void
   private report(): void
   private rgb2argb(rgb: number): number
-  private screenshot(): boolean
+  screenshot(): void
   private start(): void
 }

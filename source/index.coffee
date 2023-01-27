@@ -11,7 +11,6 @@ $ = $
 
 # ---start---
 import './area'
-import './color-manager'
 import './cursor'
 import './dashboard'
 import './key-binding'
@@ -20,6 +19,7 @@ import './scene2'
 import './timer'
 import './upgrader'
 import './client'
+import './color-manager'
 import './config'
 import './console'
 import './dictionary'

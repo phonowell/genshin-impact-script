@@ -20,5 +20,4 @@ export class Scene2G {
   private checkIsPlaying(): boolean
   private checkIsSingle(): boolean
   private makeListName(...names: Name[]): Name[]
-  private throttle(name: Name, time: number, callback: () => boolean): boolean
 }

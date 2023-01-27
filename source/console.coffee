@@ -57,7 +57,7 @@ class ConsoleG
   render: ->
 
     if Client.isSuspended then return
-    unless Timer.hasElapsed 'console/render', 300 then return
+    unless Timer.hasElapsed 'console/render', 200 then return
 
     list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
@@ -83,7 +83,7 @@ class ConsoleG
 
     Client.useActive =>
 
-      [interval, token] = [500, 'console/watch']
+      [interval, token] = [200, 'console/watch']
 
       Timer.loop token, interval, @update
       @update()

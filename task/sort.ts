@@ -4,6 +4,7 @@ import capitalize from 'lodash/capitalize'
 // variable
 
 const mapTrans: Record<string, string> = {
+  'color-manager': 'ColorManager',
   console: 'console',
   menu: 'Menu2',
   status: 'Status2',

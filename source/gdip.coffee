@@ -42,11 +42,7 @@ class GdipG
   ###* @type import('./type/gdip').GdipG['findColor'] ###
   findColor: (color, a) ->
 
-    unless @screenshot()
-      Indicator.setCount 'gdip/error'
-      return [-1, -1]
-
-    Indicator.setCount 'gdip/findColor'
+    Indicator.setCount 'gdip/findColor2'
 
     [x, y, w, h] = [
       a[0]
@@ -75,16 +71,13 @@ class GdipG
     unless x1 == -1 then result[0] = x1 + x
     unless y1 == -1 then result[1] = y1 + y
     @cache.findColor[key2] = result
-    Indicator.setCount 'gdip/findColor2'
+    Indicator.setCount 'gdip/findColor'
     return result
 
   ###* @type import('./type/gdip').GdipG['getColor'] ###
   getColor: (p) ->
 
-    unless @screenshot()
-      Indicator.setCount 'gdip/error'
-      return 0
-    Indicator.setCount 'gdip/getColor'
+    Indicator.setCount 'gdip/getColor2'
 
     key = "#{p[0]}|#{p[1]}"
     result = @cache.getColor[key]
@@ -96,7 +89,7 @@ class GdipG
 
     result = rgb
     @cache.getColor[key] = result
-    Indicator.setCount 'gdip/getColor2'
+    Indicator.setCount 'gdip/getColor'
     return result
 
   ###* @type import('./type/gdip').GdipG['init'] ###
@@ -114,12 +107,14 @@ class GdipG
     token = 'gdip/findColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/findColor2'
-    if count then console.log "##{token}: #{count} / #{count2}"
+    count3 = Indicator.getCount 'gdip/findColor3'
+    if count then console.log "##{token}: #{count3} / #{count2} / #{count}"
 
     token = 'gdip/getColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/getColor2'
-    if count then console.log "##{token}: #{count} / #{count2}"
+    count3 = Indicator.getCount 'gdip/getColor3'
+    if count then console.log "##{token}: #{count3} / #{count2} / #{count}"
 
     token = 'gdip/screenshot'
     count = Indicator.getCount token
@@ -133,22 +128,18 @@ class GdipG
   screenshot: ->
 
     token = 'gdip/screenshot'
-    interval = $.max [100, $.min [200, (Indicator.getCost token) * 3]]
-
-    if @cache.pBitmap and not Timer.hasElapsed 'gdip/throttle', interval then return true
     Indicator.setCount token
     Indicator.setCost token, 'start'
 
     {x, y, width, height} = Window2.bounds
     pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
-    unless pBitmap then return false
+    unless pBitmap then return
 
     @clearCache()
     Timer.add token, 1e3, @clearCache
     @cache.pBitmap = pBitmap
 
     Indicator.setCost token, 'end'
-    return true
 
   ###* @type import('./type/gdip').GdipG['start'] ###
   start: ->
@@ -156,4 +147,5 @@ class GdipG
     @cache.pToken = Gdip_Startup()
     return
 
+# export
 Gdip = new GdipG()

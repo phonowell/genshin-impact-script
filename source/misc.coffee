@@ -62,6 +62,7 @@ boot = (callback) ->
   list = [
     # ---start---
     Client
+    ColorManager
     Config
     console
     Dictionary

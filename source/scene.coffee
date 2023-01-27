@@ -5,8 +5,6 @@ class SceneG extends EmitterShell
   constructor: ->
     super()
 
-    ###* @type import('./type/scene').SceneG['cache'] ###
-    @cache = {}
     ###* @type import('./type/scene').SceneG['list'] ###
     @list = []
 
@@ -77,12 +75,10 @@ class SceneG extends EmitterShell
 
   ###* @type import('./type/scene').SceneG['watch'] ###
   watch: -> Client.useActive =>
-    [interval, token] = [200, 'scene/watch']
-    Timer.loop token, interval, @update
+    token = 'update.scene-watch'
+    ColorManager.on token, @update
     return =>
-      Timer.remove token
-
-      @list = []
+      ColorManager.off token
       @emit 'change'
 
 Scene = new SceneG()
