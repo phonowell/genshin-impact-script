@@ -8,13 +8,13 @@ export class ControllerG extends EmitterShell {
     ['left-stick-left', 'a', 'left'],
     ['left-stick-right', 'd', 'right'],
     ['left-stick-up', 'w', 'up'],
-    ['left-stick-down', 's', 'down']
+    ['left-stick-down', 's', 'down'],
   ]
   private listRightStick: [
     ['right-stick-left', 'left'],
     ['right-stick-right', 'right'],
     ['right-stick-up', 'up'],
-    ['right-stick-down', 'down']
+    ['right-stick-down', 'down'],
   ]
   private mapButton: Record<string, number>
   private thresholdStick: 1e4

@@ -1,9 +1,8 @@
 # @ts-check
 
-class ColorManagerG extends EmitterShell
+class ColorManagerG
 
   constructor: ->
-    super()
 
     ###* @type import('./type/color-manager').ColorManagerG['cache'] ###
     @cache = {
@@ -24,7 +23,7 @@ class ColorManagerG extends EmitterShell
     token = "#{color}|#{$.join a2, ','}"
 
     if @cache.find[token]
-      Indicator.setCount 'gdip/findColor3'
+      Indicator.setCount 'gdip/prevent'
       return @cache.find[token]
 
     return @cache.find[token] = Gdip.findColor color, a2
@@ -67,7 +66,7 @@ class ColorManagerG extends EmitterShell
     token = $.join p2, ','
 
     if @cache.get[token]
-      Indicator.setCount 'gdip/getColor3'
+      Indicator.setCount 'gdip/prevent'
       return @cache.get[token]
     return @cache.get[token] = Gdip.getColor p2
 
@@ -80,10 +79,16 @@ class ColorManagerG extends EmitterShell
 
   ###* @type import('./type/color-manager').ColorManagerG['next'] ###
   next: ->
+
     Gdip.screenshot()
     @clearCache()
-    @emit 'update'
-    Timer.add 'color-manager/next', 100, @next
+
+    Scene.update()
+    Picker.next()
+    console.update()
+
+    [interval, token] = [100, 'color-manager/next']
+    Timer.add token, interval, @next
 
   ###* @type import('./type/color-manager').ColorManagerG['pick'] ###
   pick: ->

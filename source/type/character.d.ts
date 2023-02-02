@@ -58,7 +58,7 @@ export class CharacterG {
   constructor()
   get<T extends keyof Item | void = void>(
     name: string,
-    key?: T
+    key?: T,
   ): T extends string ? Item[T] : Item
   init(): void
   is(name: string, keyword: Keyword): boolean

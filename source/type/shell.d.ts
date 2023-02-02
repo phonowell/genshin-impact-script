@@ -1,5 +1,5 @@
-import * as SA from 'node_modules/shell-ahk/dist/type/module'
 import { KeyBindingShell } from 'node_modules/shell-ahk/dist/type/keyBindingShell'
+import * as SA from 'node_modules/shell-ahk/dist/type/module'
 
 export type Shell = {
   Math: SA.Math

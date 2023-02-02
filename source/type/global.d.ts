@@ -1,3 +1,5 @@
+import { EmitterShell as ES } from 'node_modules/shell-ahk/dist/type/emitterShell'
+
 import { AliceG } from './alice'
 import { AreaG } from './area'
 import { BuffG } from './buff'
@@ -10,7 +12,6 @@ import { ControllerG } from './controller'
 import { CursorG } from './cursor'
 import { DashboardG } from './dashboard'
 import { DictionaryG } from './dictionary'
-import { EmitterShell as ES } from 'node_modules/shell-ahk/dist/type/emitterShell'
 import { FishingG } from './fishing'
 import { GdipG } from './gdip'
 import { HudG } from './hud'
@@ -20,14 +21,14 @@ import { JumperG } from './jumper'
 import { KeyBinding as KB } from './key-binding'
 import { MenuG } from './menu'
 import { MovementG } from './movement'
-import { Party2G } from './party2'
 import { PartyG } from './party'
+import { Party2G } from './party2'
 import { PickerG } from './picker'
 import { PointG } from './point'
 import { RecorderG } from './recorder'
 import { ReplayerG } from './replayer'
-import { Scene2G } from './scene2'
 import { SceneG } from './scene'
+import { Scene2G } from './scene2'
 import { Shell } from './shell'
 import { SkillG } from './skill'
 import { SoundG } from './sound'
@@ -41,6 +42,7 @@ import { WindowG } from './window'
 declare global {
   class Console {
     init(): void
+    update(): void
   }
 
   class EmitterShell {
@@ -82,14 +84,14 @@ declare global {
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
   ) => number
 
   const Gdip_PixelSearch: (
     area: number,
     color: number,
     x: number,
-    y: number
+    y: number,
   ) => number
 
   const XInput_GetState: (target: number) => {

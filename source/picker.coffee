@@ -70,7 +70,6 @@ class PickerG extends KeyBinding
 
   ###* @type import('./type/picker').PickerG['init'] ###
   init: ->
-    @watch()
 
     @registerEvent 'l-button', 'l-button'
     @registerEvent 'pick', 'f'
@@ -138,11 +137,5 @@ class PickerG extends KeyBinding
 
     Point.click p
     return true
-
-  ###* @type import('./type/picker').PickerG['watch'] ###
-  watch: -> Client.useActive =>
-    [interval, token] = [100, 'picker/watch']
-    Timer.loop token, interval, @next
-    return -> Timer.remove token
 
 Picker = new PickerG()

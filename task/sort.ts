@@ -138,7 +138,7 @@ const saveIndex = async (listName: string[]) => {
       '# ---start---',
       ...listName.map((name) => `import './${getName2(name)}'`),
       '# ---end---',
-    ].join('\n')
+    ].join('\n'),
   )
   await $.write(source, result)
 }
@@ -155,7 +155,7 @@ const saveMisc = async (listName: string[]) => {
       '# ---start---',
       ...listName.map((name) => `    ${name}`),
       '    # ---end---',
-    ].join('\n')
+    ].join('\n'),
   )
   await $.write(source, result)
 }
@@ -165,7 +165,7 @@ const sort = (listI: [string, string[], string[]][]) => {
 
   const next = () => {
     listI.forEach((item) => {
-      const [name, _, depends] = item
+      const [name, , depends] = item
       const isOut = depends.some((d) => !listO.includes(d))
       if (!isOut) {
         if (!listO.includes(name)) listO.push(name)

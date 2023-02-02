@@ -2,8 +2,33 @@
 
 class Scene2G
 
+  constructor: ->
+
+    ### @type import('./type/scene2').Scene2G['cache'] ###
+    @cache = {
+      last: 'unknown'
+    }
+    ### @type import('./type/scene2').Scene2G['mapAbout'] ###
+    @mapAbout = {
+      event: @aboutEvent
+      'half-menu': @aboutHalfMenu
+      loading: @aboutLoading
+      menu: @aboutMenu
+      'mini-menu': @aboutMiniMenu
+      normal: @aboutNormal
+    }
+
+  ###* @type import('./type/scene2').Scene2G['aboutEvent'] ###
+  aboutEvent: ->
+
+    unless @checkIsEvent() then return []
+    list = @makeListName 'event'
+
+    return list
+
   ###* @type import('./type/scene2').Scene2G['aboutHalfMenu'] ###
   aboutHalfMenu: ->
+
     unless @checkIsHalfMenu() then return []
     list = @makeListName 'half-menu'
 
@@ -13,8 +38,17 @@ class Scene2G
 
     return list
 
+  ###* @type import('./type/scene2').Scene2G['aboutLoading'] ###
+  aboutLoading: ->
+
+    unless @checkIsLoading() then return []
+    list = @makeListName 'loading'
+
+    return list
+
   ###* @type import('./type/scene2').Scene2G['aboutMenu'] ###
   aboutMenu: ->
+
     unless @checkIsMenu() then return []
     list = @makeListName 'menu'
 
@@ -29,6 +63,14 @@ class Scene2G
     if @checkIsPlaying()
       $.push list, 'playing'
       return list
+
+    return list
+
+  ###* @type import('./type/scene2').Scene2G['aboutMiniMenu'] ###
+  aboutMiniMenu: ->
+
+    unless @checkIsMiniMenu() then return []
+    list = @makeListName 'mini-menu'
 
     return list
 
@@ -50,20 +92,27 @@ class Scene2G
   ###* @type import('./type/scene2').Scene2G['check'] ###
   check: ->
 
-    if @checkIsLoading() then return ['loading']
+    list = [
+      'loading'
+      'menu'
+      'half-menu'
+      'normal'
+      'event'
+      'mini-menu'
+    ]
 
-    list = @aboutMenu()
-    if $.length list then return list
+    unless @cache.last == 'unknown'
+      list = $.filter list, (name) => @cache.last != name
+      $.unshift list, @cache.last
 
-    list = @aboutHalfMenu()
-    if $.length list then return list
+    for name in list
+      fn = @mapAbout[name]
+      result = fn()
+      unless $.length result then continue
+      @cache.last = name
+      return result
 
-    list = @aboutNormal()
-    if $.length list then return list
-
-    if @checkIsEvent() then return ['event']
-    if @checkIsMiniMenu() then return ['mini-menu']
-
+    @cache.last = 'unknown'
     return []
 
   ###* @type import('./type/scene2').Scene2G['checkIsAiming'] ###
@@ -72,16 +121,18 @@ class Scene2G
     return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
 
   ###* @type import('./type/scene2').Scene2G['checkIsChat'] ###
-  checkIsChat: -> ColorManager.findAll [0x3B4255, 0xECE5D8], [
-    '58%', '2%'
-    '60%', '6%'
-  ]
+  checkIsChat: -> @throttle 'check-is-chat', 1e3, ->
+    return ColorManager.findAll [0x3B4255, 0xECE5D8], [
+      '58%', '2%'
+      '60%', '6%'
+    ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsDomain'] ###
-  checkIsDomain: -> ColorManager.findAll 0xFFFFFF, [
-    '1%', '9%'
-    '3%', '13%'
-  ]
+  checkIsDomain: -> @throttle 'check-is-domain', 1e3, ->
+    return ColorManager.findAll [0x38425C, 0xFFFFFF], [
+      '1%', '9%'
+      '3%', '13%'
+    ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsEvent'] ###
   checkIsEvent: -> ColorManager.findAll 0xFFC300, [
@@ -91,14 +142,17 @@ class Scene2G
 
   ###* @type import('./type/scene2').Scene2G['checkIsFree'] ###
   checkIsFree: ->
+
     # unless ColorManager.findAny [0x96D722, 0xFF6666], [
     #   '88%', '25%'
     #   '89%', '53%'
     # ] then return false
+
     unless ColorManager.findAll [0xFFFFFF, 0x323232], [
       '94%', '80%'
       '95%', '82%'
     ] then return false
+
     return true
 
   ###* @type import('./type/scene2').Scene2G['checkIsHalfMenu'] ###
@@ -111,10 +165,11 @@ class Scene2G
   checkIsLoading: -> $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get [Window2.bounds.width - 1, '50%']
 
   ###* @type import('./type/scene2').Scene2G['checkIsMap'] ###
-  checkIsMap: -> ColorManager.findAll 0xEDE5DA, [
-    '1%', '38%'
-    '2%', '40%'
-  ]
+  checkIsMap: -> @throttle 'check-is-map', 1e3, ->
+    return ColorManager.findAll 0xEDE5DA, [
+      '1%', '38%'
+      '2%', '40%'
+    ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsMenu'] ###
   checkIsMenu: -> ColorManager.findAll [0x3B4255, 0xECE5D8], [
@@ -123,44 +178,68 @@ class Scene2G
   ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsMiniMenu'] ###
-  checkIsMiniMenu: -> ColorManager.findAll 0xECE5D8, [
-    '97%', '1%'
-    '98%', '5%'
-  ]
+  checkIsMiniMenu: ->
+
+    unless ColorManager.findAll 0xECE5D8, [
+      '97%', '1%'
+      '98%', '5%'
+    ] then return false
+
+    unless ColorManager.findAny [0x3D4555, 0xE2B42A], [
+      '97%', '1%'
+      '98%', '5%'
+    ] then return false
+
+    return true
 
   ###* @type import('./type/scene2').Scene2G['checkIsNormal'] ###
   checkIsNormal: ->
-    if ColorManager.findAll 0xFFFFFF, [
-      '95%', '2%'
-      '97%', '6%'
-    ] then return true
+
     if ColorManager.findAll 0xFFFFFF, [
       '2%', '17%'
       '4%', '21%'
     ] then return true
+
+    if ColorManager.findAll 0xFFFFFF, [
+      '1%', '9%'
+      '3%', '13%'
+    ] then return true
+
     return false
 
   ###* @type import('./type/scene2').Scene2G['checkIsParty'] ###
-  checkIsParty: -> ColorManager.findAll 0xFFFFFF, [
-    '41%', '3%'
-    '59%', '6%'
-  ]
+  checkIsParty: -> @throttle 'check-is-party', 1e3, ->
+    return ColorManager.findAll 0xFFFFFF, [
+      '41%', '3%'
+      '59%', '6%'
+    ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsPlaying'] ###
-  checkIsPlaying: -> ColorManager.findAll [0xFFFFFF, 0xFFE92C], [
-    '9%', '2%'
-    '11%', '6%'
-  ]
+  checkIsPlaying: -> @throttle 'check-is-playing', 1e3, ->
+    return ColorManager.findAll [0xFFFFFF, 0xFFE92C], [
+      '9%', '2%'
+      '11%', '6%'
+    ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsSingle'] ###
-  checkIsSingle: -> not ColorManager.findAny [0x006699, 0x408000], [
-    '18%', '2%'
-    '20%', '6%'
-  ]
+  checkIsSingle: -> @throttle 'check-is-single', 5e3, ->
+    return not ColorManager.findAny [0x006699, 0x408000], [
+      '18%', '2%'
+      '20%', '6%'
+    ]
 
   ###* necessary for types, do not remove
   @type import('./type/scene2').Scene2G['makeListName']
   ###
   makeListName: (names...) -> names
+
+  ###* @type import('./type/scene2').Scene2G['throttle'] ###
+  throttle: (id, interval, fn) ->
+
+    unless Timer.hasElapsed "scene/#{id}", interval
+      Indicator.setCount 'gdip/prevent'
+      return @cache[id]
+
+    return @cache[id] = fn()
 
 Scene2 = new Scene2G()

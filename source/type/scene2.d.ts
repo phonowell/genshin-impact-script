@@ -1,8 +1,15 @@
-import { Name } from "./scene"
+import { Fn } from './global'
+import { Name } from './scene'
 
 export class Scene2G {
+  private cache: object
+  private mapAbout: Record<Name, Fn>
+  constructor()
+  private aboutEvent(): Name[]
   private aboutHalfMenu(): Name[]
+  private aboutLoading(): Name[]
   private aboutMenu(): Name[]
+  private aboutMiniMenu(): Name[]
   private aboutNormal(): Name[]
   check(): Name[]
   private checkIsAiming(): boolean
@@ -20,4 +27,5 @@ export class Scene2G {
   private checkIsPlaying(): boolean
   private checkIsSingle(): boolean
   private makeListName(...names: Name[]): Name[]
+  private throttle(id: string, interval: number, fn: () => boolean): boolean
 }

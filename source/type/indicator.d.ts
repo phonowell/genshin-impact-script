@@ -3,7 +3,7 @@ export class IndicatorG extends EmitterShell {
   private cacheCount: Record<string, number>
   private cacheTs: Record<string, number>
   constructor()
-  private clear():void
+  private clear(): void
   getCost(name: string): number
   getCount(name: string): number
   init(): void

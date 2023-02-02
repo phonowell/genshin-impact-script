@@ -24,10 +24,6 @@ export class SceneG extends EmitterShell {
   constructor()
   init(): void
   is(...names: NamePossible[]): boolean
-  private update(): void
-  useExact(
-    listDeps: NamePossible[] | (() => boolean),
-    fn: () => Fn
-  ): void
-  private watch(): void
+  update(): void
+  useExact(listDeps: NamePossible[] | (() => boolean), fn: () => Fn): void
 }

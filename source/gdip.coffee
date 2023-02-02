@@ -107,14 +107,16 @@ class GdipG
     token = 'gdip/findColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/findColor2'
-    count3 = Indicator.getCount 'gdip/findColor3'
-    if count then console.log "##{token}: #{count3} / #{count2} / #{count}"
+    if count then console.log "##{token}: #{count2} / #{count}"
 
     token = 'gdip/getColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/getColor2'
-    count3 = Indicator.getCount 'gdip/getColor3'
-    if count then console.log "##{token}: #{count3} / #{count2} / #{count}"
+    if count then console.log "##{token}: #{count2} / #{count}"
+
+    token = 'gdip/prevent'
+    count = Indicator.getCount token
+    if count then console.log "##{token}: #{count}"
 
     token = 'gdip/screenshot'
     count = Indicator.getCount token

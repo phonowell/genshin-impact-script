@@ -4,8 +4,8 @@ class ConsoleG
 
   constructor: ->
 
-    ###* @type import('./type/console').ConsoleG['isChanged'] ###
-    @isChanged = false
+    ###* @type import('./type/console').ConsoleG['isEnabled'] ###
+    @isEnabled = false
     ###* @type import('./type/console').ConsoleG['lifetime'] ###
     @lifetime = 10e3
     ###* @type import('./type/console').ConsoleG['listContent'] ###
@@ -44,11 +44,19 @@ class ConsoleG
     return
 
   ###* @type import('./type/console').ConsoleG['init'] ###
-  init: -> @watch()
+  init: ->
+
+    unless Config.get 'debug/enable' then return
+
+    Client.useActive =>
+      @isEnabled = true
+      return =>
+        @isEnabled = false
+        @hide()
 
   ###* @type import('./type/console').ConsoleG['log'] ###
   log: (ipt...) ->
-    unless Config.get 'debug/enable' then return
+    unless @isEnabled then return
     @add $.join ($.map ipt, $.toString), ' '
     @render()
     return
@@ -56,8 +64,7 @@ class ConsoleG
   ###* @type import('./type/console').ConsoleG['render'] ###
   render: ->
 
-    if Client.isSuspended then return
-    unless Timer.hasElapsed 'console/render', 200 then return
+    unless @isEnabled then return
 
     list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
@@ -70,26 +77,12 @@ class ConsoleG
 
   ###* @type import('./type/console').ConsoleG['update'] ###
   update: ->
-    if Client.isSuspended then return
+
+    unless @isEnabled then return
+
     now = $.now()
-    len = $.length @listContent
     @listContent = $.filter @listContent, (item) -> item[0] >= now
-    if len != $.length @listContent then @render()
 
-  ###* @type import('./type/console').ConsoleG['watch'] ###
-  watch: ->
-
-    unless Config.get 'debug/enable' then return
-
-    Client.useActive =>
-
-      [interval, token] = [200, 'console/watch']
-
-      Timer.loop token, interval, @update
-      @update()
-
-      return =>
-        Timer.remove token
-        @hide()
+    @render()
 
 console = new ConsoleG()

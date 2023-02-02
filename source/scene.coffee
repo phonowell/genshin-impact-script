@@ -11,8 +11,6 @@ class SceneG extends EmitterShell
   ###* @type import('./type/scene').SceneG['init'] ###
   init: ->
 
-    @watch()
-
     @on 'change', =>
       unless $.length @list
         console.log '#scene: unknown'
@@ -72,13 +70,5 @@ class SceneG extends EmitterShell
         if data.isFired
           data.isFired = false
           data.callback()
-
-  ###* @type import('./type/scene').SceneG['watch'] ###
-  watch: -> Client.useActive =>
-    token = 'update.scene-watch'
-    ColorManager.on token, @update
-    return =>
-      ColorManager.off token
-      @emit 'change'
 
 Scene = new SceneG()
