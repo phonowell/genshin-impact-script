@@ -11,7 +11,6 @@ class TimerG
   ###* @type import('./type/timer').TimerG['add'] ###
   add: (args...) ->
 
-    if Client.isSuspended then return
     [id, time, fn] = @pick args
 
     hasId = !!id
@@ -55,7 +54,6 @@ class TimerG
   ###* @type import('./type/timer').TimerG['loop'] ###
   loop: (args...) ->
 
-    if Client.isSuspended then return
     [id, time, fn] = @pick args
 
     hasId = !!id

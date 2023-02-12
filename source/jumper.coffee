@@ -34,7 +34,7 @@ class JumperG extends KeyBinding
   ###* @type import('./type/jumper').JumperG['init'] ###
   init: ->
 
-    unless (Config.get 'better-jump/enable') then return
+    unless (Config.get 'misc/use-better-jump') then return
 
     Scene.useExact ['free', 'not-domain'], =>
 

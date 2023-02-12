@@ -8,9 +8,8 @@ aboutClient = ->
   report = ->
     {x, y, width, height} = Window2.bounds
     $.forEach [
+      "#client/bounds: #{x}, #{y}, #{width}, #{height}"
       "#client/is-fullscreen: #{Window2.isFullScreen}"
-      "#client/position: #{x}, #{y}"
-      "#client/size: #{width}, #{height}"
     ], (msg) -> console.log msg
 
   Window2.focus()
@@ -19,10 +18,8 @@ aboutClient = ->
     Client.emit 'enter'
     report()
 
-  Timer.add 1e3, Upgrader.check
-
 aboutDebug = ->
-  unless Config.get 'debug/enable' then return
+  unless Config.get 'misc/use-debug-mode' then return
   $.on 'alt + f9', ColorManager.pick
 
 aboutSkillTimer = ->
@@ -68,7 +65,6 @@ boot = (callback) ->
     Dictionary
     Fishing
     Hud
-    Idle
     Indicator
     Picker
     Recorder
@@ -78,7 +74,6 @@ boot = (callback) ->
     Sound
     Status2
     Tactic
-    Transparent
     Window2
     Buff
     Camera
@@ -115,5 +110,4 @@ boot ->
 # exit
 OnExit ->
   Sound.unmute()
-  Timer.reset()
   Window2.window.setPriority 'normal'

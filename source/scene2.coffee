@@ -162,7 +162,14 @@ class Scene2G
   ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsLoading'] ###
-  checkIsLoading: -> $.includes [0xFFFFFF, 0x000000, 0x1C1C22], ColorManager.get [Window2.bounds.width - 1, '50%']
+  checkIsLoading: ->
+
+    p = [Window2.bounds.width - 1, '50%']
+
+    for color in [0xFFFFFF, 0x000000, 0x1C1C22]
+      if (ColorManager.get p) == color then return true
+
+    return false
 
   ###* @type import('./type/scene2').Scene2G['checkIsMap'] ###
   checkIsMap: -> @throttle 'check-is-map', 1e3, ->

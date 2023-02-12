@@ -15,7 +15,6 @@ import { DictionaryG } from './dictionary'
 import { FishingG } from './fishing'
 import { GdipG } from './gdip'
 import { HudG } from './hud'
-import { IdleG } from './idle'
 import { IndicatorG } from './indicator'
 import { JumperG } from './jumper'
 import { KeyBinding as KB } from './key-binding'
@@ -35,8 +34,6 @@ import { SoundG } from './sound'
 import { Status2G } from './status'
 import { TacticG } from './tactic'
 import { TimerG } from './timer'
-import { TransparentG } from './transparent'
-import { UpgraderG } from './upgrader'
 import { WindowG } from './window'
 
 declare global {
@@ -119,7 +116,6 @@ declare global {
   const Fishing: FishingG
   const Gdip: GdipG
   const Hud: HudG
-  const Idle: IdleG
   const Indicator: IndicatorG
   const Jumper: JumperG
   const Menu2: MenuG
@@ -137,8 +133,6 @@ declare global {
   const Status2: Status2G
   const Tactic: TacticG
   const Timer: TimerG
-  const Transparent: TransparentG
-  const Upgrader: UpgraderG
   const Window2: WindowG
   const alice: never
   const area: never
@@ -155,7 +149,6 @@ declare global {
   const fishing: never
   const gdip: never
   const hud: never
-  const idle: never
   const indicator: never
   const jumper: never
   const menu2: never
@@ -173,8 +166,6 @@ declare global {
   const status2: never
   const tactic: never
   const timer: never
-  const transparent: never
-  const upgrader: never
   const window2: never
 }
 

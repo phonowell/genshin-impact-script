@@ -44,13 +44,17 @@ class ReplayerG
       return
 
   ###* @type import('./type/replayer').ReplayerG['init'] ###
-  init: ->
-    Client.on 'idle', @stop
+  init: -> Client.useActive =>
 
     for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
       $.on "ctrl + numpad-#{n}", => @start $.toString n
 
-    return
+    return =>
+
+      for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        $.off "ctrl + numpad-#{n}"
+
+      @stop()
 
   ###* @type import('./type/replayer').ReplayerG['next'] ###
   next: (list, i, callback = undefined) ->
@@ -67,9 +71,8 @@ class ReplayerG
       return
 
     [stringDelay, key, position] = list[i]
-    delay = $.toNumber stringDelay
+    delay = $.Math.max 1, $.toNumber stringDelay
 
-    if delay < 1 then delay = 1 # to make it works
     Timer.add @token, delay, =>
       if ($.includes key, 'l-button') and position
         $.move Point.create $.split position, ','
@@ -108,10 +111,7 @@ class ReplayerG
 
   ###* @type import('./type/replayer').ReplayerG['stop'] ###
   stop: ->
-
-    unless @isActive then return
     @isActive = false
-
     Timer.remove @token
     Hud.render 0, Dictionary.get 'end_replaying'
 

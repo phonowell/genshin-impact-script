@@ -95,7 +95,7 @@ class GdipG
   ###* @type import('./type/gdip').GdipG['init'] ###
   init: ->
     @start()
-    if Config.get 'debug/enable' then Indicator.on 'update', @report
+    if Config.get 'misc/use-debug-mode' then Indicator.on 'update', @report
 
   ###* @type import('./type/gdip').GdipG['report'] ###
   report: ->

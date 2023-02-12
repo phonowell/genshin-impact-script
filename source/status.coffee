@@ -38,6 +38,8 @@ class Status2G extends EmitterShell
   ###* @type import('./type/status').Status2G['init'] ###
   init: ->
 
+    return
+
     Scene.useExact ['single'], =>
       @on 'change', =>
         unless $.length @list

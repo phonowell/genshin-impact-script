@@ -49,37 +49,24 @@ class ConfigG
   ###* @type import('./type/config').ConfigG['load'] ###
   load: ->
 
-    # debug
-    @register 'debug/enable'
-
     # basic
     @register 'basic/path'
     @set 'basic/process', @read 'basic/process', 'GenshinImpact.exe'
-
-    # better-jump
-    @register 'better-jump/enable', 'alt + space'
 
     # better-pickup
     @register 'better-pickup/enable', 'alt + f'
     @register 'better-pickup/use-fast-pickup'
     @register 'better-pickup/use-quick-skip'
 
-    # idle
-    @set 'idle/use-time', @read 'idle/use-time', '60'
-    @register 'idle/use-mouse-move-out'
-
     # skill-timer
     @register 'skill-timer/enable'
 
-    # sound
-    @register 'sound/use-beep'
-    @register 'sound/use-mute-when-idle'
-
-    # controller
-    @register 'controller/enable'
-
     # misc
-    @register 'misc/use-transparency-when-idle'
+    @register 'misc/use-beep'
+    @register 'misc/use-better-jump', 'alt + space'
+    @register 'misc/use-controller'
+    @register 'misc/use-debug-mode'
+    @register 'misc/use-mute'
 
   ###* @type import('./type/config').ConfigG['read'] ###
   read: (ipt, defaultValue = '') ->

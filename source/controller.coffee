@@ -114,7 +114,9 @@ class ControllerG extends EmitterShell
   ###* @type import('./type/controller').ControllerG['init'] ###
   init: ->
 
-    unless Config.get 'controller/enable' then return
+    return
+
+    unless Config.get 'misc/use-controller' then return
 
     XInput_Init()
     @watch()

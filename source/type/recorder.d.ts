@@ -7,6 +7,7 @@ type Item = {
 export class RecorderG extends KeyBinding {
   isActive: boolean
   private list: Item[]
+  private listKey: string[]
   private ts: number
   constructor()
   init(): void

@@ -11,10 +11,47 @@ class WindowG extends KeyBinding
     @isActive = false
     ###* @type import('./type/window').WindowG['isFullScreen'] ###
     @isFullScreen = false
+    ###* @type import('./type/window').WindowG['isMouseIn'] ###
+    @isMouseIn = false
     ###* @type import('./type/window').WindowG['position'] ###
     @position = [1, 1]
     ###* @type import('./type/window').WindowG['window'] ###
     @window = $.window ''
+
+  ###* @type import('./type/window').WindowG['checkActive'] ###
+  checkActive: ->
+
+    isActive = !!@window.isActive()
+
+    if isActive == @isActive then return
+    @isActive = isActive
+
+    if @isActive then @emit 'enter'
+    else @emit 'leave'
+
+  ###* @type import('./type/window').WindowG['checkMousePosition'] ###
+  checkMousePosition: ->
+
+    isMouseIn = do =>
+
+      unless @isActive then return false
+
+      [x, y] = $.getPosition()
+      if x < 0 then return false
+      if x >= @bounds.width then return false
+      if y < 0 then return false
+      if y >= @bounds.height then return false
+      return true
+
+    if isMouseIn == @isMouseIn then return
+    @isMouseIn = isMouseIn
+
+    console.log "#window/is-mouse-in: #{@isMouseIn}"
+
+    if @isMouseIn then Client.suspend false
+    else Client.suspend true
+
+    return
 
   ###* @type import('./type/window').WindowG['close'] ###
   close: ->
@@ -24,7 +61,7 @@ class WindowG extends KeyBinding
   ###* @type import('./type/window').WindowG['focus'] ###
   focus: ->
     @window.focus()
-    if @isMouseInside() then return
+    if @isMouseIn then return
     $.move [
       @bounds.width * 0.5
       @bounds.height * 0.5
@@ -60,15 +97,6 @@ class WindowG extends KeyBinding
 
     @window.wait @main
 
-  ###* @type import('./type/window').WindowG['isMouseInside'] ###
-  isMouseInside: ->
-    [x, y] = $.getPosition()
-    if x < 0 then return false
-    if x >= @bounds.width then return false
-    if y < 0 then return false
-    if y >= @bounds.height then return false
-    return true
-
   ###* @type import('./type/window').WindowG['main'] ###
   main: ->
 
@@ -76,24 +104,18 @@ class WindowG extends KeyBinding
     @watch()
 
     @on 'leave', =>
-      console.log '#window: leave'
-      @isActive = false
-
       @window.setPriority 'low'
-
       Client.emit 'idle'
 
     @on 'enter', =>
-      console.log '#window: enter'
-      @isActive = true
-
       @window.setPriority 'normal'
       @getState()
       @setStyle()
+
       Timer.add 1e3, @getState
+      @focus()
 
       Client.emit 'activate'
-      @focus()
 
     $.on 'alt + enter', =>
       $.press 'alt + enter'
@@ -156,20 +178,8 @@ class WindowG extends KeyBinding
     @setPosition()
 
   ###* @type import('./type/window').WindowG['watch'] ###
-  watch: ->
-    interval = 100
-    Timer.loop interval, =>
-      if @window.isActive()
-        unless @isActive then @emit 'enter'
-
-        # blur
-        unless Config.get 'idle/use-mouse-move-out' then return
-        if @isMouseInside() then return
-        @window.blur()
-        
-        return
-      else
-        if @isActive then @emit 'leave'
-        return
+  watch: -> Timer.loop 100, =>
+    @checkActive()
+    @checkMousePosition()
 
 Window2 = new WindowG()

@@ -11,15 +11,17 @@ export class WindowG extends KeyBinding {
   bounds: Bounds
   private isActive: boolean
   isFullScreen: boolean
+  isMouseIn: boolean
   position: [number, number]
   window: WindowShell
   constructor()
+  private checkActive(): void
+  private checkMousePosition(): void
   close(): void
   focus(): void
   private getState(): void
   private getTaskBarBounds(): Bounds
   init(): void
-  private isMouseInside(): boolean
   private main(): void
   private setPosition(): void
   private setStyle(): void

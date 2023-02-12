@@ -13,19 +13,7 @@ class ClientG extends KeyBinding
   ###* @type import('./type/client').ClientG['init'] ###
   init: ->
 
-    Native 'Menu, Tray, Icon, on.ico,, 1'
-
-    @useActive =>
-
-      console.log '#client: activate'
-      Native 'Menu, Tray, Icon, on.ico'
-      @suspend false
-
-      return =>
-
-        console.log '#client: idle'
-        Native 'Menu, Tray, Icon, off.ico'
-        @suspend true
+    @setIcon 'on'
 
     $.on 'alt + f4', -> Sound.beep 2, ->
       Window2.close()
@@ -35,20 +23,24 @@ class ClientG extends KeyBinding
 
     return
 
+  ###* @type import('./type/client').ClientG['setIcon'] ###
+  setIcon: (name) ->
+    path = "#{name}.ico"
+    $.noop path
+    Native 'Menu, Tray, Icon'
+    Native 'Menu, Tray, Icon, % path, 1, 1'
+    return
+
   ###* @type import('./type/client').ClientG['suspend'] ###
   suspend: (isSuspended) ->
 
-    if isSuspended
-      if @isSuspended then return
-      @isSuspended = true
-      $.suspend true
-      return
+    if isSuspended == @isSuspended then return
+    @isSuspended = isSuspended
 
-    unless isSuspended
-      unless @isSuspended then return
-      @isSuspended = false
-      $.suspend false
-      return
+    $.suspend @isSuspended
+
+    if @isSuspended then @setIcon 'off'
+    else @setIcon 'on'
 
   ###* @type import('./type/client').ClientG['useActive'] ###
   useActive: (fn) ->

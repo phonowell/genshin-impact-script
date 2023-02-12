@@ -12,7 +12,7 @@ class SoundG
   ###* @type import('./type/sound').SoundG['beep'] ###
   beep: (n = 1, callback = undefined) ->
 
-    unless Config.get 'sound/use-beep'
+    unless Config.get 'misc/use-beep'
       if $.isFunction callback then callback()
       return
 
@@ -33,7 +33,7 @@ class SoundG
   ###* @type import('./type/sound').SoundG['init'] ###
   init: ->
 
-    unless Config.get 'sound/use-mute-when-idle'
+    unless Config.get 'misc/use-mute'
       @unmute()
       return
 

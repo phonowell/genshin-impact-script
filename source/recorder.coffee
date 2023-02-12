@@ -9,6 +9,17 @@ class RecorderG extends KeyBinding
     @isActive = false
     ###* @type import('./type/recorder').RecorderG['list'] ###
     @list = []
+    ###* @type import('./type/recorder').RecorderG['listKey'] ###
+    @listKey = [
+      'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', 'backspace'
+      'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'
+      'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'enter'
+      'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm'
+      'space'
+      'left', 'right', 'up', 'down'
+      'l-button', 'm-button', 'r-button', 'x-button-1', 'x-button-2'
+    ]
     ###* @type import('./type/recorder').RecorderG['ts'] ###
     @ts = 0
 
@@ -77,7 +88,7 @@ class RecorderG extends KeyBinding
     if @isActive then return
     @isActive = true
 
-    for key in Idle.listKey
+    for key in @listKey
       @registerEvent 'record', key
       @registerEvent 'record', "alt + #{key}"
       @registerEvent 'record', "ctrl + #{key}"
@@ -93,7 +104,7 @@ class RecorderG extends KeyBinding
     unless @isActive then return
     @isActive = false
 
-    for key in Idle.listKey
+    for key in @listKey
       @unregisterEvent 'record', key
       @unregisterEvent 'record', "alt + #{key}"
       @unregisterEvent 'record', "ctrl + #{key}"

@@ -46,13 +46,15 @@ class ConsoleG
   ###* @type import('./type/console').ConsoleG['init'] ###
   init: ->
 
-    unless Config.get 'debug/enable' then return
+    unless Config.get 'misc/use-debug-mode' then return
 
     Client.useActive =>
       @isEnabled = true
       return =>
         @isEnabled = false
         @hide()
+
+    return
 
   ###* @type import('./type/console').ConsoleG['log'] ###
   log: (ipt...) ->
