@@ -69,59 +69,56 @@ class PartyG extends KeyBinding
   ###* @type import('./type/party').PartyG['init'] ###
   init: ->
 
-    unless Config.get 'skill-timer/enable' then return
+    @on 'change', =>
+
+      unless @size then return
+
+      list = $.tail @list
+      if $.includes list, '' then $.beep()
+      console.log "#party/member: #{$.join list, ', '}"
+
+      Buff.update()
+
+    @on 'switch', (key) =>
+
+      slot = $.toNumber key
+      unless @isSlotValid slot then return
+
+      last = @current
+      @current = slot
+
+      nameLast = @list[last]
+      @name = @list[@current]
+
+      unless nameLast then nameLast = 'unknown'
+      unless @name then @name = 'unknown'
+
+      @tsSwitch = $.now()
+
+      console.log $.join [
+        '#party:'
+        "[#{last}]#{nameLast}"
+        '->'
+        "[#{@current}]#{@name}"
+      ], ' '
+
+      {typeE} = Character.get nameLast
+      if typeE == 3 then Skill.endEAsType3 last
 
     Scene.useExact ['single'], =>
-
-      @on 'change', =>
-
-        unless @size then return
-
-        list = $.tail @list
-        if $.includes list, '' then $.beep()
-        console.log "#party/member: #{$.join list, ', '}"
-
-        Buff.update()
-
-      @on 'switch', (key) =>
-
-        slot = $.toNumber key
-        unless @isSlotValid slot then return
-
-        last = @current
-        @current = slot
-
-        nameLast = @list[last]
-        @name = @list[@current]
-
-        unless nameLast then nameLast = 'unknown'
-        unless @name then @name = 'unknown'
-
-        @tsSwitch = $.now()
-
-        console.log $.join [
-          '#party:'
-          "[#{last}]#{nameLast}"
-          '->'
-          "[#{@current}]#{@name}"
-        ], ' '
-
-        {typeE} = Character.get nameLast
-        if typeE == 3 then Skill.endEAsType3 last
 
       $.on 'f12', =>
         Character.load()
         @scan()
 
-      return =>
-        @off 'change'
-        @off 'switch'
-        $.off 'f12'
+      $.on 'alt + f12', =>
+        @reset()
+        @emit 'change'
+        Hud.render 0, Dictionary.get 'party_is_cleared'
 
-    $.on 'alt + f12', =>
-      @reset()
-      @emit 'change'
-      Hud.render 0, Dictionary.get 'party_is_cleared'
+      return ->
+        $.off 'f12'
+        $.off 'alt + f12'
 
   ###* @type import('./type/party').PartyG['isCurrent'] ###
   isCurrent: (n) ->

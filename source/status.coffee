@@ -40,13 +40,11 @@ class Status2G extends EmitterShell
 
     return
 
-    Scene.useExact ['single'], =>
-      @on 'change', =>
-        unless $.length @list
-          console.log '#status/list: -'
-          return
-        console.log '#status/list:', $.join @list, ', '
-      return => @off 'change'
+    @on 'change', =>
+      unless $.length @list
+        console.log '#status/list: -'
+        return
+      console.log '#status/list:', $.join @list, ', '
 
     Scene.useExact ['single'], =>
       [interval, token] = [500, 'status/update']

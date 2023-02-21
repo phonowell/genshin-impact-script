@@ -15,31 +15,27 @@ class CameraG extends KeyBinding
   ###* @type import('./type/camera'). CameraG['init'] ###
   init: ->
 
+    @on 'press:start', =>
+      unless @count then @emit 'move:start'
+      if @count >= 4 then return
+      @count++
+
+    @on 'press:end', =>
+      if @count == 1 then @emit 'move:end'
+      if @count <= 0 then return
+      @count--
+
+    @on 'move:start', @watch
+    @on 'move:end', @watch
+
     Scene.useExact ['normal'], =>
 
       for key in @listKey
         @registerEvent 'press', key
 
-      @on 'press:start', =>
-        unless @count then @emit 'move:start'
-        if @count >= 4 then return
-        @count++
-
-      @on 'press:end', =>
-        if @count == 1 then @emit 'move:end'
-        if @count <= 0 then return
-        @count--
-
-      @on 'move:start', @watch
-      @on 'move:end', @watch
-
       return =>
         for key in @listKey
           @unregisterEvent 'press', key
-        @off 'press:start'
-        @off 'press:end'
-        @off 'move:start'
-        @off 'move:end'
 
   ###* @type import('./type/camera').CameraG['move'] ###
   move: ->

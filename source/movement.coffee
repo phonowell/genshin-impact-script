@@ -5,26 +5,19 @@ class MovementG extends KeyBinding
   constructor: ->
     super()
 
-    ###* @type import('./type/movement').MovementG['count'] ###
-    @count =
-      forward: 0
-      move: 0
+    ###* @type import('./type/movement').MovementG['direction'] ###
+    @direction = []
     ###* @type import('./type/movement').MovementG['isForwarding'] ###
     @isForwarding = false
     ###* @type import('./type/movement').MovementG['isMoving'] ###
     @isMoving = false
-    ###* @type import('./type/movement').MovementG['ts'] ###
-    @ts =
-      forward: 0
 
   ###* @type import('./type/movement').MovementG['aboutAim'] ###
-  aboutAim: -> Scene.useExact ['normal', 'not-domain'], =>
+  aboutAim: ->
 
     checkIsReadyToAim = ->
       unless Character.is Party.name, 'bow' then return false
       return Scene.is 'free'
-
-    @registerEvent 'aim', 'r'
 
     @on 'aim:start', ->
       if checkIsReadyToAim() then return
@@ -34,93 +27,79 @@ class MovementG extends KeyBinding
       if checkIsReadyToAim() then return
       $.press 't:up'
 
-    return =>
-      @unregisterEvent 'aim', 'r'
-      @off 'aim:start'
-      @off 'aim:end'
+    Scene.useExact ['normal', 'not-domain'], =>
+      @registerEvent 'aim', 'r'
+      return => @unregisterEvent 'aim', 'r'
+
+  ###* @type import('./type/movement').MovementG['aboutForward'] ###
+  aboutForward: ->
+
+    [key, token] = ['alt + w', 'toggle']
+
+    @on token, =>
+      if @isForwarding then @stopForward() else @startForward()
+
+    Scene.useExact ['normal', 'not-domain'], =>
+      @registerEvent token, key, true
+      return =>
+        @unregisterEvent token, key
+        if @isForwarding then @stopForward()
 
   ###* @type import('./type/movement').MovementG['aboutMove'] ###
-  aboutMove: -> Scene.useExact ['normal'], =>
+  aboutMove: ->
 
-    @on 'move:start', => @isMoving = true
-    @on 'move:end', => @isMoving = false
+    @on 'move', =>
 
-    return =>
-      @off 'move:start'
-      @off 'move:end'
+      if @isMoving
+        console.log "#movement/move: #{$.join @direction, ', '}"
+      else console.log '#movement/move: -'
 
-  ###* @type import('./type/movement').MovementG['aboutSprint'] ###
-  aboutSprint: -> Scene.useExact ['normal'], =>
+      if @isForwarding and (($.includes @direction, 'w') or ($.includes @direction, 's'))
+        @stopForward()
 
-    getRaw = (key) -> $.trim $.replace ($.replace key, 'shift', ''), '+', ''
+    Scene.useExact ['normal'], =>
 
-    for key in ['w', 'a', 's', 'd']
-      @registerEvent 'sprint-walk', "shift + #{key}", true
+      [interval, token] = [100, 'movement/move']
 
-    @on 'sprint-walk:start', (key) -> $.press "#{getRaw key}:down"
-    @on 'sprint-walk:end', (key) -> $.press "#{getRaw key}:up"
+      Timer.loop token, interval, =>
 
-    return =>
-      for key in ['w', 'a', 's', 'd']
-        @unregisterEvent 'sprint-walk', "shift + #{key}"
-      @off 'sprint-walk:start'
-      @off 'sprint-walk:end'
+        cache = {
+          direction: @direction
+          isMoving: @isMoving
+        }
+
+        @direction = $.filter ['w', 'a', 's', 'd'], (key) -> $.getState key
+        @isMoving = ($.length @direction) > 0
+
+        if $.eq @direction, cache.direction then return
+        @emit 'move'
+
+        if @isMoving == cache.isMoving then return
+        if @isMoving then @emit 'move:start' else @emit 'move:end'
+
+      return =>
+        Timer.remove token
+        @direction = []
+        @isMoving = false
+        @emit 'move'
+        @emit 'move:end'
 
   ###* @type import('./type/movement').MovementG['aboutUnhold'] ###
-  aboutUnhold: -> Scene.useExact ['normal', 'not-aiming', 'not-free'], =>
+  aboutUnhold: ->
 
-    @registerEvent 'unhold', 'l-button'
     @on 'unhold:start', -> $.press 'x:down'
     @on 'unhold:end', -> $.press 'x:up'
 
-    return =>
-      @unregisterEvent 'unhold', 'l-button'
-      @off 'unhold:start'
-      @off 'unhold:end'
-
-  ###* @type import('./type/movement').MovementG['aboutWalk'] ###
-  aboutWalk: -> Scene.useExact ['normal'], =>
-
-    for key in ['w', 'a', 's', 'd']
-      @registerEvent 'walk', key
-
-    @on 'walk:start', =>
-      unless @count.move then @emit 'move:start'
-      if @count.move >= 4 then return
-      @count.move++
-
-    @on 'walk:start', @toggleForward
-
-    @on 'walk:end', (key) =>
-
-      if @isForwarding and key == 'w'
-        $.press 'w:down'
-        return
-
-      if @count.move == 1 then @emit 'move:end'
-      if @count.move <= 0 then return
-      @count.move--
-
-    return =>
-      for key in ['w', 'a', 's', 'd']
-        @unregisterEvent 'walk', key
-      @off 'walk:start'
-      @off 'walk:end'
+    Scene.useExact ['normal', 'not-aiming', 'not-free'], =>
+      @registerEvent 'unhold', 'l-button'
+      return => @unregisterEvent 'unhold', 'l-button'
 
   ###* @type import('./type/movement').MovementG['init'] ###
   init: ->
-
     @aboutAim()
+    @aboutForward()
     @aboutMove()
-    @aboutSprint()
     @aboutUnhold()
-    @aboutWalk()
-
-    Scene.on 'change', =>
-      if Scene.is 'normal' then return
-      if Scene.is 'unknown' then return
-      unless @isForwarding then return
-      @stopForward()
 
   ###* @type import('./type/movement').MovementG['sprint'] ###
   sprint: -> $.click 'right'
@@ -136,33 +115,5 @@ class MovementG extends KeyBinding
     @isForwarding = false
     Hud.render 0, 'auto forward [OFF]'
     $.press 'w:up'
-
-  ###* @type import('./type/movement').MovementG['toggleForward'] ###
-  toggleForward: (key) ->
-
-    unless Scene.is 'normal', 'not-domain' then return
-
-    if @isForwarding
-      if key == 's' then @stopForward()
-      return
-
-    unless key == 'w'
-      @count.forward = 0
-      return
-
-    now = $.now()
-    diff = now - @ts.forward
-    unless diff < 500
-      @count.forward = 0
-      @ts.forward = now
-      return
-
-    @count.forward++
-    @ts.forward = now
-
-    if @count.forward >= 2
-      @count.forward = 0
-      Timer.add 100, @startForward
-      return
 
 Movement = new MovementG()

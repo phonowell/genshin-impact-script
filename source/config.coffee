@@ -58,15 +58,14 @@ class ConfigG
     @register 'better-pickup/use-fast-pickup'
     @register 'better-pickup/use-quick-skip'
 
-    # skill-timer
-    @register 'skill-timer/enable'
-
     # misc
     @register 'misc/use-beep'
     @register 'misc/use-better-jump', 'alt + space'
     @register 'misc/use-controller'
     @register 'misc/use-debug-mode'
     @register 'misc/use-mute'
+    @register 'misc/use-skill-timer'
+    @register 'misc/use-tactic', 'alt + t'
 
   ###* @type import('./type/config').ConfigG['read'] ###
   read: (ipt, defaultValue = '') ->

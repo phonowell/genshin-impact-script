@@ -111,7 +111,10 @@ class ReplayerG
 
   ###* @type import('./type/replayer').ReplayerG['stop'] ###
   stop: ->
+
+    unless @isActive then return
     @isActive = false
+    
     Timer.remove @token
     Hud.render 0, Dictionary.get 'end_replaying'
 

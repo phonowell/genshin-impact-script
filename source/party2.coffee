@@ -6,10 +6,7 @@ class Party2G extends KeyBinding
     super()
 
   ###* @type import('./type/party2').Party2G['aboutPress'] ###
-  aboutPress: -> Scene.useExact ['free', 'single'], =>
-
-    for slot in Party.listSlot
-      @registerEvent 'press', $.toString slot
+  aboutPress: ->
 
     @on 'press:start', (key) =>
 
@@ -30,11 +27,14 @@ class Party2G extends KeyBinding
 
       @waitFor n, => @emit 'switch:end'
 
-    return =>
+    Scene.useExact ['free', 'single'], =>
+
       for slot in Party.listSlot
-        @unregisterEvent 'press', $.toString slot
-      @off 'press:start'
-      @off 'press:end'
+        @registerEvent 'press', $.toString slot
+
+      return =>
+        for slot in Party.listSlot
+          @unregisterEvent 'press', $.toString slot
 
   ###* @type import('./type/party2').Party2G['aboutPressAlt'] ###
   aboutPressAlt: -> Scene.useExact ['free', 'single'], ->
@@ -51,7 +51,7 @@ class Party2G extends KeyBinding
         $.off "alt + #{slot}"
 
   ###* @type import('./type/party2').Party2G['aboutSwitch'] ###
-  aboutSwitch: -> Scene.useExact ['free', 'single'], =>
+  aboutSwitch: ->
 
     @on 'switch:start', ->
 
@@ -73,13 +73,9 @@ class Party2G extends KeyBinding
 
       Tactic.start onSwitch, $.noop
 
-    return =>
-      @off 'switch:start'
-      @off 'switch:end'
-
   ###* @type import('./type/party2').Party2G['init'] ###
   init: ->
-    unless Config.get 'skill-timer/enable' then return
+    unless Config.get 'misc/use-skill-timer' then return
     @aboutPress()
     @aboutPressAlt()
     @aboutSwitch()

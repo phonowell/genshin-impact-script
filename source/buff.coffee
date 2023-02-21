@@ -24,13 +24,16 @@ class BuffG extends EmitterShell
   ###* @type import('./type/buff').BuffG['init'] ###
   init: ->
 
-    Scene.useExact ['single'], =>
-      @on 'change', =>
-        unless $.length @list
-          console.log '#buff/list: -'
-          return
-        console.log '#buff/list:', $.join @list, ', '
-      return => @off 'change'
+    # do not delete this line
+    # or the compiler will go mad
+    # and i don't know why
+    $.noop console.log
+
+    @on 'change', =>
+      unless $.length @list
+        console.log '#buff/list: -'
+        return
+      console.log '#buff/list:', $.join @list, ', '
 
   ###* @type import('./type/buff').BuffG['remove'] ###
   remove: (name) ->

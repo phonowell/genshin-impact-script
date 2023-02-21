@@ -14,8 +14,8 @@ All keys use the default game keys, but `Swtich Run/Walk` must be bound to
 | `~`                                 | Switch character and use elemental skill |
 | `1~5`                               | Switch character                         |
 | `Alt + 1~5`                         | Switch character and use elemental burst |
-| Triple press `W`                    | Enter auto forwarding                    |
-| `S`                                 | Exit auto forwarding                     |
+| `Alt + W`                           | Enter/exit auto forwarding               |
+| `W / S`                             | Exit auto forwarding                     |
 | Long press `F`                      | Pick up items or quickly skip dialogues  |
 | `Alt + F`                           | Enter/exit auto pickup                   |
 | `Alt + Space`                       | Enable/disable better jump               |

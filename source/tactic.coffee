@@ -227,45 +227,34 @@ class TacticG extends KeyBinding
   ###* @type import('./type/tactic').TacticG['init'] ###
   init: ->
 
+    # left button
+    @on 'attack:start', =>
+      unless Party.name then return
+      @start Character.get Party.name, 'onLongPress'
+    @on 'attack:end', @stop
     Scene.useExact ['single'], =>
-
       @registerEvent 'attack', 'l-button'
-      @on 'attack:start', =>
-        unless Party.name then return
-        @start Character.get Party.name, 'onLongPress'
-      @on 'attack:end', @stop
+      return => @unregisterEvent 'attack', 'l-button'
 
-      return =>
-        @unregisterEvent 'attack', 'l-button'
-        @off 'attack:start'
-        @off 'attack:end'
-
+    # side button 1
+    @on 'side-button-1:start', =>
+      unless Party.name then return
+      @start Character.get Party.name, 'onSideButton1'
+    @on 'side-button-1:end', @stop
     Scene.useExact ['single'], =>
-
       @registerEvent 'side-button-1', 'x-button-1'
-      @on 'side-button-1:start', =>
-        unless Party.name then return
-        @start Character.get Party.name, 'onSideButton1'
-      @on 'side-button-1:end', @stop
+      return => @unregisterEvent 'side-button-1', 'x-button-1'
 
-      return =>
-        @unregisterEvent 'side-button-1', 'x-button-1'
-        @off 'side-button-1:start'
-        @off 'side-button-1:end'
-
+    # side button 2
+    @on 'side-button-2:start', =>
+      unless Party.name then return
+      @start Character.get Party.name, 'onSideButton2'
+    @on 'side-button-2:end', @stop
     Scene.useExact ['single'], =>
-
       @registerEvent 'side-button-2', 'x-button-2'
-      @on 'side-button-2:start', =>
-        unless Party.name then return
-        @start Character.get Party.name, 'onSideButton2'
-      @on 'side-button-2:end', @stop
+      return => @unregisterEvent 'side-button-2', 'x-button-2'
 
-      return =>
-        @unregisterEvent 'side-button-2', 'x-button-2'
-        @off 'side-button-2:start'
-        @off 'side-button-2:end'
-
+    # party
     Scene.useExact ['single'], =>
       Party.on 'switch.tactic', @stop
       return -> Party.off 'switch.tactic'

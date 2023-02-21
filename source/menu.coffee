@@ -33,34 +33,28 @@ class MenuG extends KeyBinding
     unless Config.get 'better-pickup/use-quick-skip' then return
 
     # r-button
-    Scene.useExact @isMenu, =>
-
-      @registerEvent 'right-click', 'r-button'
-      @on 'right-click', -> $.press 'esc'
-
-      return =>
-        @unregisterEvent 'right-click', 'r-button'
-        @off 'right-click'
+    do =>
+      token = 'right-click/menu'
+      @on token, -> $.press 'esc'
+      Scene.useExact @isMenu, =>
+        @registerEvent token, 'r-button'
+        return => @unregisterEvent token, 'r-button'
 
     # space for map
-    Scene.useExact ['map'], =>
-
-      @registerEvent 'space', 'space'
-      @on 'space', @asMap
-
-      return =>
-        @unregisterEvent 'space', 'space'
-        @off 'space'
+    do =>
+      token = 'space/map'
+      @on token, @asMap
+      Scene.useExact ['map'], =>
+        @registerEvent token, 'space'
+        return => @unregisterEvent token, 'space'
 
     # space for mini-menu
-    Scene.useExact ['mini-menu'], =>
-
-      @registerEvent 'space', 'space'
-      @on 'space', @asMiniMenu
-
-      return =>
-        @unregisterEvent 'space', 'space'
-        @off 'space'
+    do =>
+      token = 'space/mini-menu'
+      @on token, @asMiniMenu
+      Scene.useExact ['mini-menu'], =>
+        @registerEvent token, 'space'
+        return => @unregisterEvent token, 'space'
 
   ###* @type import('./type/menu').MenuG['isMenu'] ###
   isMenu: ->

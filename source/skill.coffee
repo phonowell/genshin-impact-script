@@ -161,7 +161,7 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['init'] ###
   init: ->
-    unless Config.get 'skill-timer/enable' then return
+    unless Config.get 'misc/use-skill-timer' then return
     @reset()
     @aboutBinding()
     @watch()

@@ -36,25 +36,20 @@ class JumperG extends KeyBinding
 
     unless (Config.get 'misc/use-better-jump') then return
 
+    @on 'jump:start', => @tsJump = $.now()
+
+    @on 'jump:end', =>
+
+      now = $.now()
+      diff = now - @tsJump
+      @tsJump = now
+
+      unless diff < 350 then return
+      Timer.add 'jumper/jump', 350 - diff, @jump
+
     Scene.useExact ['free', 'not-domain'], =>
-
       @registerEvent 'jump', 'space'
-
-      @on 'jump:start', => @tsJump = $.now()
-
-      @on 'jump:end', =>
-
-        now = $.now()
-        diff = now - @tsJump
-        @tsJump = now
-
-        unless diff < 350 then return
-        Timer.add 'jumper/jump', 350 - diff, @jump
-
-      return =>
-        @unregisterEvent 'jump', 'space'
-        @off 'jump:start'
-        @off 'jump:end'
+      return => @unregisterEvent 'jump', 'space'
 
     @watch()
 

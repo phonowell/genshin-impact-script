@@ -1,8 +1,9 @@
 # @ts-check
 
-aboutCaps = ->
-  Client.on 'activate', -> Native 'SetCapsLockState, Off'
+aboutCaps = -> Scene.useExact ['normal'], ->
+  Native 'SetCapsLockState, Off'
   $.on 'CapsLock', -> $.beep()
+  return -> $.off 'CapsLock'
 
 aboutClient = ->
   report = ->
@@ -22,9 +23,7 @@ aboutDebug = ->
   unless Config.get 'misc/use-debug-mode' then return
   $.on 'alt + f9', ColorManager.pick
 
-aboutSkillTimer = ->
-
-  unless Config.get 'skill-timer/enable' then return
+aboutParty = ->
 
   # auto scan
 
@@ -66,6 +65,7 @@ boot = (callback) ->
     Fishing
     Hud
     Indicator
+    Menu2
     Picker
     Recorder
     Replayer
@@ -80,7 +80,6 @@ boot = (callback) ->
     Character
     Gdip
     Jumper
-    Menu2
     Movement
     Party
     Party2
@@ -104,7 +103,7 @@ boot = (callback) ->
 boot ->
   aboutCaps()
   aboutClient()
-  aboutSkillTimer()
+  aboutParty()
   aboutDebug()
 
 # exit
