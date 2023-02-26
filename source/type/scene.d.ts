@@ -5,7 +5,6 @@ export type Name =
   | 'chat'
   | 'domain'
   | 'event'
-  | 'fishing'
   | 'free'
   | 'half-menu'
   | 'loading'

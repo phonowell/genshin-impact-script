@@ -20,7 +20,7 @@ class DictionaryG
     message = group[0]
     switch A_language
       when '0804' then message = group[1]
-      when '0411' then message = group[2]
+      # when '0411' then message = group[2]
 
     return $.replace message, '<br>', '\n'
 

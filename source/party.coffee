@@ -105,7 +105,7 @@ class PartyG extends KeyBinding
       {typeE} = Character.get nameLast
       if typeE == 3 then Skill.endEAsType3 last
 
-    Scene.useExact ['single'], =>
+    Scene.useExact ['free', 'single'], =>
 
       $.on 'f12', =>
         Character.load()
@@ -124,7 +124,6 @@ class PartyG extends KeyBinding
   isCurrent: (n) ->
 
     unless Scene.is 'normal' then return false
-    if Scene.is 'using-q' then return true
 
     if ColorManager.findAll [0xFFFFFF, 0x323232], @makeArea n, true
       return false
@@ -165,11 +164,6 @@ class PartyG extends KeyBinding
     token = 'party/scan'
     Indicator.setCost token, 'start'
 
-    unless Scene.is 'free', 'single'
-      Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
-      Sound.beep()
-      return
-
     @reset()
     @countMember()
 
@@ -194,6 +188,7 @@ class PartyG extends KeyBinding
     $.push @list, name
 
     nameOutput = Dictionary.get name
+    unless name then nameOutput = Dictionary.get 'unknown_character'
     if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
       nameOutput = $.replace nameOutput, ' ', '\n'
 

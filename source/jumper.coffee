@@ -34,8 +34,6 @@ class JumperG extends KeyBinding
   ###* @type import('./type/jumper').JumperG['init'] ###
   init: ->
 
-    unless (Config.get 'misc/use-better-jump') then return
-
     @on 'jump:start', => @tsJump = $.now()
 
     @on 'jump:end', =>
@@ -48,10 +46,13 @@ class JumperG extends KeyBinding
       Timer.add 'jumper/jump', 350 - diff, @jump
 
     Scene.useExact ['free', 'not-domain'], =>
+      unless (Config.get 'misc/use-better-jump') then return $.noop
       @registerEvent 'jump', 'space'
-      return => @unregisterEvent 'jump', 'space'
+      return =>
+        @unregisterEvent 'jump', 'space'
+        Timer.remove 'jumper/jump'
 
-    @watch()
+    # @watch()
 
   ###* @type import('./type/jumper').JumperG['jump'] ###
   jump: ->

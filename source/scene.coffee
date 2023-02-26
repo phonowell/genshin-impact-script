@@ -39,9 +39,6 @@ class SceneG extends EmitterShell
 
     # do not use @is() here
     # because it will cause infinite loop
-    if $.includes @list, 'fishing' then return
-
-    unless Timer.hasElapsed 'scene/update', 100 then return
 
     list = Scene2.check()
     if $.eq list, @list then return

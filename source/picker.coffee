@@ -29,7 +29,7 @@ class PickerG extends KeyBinding
   ###* @type import('./type/picker').PickerG['find'] ###
   find: ->
 
-    if @isPressed['f'] then return
+    if @mapPressed['f'] then return
     unless Scene.is 'normal', 'not-domain' then return
 
     p = ColorManager.findAny 0x323232, [
@@ -88,7 +88,7 @@ class PickerG extends KeyBinding
     diff = $.now() - @tsPick
     unless diff > 150 then return
 
-    unless @isPressed['f'] then return
+    unless @mapPressed['f'] then return
 
     if @skip() then return
 
@@ -103,7 +103,7 @@ class PickerG extends KeyBinding
       @listen()
       return
 
-    if @isPressed['f']
+    if @mapPressed['f']
       @listen()
       return
 
@@ -119,9 +119,9 @@ class PickerG extends KeyBinding
   skip: ->
 
     unless Scene.is 'event' then return false
-    if @isPressed['l-button'] then return false # enable camera
+    if @mapPressed['l-button'] then return false # enable camera
 
-    if @isPressed['f'] then $.press 'f'
+    if @mapPressed['f'] then $.press 'f'
     else $.press 'space'
 
     p = ColorManager.findAny [

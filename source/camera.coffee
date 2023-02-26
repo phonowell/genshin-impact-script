@@ -42,12 +42,12 @@ class CameraG extends KeyBinding
 
     unless Scene.is 'normal' then return
 
-    if @isPressed['left'] then x = -1
-    else if @isPressed['right'] then x = 1
+    if @mapPressed['left'] then x = -1
+    else if @mapPressed['right'] then x = 1
     else x = 0
 
-    if @isPressed['up'] then y = -1
-    else if @isPressed['down'] then y = 1
+    if @mapPressed['up'] then y = -1
+    else if @mapPressed['down'] then y = 1
     else y = 0
 
     if x == 0 and y == 0 then return

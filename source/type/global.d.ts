@@ -51,10 +51,7 @@ declare global {
   }
 
   class KeyBinding extends EmitterShell {
-    isFired: KB['isFired']
-    isPressed: KB['isPressed']
-    map: KB['map']
-
+    mapPressed: KB['mapPressed']
     registerEvent: KB['registerEvent']
     unregisterEvent: KB['unregisterEvent']
   }
