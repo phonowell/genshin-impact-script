@@ -17,7 +17,7 @@ class MovementG extends KeyBinding
 
     checkIsReadyToAim = ->
       unless Character.is Party.name, 'bow' then return false
-      return Status2.has 'free'
+      return State.is 'free'
 
     @on 'aim:start', ->
       if checkIsReadyToAim() then return
@@ -88,13 +88,13 @@ class MovementG extends KeyBinding
   aboutUnhold: ->
 
     @on 'unhold:start', ->
-      if Status2.has 'aiming' then return
-      if Status2.has 'free' then return
+      if State.is 'aiming' then return
+      if State.is 'free' then return
       $.press 'x:down'
 
     @on 'unhold:end', ->
-      if Status2.has 'aiming' then return
-      if Status2.has 'free' then return
+      if State.is 'aiming' then return
+      if State.is 'free' then return
       $.press 'x:up'
 
     Scene.useExact ['normal'], =>

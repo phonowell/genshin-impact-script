@@ -36,7 +36,7 @@ class MenuG extends KeyBinding
     do =>
       token = 'right-click/menu'
       @on token, -> $.press 'esc'
-      Client.useChange ['scene'], ->
+      Client.useChange [Scene], ->
         if Scene.is 'half-menu' then return true
         if Scene.is 'menu' then return true
         if Scene.is 'mini-menu' then return true

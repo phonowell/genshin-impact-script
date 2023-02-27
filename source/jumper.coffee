@@ -35,12 +35,12 @@ class JumperG extends KeyBinding
   init: ->
 
     @on 'jump:start', =>
-      unless Status2.has 'free' then return
+      unless State.is 'free' then return
       @tsJump = $.now()
 
     @on 'jump:end', =>
 
-      unless Status2.has 'free' then return
+      unless State.is 'free' then return
 
       now = $.now()
       diff = now - @tsJump
@@ -49,7 +49,7 @@ class JumperG extends KeyBinding
       unless diff < 350 then return
       Timer.add 'jumper/jump', 350 - diff, @jump
 
-    Client.useChange ['config', 'scene'], ->
+    Client.useChange [Config, Scene], ->
       unless Config.get 'misc/use-better-jump' then return false
       unless Scene.is 'not-domain' then return false
       return true
@@ -69,7 +69,7 @@ class JumperG extends KeyBinding
 
   ###* @type import('./type/jumper').JumperG['watch'] ###
   watch: -> Scene.useExact ['normal'], =>
-    unless (Status2.has 'cryo') or (Status2.has 'hydro') then return $.noop
+    unless (State.is 'cryo') or (State.is 'hydro') then return $.noop
     [interval, token] = [300, 'jumper/watch']
     Timer.loop token, interval, @check
     return -> Timer.remove token

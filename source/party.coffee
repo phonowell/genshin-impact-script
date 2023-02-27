@@ -18,6 +18,12 @@ class PartyG extends KeyBinding
     ###* @type import('./type/party').PartyG['tsSwitch'] ###
     @tsSwitch = 0
 
+  ###* @type import('./type/party').PartyG['clear'] ###
+  clear: ->
+    @reset()
+    @emit 'change'
+    Hud.render 0, Dictionary.get 'party_is_cleared'
+
   ###* @type import('./type/party').PartyG['countMember'] ###
   countMember: ->
 
@@ -109,7 +115,7 @@ class PartyG extends KeyBinding
 
       $.on 'f12', =>
 
-        unless Status2.has 'free'
+        unless State.is 'free'
           Sound.beep()
           Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
           return
@@ -117,14 +123,32 @@ class PartyG extends KeyBinding
         Character.load()
         @scan()
 
-      $.on 'alt + f12', =>
-        @reset()
-        @emit 'change'
-        Hud.render 0, Dictionary.get 'party_is_cleared'
+      return -> $.off 'f12'
 
-      return ->
-        $.off 'f12'
-        $.off 'alt + f12'
+    Scene.useExact ['normal'], =>
+      $.on 'alt + f12', @clear
+      return -> $.off 'alt + f12'
+
+    # auto clear/scan party
+    do addListener = =>
+      token = 'party/addListener'
+      Timer.loop token, 1e3, =>
+
+        if Party.size
+          Timer.remove token
+          return
+
+        unless Scene.is 'single' then return
+        unless State.is 'free' then return
+        @scan()
+
+    Client.useChange [Scene], ->
+      if Scene.is 'party' then return true
+      if Scene.is 'normal', 'not-single' then return true
+      return false
+    , =>
+      @clear()
+      return addListener
 
   ###* @type import('./type/party').PartyG['isCurrent'] ###
   isCurrent: (n) ->

@@ -82,8 +82,10 @@ class ClientG extends KeyBinding
       if fnCheck() then fnA()
       else fnB()
 
-    if $.includes listDeps, 'config' then Config.on 'change', fn
-    if $.includes listDeps, 'scene' then Scene.on 'change', fn
+    for dep in listDeps
+      dep.on 'change', fn
+
+    return
 
 # @ts-ignore
 Client = new ClientG()

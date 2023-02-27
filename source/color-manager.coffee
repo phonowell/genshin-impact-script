@@ -84,7 +84,7 @@ class ColorManagerG
     @clearCache()
 
     Scene.update()
-    Status2.update()
+    State.update()
     Picker.next()
     console.update()
 

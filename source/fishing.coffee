@@ -73,12 +73,12 @@ class FishingG
         Sound.beep()
         return
 
-      if Status2.has 'free'
+      if State.is 'free'
         Sound.beep()
         return
 
       @isActive = true
-      
+
     else @isActive = false
 
     Timer.remove 'fishing/watch'

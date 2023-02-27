@@ -108,7 +108,7 @@ class PickerG extends KeyBinding
       @listen()
       return
 
-    if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'event'
+    if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'dialogue'
       @skip()
       return
 
@@ -119,7 +119,7 @@ class PickerG extends KeyBinding
   ###* @type import('./type/picker').PickerG['skip'] ###
   skip: ->
 
-    unless Scene.is 'event' then return false
+    unless Scene.is 'dialogue' then return false
     if @mapPressed['l-button'] then return false # enable camera
 
     if @mapPressed['f'] then $.press 'f'

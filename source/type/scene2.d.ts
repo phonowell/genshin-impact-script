@@ -5,7 +5,7 @@ export class Scene2G {
   private cache: object
   private mapAbout: Record<Name, Fn>
   constructor()
-  private aboutEvent(): Name[]
+  private aboutDialogue(): Name[]
   private aboutHalfMenu(): Name[]
   private aboutLoading(): Name[]
   private aboutMenu(): Name[]
@@ -13,8 +13,8 @@ export class Scene2G {
   private aboutNormal(): Name[]
   check(): Name[]
   private checkIsChat(): boolean
+  private checkIsDialogue(): boolean
   private checkIsDomain(): boolean
-  private checkIsEvent(): boolean
   private checkIsHalfMenu(): boolean
   private checkIsLoading(): boolean
   private checkIsMap(): boolean

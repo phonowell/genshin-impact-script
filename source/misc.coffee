@@ -23,37 +23,6 @@ aboutDebug = ->
   unless Config.get 'misc/use-debug-mode' then return
   $.on 'alt + f9', ColorManager.pick
 
-aboutParty = ->
-
-  # auto scan
-
-  token = 'change.auto-scan'
-
-  autoScan = ->
-    unless Scene.is 'single' then return
-    unless Status2.has 'free' then return
-    Scene.off token
-    Party.scan()
-
-  addListener = ->
-    Scene.off token
-    Scene.on token, autoScan
-
-  Scene.on 'change', ->
-    unless Scene.is 'party' then return
-    addListener()
-
-  addListener()
-  Scene.emit token
-
-  # clear party
-
-  Scene.on 'change', ->
-    unless Party.size then return
-    unless Scene.is 'normal' then return
-    if Scene.is 'single' then return
-    $.trigger 'alt + f12'
-
 boot = (callback) ->
 
   list = [
@@ -74,7 +43,7 @@ boot = (callback) ->
     Scene
     Skill
     Sound
-    Status2
+    State
     Tactic
     Window2
     Buff
@@ -104,7 +73,6 @@ boot = (callback) ->
 boot ->
   aboutCaps()
   aboutClient()
-  aboutParty()
   aboutDebug()
 
 # exit

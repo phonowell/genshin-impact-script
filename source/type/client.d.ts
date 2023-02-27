@@ -9,7 +9,7 @@ export class ClientG extends KeyBinding {
   suspend(isSuspended: boolean): void
   useActive(fn: () => Fn): void
   useChange(
-    listDeps: ('config' | 'scene')[],
+    listDeps: EmitterShell[],
     fnCheck: () => boolean,
     fnExec: () => Fn,
   ): void

@@ -15,6 +15,7 @@ import __diluc__ from '../../genshin-character-data/source/diluc.yaml'
 import __diona__ from '../../genshin-character-data/source/diona.yaml'
 import __dori__ from '../../genshin-character-data/source/dori.yaml'
 import __eula__ from '../../genshin-character-data/source/eula.yaml'
+import __faruzan__ from '../../genshin-character-data/source/faruzan.yaml'
 import __fischl__ from '../../genshin-character-data/source/fischl.yaml'
 import __ganyu__ from '../../genshin-character-data/source/ganyu.yaml'
 import __gorou__ from '../../genshin-character-data/source/gorou.yaml'
@@ -49,12 +50,14 @@ import __thoma__ from '../../genshin-character-data/source/thoma.yaml'
 import __tighnari__ from '../../genshin-character-data/source/tighnari.yaml'
 import __traveler__ from '../../genshin-character-data/source/traveler.yaml'
 import __venti__ from '../../genshin-character-data/source/venti.yaml'
+import __wanderer__ from '../../genshin-character-data/source/wanderer.yaml'
 import __xiangling__ from '../../genshin-character-data/source/xiangling.yaml'
 import __xiao__ from '../../genshin-character-data/source/xiao.yaml'
 import __xingqiu__ from '../../genshin-character-data/source/xingqiu.yaml'
 import __xinyan__ from '../../genshin-character-data/source/xinyan.yaml'
 import __yae_miko__ from '../../genshin-character-data/source/yae_miko.yaml'
 import __yanfei__ from '../../genshin-character-data/source/yanfei.yaml'
+import __yaoyao__ from '../../genshin-character-data/source/yaoyao.yaml'
 import __yelan__ from '../../genshin-character-data/source/yelan.yaml'
 import __yoimiya__ from '../../genshin-character-data/source/yoimiya.yaml'
 import __yun_jin__ from '../../genshin-character-data/source/yun_jin.yaml'
@@ -138,6 +141,7 @@ class CharacterG
     $.mixin data, diona: __diona__
     $.mixin data, dori: __dori__
     $.mixin data, eula: __eula__
+    $.mixin data, faruzan: __faruzan__
     $.mixin data, fischl: __fischl__
     $.mixin data, ganyu: __ganyu__
     $.mixin data, gorou: __gorou__
@@ -172,12 +176,14 @@ class CharacterG
     $.mixin data, tighnari: __tighnari__
     $.mixin data, traveler: __traveler__
     $.mixin data, venti: __venti__
+    $.mixin data, wanderer: __wanderer__
     $.mixin data, xiangling: __xiangling__
     $.mixin data, xiao: __xiao__
     $.mixin data, xingqiu: __xingqiu__
     $.mixin data, xinyan: __xinyan__
     $.mixin data, yae_miko: __yae_miko__
     $.mixin data, yanfei: __yanfei__
+    $.mixin data, yaoyao: __yaoyao__
     $.mixin data, yelan: __yelan__
     $.mixin data, yoimiya: __yoimiya__
     $.mixin data, yun_jin: __yun_jin__

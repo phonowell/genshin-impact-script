@@ -170,7 +170,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['isEUsed'] ###
   isEUsed: ->
 
-    unless Status2.has 'free' then return
+    unless State.is 'free' then return
     unless $.now() - @tsUseE > 500 then return
 
     {current, name} = Party
@@ -239,7 +239,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['switchQ'] ###
   switchQ: (slot) ->
 
-    unless Status2.has 'free'
+    unless State.is 'free'
       $.press "alt + #{slot}"
       return
 
@@ -270,7 +270,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['useQ'] ###
   useQ: ->
 
-    unless Status2.has 'free' then return
+    unless State.is 'free' then return
 
     $.press 'q'
     @freeze()

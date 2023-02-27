@@ -2,8 +2,8 @@ import { Fn } from './global'
 
 export type Name =
   | 'chat'
+  | 'dialogue'
   | 'domain'
-  | 'event'
   | 'half-menu'
   | 'loading'
   | 'map'

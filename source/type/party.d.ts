@@ -8,6 +8,7 @@ export class PartyG extends KeyBinding {
   size: number
   tsSwitch: number
   constructor()
+  private clear(): void
   private countMember(): void
   findCurrent(): number
   private getNameViaSlot(n: number): string

@@ -7,7 +7,6 @@ const mapTrans: Record<string, string> = {
   'color-manager': 'ColorManager',
   console: 'console',
   menu: 'Menu2',
-  status: 'Status2',
   window: 'Window2',
 }
 

@@ -10,7 +10,7 @@ class Party2G extends KeyBinding
 
     @on 'press:start', (key) =>
 
-      unless Status2.has 'free' then return
+      unless State.is 'free' then return
 
       Timer.remove 'party2/is-current-as'
       Timer.remove 'party2/wait-for'
@@ -24,7 +24,7 @@ class Party2G extends KeyBinding
 
     @on 'press:end', (key) =>
 
-      unless Status2.has 'free' then return
+      unless State.is 'free' then return
 
       n = $.toNumber key
       unless Party.isSlotValid n then return
@@ -50,7 +50,7 @@ class Party2G extends KeyBinding
           $.press "alt + #{slot}"
           return
 
-        unless Status2.has 'free' then return
+        unless State.is 'free' then return
 
         Skill.switchQ slot
 
@@ -145,7 +145,7 @@ class Party2G extends KeyBinding
     Timer.loop token, interval, =>
 
       unless Party.size then return
-      unless Status2.has 'free' then return
+      unless State.is 'free' then return
       unless $.now() - Party.tsSwitch > 1e3 then return
       if Party.isCurrent Party.current then return
 

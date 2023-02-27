@@ -31,7 +31,7 @@ import { Scene2G } from './scene2'
 import { Shell } from './shell'
 import { SkillG } from './skill'
 import { SoundG } from './sound'
-import { Status2G } from './status'
+import { StateG } from './state'
 import { TacticG } from './tactic'
 import { TimerG } from './timer'
 import { WindowG } from './window'
@@ -127,7 +127,7 @@ declare global {
   const Scene: SceneG
   const Skill: SkillG
   const Sound: SoundG
-  const Status2: Status2G
+  const State: StateG
   const Tactic: TacticG
   const Timer: TimerG
   const Window2: WindowG
@@ -160,7 +160,7 @@ declare global {
   const scene: never
   const skill: never
   const sound: never
-  const status2: never
+  const state: never
   const tactic: never
   const timer: never
   const window2: never

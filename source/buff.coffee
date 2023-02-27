@@ -1,8 +1,5 @@
 # @ts-check
 
-# @ts-ignore
-import __map_status__ from '../../genshin-avatar-color-picker/source/result/status.yaml'
-
 class BuffG extends EmitterShell
 
   constructor: ->
