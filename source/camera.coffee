@@ -81,5 +81,5 @@ class CameraG extends KeyBinding
     Client.on eventActivate, => Timer.loop token, interval, @move
     Timer.loop token, interval, @move
 
-# export
+# @ts-ignore
 Camera = new CameraG()

@@ -1,5 +1,6 @@
 # @ts-check
 
+# @ts-ignore
 import __character_a_n__ from '../../gis-static/dictionary/character/a-n.yaml'
 import __character_o_z__ from '../../gis-static/dictionary/character/o-z.yaml'
 import __misc__ from '../../gis-static/dictionary/misc.yaml'
@@ -43,4 +44,5 @@ class DictionaryG
   ###* @type import('./type/dictionary').DictionaryG['noop'] ###
   noop: -> undefined
 
+# @ts-ignore
 Dictionary = new DictionaryG()

@@ -78,5 +78,5 @@ class CursorG
     Client.on eventActivate, => Timer.loop token, interval, @move
     Timer.loop token, interval, @move
 
-# export
+# @ts-ignore
 Cursor = new CursorG()

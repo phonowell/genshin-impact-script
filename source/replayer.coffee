@@ -114,9 +114,9 @@ class ReplayerG
 
     unless @isActive then return
     @isActive = false
-    
+
     Timer.remove @token
     Hud.render 0, Dictionary.get 'end_replaying'
 
-# export
+# @ts-ignore
 Replayer = new ReplayerG()

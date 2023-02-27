@@ -182,4 +182,5 @@ class WindowG extends KeyBinding
     @checkActive()
     @checkMousePosition()
 
+# @ts-ignore
 Window2 = new WindowG()

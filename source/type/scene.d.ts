@@ -1,11 +1,9 @@
 import { Fn } from './global'
 
 export type Name =
-  | 'aiming'
   | 'chat'
   | 'domain'
   | 'event'
-  | 'free'
   | 'half-menu'
   | 'loading'
   | 'map'
@@ -24,5 +22,5 @@ export class SceneG extends EmitterShell {
   init(): void
   is(...names: NamePossible[]): boolean
   update(): void
-  useExact(listDeps: NamePossible[] | (() => boolean), fn: () => Fn): void
+  useExact(listDeps: NamePossible[], fn: () => Fn): void
 }

@@ -1,5 +1,6 @@
 # @ts-check
 
+# @ts-ignore
 import __shape__ from '../../gis-static/data/shape-forbidden.yaml'
 
 class PickerG extends KeyBinding
@@ -137,4 +138,5 @@ class PickerG extends KeyBinding
     Point.click p
     return true
 
+# @ts-ignore
 Picker = new PickerG()

@@ -19,7 +19,6 @@ class SceneG extends EmitterShell
   ###* @type import('./type/scene').SceneG['is'] ###
   is: (names...) ->
 
-    @update()
     if $.includes names, 'unknown' then return ($.length @list) == 0
 
     for name in names
@@ -55,11 +54,7 @@ class SceneG extends EmitterShell
 
     @on 'change', =>
 
-      isValid = false
-      if $.isArray list then isValid = @is list...
-      else isValid = list()
-
-      if isValid
+      if @is list...
         unless data.isFired
           data.isFired = true
           data.callback = fn()
@@ -68,4 +63,5 @@ class SceneG extends EmitterShell
           data.isFired = false
           data.callback()
 
+# @ts-ignore
 Scene = new SceneG()

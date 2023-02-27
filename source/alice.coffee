@@ -48,4 +48,5 @@ class AliceG
       if onSwitch then @mapOnSwitch["p#{n}"] = onSwitch
     return
 
+# @ts-ignore
 Alice = new AliceG()

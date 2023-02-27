@@ -84,4 +84,5 @@ class TimerG
     $.delete @cacheTimer, id
     return
 
+# @ts-ignore
 Timer = new TimerG()

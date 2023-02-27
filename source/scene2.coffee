@@ -79,11 +79,6 @@ class Scene2G
     unless @checkIsNormal() then return []
     list = @makeListName 'normal'
 
-    if @checkIsFree()
-      $.push list, 'free'
-    else
-      if @checkIsAiming() then $.push list, 'aiming'
-
     if @checkIsDomain() then $.push list, 'domain'
     if @checkIsSingle() then $.push list, 'single'
 
@@ -115,11 +110,6 @@ class Scene2G
     @cache.last = 'unknown'
     return []
 
-  ###* @type import('./type/scene2').Scene2G['checkIsAiming'] ###
-  checkIsAiming: ->
-    unless (Character.get Party.name, 'weapon') == 'bow' then return false
-    return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
-
   ###* @type import('./type/scene2').Scene2G['checkIsChat'] ###
   checkIsChat: -> @throttle 'check-is-chat', 1e3, ->
     return ColorManager.findAll [0x3B4255, 0xECE5D8], [
@@ -139,21 +129,6 @@ class Scene2G
     '45%', '79%'
     '55%', '82%'
   ]
-
-  ###* @type import('./type/scene2').Scene2G['checkIsFree'] ###
-  checkIsFree: ->
-
-    # unless ColorManager.findAny [0x96D722, 0xFF6666], [
-    #   '88%', '25%'
-    #   '89%', '53%'
-    # ] then return false
-
-    unless ColorManager.findAll [0xFFFFFF, 0x323232], [
-      '94%', '80%'
-      '95%', '82%'
-    ] then return false
-
-    return true
 
   ###* @type import('./type/scene2').Scene2G['checkIsHalfMenu'] ###
   checkIsHalfMenu: -> ColorManager.findAll [0x3B4255, 0xECE5D8], [
@@ -249,4 +224,5 @@ class Scene2G
 
     return @cache[id] = fn()
 
+# @ts-ignore
 Scene2 = new Scene2G()

@@ -114,5 +114,5 @@ class RecorderG extends KeyBinding
     Sound.beep()
     Hud.render 0, Dictionary.get 'end_recording'
 
-# export
+# @ts-ignore
 Recorder = new RecorderG()

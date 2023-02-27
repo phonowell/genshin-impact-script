@@ -2,7 +2,7 @@
 
 aboutCaps = -> Scene.useExact ['normal'], ->
   Native 'SetCapsLockState, Off'
-  $.on 'CapsLock', -> $.beep()
+  $.on 'CapsLock', -> Sound.beep()
   return -> $.off 'CapsLock'
 
 aboutClient = ->
@@ -30,7 +30,8 @@ aboutParty = ->
   token = 'change.auto-scan'
 
   autoScan = ->
-    unless Scene.is 'free', 'single' then return
+    unless Scene.is 'single' then return
+    unless Status2.has 'free' then return
     Scene.off token
     Party.scan()
 
@@ -65,6 +66,7 @@ boot = (callback) ->
     Fishing
     Hud
     Indicator
+    Jumper
     Menu2
     Picker
     Recorder
@@ -79,7 +81,6 @@ boot = (callback) ->
     Camera
     Character
     Gdip
-    Jumper
     Movement
     Party
     Party2

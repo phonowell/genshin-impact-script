@@ -36,7 +36,12 @@ class MenuG extends KeyBinding
     do =>
       token = 'right-click/menu'
       @on token, -> $.press 'esc'
-      Scene.useExact @isMenu, =>
+      Client.useChange ['scene'], ->
+        if Scene.is 'half-menu' then return true
+        if Scene.is 'menu' then return true
+        if Scene.is 'mini-menu' then return true
+        return false
+      , =>
         @registerEvent token, 'r-button'
         return => @unregisterEvent token, 'r-button'
 
@@ -56,11 +61,5 @@ class MenuG extends KeyBinding
         @registerEvent token, 'space'
         return => @unregisterEvent token, 'space'
 
-  ###* @type import('./type/menu').MenuG['isMenu'] ###
-  isMenu: ->
-    if Scene.is 'half-menu' then return true
-    if Scene.is 'menu' then return true
-    if Scene.is 'mini-menu' then return true
-    return false
-
+# @ts-ignore
 Menu2 = new MenuG()

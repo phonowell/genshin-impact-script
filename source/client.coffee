@@ -60,4 +60,30 @@ class ClientG extends KeyBinding
       data.isFired = false
       data.callback()
 
+  ###* @type import('./type/client').ClientG['useChange'] ###
+  useChange: (listDeps, fnCheck, fnExec) ->
+
+    data = {
+      callback: $.noop
+      isFired: false
+    }
+
+    fnA = ->
+      if data.isFired then return
+      data.isFired = true
+      data.callback = fnExec()
+
+    fnB = ->
+      unless data.isFired then return
+      data.isFired = false
+      data.callback()
+
+    fn = ->
+      if fnCheck() then fnA()
+      else fnB()
+
+    if $.includes listDeps, 'config' then Config.on 'change', fn
+    if $.includes listDeps, 'scene' then Scene.on 'change', fn
+
+# @ts-ignore
 Client = new ClientG()

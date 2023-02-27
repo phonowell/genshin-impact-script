@@ -98,4 +98,5 @@ class HudG
       Timer.remove token
       @hideAll()
 
+# @ts-ignore
 Hud = new HudG()

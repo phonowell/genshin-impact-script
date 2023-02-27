@@ -284,4 +284,5 @@ class TacticG extends KeyBinding
     @isActive = false
     Timer.remove 'tactic/next'
 
+# @ts-ignore
 Tactic = new TacticG()

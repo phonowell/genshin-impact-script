@@ -44,4 +44,5 @@ class AreaG
     unless ($.isNumber y2) and y2 >= y then return false
     return true
 
+# @ts-ignore
 Area = new AreaG()

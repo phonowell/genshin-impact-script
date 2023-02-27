@@ -84,6 +84,7 @@ class ColorManagerG
     @clearCache()
 
     Scene.update()
+    Status2.update()
     Picker.next()
     console.update()
 
@@ -103,5 +104,5 @@ class ColorManagerG
     ClipBoard = color
     $.noop ClipBoard
 
-# export
+# @ts-ignore
 ColorManager = new ColorManagerG()

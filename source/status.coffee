@@ -1,5 +1,6 @@
 # @ts-check
 
+# @ts-ignore
 import __map_status__ from '../../genshin-avatar-color-picker/source/result/status.yaml'
 
 class Status2G extends EmitterShell
@@ -11,26 +12,32 @@ class Status2G extends EmitterShell
     @list = []
     ###* @type import('./type/status').Status2G['mapColor'] ###
     @mapColor = __map_status__
-    ###* @type import('./type/status').Status2G['mapTs'] ###
-    @mapTs = {
-      cryo: 0
-      hydro: 0
-    }
 
-  ###* @type import('./type/status').Status2G['add'] ###
-  add: (name) ->
-    unless name then return
-    if @has name then return
-    $.push @list, name
-    @mapTs[name] = $.now()
-    @emit 'change'
-    return
-
-  ###* @type import('./type/status').Status2G['check'] ###
-  check: (name) -> ColorManager.findAll [
+  ###* @type import('./type/status').Status2G['checkElement'] ###
+  checkElement: (name) -> ColorManager.findAll [
     @mapColor[name][0][0]
     @mapColor[name][0][1]
   ], ['42%', '88%', '58%', '91%']
+
+  ###* @type import('./type/status').Status2G['checkIsAiming'] ###
+  checkIsAiming: ->
+    unless (Character.get Party.name, 'weapon') == 'bow' then return false
+    return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
+
+  ###* @type import('./type/status').Status2G['checkIsFree'] ###
+  checkIsFree: ->
+
+    # unless ColorManager.findAny [0x96D722, 0xFF6666], [
+    #   '88%', '25%'
+    #   '89%', '53%'
+    # ] then return false
+
+    unless ColorManager.findAll [0xFFFFFF, 0x323232], [
+      '94%', '80%'
+      '95%', '82%'
+    ] then return false
+
+    return true
 
   ###* @type import('./type/status').Status2G['has'] ###
   has: (name) -> $.includes @list, name
@@ -38,43 +45,32 @@ class Status2G extends EmitterShell
   ###* @type import('./type/status').Status2G['init'] ###
   init: ->
 
-    return
-
     @on 'change', =>
       unless $.length @list
         console.log '#status/list: -'
-        return
-      console.log '#status/list:', $.join @list, ', '
+      else console.log '#status/list:', $.join @list, ', '
 
-    Scene.useExact ['single'], =>
-      [interval, token] = [500, 'status/update']
-      Timer.loop token, interval, @update
-      return -> Timer.remove token
-
-  ###* @type import('./type/status').Status2G['remove'] ###
-  remove: (name) ->
-    unless name then return
-    unless @has name then return
-    @list = $.filter @list, (it) -> it != name
-    @emit 'change'
-    return
+  ###* @type import('./type/status').Status2G['makeListName'] ###
+  makeListName: -> []
 
   ###* @type import('./type/status').Status2G['update'] ###
   update: ->
 
-    interval = 2e3
-    now = $.now()
+    list = @makeListName()
+    if Scene.is 'normal'
 
-    # hydro
-    if now - @mapTs.hydro > interval
-      if @check 'hydro'
-        @add 'hydro'
-      else @remove 'hydro'
+      # element
+      if @checkElement 'cryo' then $.push list, 'cryo'
+      if @checkElement 'hydro' then $.push list, 'hydro'
 
-    # cryo
-    if now - @mapTs.cryo > interval
-      if @check 'cryo'
-        @add 'cryo'
-      else @remove 'cryo'
+      if @checkIsFree()
+        $.push list, 'free'
+      else
+        if @checkIsAiming() then $.push list, 'aiming'
 
+    if $.eq list, @list then return
+    @list = list
+    @emit 'change'
+
+# @ts-ignore
 Status2 = new Status2G()

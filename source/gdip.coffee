@@ -149,5 +149,5 @@ class GdipG
     @cache.pToken = Gdip_Startup()
     return
 
-# export
+# @ts-ignore
 Gdip = new GdipG()

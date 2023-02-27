@@ -1,11 +1,26 @@
 # @ts-check
 
-class ConfigG
+class ConfigG extends EmitterShell
 
   constructor: ->
+    super()
 
     ###* @type import('./type/config').ConfigG['data'] ###
-    @data = {}
+    @data = {
+      'basic/arguments': ''
+      'basic/path': ''
+      'basic/process': ''
+      'better-pickup/enable': '0'
+      'better-pickup/use-fast-pickup': '0'
+      'better-pickup/use-quick-skip': '0'
+      'misc/use-beep': '0'
+      'misc/use-better-jump': '0'
+      'misc/use-controller': '0'
+      'misc/use-debug-mode': '0'
+      'misc/use-mute': '0'
+      'misc/use-skill-timer': '0'
+      'misc/use-tactic': '0'
+    }
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 
@@ -67,6 +82,8 @@ class ConfigG
     @register 'misc/use-skill-timer'
     @register 'misc/use-tactic', 'alt + t'
 
+    @emit 'change'
+
   ###* @type import('./type/config').ConfigG['read'] ###
   read: (ipt, defaultValue = '') ->
     [section, key] = $.split ipt, '/'
@@ -79,7 +96,9 @@ class ConfigG
   ###* @type import('./type/config').ConfigG['register'] ###
   register: (ipt, key = '') ->
     @set ipt, @read ipt, '0'
-    if key then $.on key, => @toggle ipt
+    if key then $.on key, =>
+      @toggle ipt
+      @emit 'change'
     return
 
   ###* @type import('./type/config').ConfigG['set'] ###
@@ -107,4 +126,5 @@ class ConfigG
     Native 'IniWrite, % value, % this.source, % section, % key'
     return
 
+# @ts-ignore
 Config = new ConfigG()

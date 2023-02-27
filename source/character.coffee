@@ -261,4 +261,5 @@ class CharacterG
     else Native 'IniRead, result, % this.source, % section'
     return $.toLowerCase result
 
+# @ts-ignore
 Character = new CharacterG()

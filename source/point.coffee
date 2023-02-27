@@ -40,4 +40,5 @@ class PointG
     n = $.replace n, '%', ''
     return $.Math.round Window2.bounds.width * ($.toNumber n) * 0.01
 
+# @ts-ignore
 Point = new PointG()

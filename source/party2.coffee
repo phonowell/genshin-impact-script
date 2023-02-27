@@ -10,6 +10,8 @@ class Party2G extends KeyBinding
 
     @on 'press:start', (key) =>
 
+      unless Status2.has 'free' then return
+
       Timer.remove 'party2/is-current-as'
       Timer.remove 'party2/wait-for'
 
@@ -22,12 +24,14 @@ class Party2G extends KeyBinding
 
     @on 'press:end', (key) =>
 
+      unless Status2.has 'free' then return
+
       n = $.toNumber key
       unless Party.isSlotValid n then return
 
       @waitFor n, => @emit 'switch:end'
 
-    Scene.useExact ['free', 'single'], =>
+    Scene.useExact ['single'], =>
 
       for slot in Party.listSlot
         @registerEvent 'press', $.toString slot
@@ -37,13 +41,17 @@ class Party2G extends KeyBinding
           @unregisterEvent 'press', $.toString slot
 
   ###* @type import('./type/party2').Party2G['aboutPressAlt'] ###
-  aboutPressAlt: -> Scene.useExact ['free', 'single'], ->
+  aboutPressAlt: -> Scene.useExact ['single'], ->
 
     for slot in Party.listSlot
       $.on "alt + #{slot}", ->
+
         unless Party.size
           $.press "alt + #{slot}"
           return
+
+        unless Status2.has 'free' then return
+
         Skill.switchQ slot
 
     return ->
@@ -130,14 +138,14 @@ class Party2G extends KeyBinding
       Timer.remove token
 
   ###* @type import('./type/party2').Party2G['watch'] ###
-  watch: -> Scene.useExact ['free', 'single'], =>
+  watch: -> Scene.useExact ['single'], =>
 
     [interval, token] = [200, 'party2/watch']
 
     Timer.loop token, interval, =>
 
       unless Party.size then return
-      unless Scene.is 'free' then return
+      unless Status2.has 'free' then return
       unless $.now() - Party.tsSwitch > 1e3 then return
       if Party.isCurrent Party.current then return
 
@@ -145,11 +153,12 @@ class Party2G extends KeyBinding
       unless Party.isSlotValid slot then return
       if slot == Party.current then return
 
-      $.beep()
+      Sound.beep()
       console.log '#party2/watch:', 'should be', Party.current, 'but got', slot
 
       @retry slot
 
     return -> Timer.remove token
 
+# @ts-ignore
 Party2 = new Party2G()

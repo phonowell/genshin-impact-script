@@ -47,4 +47,5 @@ class SoundG
   ###* @type import('./type/sound').SoundG['unmute'] ###
   unmute: -> ShiftAppVolumeTopped ($.toString Config.get 'basic/process'), 1
 
+# @ts-ignore
 Sound = new SoundG()

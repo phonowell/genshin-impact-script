@@ -1,10 +1,13 @@
 # @ts-check
 
+# @ts-ignore
 class KeyBinding extends EmitterShell
 
   constructor: ->
     super()
 
+    ###* @type import('./type/key-binding').KeyBinding['mapFired'] ###
+    @mapFired = {}
     ###* @type import('./type/key-binding').KeyBinding['mapGroup'] ###
     @mapGroup = {}
     ###* @type import('./type/key-binding').KeyBinding['mapPressed'] ###
@@ -15,17 +18,26 @@ class KeyBinding extends EmitterShell
   ###* @type import('./type/key-binding').KeyBinding['end'] ###
   end: (name, key) ->
 
-    unless @mapPressed[key] then return
-    @mapPressed[key] = false
+    unless @mapFired["#{key}.#{name}"] then return
+    @mapFired["#{key}.#{name}"] = false
 
-    # name2 = "#{key}"
-    # if name != key then name2 = "#{key}.#{name}"
-    # console.log "#{name2}/end: #{@mapPressed[key]}"
+    # @log name, key, 'end', @mapFired["#{key}.#{name}"]
 
-    unless @mapPrevented[key] then $.press "#{key}:up"
+    unless @mapPrevented[key]
+      if @mapPressed[key]
+        @mapPressed[key] = false
+        $.press "#{key}:up"
 
+    @mapFired["#{key}.#{name}"] = false
     @emit "#{name}:end", key
     @emit name, key
+
+  ###* @type import('./type/key-binding').KeyBinding['log'] ###
+  log: (name, key, step, message) ->
+    unless Config.get 'misc/use-debug-mode' then return
+    name2 = key
+    if name != key then name2 = "#{key}.#{name}"
+    console.log "#{name2}/#{step}: #{message}"
 
   ###* @type import('./type/key-binding').KeyBinding['registerEvent'] ###
   registerEvent: (name, key, isPrevented = false) ->
@@ -37,30 +49,30 @@ class KeyBinding extends EmitterShell
     unless @mapGroup[name] then @mapGroup[name] = []
     $.push @mapGroup[name], key
 
-    if @mapPressed[key]
-      Timer.add 30, => @registerEvent name, key, isPrevented
+    if @mapFired["#{key}.#{name}"]
+      Timer.add 50, => @registerEvent name, key, isPrevented
       return
+    @mapFired["#{key}.#{name}"] = false
 
     @mapPrevented[key] = isPrevented
 
     $.on "#{key}.#{name}", => @start name, key
-
-    $.on "#{key}:up.#{name}", =>
-      if @mapPressed[key] then @end name, key
-      else Timer.add 30, => @end name, key
+    $.on "#{key}:up.#{name}", => @end name, key
 
   ###* @type import('./type/key-binding').KeyBinding['start'] ###
   start: (name, key) ->
 
-    if @mapPressed[key] then return
-    @mapPressed[key] = true
+    if @mapFired["#{key}.#{name}"] then return
+    @mapFired["#{key}.#{name}"] = true
 
-    # name2 = "#{key}"
-    # if name != key then name2 = "#{key}.#{name}"
-    # console.log "#{name2}/start: #{@mapPressed[key]}"
+    # @log name, key, 'start', @mapFired["#{key}.#{name}"]
 
-    unless @mapPrevented[key] then $.press "#{key}:down"
+    unless @mapPrevented[key]
+      unless @mapPressed[key]
+        @mapPressed[key] = true
+        $.press "#{key}:down"
 
+    @mapFired["#{key}.#{name}"] = true
     @emit "#{name}:start", key
 
   ###* @type import('./type/key-binding').KeyBinding['unregisterEvent'] ###
@@ -73,8 +85,8 @@ class KeyBinding extends EmitterShell
     unless group then return
     unless $.includes group, key then return
 
-    if @mapPressed[key]
-      Timer.add 30, => @unregisterEvent name, key
+    if @mapFired["#{key}.#{name}"]
+      Timer.add 50, => @unregisterEvent name, key
       return
 
     @mapGroup[name] = $.filter group, (k) -> k != key

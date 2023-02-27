@@ -74,7 +74,7 @@ class PartyG extends KeyBinding
       unless @size then return
 
       list = $.tail @list
-      if $.includes list, '' then $.beep()
+      if $.includes list, '' then Sound.beep()
       console.log "#party/member: #{$.join list, ', '}"
 
       Buff.update()
@@ -105,9 +105,15 @@ class PartyG extends KeyBinding
       {typeE} = Character.get nameLast
       if typeE == 3 then Skill.endEAsType3 last
 
-    Scene.useExact ['free', 'single'], =>
+    Scene.useExact ['single'], =>
 
       $.on 'f12', =>
+
+        unless Status2.has 'free'
+          Sound.beep()
+          Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
+          return
+
         Character.load()
         @scan()
 
@@ -209,4 +215,5 @@ class PartyG extends KeyBinding
 
     Hud.render n, nameOutput
 
+# @ts-ignore
 Party = new PartyG()

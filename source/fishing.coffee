@@ -68,10 +68,17 @@ class FishingG
   toggle: ->
 
     unless @isActive
-      unless Scene.is 'normal', 'not-free'
+
+      unless Scene.is 'normal'
         Sound.beep()
         return
+
+      if Status2.has 'free'
+        Sound.beep()
+        return
+
       @isActive = true
+      
     else @isActive = false
 
     Timer.remove 'fishing/watch'
@@ -104,4 +111,5 @@ class FishingG
 
     @pull()
 
+# @ts-ignore
 Fishing = new FishingG()

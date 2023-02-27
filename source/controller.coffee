@@ -281,4 +281,5 @@ class ControllerG extends EmitterShell
     Timer.loop token, interval, @update
     return -> Timer.remove token
 
+# @ts-ignore
 Controller = new ControllerG()

@@ -12,11 +12,9 @@ export class Scene2G {
   private aboutMiniMenu(): Name[]
   private aboutNormal(): Name[]
   check(): Name[]
-  private checkIsAiming(): boolean
   private checkIsChat(): boolean
   private checkIsDomain(): boolean
   private checkIsEvent(): boolean
-  private checkIsFree(): boolean
   private checkIsHalfMenu(): boolean
   private checkIsLoading(): boolean
   private checkIsMap(): boolean

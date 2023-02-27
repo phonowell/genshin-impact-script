@@ -9,6 +9,7 @@ export type Shell = {
   clearTimeout: SA.ClearTimeout
   click: SA.Click
   confirm: SA.Confirm
+  debounce: SA.Debounce
   delete: SA.Delete
   emitter: SA.Emitter
   eq: SA.Eq

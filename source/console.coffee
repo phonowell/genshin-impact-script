@@ -87,4 +87,5 @@ class ConsoleG
 
     @render()
 
+# @ts-ignore
 console = new ConsoleG()

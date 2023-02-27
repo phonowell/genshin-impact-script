@@ -17,7 +17,7 @@ class MovementG extends KeyBinding
 
     checkIsReadyToAim = ->
       unless Character.is Party.name, 'bow' then return false
-      return Scene.is 'free'
+      return Status2.has 'free'
 
     @on 'aim:start', ->
       if checkIsReadyToAim() then return
@@ -87,10 +87,17 @@ class MovementG extends KeyBinding
   ###* @type import('./type/movement').MovementG['aboutUnhold'] ###
   aboutUnhold: ->
 
-    @on 'unhold:start', -> $.press 'x:down'
-    @on 'unhold:end', -> $.press 'x:up'
+    @on 'unhold:start', ->
+      if Status2.has 'aiming' then return
+      if Status2.has 'free' then return
+      $.press 'x:down'
 
-    Scene.useExact ['normal', 'not-aiming', 'not-free'], =>
+    @on 'unhold:end', ->
+      if Status2.has 'aiming' then return
+      if Status2.has 'free' then return
+      $.press 'x:up'
+
+    Scene.useExact ['normal'], =>
       @registerEvent 'unhold', 'l-button'
       return => @unregisterEvent 'unhold', 'l-button'
 
@@ -116,4 +123,5 @@ class MovementG extends KeyBinding
     Hud.render 0, 'auto forward [OFF]'
     $.press 'w:up'
 
+# @ts-ignore
 Movement = new MovementG()

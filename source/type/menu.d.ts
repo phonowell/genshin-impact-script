@@ -3,5 +3,4 @@ export class MenuG extends KeyBinding {
   private asMap(): void
   private asMiniMenu(): void
   init(): void
-  private isMenu(): boolean
 }

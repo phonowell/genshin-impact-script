@@ -1,5 +1,6 @@
 # @ts-check
 
+# @ts-ignore
 import __e_charge__ from '../../gis-static/data/character-e-charge.yaml'
 
 class SkillG extends KeyBinding
@@ -169,7 +170,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['isEUsed'] ###
   isEUsed: ->
 
-    unless Scene.is 'free' then return
+    unless Status2.has 'free' then return
     unless $.now() - @tsUseE > 500 then return
 
     {current, name} = Party
@@ -238,7 +239,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['switchQ'] ###
   switchQ: (slot) ->
 
-    unless Scene.is 'free'
+    unless Status2.has 'free'
       $.press "alt + #{slot}"
       return
 
@@ -269,7 +270,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['useQ'] ###
   useQ: ->
 
-    unless Scene.is 'free' then return
+    unless Status2.has 'free' then return
 
     $.press 'q'
     @freeze()
@@ -286,4 +287,5 @@ class SkillG extends KeyBinding
       if Timer.hasElapsed 'skill/is-e-used', 1e3 then @isEUsed()
     return -> Timer.remove token
 
+# @ts-ignore
 Skill = new SkillG()

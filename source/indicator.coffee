@@ -76,4 +76,5 @@ class IndicatorG extends EmitterShell
     Timer.loop token, interval, @clear
     return -> Timer.remove token
 
+# @ts-ignore
 Indicator = new IndicatorG()
