@@ -7,14 +7,19 @@ class WindowG extends KeyBinding
 
     ###* @type import('./type/window').WindowG['bounds'] ###
     @bounds = {x: 0, y: 0, width: 0, height: 0}
+
     ###* @type import('./type/window').WindowG['isActive'] ###
     @isActive = false
+
     ###* @type import('./type/window').WindowG['isFullScreen'] ###
     @isFullScreen = false
+
     ###* @type import('./type/window').WindowG['isMouseIn'] ###
     @isMouseIn = false
+
     ###* @type import('./type/window').WindowG['position'] ###
     @position = [1, 1]
+
     ###* @type import('./type/window').WindowG['window'] ###
     @window = $.window ''
 
@@ -117,12 +122,12 @@ class WindowG extends KeyBinding
 
       Client.emit 'activate'
 
-    $.on 'alt + enter', =>
-      $.press 'alt + enter'
+    $.on 'alt + enter', => Timer.add 50, =>
       @getState()
       @setStyle()
 
     for direction in ['left', 'right', 'up', 'down']
+
       $.on "win + #{direction}", =>
 
         if @isFullScreen then return
@@ -141,6 +146,8 @@ class WindowG extends KeyBinding
 
         @position = [x, y]
         @setPosition()
+
+      $.preventInput "win + #{direction}", true
 
     return
 
