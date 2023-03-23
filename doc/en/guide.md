@@ -2,42 +2,46 @@
 
 ## How to Use
 
-### First Time Launch
+### First Launch
 
-- Open the game
+- Open the game.
 
-- Adjust the game display to a `16:9` aspect ratio and a resolution of at least `1600x900`
+- Adjust the game screen to a `16:9` aspect ratio with a resolution of no less
+  than `1600x900`.
 
-- In the control settings, rebind the `Switch Walk/Run` to `Right Ctrl`
+- In the operation settings, rebind `Switch Walk/Run` to `Right Ctrl`.
 
-- Launch the script
+- Launch the script.
 
 ### Subsequent Launches
 
-- Directly launch the script
+- Simply launch the script.
 
 ## Troubleshooting
 
-- Make sure the script is launched with administrator privileges
+- Ensure that the script is launched with administrator privileges.
 
-- Make sure the game display is set to a `16:9` aspect ratio and a resolution of at least `1600x900`
+- Ensure that the game screen is at a `16:9` aspect ratio with a resolution of
+  no less than `1600x900`.
 
-- Make sure no graphic filters are being used
+- Ensure that no screen filters are being used.
 
-- Make sure to equip gadgets
+- Ensure that small equipment items are equipped.
 
-- For players in East Asia, make sure the input method is in English
+- For players in East Asia, ensure that the input method is in English.
 
-- The script was developed in a `1600x900` resolution window mode. If you encounter any problems, try switching to this resolution
+- The script was developed in windowed mode with a resolution of `1600x900`. If
+  you encounter any issues, try switching to this resolution.
 
-- Create an `issue`
+- Raise an `issue`.
 
 ## Other Notes
 
-- No graphic filters are supported
+- No screen filters are supported.
 
-- When using the skill timer, you need to scan the party first
+- When using the skill timer, you need to scan the team first.
 
-- The game should be run at a `16:9` resolution and not less than `1600x900`
+- The game should run at a `16:9` resolution of no less than `1600x900`.
 
-- Starting from version `0.0.31`, `Celestia` and `Irminsul` servers are no longer supported by default
+- Starting from version `0.0.31`, `Celestia` and `Irminsul` servers are no
+  longer supported by default.
