@@ -40,6 +40,7 @@ export type Shell = {
   on: KeyBindingShell['add']
   open: SA.Open
   press: SA.Press
+  preventInput: SA.PreventInput
   push: SA.Push
   reload: SA.Reload
   replace: SA.Replace
