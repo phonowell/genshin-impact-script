@@ -7,8 +7,6 @@ class ClientG extends KeyBinding
 
     ###* @type import('./type/client').ClientG['isSuspended'] ###
     @isSuspended = false
-    ###* @type import('./type/client').ClientG['version'] ###
-    @version = 49
 
   ###* @type import('./type/client').ClientG['init'] ###
   init: ->
@@ -18,8 +16,10 @@ class ClientG extends KeyBinding
     $.on 'alt + f4', -> Sound.beep 2, ->
       Window2.close()
       $.exit()
+    $.preventInput 'alt + f4', true
 
     $.on 'ctrl + f5', -> Sound.beep 3, $.reload
+    $.preventInput 'ctrl + f5', true
 
     return
 
