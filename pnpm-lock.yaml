@@ -20,7 +20,7 @@ specifiers:
   lodash: ^4.17.21
   prettier: ^2.8.6
   say: ^0.16.0
-  shell-ahk: ^0.0.32
+  shell-ahk: ^0.0.33
   ts-node: ^10.9.1
   typescript: ^5.0.2
 
@@ -44,7 +44,7 @@ dependencies:
   lodash: 4.17.21
   prettier: 2.8.6
   say: 0.16.0
-  shell-ahk: 0.0.32
+  shell-ahk: 0.0.33
   ts-node: 10.9.1_awsfqicsemvcbwr47kxtga52aq
   typescript: 5.0.2
 
@@ -4526,8 +4526,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /shell-ahk/0.0.32:
-    resolution: {integrity: sha512-RcPuCn23/pHVp8G0hL12zlpvGIXkFXK/fwloK1r434nFglitmI44yQ1Nibzx6vVjHPtx3RMxfcGbQZp2v1dKZA==}
+  /shell-ahk/0.0.33:
+    resolution: {integrity: sha512-Kab4iInfo0/jpq7URuHa/rdml5imYFikjofWXJBtH/HbkcKEBCnaHaVlQKkQ2Oci6wvJesRMD0KMUz1OJU96Gg==}
     dev: false
 
   /side-channel/1.0.4:

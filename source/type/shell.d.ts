@@ -17,10 +17,10 @@ export type Shell = {
   file: SA.File
   filter: SA.Filter
   forEach: SA.ForEach
-  get: SA.Get
   getPosition: SA.GetPosition
   getState: SA.GetState
   getType: SA.GetType
+  httpGet: SA.HttpGet
   includes: SA.Includes
   isArray: SA.IsArray
   isFunction: SA.IsFunction

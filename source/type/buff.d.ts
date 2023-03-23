@@ -1,7 +1,7 @@
 type Name = 'impetuous winds'
 
 export class BuffG extends EmitterShell {
-  private list: (Name)[]
+  private list: Name[]
   constructor()
   private add(name: Name): void
   has(name: Name): boolean
