@@ -27,8 +27,10 @@ class TacticG extends KeyBinding
 
     ###* @type import('./type/tactic').TacticG['intervalLong'] ###
     @intervalLong = 100
+
     ###* @type import('./type/tactic').TacticG['intervalShort'] ###
     @intervalShort = 50
+
     ###* @type import('./type/tactic').TacticG['isActive'] ###
     @isActive = false
 

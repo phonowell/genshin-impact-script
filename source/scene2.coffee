@@ -8,6 +8,7 @@ class Scene2G
     @cache = {
       last: 'unknown'
     }
+
     ### @type import('./type/scene2').Scene2G['mapAbout'] ###
     @mapAbout = {
       dialogue: @aboutDialogue

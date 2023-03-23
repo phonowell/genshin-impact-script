@@ -7,6 +7,7 @@ class JumperG extends KeyBinding
 
     ###* @type import('./type/jumper').JumperG['isBreaking'] ###
     @isBreaking = false
+
     ###* @type import('./type/jumper').JumperG['tsJump'] ###
     @tsJump = 0
 

@@ -3,8 +3,10 @@
 class TimerG
 
   constructor: ->
+
     ###* @type import('./type/timer').TimerG['cacheTimer'] ###
     @cacheTimer = {}
+
     ###* @type import('./type/timer').TimerG['cacheTs'] ###
     @cacheTs = {}
 

@@ -10,6 +10,7 @@ class PickerG extends KeyBinding
 
     ###* @type import('./type/picker').PickerG['listShapeForbidden'] ###
     @listShapeForbidden = __shape__.list
+
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
 

@@ -10,14 +10,19 @@ class SkillG extends KeyBinding
 
     ###* @type import('./type/skill').SkillG['listCache'] ###
     @listCache = {}
+
     ###* @type import('./type/skill').SkillG['listCharacterECharge'] ###
     @listCharacterECharge = __e_charge__.list
+
     ###* @type import('./type/skill').SkillG['listCountDown'] ###
     @listCountDown = {}
+
     ###* @type import('./type/skill').SkillG['listDuration'] ###
     @listDuration = {}
+
     ###* @type import('./type/skill').SkillG['listRecord'] ###
     @listRecord = {}
+
     ###* @type import('./type/skill').SkillG['tsUseE'] ###
     @tsUseE = 0
 

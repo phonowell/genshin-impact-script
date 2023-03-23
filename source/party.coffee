@@ -7,14 +7,19 @@ class PartyG extends KeyBinding
 
     ###* @type import('./type/party').PartyG['current'] ###
     @current = 0
+
     ###* @type import('./type/party').PartyG['list'] ###
     @list = [''] # '' is a placeholder, don't remove it
+
     ###* @type import('./type/party').PartyG['listSlot'] ###
     @listSlot = [1, 2, 3, 4, 5]
+
     ###* @type import('./type/party').PartyG['name'] ###
     @name = ''
+
     ###* @type import('./type/party').PartyG['size'] ###
     @size = 0
+
     ###* @type import('./type/party').PartyG['tsSwitch'] ###
     @tsSwitch = 0
 

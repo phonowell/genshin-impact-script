@@ -10,6 +10,7 @@ class FishingG
 
     ###* @type import('./type/fishing').FishingG['isActive'] ###
     @isActive = false
+
     ###* @type import('./type/fishing').FishingG['isPulling'] ###
     @isPulling = false
 

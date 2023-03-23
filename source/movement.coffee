@@ -7,8 +7,10 @@ class MovementG extends KeyBinding
 
     ###* @type import('./type/movement').MovementG['direction'] ###
     @direction = []
+
     ###* @type import('./type/movement').MovementG['isForwarding'] ###
     @isForwarding = false
+
     ###* @type import('./type/movement').MovementG['isMoving'] ###
     @isMoving = false
 

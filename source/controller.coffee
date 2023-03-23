@@ -12,8 +12,10 @@ class ControllerG extends EmitterShell
       n: {}
       s: {}
     }
+
     ###* @type import('./type/controller').ControllerG['isPressed'] ###
     @isPressed = {}
+
     ###* @type import('./type/controller').ControllerG['listLeftStick'] ###
     @listLeftStick = [
       ['left-stick-left', 'a', 'left']
@@ -21,6 +23,7 @@ class ControllerG extends EmitterShell
       ['left-stick-up', 'w', 'up']
       ['left-stick-down', 's', 'down']
     ]
+
     ###* @type import('./type/controller').ControllerG['listRightStick'] ###
     @listRightStick = [
       ['right-stick-left', 'left']
@@ -28,6 +31,7 @@ class ControllerG extends EmitterShell
       ['right-stick-up', 'up']
       ['right-stick-down', 'down']
     ]
+
     ###* @type import('./type/controller').ControllerG['mapButton'] ###
     @mapButton = {
       a: 4096
@@ -43,8 +47,10 @@ class ControllerG extends EmitterShell
       left: 4
       right: 8
     }
+
     ###* @type import('./type/controller').ControllerG['thresholdStick'] ###
     @thresholdStick = 1e4
+
     ###* @type import('./type/controller').ControllerG['ts'] ###
     @ts = {}
 

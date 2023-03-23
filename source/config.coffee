@@ -21,6 +21,7 @@ class ConfigG extends EmitterShell
       'misc/use-skill-timer': '0'
       'misc/use-tactic': '0'
     }
+    
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 
