@@ -1,6 +1,6 @@
 import watch from 'fire-keeper/dist/watch'
 import { debounce } from 'lodash'
-import beep from 'node-beep'
+import say from 'say'
 
 import build from './build'
 
@@ -8,7 +8,7 @@ import build from './build'
 
 const build2 = debounce(async () => {
   await build()
-  beep()
+  say.speak('build complete')
 }, 5e3)
 
 const main = () => {
