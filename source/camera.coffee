@@ -7,8 +7,10 @@ class CameraG extends KeyBinding
 
     ###* @type import('./type/camera').CameraG['count'] ###
     @count = 0
+
     ###* @type import('./type/camera').CameraG['isWatching'] ###
     @isWatching = false
+
     ###* @type import('./type/camera').CameraG['listKey'] ###
     @listKey = ['left', 'right', 'up', 'down']
 
@@ -42,12 +44,12 @@ class CameraG extends KeyBinding
 
     unless Scene.is 'normal' then return
 
-    if @mapPressed['left'] then x = -1
-    else if @mapPressed['right'] then x = 1
+    if $.getState 'left' then x = -1
+    else if $.getState 'right' then x = 1
     else x = 0
 
-    if @mapPressed['up'] then y = -1
-    else if @mapPressed['down'] then y = 1
+    if $.getState 'up' then y = -1
+    else if $.getState 'down' then y = 1
     else y = 0
 
     if x == 0 and y == 0 then return
