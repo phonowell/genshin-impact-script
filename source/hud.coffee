@@ -6,8 +6,10 @@ class HudG
 
     ###* @type import('./type/hud').HudG['lifetime'] ###
     @lifetime = 5e3
+
     ###* @type import('./type/hud').HudG['map'] ###
     @map = {}
+
     ###* @type import('./type/hud').HudG['mapLast'] ###
     @mapLast = {}
 

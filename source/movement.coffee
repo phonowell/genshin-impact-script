@@ -7,8 +7,10 @@ class MovementG extends KeyBinding
 
     ###* @type import('./type/movement').MovementG['direction'] ###
     @direction = []
+
     ###* @type import('./type/movement').MovementG['isForwarding'] ###
     @isForwarding = false
+
     ###* @type import('./type/movement').MovementG['isMoving'] ###
     @isMoving = false
 
@@ -36,13 +38,21 @@ class MovementG extends KeyBinding
 
     [key, token] = ['alt + w', 'toggle']
 
+    # on event 'toggle', start or stop auto-forward
     @on token, =>
       if @isForwarding then @stopForward() else @startForward()
 
     Scene.useExact ['normal', 'not-domain'], =>
-      @registerEvent token, key, true
+
+      @registerEvent token, key
+      $.preventInput key, true
+
       return =>
+
         @unregisterEvent token, key
+        $.preventInput key, false
+
+        # stop auto-forward if it is running
         if @isForwarding then @stopForward()
 
   ###* @type import('./type/movement').MovementG['aboutMove'] ###
@@ -68,7 +78,10 @@ class MovementG extends KeyBinding
           isMoving: @isMoving
         }
 
-        @direction = $.filter ['w', 'a', 's', 'd'], (key) -> $.getState key
+        @direction = $.filter ['w', 'a', 's', 'd'], (key) ->
+          # exclude `alt + w`
+          if key == 'w' then return ($.getState 'w') and not $.getState 'alt'
+          return $.getState key
         @isMoving = ($.length @direction) > 0
 
         if $.eq @direction, cache.direction then return

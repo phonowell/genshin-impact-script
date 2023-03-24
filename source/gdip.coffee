@@ -138,7 +138,6 @@ class GdipG
     unless pBitmap then return
 
     @clearCache()
-    Timer.add token, 1e3, @clearCache
     @cache.pBitmap = pBitmap
 
     Indicator.setCost token, 'end'

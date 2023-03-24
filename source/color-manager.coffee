@@ -10,6 +10,9 @@ class ColorManagerG
       get: {}
     }
 
+    ###* @type import('./type/color-manager').ColorManagerG['isFrozen'] ###
+    @isFrozen = false
+
   ###* @type import('./type/color-manager').ColorManagerG['clearCache'] ###
   clearCache: ->
     @cache.find = {}
@@ -58,6 +61,36 @@ class ColorManagerG
 
   ###* @type import('./type/color-manager').ColorManagerG['format'] ###
   format: (n) -> $.toNumber $.replace "0x#{(Format '{:p}', n)}", '0x00', '0x'
+
+  ###* @type import('./type/color-manager').ColorManagerG['freeze'] ###
+  freeze: (fn) ->
+
+    # if already frozen, do not freeze again
+    if @isFrozen
+      Sound.beep() # beep to notify
+      return
+    # set flag
+    @isFrozen = true
+
+    [token, ts] = ['color-manager/next', $.now()]
+
+    # clear timer
+    Timer.remove token
+
+    # execute fn
+    fn()
+
+    # reset flag
+    @isFrozen = false
+
+    # if client is suspended, do not resume
+    # because it will be resumed automatically with Client.useActive
+    if Client.isSuspended then return
+
+    # resume timer
+    # try to keep the interval
+    diff = $.Math.min $.now() - ts, 100
+    Timer.add token, 100 - diff, @next
 
   ###* @type import('./type/color-manager').ColorManagerG['get'] ###
   get: (p) ->

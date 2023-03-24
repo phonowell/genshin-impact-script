@@ -7,8 +7,10 @@ class IndicatorG extends EmitterShell
 
     ###* @type import('./type/indicator').IndicatorG['cacheCost'] ###
     @cacheCost = {} # Record<string, number[]>
+
     ###* @type import('./type/indicator').IndicatorG['cacheCount'] ###
     @cacheCount = {} # Record<string, number>
+
     ###* @type import('./type/indicator').IndicatorG['cacheTs'] ###
     @cacheTs = {} # Record<string, number>
 

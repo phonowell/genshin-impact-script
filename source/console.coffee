@@ -6,8 +6,10 @@ class ConsoleG
 
     ###* @type import('./type/console').ConsoleG['isEnabled'] ###
     @isEnabled = false
+
     ###* @type import('./type/console').ConsoleG['lifetime'] ###
     @lifetime = 10e3
+    
     ###* @type import('./type/console').ConsoleG['listContent'] ###
     @listContent = []
 

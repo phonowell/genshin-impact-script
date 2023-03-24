@@ -10,6 +10,7 @@ class PickerG extends KeyBinding
 
     ###* @type import('./type/picker').PickerG['listShapeForbidden'] ###
     @listShapeForbidden = __shape__.list
+
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
 
@@ -30,7 +31,7 @@ class PickerG extends KeyBinding
   ###* @type import('./type/picker').PickerG['find'] ###
   find: ->
 
-    if @mapPressed['f'] then return
+    if $.getState 'f' then return
     unless Scene.is 'normal', 'not-domain' then return
 
     p = ColorManager.findAny 0x323232, [
@@ -89,7 +90,7 @@ class PickerG extends KeyBinding
     diff = $.now() - @tsPick
     unless diff > 150 then return
 
-    unless @mapPressed['f'] then return
+    unless $.getState 'f' then return
 
     if @skip() then return
 
@@ -104,7 +105,7 @@ class PickerG extends KeyBinding
       @listen()
       return
 
-    if @mapPressed['f']
+    if $.getState 'f'
       @listen()
       return
 
@@ -120,9 +121,9 @@ class PickerG extends KeyBinding
   skip: ->
 
     unless Scene.is 'dialogue' then return false
-    if @mapPressed['l-button'] then return false # enable camera
+    if $.getState 'l-button' then return false # enable camera
 
-    if @mapPressed['f'] then $.press 'f'
+    if $.getState 'f' then $.press 'f'
     else $.press 'space'
 
     p = ColorManager.findAny [

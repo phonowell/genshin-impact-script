@@ -13,8 +13,10 @@ class StateG extends EmitterShell
       cryo: false
       hydro: false
     }
+
     ###* @type import('./type/state').StateG['list'] ###
     @list = []
+
     ###* @type import('./type/state').StateG['mapColor'] ###
     @mapColor = __map_state__
 

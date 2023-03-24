@@ -1,10 +1,11 @@
-import { AreaLike, PointLike } from './global'
+import { AreaLike, Fn, PointLike } from './global'
 
 export class ColorManagerG {
   private cache: {
     find: Record<string, [number, number]>
     get: Record<string, number>
   }
+  private isFrozen: boolean
   constructor()
   private clearCache(): void
   find(color: number, a: AreaLike): [number, number]
@@ -14,6 +15,7 @@ export class ColorManagerG {
     a: AreaLike,
   ): [number, number, number] | void
   format(n: number): number
+  freeze(fn: Fn): void
   get(p: PointLike): number
   init(): void
   next(): void

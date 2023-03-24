@@ -21,6 +21,7 @@ class ConfigG extends EmitterShell
       'misc/use-skill-timer': '0'
       'misc/use-tactic': '0'
     }
+
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 
@@ -95,11 +96,17 @@ class ConfigG extends EmitterShell
 
   ###* @type import('./type/config').ConfigG['register'] ###
   register: (ipt, key = '') ->
+
+    # set value
     @set ipt, @read ipt, '0'
-    if key then $.on key, =>
+
+    unless key then return
+
+    # register toggling key
+    $.on key, =>
       @toggle ipt
       @emit 'change'
-    return
+    $.preventInput key, true
 
   ###* @type import('./type/config').ConfigG['set'] ###
   set: (ipt, value) ->

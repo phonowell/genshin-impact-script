@@ -17,10 +17,10 @@ export type Shell = {
   file: SA.File
   filter: SA.Filter
   forEach: SA.ForEach
-  get: SA.Get
   getPosition: SA.GetPosition
   getState: SA.GetState
   getType: SA.GetType
+  httpGet: SA.HttpGet
   includes: SA.Includes
   isArray: SA.IsArray
   isFunction: SA.IsFunction
@@ -40,6 +40,7 @@ export type Shell = {
   on: KeyBindingShell['add']
   open: SA.Open
   press: SA.Press
+  preventInput: SA.PreventInput
   push: SA.Push
   reload: SA.Reload
   replace: SA.Replace

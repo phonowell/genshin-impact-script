@@ -3,6 +3,7 @@
 class CursorG
 
   constructor: ->
+
     ###* @type import('./type/cursor').CursorG['map'] ###
     @map = {
       left: false
@@ -10,6 +11,7 @@ class CursorG
       up: false
       down: false
     }
+
     ###* @type import('./type/cursor').CursorG['speed'] ###
     @speed = 0
 

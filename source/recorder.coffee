@@ -7,8 +7,10 @@ class RecorderG extends KeyBinding
 
     ###* @type import('./type/recorder').RecorderG['isActive'] ###
     @isActive = false
+
     ###* @type import('./type/recorder').RecorderG['list'] ###
     @list = []
+
     ###* @type import('./type/recorder').RecorderG['listKey'] ###
     @listKey = [
       'esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
@@ -20,6 +22,7 @@ class RecorderG extends KeyBinding
       'left', 'right', 'up', 'down'
       'l-button', 'm-button', 'r-button', 'x-button-1', 'x-button-2'
     ]
+
     ###* @type import('./type/recorder').RecorderG['ts'] ###
     @ts = 0
 
