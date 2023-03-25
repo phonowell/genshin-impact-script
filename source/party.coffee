@@ -120,7 +120,7 @@ class PartyG extends KeyBinding
 
       $.on 'f12', =>
 
-        unless State.is 'free'
+        unless State.is 'ready'
           Sound.beep()
           Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
           return
@@ -144,10 +144,11 @@ class PartyG extends KeyBinding
           return
 
         unless Scene.is 'single' then return
-        unless State.is 'free' then return
+        unless State.is 'ready' then return
         @scan()
 
     Client.useChange [Scene], ->
+      unless Party.size then return false # if party has no member, ignore
       if Scene.is 'party' then return true
       if Scene.is 'normal', 'not-single' then return true
       return false

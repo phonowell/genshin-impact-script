@@ -10,7 +10,7 @@ export class GdipG {
   private cache: Cache
   constructor()
   private argb2rgb(argb: number): number
-  private clearCache(): void
+  clearCache(): void
   private end(): void
   findColor(
     color: number,

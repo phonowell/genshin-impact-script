@@ -6,6 +6,7 @@ export class ColorManagerG {
     get: Record<string, number>
   }
   private isFrozen: boolean
+  private tsUpdate: number
   constructor()
   private clearCache(): void
   find(color: number, a: AreaLike): [number, number]
@@ -18,6 +19,7 @@ export class ColorManagerG {
   freeze(fn: Fn): void
   get(p: PointLike): number
   init(): void
-  next(): void
+  private next(): void
   pick(): void
+  private update(): void
 }

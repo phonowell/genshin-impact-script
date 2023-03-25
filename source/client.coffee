@@ -13,6 +13,13 @@ class ClientG extends KeyBinding
 
     @setIcon 'on'
 
+    @on 'idle', =>
+      @suspend true
+      @setIcon 'off'
+    @on 'activate', =>
+      @suspend false
+      @setIcon 'on'
+
     $.on 'alt + f4', -> Sound.beep 2, ->
       Window2.close()
       $.exit()
@@ -38,9 +45,6 @@ class ClientG extends KeyBinding
     @isSuspended = isSuspended
 
     $.suspend @isSuspended
-
-    if @isSuspended then @setIcon 'off'
-    else @setIcon 'on'
 
   ###* @type import('./type/client').ClientG['useActive'] ###
   useActive: (fn) ->

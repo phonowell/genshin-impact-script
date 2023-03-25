@@ -51,10 +51,8 @@ class WindowG extends KeyBinding
     if isMouseIn == @isMouseIn then return
     @isMouseIn = isMouseIn
 
-    console.log "#window/is-mouse-in: #{@isMouseIn}"
-
-    if @isMouseIn then Client.suspend false
-    else Client.suspend true
+    if @isMouseIn then @emit 'enter'
+    else @emit 'leave'
 
     return
 

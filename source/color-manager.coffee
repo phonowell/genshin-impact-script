@@ -13,6 +13,9 @@ class ColorManagerG
     ###* @type import('./type/color-manager').ColorManagerG['isFrozen'] ###
     @isFrozen = false
 
+    ###* @type import('./type/color-manager').ColorManagerG['tsUpdate'] ###
+    @tsUpdate = 0
+
   ###* @type import('./type/color-manager').ColorManagerG['clearCache'] ###
   clearCache: ->
     @cache.find = {}
@@ -65,32 +68,18 @@ class ColorManagerG
   ###* @type import('./type/color-manager').ColorManagerG['freeze'] ###
   freeze: (fn) ->
 
-    # if already frozen, do not freeze again
     if @isFrozen
-      Sound.beep() # beep to notify
+      Sound.beep()
       return
-    # set flag
     @isFrozen = true
 
-    [token, ts] = ['color-manager/next', $.now()]
+    Timer.remove 'color-manager/next'
 
-    # clear timer
-    Timer.remove token
-
-    # execute fn
     fn()
 
-    # reset flag
     @isFrozen = false
 
-    # if client is suspended, do not resume
-    # because it will be resumed automatically with Client.useActive
-    if Client.isSuspended then return
-
-    # resume timer
-    # try to keep the interval
-    diff = $.Math.min $.now() - ts, 100
-    Timer.add token, 100 - diff, @next
+    @next()
 
   ###* @type import('./type/color-manager').ColorManagerG['get'] ###
   get: (p) ->
@@ -107,22 +96,19 @@ class ColorManagerG
   init: ->
 
     Client.useActive =>
+
       @next()
-      return -> Timer.remove 'color-manager/next'
+
+      return ->
+
+        Timer.remove 'color-manager/next'
+        Gdip.clearCache()
 
   ###* @type import('./type/color-manager').ColorManagerG['next'] ###
   next: ->
-
-    Gdip.screenshot()
-    @clearCache()
-
-    Scene.update()
-    State.update()
-    Picker.next()
-    console.update()
-
-    [interval, token] = [100, 'color-manager/next']
-    Timer.add token, interval, @next
+    if Client.isSuspended then return
+    diff = $.Math.min $.now() - @tsUpdate, 100
+    Timer.add 'color-manager/next', 100 - diff, @update
 
   ###* @type import('./type/color-manager').ColorManagerG['pick'] ###
   pick: ->
@@ -136,6 +122,21 @@ class ColorManagerG
     console.log "#color-manager: #{x1}, #{y1} / #{color}"
     ClipBoard = color
     $.noop ClipBoard
+
+  ###* @type import('./type/color-manager').ColorManagerG['update'] ###
+  update: ->
+
+    Gdip.screenshot()
+    @clearCache()
+
+    Scene.update()
+    State.update()
+    Picker.next()
+    Jumper.break()
+    console.update()
+
+    @tsUpdate = $.now()
+    @next()
 
 # @ts-ignore
 ColorManager = new ColorManagerG()

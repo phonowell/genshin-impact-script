@@ -26,7 +26,7 @@
 
 - Ensure that no screen filters are being used.
 
-- Ensure that small equipment items are equipped.
+- Ensure that gadgets are equipped.
 
 - For players in East Asia, ensure that the input method is in English.
 
