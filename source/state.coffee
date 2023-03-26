@@ -42,7 +42,9 @@ class StateG extends EmitterShell
     isHydro = $.includes list, 'hydro'
 
     unless (isCryo or isHydro) then return false
-    if isCryo and isHydro then return true
+    # it is less precise
+    # do not use this judgment
+    # if isCryo and isHydro then return true
 
     unless ColorManager.findAll 0xF05C4A, [
       '73%', '48%'
