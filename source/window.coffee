@@ -20,6 +20,9 @@ class WindowG extends KeyBinding
     ###* @type import('./type/window').WindowG['position'] ###
     @position = [1, 1]
 
+    ###* @type import('./type/window').WindowG['scaleFactor'] ###
+    @scaleFactor = 0
+
     ###* @type import('./type/window').WindowG['window'] ###
     @window = $.window ''
 
@@ -74,6 +77,7 @@ class WindowG extends KeyBinding
   getState: ->
     @bounds = @window.getBounds()
     @isFullScreen = @window.isFullScreen()
+    @scaleFactor = 1280 / @bounds.width
     return
 
   ###* @type import('./type/window').WindowG['getTaskBarBounds'] ###

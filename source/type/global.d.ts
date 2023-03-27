@@ -60,32 +60,12 @@ declare global {
   const A_ScreenWidth: number
   const A_language: string
   const Format: (f: string, v: string | number) => string
-  const Gdip_BitmapFromScreen: (area: string) => number
-  const Gdip_DisposeImage: (bitmap: number) => void
-  const Gdip_GetPixel: (bitmap: number, x: number, y: number) => number
-  const Gdip_Shutdown: (token: number) => void
-  const Gdip_Startup: () => number
   const GetKeyState: (key: string, type: string) => boolean
   const Native: (...args: unknown[]) => unknown
   const OnExit: (fn: Fn) => void
   const Round: (a: number, b: number) => number
   const ShiftAppVolumeTopped: (app: string, volume: number) => void
   const XInput_Init: () => void
-
-  const Gdip_CloneBitmapArea: (
-    bitmap: number,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  ) => number
-
-  const Gdip_PixelSearch: (
-    area: number,
-    color: number,
-    x: number,
-    y: number,
-  ) => number
 
   const XInput_GetState: (target: number) => {
     wButtons: number

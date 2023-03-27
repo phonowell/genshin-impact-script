@@ -95,7 +95,8 @@ class GdipG
   ###* @type import('./type/gdip').GdipG['init'] ###
   init: ->
     @start()
-    if Config.get 'misc/use-debug-mode' then Indicator.on 'update', @report
+    if Config.get 'misc/use-debug-mode'
+      Indicator.on 'update', @report
 
   ###* @type import('./type/gdip').GdipG['report'] ###
   report: ->
@@ -135,7 +136,6 @@ class GdipG
 
     {x, y, width, height} = Window2.bounds
     pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
-    unless pBitmap then return
 
     @clearCache()
     @cache.pBitmap = pBitmap
