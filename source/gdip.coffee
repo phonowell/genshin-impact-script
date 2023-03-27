@@ -134,8 +134,12 @@ class GdipG
     Indicator.setCount token
     Indicator.setCost token, 'start'
 
-    {x, y, width, height} = Window2.bounds
-    pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
+    # {x, y, width, height} = Window2.bounds
+    # pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
+
+    unless Window2.id then return
+    pBitmap = Gdip_BitmapFromHWND Window2.id
+    unless pBitmap then return
 
     @clearCache()
     @cache.pBitmap = pBitmap

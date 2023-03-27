@@ -8,6 +8,9 @@ class WindowG extends KeyBinding
     ###* @type import('./type/window').WindowG['bounds'] ###
     @bounds = {x: 0, y: 0, width: 0, height: 0}
 
+    ###* @type import('./type/window').WindowG['id'] ###
+    @id = 0
+
     ###* @type import('./type/window').WindowG['isActive'] ###
     @isActive = false
 
@@ -19,9 +22,6 @@ class WindowG extends KeyBinding
 
     ###* @type import('./type/window').WindowG['position'] ###
     @position = [1, 1]
-
-    ###* @type import('./type/window').WindowG['scaleFactor'] ###
-    @scaleFactor = 0
 
     ###* @type import('./type/window').WindowG['window'] ###
     @window = $.window ''
@@ -77,7 +77,6 @@ class WindowG extends KeyBinding
   getState: ->
     @bounds = @window.getBounds()
     @isFullScreen = @window.isFullScreen()
-    @scaleFactor = 1280 / @bounds.width
     return
 
   ###* @type import('./type/window').WindowG['getTaskBarBounds'] ###
@@ -111,10 +110,16 @@ class WindowG extends KeyBinding
     @watch()
 
     @on 'leave', =>
+      @id = 0
       @window.setPriority 'low'
       Client.emit 'idle'
 
     @on 'enter', =>
+
+      id = 0
+      Native 'WinGet, id, IDLast, % this.window.exe'
+      @id = id
+
       @window.setPriority 'normal'
       @getState()
       @setStyle()

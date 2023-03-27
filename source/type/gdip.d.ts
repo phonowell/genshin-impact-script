@@ -3,6 +3,7 @@ type Code = number
 type Graphics = number
 
 declare global {
+  const Gdip_BitmapFromHWND: (hwnd: number) => Bitmap
   const Gdip_BitmapFromScreen: (area: string) => Bitmap
 
   const Gdip_CloneBitmapArea: (
@@ -44,6 +45,13 @@ declare global {
     x: number,
     y: number,
   ) => number
+
+  const Gdip_ResizeBitmap: (
+    bitmap: Bitmap,
+    width: number,
+    height: number,
+    keepRatio: boolean,
+  ) => Bitmap
 
   const Gdip_SaveBitmapToFile: (bitmap: Bitmap, path: string) => void
 

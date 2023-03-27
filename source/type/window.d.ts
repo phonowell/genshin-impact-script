@@ -9,11 +9,11 @@ type Bounds = {
 
 export class WindowG extends KeyBinding {
   bounds: Bounds
+  id: number
   private isActive: boolean
   isFullScreen: boolean
   isMouseIn: boolean
   position: [number, number]
-  scaleFactor: number
   window: WindowShell
   constructor()
   private checkActive(): void
