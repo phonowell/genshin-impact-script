@@ -103,10 +103,10 @@ class ConfigG extends EmitterShell
     unless key then return
 
     # register toggling key
+    $.preventDefaultKey key, true
     $.on key, =>
       @toggle ipt
       @emit 'change'
-    $.preventInput key, true
 
   ###* @type import('./type/config').ConfigG['set'] ###
   set: (ipt, value) ->

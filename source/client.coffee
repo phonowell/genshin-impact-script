@@ -20,13 +20,13 @@ class ClientG extends KeyBinding
       @suspend false
       @setIcon 'on'
 
+    $.preventDefaultKey 'alt + f4', true
     $.on 'alt + f4', -> Sound.beep 2, ->
       Window2.close()
       $.exit()
-    $.preventInput 'alt + f4', true
 
+    $.preventDefaultKey 'ctrl + f5', true
     $.on 'ctrl + f5', -> Sound.beep 3, $.reload
-    $.preventInput 'ctrl + f5', true
 
     return
 

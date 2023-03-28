@@ -18,13 +18,14 @@ export type Shell = {
   filter: SA.Filter
   forEach: SA.ForEach
   getPosition: SA.GetPosition
-  getState: SA.GetState
   getType: SA.GetType
   httpGet: SA.HttpGet
   includes: SA.Includes
   isArray: SA.IsArray
   isFunction: SA.IsFunction
+  isKeyBound: SA.IsKeyBound
   isNumber: SA.IsNumber
+  isPressing: SA.IsPressing
   isString: SA.IsString
   join: SA.Join
   keys: SA.Keys
@@ -40,7 +41,7 @@ export type Shell = {
   on: KeyBindingShell['add']
   open: SA.Open
   press: SA.Press
-  preventInput: SA.PreventInput
+  preventDefaultKey: SA.PreventDefaultKey
   push: SA.Push
   reload: SA.Reload
   replace: SA.Replace

@@ -135,6 +135,7 @@ class WindowG extends KeyBinding
 
     for direction in ['left', 'right', 'up', 'down']
 
+      $.preventDefaultKey "win + #{direction}", true
       $.on "win + #{direction}", =>
 
         if @isFullScreen then return
@@ -153,8 +154,6 @@ class WindowG extends KeyBinding
 
         @position = [x, y]
         @setPosition()
-
-      $.preventInput "win + #{direction}", true
 
     return
 

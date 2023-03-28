@@ -44,13 +44,13 @@ class MovementG extends KeyBinding
 
     Scene.useExact ['normal', 'not-domain'], =>
 
+      $.preventDefaultKey key, true
       @registerEvent token, key
-      $.preventInput key, true
 
       return =>
 
+        $.preventDefaultKey key, false
         @unregisterEvent token, key
-        $.preventInput key, false
 
         # stop auto-forward if it is running
         if @isForwarding then @stopForward()
@@ -80,8 +80,8 @@ class MovementG extends KeyBinding
 
         @direction = $.filter ['w', 'a', 's', 'd'], (key) ->
           # exclude `alt + w`
-          if key == 'w' then return ($.getState 'w') and not $.getState 'alt'
-          return $.getState key
+          if key == 'w' then return ($.isPressing 'w') and not $.isPressing 'alt'
+          return $.isPressing key
         @isMoving = ($.length @direction) > 0
 
         if $.eq @direction, cache.direction then return
