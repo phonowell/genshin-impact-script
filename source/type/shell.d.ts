@@ -24,6 +24,7 @@ export type Shell = {
   isArray: SA.IsArray
   isFunction: SA.IsFunction
   isKeyBound: SA.IsKeyBound
+  isKeyPreventedDefault: SA.IsKeyPreventedDefault
   isNumber: SA.IsNumber
   isPressing: SA.IsPressing
   isString: SA.IsString
@@ -31,8 +32,6 @@ export type Shell = {
   keys: SA.Keys
   length: SA.Length
   map: SA.Map
-  max: SA.Max
-  min: SA.Min
   mixin: SA.Mixin
   move: SA.Move
   noop: SA.Noop

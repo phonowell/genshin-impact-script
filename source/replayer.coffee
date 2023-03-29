@@ -48,14 +48,18 @@ class ReplayerG
   init: -> Client.useActive =>
 
     for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+      $.preventDefaultKey "ctrl + numpad-#{n}", true
       $.on "ctrl + numpad-#{n}", => @start $.toString n
 
     return =>
 
-      for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        $.off "ctrl + numpad-#{n}"
-
       @stop()
+
+      for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        $.preventDefaultKey "ctrl + numpad-#{n}", false
+        $.off "ctrl + numpad-#{n}"
 
   ###* @type import('./type/replayer').ReplayerG['next'] ###
   next: (list, i, callback = undefined) ->
@@ -75,9 +79,13 @@ class ReplayerG
     delay = $.Math.max 1, $.toNumber stringDelay
 
     Timer.add @token, delay, =>
+
       if ($.includes key, 'l-button') and position
         $.move Point.create $.split position, ','
-      $.trigger key
+
+      unless $.isKeyPreventedDefault key then $.press key
+      if $.isKeyBound key then $.trigger key
+
       @next list, i + 1, callback
 
   ###* @type import('./type/replayer').ReplayerG['start'] ###
