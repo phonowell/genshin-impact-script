@@ -229,6 +229,8 @@ class TacticG extends KeyBinding
   ###* @type import('./type/tactic').TacticG['init'] ###
   init: ->
 
+    return
+
     # left button
     @on 'attack:start', =>
       unless Party.name then return
