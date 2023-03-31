@@ -1,6 +1,7 @@
 # @ts-check
 
 import __albedo__ from '../../genshin-character-data/source/albedo.yaml'
+import __alhaitham__ from '../../genshin-character-data/source/alhaitham.yaml'
 import __aloy__ from '../../genshin-character-data/source/aloy.yaml'
 import __amber__ from '../../genshin-character-data/source/amber.yaml'
 import __arataki_itto__ from '../../genshin-character-data/source/arataki_itto.yaml'
@@ -11,6 +12,7 @@ import __candace__ from '../../genshin-character-data/source/candace.yaml'
 import __chongyun__ from '../../genshin-character-data/source/chongyun.yaml'
 import __collei__ from '../../genshin-character-data/source/collei.yaml'
 import __cyno__ from '../../genshin-character-data/source/cyno.yaml'
+import __dehya__ from '../../genshin-character-data/source/dehya.yaml'
 import __diluc__ from '../../genshin-character-data/source/diluc.yaml'
 import __diona__ from '../../genshin-character-data/source/diona.yaml'
 import __dori__ from '../../genshin-character-data/source/dori.yaml'
@@ -31,6 +33,7 @@ import __kujou_sara__ from '../../genshin-character-data/source/kujou_sara.yaml'
 import __kuki_shinobu__ from '../../genshin-character-data/source/kuki_shinobu.yaml'
 import __layla__ from '../../genshin-character-data/source/layla.yaml'
 import __lisa__ from '../../genshin-character-data/source/lisa.yaml'
+import __mika__ from '../../genshin-character-data/source/mika.yaml'
 import __mona__ from '../../genshin-character-data/source/mona.yaml'
 import __nahida__ from '../../genshin-character-data/source/nahida.yaml'
 import __nilou__ from '../../genshin-character-data/source/nilou.yaml'
@@ -127,6 +130,7 @@ class CharacterG
     data = {}
 
     $.mixin data, albedo: __albedo__
+    $.mixin data, alhaitham: __alhaitham__
     $.mixin data, aloy: __aloy__
     $.mixin data, amber: __amber__
     $.mixin data, arataki_itto: __arataki_itto__
@@ -137,6 +141,7 @@ class CharacterG
     $.mixin data, chongyun: __chongyun__
     $.mixin data, collei: __collei__
     $.mixin data, cyno: __cyno__
+    $.mixin data, dehya: __dehya__
     $.mixin data, diluc: __diluc__
     $.mixin data, diona: __diona__
     $.mixin data, dori: __dori__
@@ -157,6 +162,7 @@ class CharacterG
     $.mixin data, kuki_shinobu: __kuki_shinobu__
     $.mixin data, layla: __layla__
     $.mixin data, lisa: __lisa__
+    $.mixin data, mika: __mika__
     $.mixin data, mona: __mona__
     $.mixin data, nahida: __nahida__
     $.mixin data, nilou: __nilou__
