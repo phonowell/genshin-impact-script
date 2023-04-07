@@ -59,6 +59,7 @@ class ConfigG extends EmitterShell
 
   ###* @type import('./type/config').ConfigG['init'] ###
   init: ->
+    Dictionary.noop() # for keeping loading order
     unless @detectRegion() then return
     @load()
 

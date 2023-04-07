@@ -19,7 +19,6 @@ export class WindowG extends KeyBinding {
   private checkActive(): void
   private checkMousePosition(): void
   close(): void
-  focus(): void
   private getState(): void
   private getTaskBarBounds(): Bounds
   init(): void

@@ -18,6 +18,7 @@ class MovementG extends KeyBinding
   aboutAim: ->
 
     checkIsReadyToAim = ->
+      unless Party.size then return false
       unless Character.is Party.name, 'bow' then return false
       return State.is 'free'
 

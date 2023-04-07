@@ -13,7 +13,7 @@ aboutClient = ->
       "#client/is-fullscreen: #{Window2.isFullScreen}"
     ], (msg) -> console.log msg
 
-  Window2.focus()
+  Window2.window.focus()
 
   Timer.add 200, ->
     Client.emit 'enter'
@@ -29,31 +29,31 @@ boot = (callback) ->
     # ---start---
     Client
     ColorManager
-    Config
-    console
     Dictionary
     Fishing
     Hud
     Indicator
     Jumper
-    Menu2
     Picker
     Recorder
     Replayer
     Scene
-    Skill
-    Sound
     State
     Tactic
-    Window2
-    Buff
     Camera
     Character
+    Config
+    console
     Gdip
+    Menu2
     Movement
     Party
     Party2
+    Skill
+    Sound
+    Window2
     Alice
+    Buff
     Controller
     # ---end---
   ]

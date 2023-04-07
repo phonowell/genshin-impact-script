@@ -64,15 +64,6 @@ class WindowG extends KeyBinding
     @window.minimize()
     @window.close()
 
-  ###* @type import('./type/window').WindowG['focus'] ###
-  focus: ->
-    @window.focus()
-    if @isMouseIn then return
-    $.move [
-      @bounds.width * 0.5
-      @bounds.height * 0.5
-    ]
-
   ###* @type import('./type/window').WindowG['getState'] ###
   getState: ->
     @bounds = @window.getBounds()
@@ -125,7 +116,7 @@ class WindowG extends KeyBinding
       @setStyle()
 
       Timer.add 1e3, @getState
-      @focus()
+      @window.focus()
 
       Client.emit 'activate'
 
