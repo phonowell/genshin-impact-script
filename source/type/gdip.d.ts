@@ -70,6 +70,7 @@ type Cache = {
 
 export class GdipG {
   private cache: Cache
+  namespace: 'gdip'
   constructor()
   private argb2rgb(argb: number): number
   clearCache(): void

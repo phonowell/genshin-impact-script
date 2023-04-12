@@ -17,6 +17,7 @@ export class ControllerG extends EmitterShell {
     ['right-stick-down', 'down'],
   ]
   private mapButton: Record<string, number>
+  namespace: 'controller'
   private thresholdStick: 1e4
   private ts: Record<string, number>
   constructor()

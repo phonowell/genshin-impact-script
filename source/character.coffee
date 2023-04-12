@@ -72,6 +72,7 @@ class CharacterG
 
     ###* @type import('./type/character').CharacterG['data'] ###
     @data = {}
+
     ###* @type import('./type/character').CharacterG['listVision'] ###
     @listVision = [
       'anemo'
@@ -82,6 +83,7 @@ class CharacterG
       'hydro'
       'pyro'
     ]
+
     ###* @type import('./type/character').CharacterG['listWeapon'] ###
     @listWeapon = [
       'bow'
@@ -90,6 +92,10 @@ class CharacterG
       'polearm'
       'sword'
     ]
+
+    ###* @type import('./type/character').CharacterG['namespace'] ###
+    @namespace = 'character'
+
     ###* @type import('./type/character').CharacterG['source'] ###
     @source = 'character.ini'
 

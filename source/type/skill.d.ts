@@ -6,6 +6,7 @@ export class SkillG extends KeyBinding {
   listCountDown: Record<number, number>
   listDuration: Record<number, number>
   private listRecord: Record<number, number>
+  namespace: 'skill'
   private tsUseE: number
   constructor()
   private aboutBinding(): void

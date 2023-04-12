@@ -6,6 +6,7 @@ export class ColorManagerG {
     get: Record<string, number>
   }
   private isFrozen: boolean
+  namespace: 'color-manager'
   private tsUpdate: number
   constructor()
   private clearCache(): void

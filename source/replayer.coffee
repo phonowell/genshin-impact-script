@@ -7,6 +7,9 @@ class ReplayerG
     ###* @type import('./type/replayer').ReplayerG['isActive'] ###
     @isActive = false
 
+    ###* @type import('./type/replayer').ReplayerG['namespace'] ###
+    @namespace = 'replayer'
+
     ###* @type import('./type/replayer').ReplayerG['token'] ###
     @token = 'replayer/next'
 

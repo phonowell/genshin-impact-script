@@ -8,6 +8,9 @@ class BuffG extends EmitterShell
     ###* @type import('./type/buff').BuffG['list'] ###
     @list = []
 
+    ###* @type import('./type/buff').BuffG['namespace'] ###
+    @namespace = 'buff'
+
   ###* @type import('./type/buff').BuffG['add'] ###
   add: (name) ->
     unless name then return

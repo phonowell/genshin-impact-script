@@ -13,6 +13,7 @@ export class WindowG extends KeyBinding {
   private isActive: boolean
   isFullScreen: boolean
   isMouseIn: boolean
+  namespace: 'window'
   position: [number, number]
   window: WindowShell
   constructor()

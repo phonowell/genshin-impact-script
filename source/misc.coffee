@@ -59,6 +59,11 @@ boot = (callback) ->
   ]
 
   for m in list
+
+    unless $.isString m.namespace
+      $.alert 'misc/boot: invalid namespace'
+      return
+
     unless $.isFunction m.init
       $.setTimeout ->
         boot callback
@@ -66,6 +71,7 @@ boot = (callback) ->
       return
 
   $.forEach list, (m) -> m.init()
+
   callback()
   return
 

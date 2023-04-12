@@ -23,6 +23,9 @@ class RecorderG extends KeyBinding
       'l-button', 'm-button', 'r-button', 'x-button-1', 'x-button-2'
     ]
 
+    ###* @type import('./type/recorder').RecorderG['namespace'] ###
+    @namespace = 'recorder'
+
     ###* @type import('./type/recorder').RecorderG['ts'] ###
     @ts = 0
 

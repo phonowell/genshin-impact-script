@@ -14,6 +14,9 @@ class MovementG extends KeyBinding
     ###* @type import('./type/movement').MovementG['isMoving'] ###
     @isMoving = false
 
+    ###* @type import('./type/movement').MovementG['namespace'] ###
+    @namespace = 'movement'
+
   ###* @type import('./type/movement').MovementG['aboutAim'] ###
   aboutAim: ->
 

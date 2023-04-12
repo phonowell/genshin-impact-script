@@ -1,6 +1,7 @@
 import { Fn } from './global'
 
 export class Party2G extends KeyBinding {
+  namespace: 'party-2'
   constructor()
   private aboutPress(): void
   private aboutPressAlt(): void

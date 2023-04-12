@@ -2,7 +2,12 @@
 
 class MenuG extends KeyBinding
 
-  constructor: -> super()
+  constructor: ->
+
+    super()
+
+    ###* @type import('./type/menu').MenuG['namespace'] ###
+    @namespace = 'menu'
 
   ###* @type import('./type/menu').MenuG['asMap'] ###
   asMap: ->

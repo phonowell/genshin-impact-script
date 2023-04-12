@@ -54,6 +54,7 @@ export class CharacterG {
   data: Record<string, Item>
   private listVision: Vision[]
   private listWeapon: Weapon[]
+  namespace: 'character'
   private source: 'character.ini'
   constructor()
   get<T extends keyof Item | void = void>(

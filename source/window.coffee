@@ -20,6 +20,9 @@ class WindowG extends KeyBinding
     ###* @type import('./type/window').WindowG['isMouseIn'] ###
     @isMouseIn = false
 
+    ###* @type import('./type/window').WindowG['namespace'] ###
+    @namespace = 'window'
+
     ###* @type import('./type/window').WindowG['position'] ###
     @position = [1, 1]
 

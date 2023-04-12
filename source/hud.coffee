@@ -13,6 +13,9 @@ class HudG
     ###* @type import('./type/hud').HudG['mapLast'] ###
     @mapLast = {}
 
+    ###* @type import('./type/hud').HudG['namespace'] ###
+    @namespace = 'hud'
+
   ###* @type import('./type/hud').HudG['hide'] ###
   hide: (n, isForce) ->
     unless @mapLast[n] or isForce then return

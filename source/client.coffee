@@ -8,6 +8,9 @@ class ClientG extends KeyBinding
     ###* @type import('./type/client').ClientG['isSuspended'] ###
     @isSuspended = false
 
+    ###* @type import('./type/client').ClientG['namespace'] ###
+    @namespace = 'client'
+
   ###* @type import('./type/client').ClientG['init'] ###
   init: ->
 

@@ -17,6 +17,9 @@ class PartyG extends KeyBinding
     ###* @type import('./type/party').PartyG['name'] ###
     @name = ''
 
+    ###* @type import('./type/party').PartyG['namespace'] ###
+    @namespace = 'party'
+
     ###* @type import('./type/party').PartyG['size'] ###
     @size = 0
 
@@ -216,7 +219,7 @@ class PartyG extends KeyBinding
     unless @current then $.trigger '1'
 
     Indicator.setCost token, 'end'
-    console.log "##{token}: completed in #{Indicator.getCost token} ms"
+    console.log "##{token}: completed in #{Indicator.getCost token}ms"
 
   ###* @type import('./type/party').PartyG['scanSlot'] ###
   scanSlot: (n) ->

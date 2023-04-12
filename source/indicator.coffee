@@ -14,6 +14,9 @@ class IndicatorG extends EmitterShell
     ###* @type import('./type/indicator').IndicatorG['cacheTs'] ###
     @cacheTs = {} # Record<string, number>
 
+    ###* @type import('./type/indicator').IndicatorG['namespace'] ###
+    @namespace = 'indicator'
+
   ###* @type import('./type/indicator').IndicatorG['clear'] ###
   clear: ->
 

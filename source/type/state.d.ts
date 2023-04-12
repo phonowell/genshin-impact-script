@@ -4,6 +4,7 @@ type NameElement = 'cryo' | 'hydro'
 export class StateG extends EmitterShell {
   private list: Name[]
   private mapColor: Record<Name, number[][]>
+  namespace: 'state'
   constructor()
   private checkElement(name: NameElement): boolean
   private checkIsAiming(): boolean

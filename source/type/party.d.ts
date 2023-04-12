@@ -5,6 +5,7 @@ export class PartyG extends KeyBinding {
   list: string[]
   listSlot: [1, 2, 3, 4, 5]
   name: string
+  namespace: 'party'
   size: number
   tsSwitch: number
   constructor()

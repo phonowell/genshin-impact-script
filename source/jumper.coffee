@@ -5,6 +5,9 @@ class JumperG extends KeyBinding
   constructor: ->
     super()
 
+    ###* @type import('./type/jumper').JumperG['namespace'] ###
+    @namespace = 'jumper'
+
     ###* @type import('./type/jumper').JumperG['tsJump'] ###
     @tsJump = 0
 

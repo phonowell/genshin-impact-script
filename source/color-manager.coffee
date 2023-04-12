@@ -13,6 +13,9 @@ class ColorManagerG
     ###* @type import('./type/color-manager').ColorManagerG['isFrozen'] ###
     @isFrozen = false
 
+    ###* @type import('./type/color-manager').ColorManagerG['namespace'] ###
+    @namespace = 'color-manager'
+
     ###* @type import('./type/color-manager').ColorManagerG['tsUpdate'] ###
     @tsUpdate = 0
 

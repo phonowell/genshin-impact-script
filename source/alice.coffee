@@ -7,6 +7,9 @@ class AliceG
     ###* @type import('./type/alice').AliceG['mapOnSwitch'] ###
     @mapOnSwitch = {}
 
+    ###* @type import('./type/alice').AliceG['namespace'] ###
+    @namespace = 'alice'
+
   ###* @type import('./type/alice').AliceG['init'] ###
   init: ->
     Party.on 'change', @prepare

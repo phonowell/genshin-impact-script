@@ -38,6 +38,7 @@ import { WindowG } from './window'
 
 declare global {
   class Console {
+    namespace: 'console'
     init(): void
     update(): void
   }

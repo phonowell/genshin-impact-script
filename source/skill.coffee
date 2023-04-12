@@ -23,6 +23,9 @@ class SkillG extends KeyBinding
     ###* @type import('./type/skill').SkillG['listRecord'] ###
     @listRecord = {}
 
+    ###* @type import('./type/skill').SkillG['namespace'] ###
+    @namespace = 'skill'
+
     ###* @type import('./type/skill').SkillG['tsUseE'] ###
     @tsUseE = 0
 

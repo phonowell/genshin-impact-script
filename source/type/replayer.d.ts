@@ -4,6 +4,7 @@ type Item = [string, string, string]
 
 export class ReplayerG {
   isActive: boolean
+  namespace: 'replayer'
   private token: 'replayer/next'
   constructor()
   private asMark(list: string[], callback: Fn): void

@@ -22,6 +22,9 @@ class ConfigG extends EmitterShell
       'misc/use-tactic': '0'
     }
 
+    ###* @type import('./type/config').ConfigG['namespace'] ###
+    @namespace = 'config'
+
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 

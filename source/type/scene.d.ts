@@ -18,6 +18,7 @@ type NamePossible = Name | NameNot | 'unknown'
 
 export class SceneG extends EmitterShell {
   private list: Name[]
+  namespace: 'scene'
   constructor()
   init(): void
   is(...names: NamePossible[]): boolean

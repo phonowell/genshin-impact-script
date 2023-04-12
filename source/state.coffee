@@ -14,6 +14,9 @@ class StateG extends EmitterShell
     ###* @type import('./type/state').StateG['mapColor'] ###
     @mapColor = __map_state__
 
+    ###* @type import('./type/state').StateG['namespace'] ###
+    @namespace = 'state'
+
   ###* @type import('./type/state').StateG['checkElement'] ###
   checkElement: (name) -> ColorManager.findAll [
     @mapColor[name][0][0]

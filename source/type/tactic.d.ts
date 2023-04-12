@@ -4,6 +4,7 @@ export class TacticG extends KeyBinding {
   private intervalLong: 100
   private intervalShort: 50
   private isActive: boolean
+  namespace: 'tactic'
   constructor()
   private atDuration(cbA: Fn, cbB: Fn, isNot: boolean): void
   private atMovement(cbA: Fn, cbB: Fn, isNot: boolean): void

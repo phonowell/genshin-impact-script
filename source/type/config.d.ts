@@ -19,6 +19,7 @@ type Key = Keys<keyof Data>
 
 export class ConfigG {
   data: Record<Key, string | number>
+  namespace: 'config'
   private source: 'config.ini'
   constructor()
   detectPath(): void
