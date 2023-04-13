@@ -54,7 +54,6 @@ boot = (callback) ->
     Window2
     Alice
     Buff
-    Controller
     # ---end---
   ]
 

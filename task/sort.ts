@@ -80,6 +80,8 @@ const getList = async () => {
     './source/*.coffee',
     '!./source/index.coffee',
     '!./source/misc.coffee',
+    // ignore
+    '!./source/controller.coffee',
   ])
 
   const listB: [string, string[], string[]][] = []

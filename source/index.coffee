@@ -44,7 +44,6 @@ import './sound'
 import './window'
 import './alice'
 import './buff'
-import './controller'
 # ---end---
 
 import './misc'
