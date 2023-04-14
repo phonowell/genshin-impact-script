@@ -1,47 +1,47 @@
 # Guide
 
-## How to Use
+## How to use
 
-### First Launch
+## First start
 
 - Open the game.
 
-- Adjust the game screen to a `16:9` aspect ratio with a resolution of no less
-  than `1600x900`.
+- Set the game screen to a `16:9` aspect ratio with a resolution of at least
+  `1600x900`.
 
-- In the operation settings, rebind `Switch Walk/Run` to `Right Ctrl`.
+- In the settings, rebind `Switch Walk/Run` to `Right Ctrl`.
 
-- Launch the script.
+- Run the script.
 
-### Subsequent Launches
+### Subsequent launches
 
-- Simply launch the script.
+- Simply run the script.
 
 ## Troubleshooting
 
-- Ensure that the script is launched with administrator privileges.
+- Make sure the script is running with administrator privileges.
 
-- Ensure that the game screen is at a `16:9` aspect ratio with a resolution of
-  no less than `1600x900`.
+- Make sure the game screen is set to a `16:9` aspect ratio with a resolution of
+  at least `1600x900`.
 
-- Ensure that no screen filters are being used.
+- Make sure no screen filters are in use.
 
-- Ensure that gadgets are equipped.
+- Make sure gadgets are equipped.
 
-- For players in East Asia, ensure that the input method is in English.
+- For players in East Asia, make sure the input method is in English.
 
-- The script was developed in windowed mode with a resolution of `1600x900`. If
-  you encounter any issues, try switching to this resolution.
+- The script has been developed in windowed mode with a resolution of
+  `1600x900`. If you encounter problems, try switching to this resolution.
 
-- Raise an `issue`.
+- Report an `issue'.
 
-## Other Notes
+## Other notes
 
-- No screen filters are supported.
+- Screen filters are not supported.
 
-- When using the skill timer, you need to scan the team first.
+- When using the skill timer, you must scan the team first.
 
-- The game should run at a `16:9` resolution of no less than `1600x900`.
+- The game should run at a `16:9` resolution of at least `1600x900`.
 
-- Starting from version `0.0.31`, `Celestia` and `Irminsul` servers are no
-  longer supported by default.
+- As of version `0.0.31`, the `Celestia` and `Irminsul` servers are no longer
+  supported by default.

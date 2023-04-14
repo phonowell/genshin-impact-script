@@ -1,19 +1,20 @@
 # Recording
 
-This feature provides programmable key recording and replay functionality.
+This feature provides programmable keystroke recording and playback
+functionality.
 
 ## Quick Start
 
-To get started, press `Ctrl + Numpad Dot`, press a few other keys, and then
-press `Ctrl + Numpad Dot` again to record your first action. The file name for
-this recording is `replay/0.txt`.
+To get started, press `Ctrl + Numpad Dot`, press a few more keys, and then press
+`Ctrl + Numpad Dot` again to record your first action. The file name for this
+recording is `replay/0.txt`.
 
 To replay this recording, press `Ctrl + Numpad 0`.
 
-`replay/0~9.txt` are ten built-in shortcut entries, which can be called by
+`replay/0~9.txt` are ten built-in shortcut entries that can be accessed by
 pressing `Ctrl + Numpad 0~9`.
 
-The contents of a recording are usually formatted like this:
+The contents of a recording are usually formatted as follows:
 
 ```txt
 1000 esc:down
@@ -59,8 +60,8 @@ More complex recording content may also look like this:
 50 esc:up
 ```
 
-Lines starting with `#` represent comments and will not be parsed and executed.
-Inline comments are not currently supported.
+Lines starting with `#` are comments and will not be parsed and executed. Inline
+comments are currently not supported.
 
 Lines starting with `@` represent special markers, and the current special
 markers are as follows:
@@ -78,6 +79,6 @@ in the game, and you should see `hello world` being input and sent.
 ```
 
 After saving the above text content as `replay/0.txt`, press `Ctrl + Numpad 0`
-in the game, you should see the same actions performed as before. This is
+in the game, and you should see the same actions performed as before. This is
 because the `@run` tag provides the ability to jump between different
 recordings.
