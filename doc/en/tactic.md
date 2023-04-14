@@ -3,13 +3,12 @@
 Tactics can save a lot of repetitive operations. Just press and hold the left
 mouse button.
 
-Note that since version `0.0.35`, tactics need to be configured in
-`character.ini`.
+Note that since version `0.0.35`, tactics must be configured in `character.ini`.
 
-Since version `0.0.40`, you can use the `on-side-button-1` and
+As of version `0.0.40`, you can use the `on-side-button-1` and
 `on-side-button-2` items to configure side button actions.
 
-## Quick Start
+## Quick start
 
 First, an example:
 
@@ -27,28 +26,28 @@ on-long-press = a, a~
 on-long-press = a, e~
 ```
 
-Get to know these keywords:
+Learn about these keywords:
 
 | Keyword      | Description                              |
 | ------------ | ---------------------------------------- |
-| `#`          | Immediately jump to the next group       |
+| `#`          | Jump to the next group immediately       |
 | `@e`/`!@e`   | Whether the elemental skill is effective |
 | `@e?`/`!@e?` | Whether the elemental skill is ready     |
 | `@m`/`!@m`   | Whether the character is moving          |
-| `a`/`a~`     | Normal attack / charged attack           |
+| `a`/`a~`     | Normal attack / Charged attack           |
 | `e`/`e~`     | Use elemental skill (tap / long press)   |
 | `ee`         | Quickly use elemental skill twice        |
 | `j`          | Jump                                     |
 | `ja`         | Jump attack                              |
 | `s`          | Sprint                                   |
 | `t`          | Aim                                      |
-| `tt`         | Quickly aim twice                        |
+| `tt`         | Aim twice quickly                        |
 | Number       | Delay, unit is `ms`                      |
 
-Different instructions are separated by `,`, and different groups are separated
-by `;`.
+Different commands are separated by `,`, and different groups are separated by
+`;`.
 
-So looking back at the example, Fischl's tactic is like this:
+So, looking back at the example, Fischl's tactic looks like this:
 
 - Normal attack
 
@@ -62,17 +61,16 @@ So looking back at the example, Fischl's tactic is like this:
 
 Hu Tao's logic is much more complicated, divided into two groups:
 
-- When the elemental skill is effective, loop using charged attack jump
+- When the elemental skill is effective, loop with charged attack jump
 
-- When the elemental skill is not effective, loop using normal attack, and use
+- When the elemental skill is not effective, loop with normal attack, and use
   the elemental skill when the elemental skill is ready
 
-`@e` is a special mark, which will continue to execute forward only when the
-elemental skill is effective; otherwise, it will jump to the next group.
+`@e` is a special marker that will only continue forward if the Elemental Skill
+is effective, otherwise, it will jump to the next group.
 
-The remaining two examples are relatively simple. Klee will loop using normal
-attack plus charged attack, while Zhongli will constantly break the shield in
-normal attack.
+The other two examples are relatively simple. Klee will loop with normal attack
+plus charged attack, and Zhongli will keep his shield in normal attack.
 
 ## Copy homework
 
@@ -112,8 +110,8 @@ on-long-press = a, a~
 on-long-press = a, e~
 ```
 
-The above configuration is not the optimal solution. If you have a better
-solution, please let me know.
+The above configuration is not optimal. If you have a better solution, please
+let me know.
 
 ## Wildcard
 
@@ -131,7 +129,7 @@ Since version `0.0.34`, the following wildcards can be used:
 
 - sword <br> All sword characters
 
-For most characters, setting it like this is always correct:
+For most characters, this is the correct setting:
 
 ```ini
 [all]
@@ -141,7 +139,7 @@ on-long-press = a, e
 ## Raw key
 
 Since version `0.0.38`, you can call the key on the keyboard by following the
-key name with `$`, for example `$w` represents pressing the `w` key.
+key name with `$`, e.g. `$w` means press the `w` key.
 
-Similarly, `$l-button:down, 1000, $l-button:up` means long press the left mouse
-button.
+Similarly, `$l-button:down, 1000, $l-button:up` means to hold down the left
+mouse button.
