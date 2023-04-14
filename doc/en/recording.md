@@ -1,20 +1,19 @@
 # Recording
 
-This feature provides programmable keystroke recording and playback
-functionality.
+Offer programmable key recording and replaying feature.
 
 ## Quick Start
 
-To get started, press `Ctrl + Numpad Dot`, press a few more keys, and then press
-`Ctrl + Numpad Dot` again to record your first action. The file name for this
-recording is `replay/0.txt`.
+Initially, press `Ctrl + Numpad Dot`. After hitting a few other keys, press
+`Ctrl + Numpad Dot` again to obtain the first recording. Its file name is
+`replay/0.txt`.
 
-To replay this recording, press `Ctrl + Numpad 0`.
+By pressing `Ctrl + Numpad 0`, you should be able to replay this recording.
 
-`replay/0~9.txt` are ten built-in shortcut entries that can be accessed by
+`replay/0~9.txt` provides ten built-in shortcuts. You can invoke them by
 pressing `Ctrl + Numpad 0~9`.
 
-The contents of a recording are usually formatted as follows:
+The content of a recording usually looks like this:
 
 ```txt
 1000 esc:down
@@ -36,7 +35,7 @@ The contents of a recording are usually formatted as follows:
 Each line represents an action, including the action time (in milliseconds),
 key, and position information (in percentages), separated by spaces.
 
-More complex recording content may also look like this:
+More complex recording content may also be like this:
 
 ```txt
 # start chat
@@ -60,11 +59,11 @@ More complex recording content may also look like this:
 50 esc:up
 ```
 
-Lines starting with `#` are comments and will not be parsed and executed. Inline
-comments are currently not supported.
+Lines starting with `#` represent comments and will not be parsed or executed.
+Currently, inline comments are not supported.
 
-Lines starting with `@` represent special markers, and the current special
-markers are as follows:
+Lines starting with `@` contain special markers. The currently available markers
+are as follows:
 
 - @input
 - @paste
@@ -72,13 +71,12 @@ markers are as follows:
 - @sleep
 
 After saving the above text content as `replay/9.txt`, press `Ctrl + Numpad 9`
-in the game, and you should see `hello world` being input and sent.
+in the game to see the input of `hello world` sent.
 
 ```txt
 @run 9
 ```
 
 After saving the above text content as `replay/0.txt`, press `Ctrl + Numpad 0`
-in the game, and you should see the same actions performed as before. This is
-because the `@run` tag provides the ability to jump between different
-recordings.
+in the game to see the same action executed. This is because the `@run` marker
+provides the feature of jumping between different recordings.

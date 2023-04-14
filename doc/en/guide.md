@@ -2,46 +2,47 @@
 
 ## How to use
 
-## First start
+## Initial Launch
 
-- Open the game.
+- Launch the game.
 
-- Set the game screen to a `16:9` aspect ratio with a resolution of at least
+- Adjust the game screen to a `16:9` aspect ratio with a minimum resolution of
   `1600x900`.
 
-- In the settings, rebind `Switch Walk/Run` to `Right Ctrl`.
+- In the settings, rebind the `Switch Walk/Run` function to the `Right Ctrl`
+  key.
 
-- Run the script.
+- Launch the script.
 
-### Subsequent launches
+### Subsequent Launches
 
-- Simply run the script.
+- Simply launch the script.
 
 ## Troubleshooting
 
-- Make sure the script is running with administrator privileges.
+- Ensure that the script is launched with administrator privileges.
 
-- Make sure the game screen is set to a `16:9` aspect ratio with a resolution of
-  at least `1600x900`.
+- Ensure that the game screen has a `16:9` aspect ratio with a minimum
+  resolution of `1600x900`.
 
-- Make sure no screen filters are in use.
+- Ensure that no screen filters are in use.
 
-- Make sure gadgets are equipped.
+- Ensure that gadgets are equipped.
 
-- For players in East Asia, make sure the input method is in English.
+- For players in East Asia, ensure that the input method is in English mode.
 
-- The script has been developed in windowed mode with a resolution of
-  `1600x900`. If you encounter problems, try switching to this resolution.
+- The script is developed in a `1600x900` resolution windowed mode. If issues
+  arise, try switching to that resolution.
 
-- Report an `issue'.
+- Raise an `issue'.
 
-## Other notes
+## Other Notes
 
-- Screen filters are not supported.
+- No Screen filters are supported.
 
-- When using the skill timer, you must scan the team first.
+- When using the skill timer, scan the party first.
 
-- The game should run at a `16:9` resolution of at least `1600x900`.
+- The game should be running in `16:9` resolution with a minimum of `1600x900`.
 
-- As of version `0.0.31`, the `Celestia` and `Irminsul` servers are no longer
+- Since version `0.0.31`, `Celestia` and `Irminsul` servers are no longer
   supported by default.
