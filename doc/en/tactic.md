@@ -6,6 +6,8 @@ Note that starting from version `0.0.35`, custom actions need to be configured i
 
 Starting from version `0.0.40`, you can use the `on-side-button-1` and `on-side-button-2` options to configure the side button actions.
 
+Since version `0.0.48`, this functionality has been temporarily disabled.
+
 ## Quick Start
 
 First, let's take an example:

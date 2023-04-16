@@ -12,7 +12,7 @@
 - [新手指引](./doc/guide.md)
 - [功能](./doc/feature.md)
 - [按键](./doc/keymap.md)
-- [自定义动作](./doc/tactic.md)
+- ~~[自定义动作](./doc/tactic.md)~~
 - [录像](./doc/recording.md)
 - [常见问题](./doc/faq.md)
 - [联系方式](./doc/contact.md)
