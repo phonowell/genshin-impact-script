@@ -2,6 +2,7 @@ import { Fn } from './global'
 
 export class ClientG extends KeyBinding {
   isSuspended: boolean
+  namespace: 'client'
   constructor()
   init(): void
   private setIcon(name: 'on' | 'off'): void

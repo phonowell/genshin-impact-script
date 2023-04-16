@@ -3,6 +3,7 @@ type Shape = 0 | 1 | 2
 export class FishingG {
   private isActive: boolean
   private isPulling: boolean
+  namespace: 'fishing'
   constructor()
   private checkIsFishing(): boolean
   private checkShape(): Shape

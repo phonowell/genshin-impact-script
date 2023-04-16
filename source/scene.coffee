@@ -8,6 +8,9 @@ class SceneG extends EmitterShell
     ###* @type import('./type/scene').SceneG['list'] ###
     @list = []
 
+    ###* @type import('./type/scene').SceneG['namespace'] ###
+    @namespace = 'scene'
+
   ###* @type import('./type/scene').SceneG['init'] ###
   init: ->
 

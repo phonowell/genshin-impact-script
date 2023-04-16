@@ -15,6 +15,9 @@ class GdipG
       pBitmap: 0
       pToken: 0
 
+    ###* @type import('./type/gdip').GdipG['namespace'] ###
+    @namespace = 'gdip'
+
   ###* @type import('./type/gdip').GdipG['argb2rgb'] ###
   argb2rgb: (argb) -> argb - 0xFF000000
 
@@ -95,7 +98,8 @@ class GdipG
   ###* @type import('./type/gdip').GdipG['init'] ###
   init: ->
     @start()
-    if Config.get 'misc/use-debug-mode' then Indicator.on 'update', @report
+    if Config.get 'misc/use-debug-mode'
+      Indicator.on 'update', @report
 
   ###* @type import('./type/gdip').GdipG['report'] ###
   report: ->
@@ -133,8 +137,11 @@ class GdipG
     Indicator.setCount token
     Indicator.setCost token, 'start'
 
-    {x, y, width, height} = Window2.bounds
-    pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
+    # {x, y, width, height} = Window2.bounds
+    # pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
+
+    unless Window2.id then return
+    pBitmap = Gdip_BitmapFromHWND Window2.id
     unless pBitmap then return
 
     @clearCache()

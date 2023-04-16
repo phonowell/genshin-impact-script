@@ -14,6 +14,12 @@ class CameraG extends KeyBinding
     ###* @type import('./type/camera').CameraG['listKey'] ###
     @listKey = ['left', 'right', 'up', 'down']
 
+    ###* @type import('./type/camera').CameraG['namespace'] ###
+    @namespace = 'camera'
+
+  ###* @type import('./type/camera'). CameraG['center'] ###
+  center: -> $.press 'm-button'
+
   ###* @type import('./type/camera'). CameraG['init'] ###
   init: ->
 
@@ -44,12 +50,12 @@ class CameraG extends KeyBinding
 
     unless Scene.is 'normal' then return
 
-    if $.getState 'left' then x = -1
-    else if $.getState 'right' then x = 1
+    if $.isPressing 'left' then x = -1
+    else if $.isPressing 'right' then x = 1
     else x = 0
 
-    if $.getState 'up' then y = -1
-    else if $.getState 'down' then y = 1
+    if $.isPressing 'up' then y = -1
+    else if $.isPressing 'down' then y = 1
     else y = 0
 
     if x == 0 and y == 0 then return

@@ -12,6 +12,9 @@ class DictionaryG
     ###* @type import('./type/dictionary').DictionaryG['data'] ###
     @data = {}
 
+    ###* @type import('./type/dictionary').DictionaryG['namespace'] ###
+    @namespace = 'dictionary'
+
   ###* @type import('./type/dictionary').DictionaryG['get'] ###
   get: (name) ->
 

@@ -8,6 +8,7 @@ export type Shell = {
   clearInterval: SA.ClearInterval
   clearTimeout: SA.ClearTimeout
   click: SA.Click
+  clone: SA.Clone
   confirm: SA.Confirm
   debounce: SA.Debounce
   delete: SA.Delete
@@ -18,20 +19,20 @@ export type Shell = {
   filter: SA.Filter
   forEach: SA.ForEach
   getPosition: SA.GetPosition
-  getState: SA.GetState
   getType: SA.GetType
   httpGet: SA.HttpGet
   includes: SA.Includes
   isArray: SA.IsArray
   isFunction: SA.IsFunction
+  isKeyBound: SA.IsKeyBound
+  isKeyPreventedDefault: SA.IsKeyPreventedDefault
   isNumber: SA.IsNumber
+  isPressing: SA.IsPressing
   isString: SA.IsString
   join: SA.Join
   keys: SA.Keys
   length: SA.Length
   map: SA.Map
-  max: SA.Max
-  min: SA.Min
   mixin: SA.Mixin
   move: SA.Move
   noop: SA.Noop
@@ -40,7 +41,7 @@ export type Shell = {
   on: KeyBindingShell['add']
   open: SA.Open
   press: SA.Press
-  preventInput: SA.PreventInput
+  preventDefaultKey: SA.PreventDefaultKey
   push: SA.Push
   reload: SA.Reload
   replace: SA.Replace

@@ -18,7 +18,6 @@ class TimerG
     hasId = !!id
 
     if hasId and @cacheTimer[id] then $.clearTimeout @cacheTimer[id]
-    unless time then return
 
     result = $.setTimeout fn, time
     if hasId then @cacheTimer[id] = result

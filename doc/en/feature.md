@@ -1,10 +1,11 @@
 # Features
 
-- Auto fishing and pick-up
+- Automatic fishing
 
-- Combat assistance with features such as skill cooldowns, one-click combat
-  macros, and more
+- Automatic pickup
 
-- Key recording and replay
+- Combat assistance, including skill countdown, one-button combat macro, and other multiple functions
 
-- Other features such as quick dialogue skipping, background muting, and more
+- Key recording and replaying
+
+- Other multiple functions, such as fast skipping of plot, background mute, etc.

@@ -1,17 +1,14 @@
 # Tactic
 
-Tactics can save a lot of repetitive operations. Just press and hold the left
-mouse button.
+Tactics allow you to save a lot of repetitive operations. You just need to press and hold the left button.
 
-Note that since version `0.0.35`, tactics need to be configured in
-`character.ini`.
+Note that starting from version `0.0.35`, custom actions need to be configured in `character.ini`.
 
-Since version `0.0.40`, you can use the `on-side-button-1` and
-`on-side-button-2` items to configure side button actions.
+Starting from version `0.0.40`, you can use the `on-side-button-1` and `on-side-button-2` options to configure the side button actions.
 
 ## Quick Start
 
-First, an example:
+First, let's take an example:
 
 ```ini
 [fischl]
@@ -31,50 +28,45 @@ Get to know these keywords:
 
 | Keyword      | Description                              |
 | ------------ | ---------------------------------------- |
-| `#`          | Immediately jump to the next group       |
+| `#`          | Immediately jumps to the next group      |
 | `@e`/`!@e`   | Whether the elemental skill is effective |
 | `@e?`/`!@e?` | Whether the elemental skill is ready     |
 | `@m`/`!@m`   | Whether the character is moving          |
-| `a`/`a~`     | Normal attack / charged attack           |
-| `e`/`e~`     | Use elemental skill (tap / long press)   |
+| `a`/`a~`     | Normal attack/Charged attack             |
+| `e`/`e~`     | Use elemental skill (tap/long press)     |
 | `ee`         | Quickly use elemental skill twice        |
 | `j`          | Jump                                     |
 | `ja`         | Jump attack                              |
 | `s`          | Sprint                                   |
 | `t`          | Aim                                      |
 | `tt`         | Quickly aim twice                        |
-| Number       | Delay, unit is `ms`                      |
+| Number       | Delay, in `milliseconds`                 |
 
-Different instructions are separated by `,`, and different groups are separated
-by `;`.
+Use `,` to separate different commands, and `;` to separate different groups.
 
 So looking back at the example, Fischl's tactic is like this:
 
 - Normal attack
 
-- Wait for 100ms
+- Wait for 100 milliseconds
 
 - Normal attack
 
-- Wait for 100ms
+- Wait for 100 milliseconds
 
 - Quickly aim twice
 
-Hu Tao's logic is much more complicated, divided into two groups:
+Hu Tao's logic is much more complicated and divided into two groups:
 
-- When the elemental skill is effective, loop using charged attack jump
+- When the elemental skill is effective, loop with charged attack jump
 
-- When the elemental skill is not effective, loop using normal attack, and use
-  the elemental skill when the elemental skill is ready
+- When the elemental skill is not effective, loop with normal attack, and use the elemental skill when it is ready
 
-`@e` is a special mark, which will continue to execute forward only when the
-elemental skill is effective; otherwise, it will jump to the next group.
+`@e` is a special marker that only continues to execute if the elemental skill is effective; otherwise it jumps to the next group.
 
-The remaining two examples are relatively simple. Klee will loop using normal
-attack plus charged attack, while Zhongli will constantly break the shield in
-normal attack.
+The remaining two examples are relatively simple. Klee will loop normal attacks plus charged attacks, while Zhongli will keep the shield active during normal attacks.
 
-## Copy homework
+## Recommended
 
 ```ini
 [amber]
@@ -112,10 +104,9 @@ on-long-press = a, a~
 on-long-press = a, e~
 ```
 
-The above configuration is not the optimal solution. If you have a better
-solution, please let me know.
+The above configuration is not an optimal solution. If you have a better solution, please let me know at any time.
 
-## Wildcard
+## Wildcards
 
 Since version `0.0.34`, the following wildcards can be used:
 
@@ -131,7 +122,7 @@ Since version `0.0.34`, the following wildcards can be used:
 
 - sword <br> All sword characters
 
-For most characters, setting it like this is always correct:
+For most characters, this is the correct setting:
 
 ```ini
 [all]
@@ -140,8 +131,6 @@ on-long-press = a, e
 
 ## Raw key
 
-Since version `0.0.38`, you can call the key on the keyboard by following the
-key name with `$`, for example `$w` represents pressing the `w` key.
+Since version `0.0.38`, you can call the keys on the keyboard by using `$` followed by the key name, for example, `$w` represents pressing the `w` key.
 
-Similarly, `$l-button:down, 1000, $l-button:up` means long press the left mouse
-button.
+Similarly, `$l-button:down, 1000, $l-button:up` represents holding down the left button.

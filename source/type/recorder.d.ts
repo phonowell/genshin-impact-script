@@ -8,6 +8,7 @@ export class RecorderG extends KeyBinding {
   isActive: boolean
   private list: Item[]
   private listKey: string[]
+  namespace: 'recorder'
   private ts: number
   constructor()
   init(): void

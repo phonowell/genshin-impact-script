@@ -48,6 +48,9 @@ class ControllerG extends EmitterShell
       right: 8
     }
 
+    ###* @type import('./type/controller').ControllerG['namespace'] ###
+    @namespace = 'controller'
+
     ###* @type import('./type/controller').ControllerG['thresholdStick'] ###
     @thresholdStick = 1e4
 

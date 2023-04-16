@@ -8,29 +8,20 @@ class StateG extends EmitterShell
   constructor: ->
     super()
 
-    ###* @type import('./type/state').StateG['cacheElement'] ###
-    @cacheElement = {
-      cryo: false
-      hydro: false
-    }
-
     ###* @type import('./type/state').StateG['list'] ###
     @list = []
 
     ###* @type import('./type/state').StateG['mapColor'] ###
     @mapColor = __map_state__
 
+    ###* @type import('./type/state').StateG['namespace'] ###
+    @namespace = 'state'
+
   ###* @type import('./type/state').StateG['checkElement'] ###
-  checkElement: (name) ->
-
-    unless Timer.hasElapsed "state/#{name}", 500
-      Indicator.setCount 'gdip/prevent'
-      return @cacheElement[name]
-
-    return @cacheElement[name] = ColorManager.findAll [
-      @mapColor[name][0][0]
-      @mapColor[name][0][1]
-    ], ['42%', '88%', '58%', '91%']
+  checkElement: (name) -> ColorManager.findAll [
+    @mapColor[name][0][0]
+    @mapColor[name][0][1]
+  ], ['42%', '88%', '58%', '91%']
 
   ###* @type import('./type/state').StateG['checkIsAiming'] ###
   checkIsAiming: ->
@@ -40,14 +31,44 @@ class StateG extends EmitterShell
   ###* @type import('./type/state').StateG['checkIsFree'] ###
   checkIsFree: ->
 
-    # unless ColorManager.findAny [0x96D722, 0xFF6666], [
-    #   '88%', '25%'
-    #   '89%', '53%'
-    # ] then return false
-
     unless ColorManager.findAll [0xFFFFFF, 0x323232], [
       '94%', '80%'
       '95%', '82%'
+    ] then return false
+
+    return true
+
+  ###* @type import('./type/state').StateG['checkIsFrozen'] ###
+  checkIsFrozen: (list) ->
+
+    isCryo = $.includes list, 'cryo'
+    isHydro = $.includes list, 'hydro'
+
+    unless (isCryo or isHydro) then return false
+    # it is less precise
+    # do not use this judgment
+    # if isCryo and isHydro then return true
+
+    unless ColorManager.findAll 0xF05C4A, [
+      '73%', '48%'
+      '75%', '52%'
+    ] then return false
+
+    unless ColorManager.findAll [0xFFFFFF, 0x323232], [
+      '72%', '53%'
+      '75%', '56%'
+    ] then return false
+
+    return true
+
+  ###* @type import('./type/state').StateG['checkIsReady'] ###
+  checkIsReady: ->
+
+    unless Party.size > 1 then return true
+
+    unless ColorManager.findAny [0x96D722, 0xFF6666], [
+      '88%', '25%'
+      '89%', '53%'
     ] then return false
 
     return true
@@ -69,17 +90,26 @@ class StateG extends EmitterShell
   ###* @type import('./type/state').StateG['update'] ###
   update: ->
 
-    list = @makeListName()
-    if Scene.is 'normal'
+    list = do =>
 
-      if @checkIsFree()
-        $.push list, 'free'
-      else
-        if @checkIsAiming() then $.push list, 'aiming'
+      l = @makeListName()
+      unless Scene.is 'normal' then return l
 
       # element
-      if @checkElement 'cryo' then $.push list, 'cryo'
-      # if @checkElement 'hydro' then $.push list, 'hydro'
+      if @checkElement 'cryo' then $.push l, 'cryo'
+      if @checkElement 'hydro' then $.push l, 'hydro'
+      if @checkIsFrozen l then $.push l, 'frozen'
+      if $.includes l, 'frozen' then return l
+
+      # free
+      if @checkIsFree()
+        $.push l, 'free'
+        if @checkIsReady() then $.push l, 'ready'
+        return l
+
+      # not free
+      if @checkIsAiming() then $.push l, 'aiming'
+      return l
 
     if $.eq list, @list then return
     @list = list

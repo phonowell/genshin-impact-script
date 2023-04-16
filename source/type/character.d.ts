@@ -38,7 +38,7 @@ type Keyword = '5-star' | Vision | Weapon
 
 type TypeE =
   | 0
-  | 1 // amber beidou fischl jean keqing
+  | 1 // alhaitham amber beidou fischl jean mika nahida keqing yaoyao
   | 2 // diluc nilou
   | 3 // tartaglia
   | 4 // sayu yelan
@@ -54,6 +54,7 @@ export class CharacterG {
   data: Record<string, Item>
   private listVision: Vision[]
   private listWeapon: Weapon[]
+  namespace: 'character'
   private source: 'character.ini'
   constructor()
   get<T extends keyof Item | void = void>(

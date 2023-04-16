@@ -22,6 +22,9 @@ class ConfigG extends EmitterShell
       'misc/use-tactic': '0'
     }
 
+    ###* @type import('./type/config').ConfigG['namespace'] ###
+    @namespace = 'config'
+
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 
@@ -59,6 +62,7 @@ class ConfigG extends EmitterShell
 
   ###* @type import('./type/config').ConfigG['init'] ###
   init: ->
+    Dictionary.noop() # for keeping loading order
     unless @detectRegion() then return
     @load()
 
@@ -103,10 +107,10 @@ class ConfigG extends EmitterShell
     unless key then return
 
     # register toggling key
+    $.preventDefaultKey key, true
     $.on key, =>
       @toggle ipt
       @emit 'change'
-    $.preventInput key, true
 
   ###* @type import('./type/config').ConfigG['set'] ###
   set: (ipt, value) ->

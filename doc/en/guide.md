@@ -1,15 +1,14 @@
 # Guide
 
-## How to Use
+## How to use
 
-### First Launch
+## Initial Launch
 
-- Open the game.
+- Launch the game.
 
-- Adjust the game screen to a `16:9` aspect ratio with a resolution of no less
-  than `1600x900`.
+- Adjust the game screen to a `16:9` aspect ratio with a minimum resolution of `1600x900`.
 
-- In the operation settings, rebind `Switch Walk/Run` to `Right Ctrl`.
+- In the settings, rebind the `Switch Walk/Run` function to the `Right Ctrl` key.
 
 - Launch the script.
 
@@ -21,27 +20,24 @@
 
 - Ensure that the script is launched with administrator privileges.
 
-- Ensure that the game screen is at a `16:9` aspect ratio with a resolution of
-  no less than `1600x900`.
+- Ensure that the game screen has a `16:9` aspect ratio with a minimum resolution of `1600x900`.
 
-- Ensure that no screen filters are being used.
+- Ensure that no screen filters are in use.
 
-- Ensure that small equipment items are equipped.
+- Ensure that gadgets are equipped.
 
-- For players in East Asia, ensure that the input method is in English.
+- For players in East Asia, ensure that the input method is in English mode.
 
-- The script was developed in windowed mode with a resolution of `1600x900`. If
-  you encounter any issues, try switching to this resolution.
+- The script is developed in a `1600x900` resolution windowed mode. If issues arise, try switching to that resolution.
 
-- Raise an `issue`.
+- Raise an `issue'.
 
 ## Other Notes
 
-- No screen filters are supported.
+- No Screen filters are supported.
 
-- When using the skill timer, you need to scan the team first.
+- When using the skill timer, scan the party first.
 
-- The game should run at a `16:9` resolution of no less than `1600x900`.
+- The game should be running in `16:9` resolution with a minimum of `1600x900`.
 
-- Starting from version `0.0.31`, `Celestia` and `Irminsul` servers are no
-  longer supported by default.
+- Since version `0.0.31`, `Celestia` and `Irminsul` servers are no longer supported by default.

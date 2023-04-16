@@ -1,9 +1,8 @@
 export class JumperG extends KeyBinding {
-  private isBreaking: boolean
+  namespace: 'jumper'
   private tsJump: number
   constructor()
-  private check(): void
+  break(): void
   init(): void
   jump(): void
-  private watch(): void
 }

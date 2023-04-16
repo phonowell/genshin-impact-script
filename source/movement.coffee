@@ -14,10 +14,14 @@ class MovementG extends KeyBinding
     ###* @type import('./type/movement').MovementG['isMoving'] ###
     @isMoving = false
 
+    ###* @type import('./type/movement').MovementG['namespace'] ###
+    @namespace = 'movement'
+
   ###* @type import('./type/movement').MovementG['aboutAim'] ###
   aboutAim: ->
 
     checkIsReadyToAim = ->
+      unless Party.size then return false
       unless Character.is Party.name, 'bow' then return false
       return State.is 'free'
 
@@ -44,13 +48,13 @@ class MovementG extends KeyBinding
 
     Scene.useExact ['normal', 'not-domain'], =>
 
+      $.preventDefaultKey key, true
       @registerEvent token, key
-      $.preventInput key, true
 
       return =>
 
+        $.preventDefaultKey key, false
         @unregisterEvent token, key
-        $.preventInput key, false
 
         # stop auto-forward if it is running
         if @isForwarding then @stopForward()
@@ -58,13 +62,11 @@ class MovementG extends KeyBinding
   ###* @type import('./type/movement').MovementG['aboutMove'] ###
   aboutMove: ->
 
-    @on 'move', =>
+    @on 'move', @report
 
-      if @isMoving
-        console.log "#movement/move: #{$.join @direction, ', '}"
-      else console.log '#movement/move: -'
+    @on 'move:start', =>
 
-      if @isForwarding and (($.includes @direction, 'w') or ($.includes @direction, 's'))
+      if @isForwarding and $.includes @direction, 's'
         @stopForward()
 
     Scene.useExact ['normal'], =>
@@ -80,8 +82,8 @@ class MovementG extends KeyBinding
 
         @direction = $.filter ['w', 'a', 's', 'd'], (key) ->
           # exclude `alt + w`
-          if key == 'w' then return ($.getState 'w') and not $.getState 'alt'
-          return $.getState key
+          if key == 'w' then return ($.isPressing 'w') and not $.isPressing 'alt'
+          return $.isPressing key
         @isMoving = ($.length @direction) > 0
 
         if $.eq @direction, cache.direction then return
@@ -121,20 +123,41 @@ class MovementG extends KeyBinding
     @aboutMove()
     @aboutUnhold()
 
+  ###* @type import('./type/movement').MovementG['report'] ###
+  report: ->
+
+    token = 'movement/report'
+
+    unless @isMoving
+      console.log "##{token}: -"
+      return
+
+    console.log "##{token}:", $.join @direction, ', '
+
   ###* @type import('./type/movement').MovementG['sprint'] ###
   sprint: -> $.click 'right'
 
   ###* @type import('./type/movement').MovementG['startForward'] ###
   startForward: ->
+
     @isForwarding = true
     Hud.render 0, 'auto forward [ON]'
     $.press 'w:down'
 
+    $.preventDefaultKey 'w', true
+    $.on 'w:down.stop-forward', =>
+      @stopForward()
+      $.press 'w:down'
+
   ###* @type import('./type/movement').MovementG['stopForward'] ###
   stopForward: ->
+
     @isForwarding = false
     Hud.render 0, 'auto forward [OFF]'
     $.press 'w:up'
+
+    $.preventDefaultKey 'w', false
+    $.off 'w:down.stop-forward'
 
 # @ts-ignore
 Movement = new MovementG()

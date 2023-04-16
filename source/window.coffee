@@ -8,6 +8,9 @@ class WindowG extends KeyBinding
     ###* @type import('./type/window').WindowG['bounds'] ###
     @bounds = {x: 0, y: 0, width: 0, height: 0}
 
+    ###* @type import('./type/window').WindowG['id'] ###
+    @id = 0
+
     ###* @type import('./type/window').WindowG['isActive'] ###
     @isActive = false
 
@@ -16,6 +19,9 @@ class WindowG extends KeyBinding
 
     ###* @type import('./type/window').WindowG['isMouseIn'] ###
     @isMouseIn = false
+
+    ###* @type import('./type/window').WindowG['namespace'] ###
+    @namespace = 'window'
 
     ###* @type import('./type/window').WindowG['position'] ###
     @position = [1, 1]
@@ -51,10 +57,8 @@ class WindowG extends KeyBinding
     if isMouseIn == @isMouseIn then return
     @isMouseIn = isMouseIn
 
-    console.log "#window/is-mouse-in: #{@isMouseIn}"
-
-    if @isMouseIn then Client.suspend false
-    else Client.suspend true
+    if @isMouseIn then @emit 'enter'
+    else @emit 'leave'
 
     return
 
@@ -62,15 +66,6 @@ class WindowG extends KeyBinding
   close: ->
     @window.minimize()
     @window.close()
-
-  ###* @type import('./type/window').WindowG['focus'] ###
-  focus: ->
-    @window.focus()
-    if @isMouseIn then return
-    $.move [
-      @bounds.width * 0.5
-      @bounds.height * 0.5
-    ]
 
   ###* @type import('./type/window').WindowG['getState'] ###
   getState: ->
@@ -109,16 +104,22 @@ class WindowG extends KeyBinding
     @watch()
 
     @on 'leave', =>
+      @id = 0
       @window.setPriority 'low'
       Client.emit 'idle'
 
     @on 'enter', =>
+
+      id = 0
+      Native 'WinGet, id, IDLast, % this.window.exe'
+      @id = id
+
       @window.setPriority 'normal'
       @getState()
       @setStyle()
 
       Timer.add 1e3, @getState
-      @focus()
+      @window.focus()
 
       Client.emit 'activate'
 
@@ -128,6 +129,7 @@ class WindowG extends KeyBinding
 
     for direction in ['left', 'right', 'up', 'down']
 
+      $.preventDefaultKey "win + #{direction}", true
       $.on "win + #{direction}", =>
 
         if @isFullScreen then return
@@ -146,8 +148,6 @@ class WindowG extends KeyBinding
 
         @position = [x, y]
         @setPosition()
-
-      $.preventInput "win + #{direction}", true
 
     return
 

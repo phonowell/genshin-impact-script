@@ -9,9 +9,12 @@ class ConsoleG
 
     ###* @type import('./type/console').ConsoleG['lifetime'] ###
     @lifetime = 10e3
-    
+
     ###* @type import('./type/console').ConsoleG['listContent'] ###
     @listContent = []
+
+    ###* @type import('./type/console').ConsoleG['namespace'] ###
+    @namespace = 'console'
 
   ###* @type import('./type/console').ConsoleG['add'] ###
   add: (msg) ->

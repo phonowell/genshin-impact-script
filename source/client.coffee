@@ -8,18 +8,28 @@ class ClientG extends KeyBinding
     ###* @type import('./type/client').ClientG['isSuspended'] ###
     @isSuspended = false
 
+    ###* @type import('./type/client').ClientG['namespace'] ###
+    @namespace = 'client'
+
   ###* @type import('./type/client').ClientG['init'] ###
   init: ->
 
     @setIcon 'on'
 
+    @on 'idle', =>
+      @suspend true
+      @setIcon 'off'
+    @on 'activate', =>
+      @suspend false
+      @setIcon 'on'
+
+    $.preventDefaultKey 'alt + f4', true
     $.on 'alt + f4', -> Sound.beep 2, ->
       Window2.close()
       $.exit()
-    $.preventInput 'alt + f4', true
 
+    $.preventDefaultKey 'ctrl + f5', true
     $.on 'ctrl + f5', -> Sound.beep 3, $.reload
-    $.preventInput 'ctrl + f5', true
 
     return
 
@@ -38,9 +48,6 @@ class ClientG extends KeyBinding
     @isSuspended = isSuspended
 
     $.suspend @isSuspended
-
-    if @isSuspended then @setIcon 'off'
-    else @setIcon 'on'
 
   ###* @type import('./type/client').ClientG['useActive'] ###
   useActive: (fn) ->

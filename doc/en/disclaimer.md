@@ -1,3 +1,3 @@
 # Disclaimer
 
-You know the drill.
+You know what I mean.

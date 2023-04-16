@@ -5,6 +5,9 @@ class Party2G extends KeyBinding
   constructor: ->
     super()
 
+    ###* @type import('./type/party2').Party2G['namespace'] ###
+    @namespace = 'party-2'
+
   ###* @type import('./type/party2').Party2G['aboutPress'] ###
   aboutPress: ->
 

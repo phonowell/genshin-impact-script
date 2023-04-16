@@ -14,6 +14,9 @@ class FishingG
     ###* @type import('./type/fishing').FishingG['isPulling'] ###
     @isPulling = false
 
+    ###* @type import('./type/fishing').FishingG['namespace'] ###
+    @namespace = 'fishing'
+
   ###* @type import('./type/fishing').FishingG['checkIsFishing'] ###
   checkIsFishing: -> ColorManager.findAll 0xFFFFFF, [
     '94%', '94%'

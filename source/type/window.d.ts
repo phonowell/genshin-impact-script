@@ -9,16 +9,17 @@ type Bounds = {
 
 export class WindowG extends KeyBinding {
   bounds: Bounds
+  id: number
   private isActive: boolean
   isFullScreen: boolean
   isMouseIn: boolean
+  namespace: 'window'
   position: [number, number]
   window: WindowShell
   constructor()
   private checkActive(): void
   private checkMousePosition(): void
   close(): void
-  focus(): void
   private getState(): void
   private getTaskBarBounds(): Bounds
   init(): void

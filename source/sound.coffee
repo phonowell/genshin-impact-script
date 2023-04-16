@@ -9,6 +9,9 @@ class SoundG
     ###* @type import('./type/sound').SoundG['index'] ###
     @index = 0
 
+    ###* @type import('./type/sound').SoundG['namespace'] ###
+    @namespace = 'sound'
+
   ###* @type import('./type/sound').SoundG['beep'] ###
   beep: (n = 1, callback = undefined) ->
 

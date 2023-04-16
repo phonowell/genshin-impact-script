@@ -1,25 +1,24 @@
 # Keymap
 
-The following table lists the default game key bindings. However, it is
-important to note that `Toggle Run/Walk` must be bound to `Right Ctrl`.
+All keys use default game key bindings, but `Toggle Walk/Run` needs to be bound to `Right Ctrl`.
 
-| Key                           | Function                                    |
-| ----------------------------- | ------------------------------------------- |
-| Long press `Left/Right Click` | Enables tactic                              |
-| `Right Click`                 | Exits current menu                          |
-| `Alt + F4`                    | Exits                                       |
-| `Ctrl + F5`                   | Reloads                                     |
-| `F11`                         | Enters/Exits Auto Fishing Mode              |
-| `F12`                         | Scans Party                                 |
-| `~`                           | Switches character and uses Elemental Skill |
-| `1~5`                         | Switches character                          |
-| `Alt + 1~5`                   | Switches character and uses Elemental Burst |
-| `Alt + W`                     | Enters/Exits Auto Forward Mode              |
-| `W / S`                       | Exits Auto Forward Mode                     |
-| Long press `F`                | Quickly picks up items/Skips dialogue       |
-| `Alt + F`                     | Enters/Exits Auto Pick Up Mode              |
-| `Alt + Space`                 | Enables/Disables Improved Jump              |
-| `Left/Right/Up/Down`          | Moves camera                                |
-| `Win + Left/Right/Up/Down`    | Moves window                                |
-| `Ctrl + Numpad Dot`           | Starts/Ends recording                       |
-| `Ctrl + Numpad 0~9`           | Plays recording                             |
+| Key                           | Function                                 |
+| ----------------------------- | ---------------------------------------- |
+| Long press `Left/Right Click` | Activates tactic                         |
+| `Right Click`                 | Exit current menu                        |
+| `Alt + F4`                    | Quit                                     |
+| `Ctrl + F5`                   | Reload                                   |
+| `F11`                         | Enter/Exit auto fishing mode             |
+| `F12`                         | Scan Party                               |
+| `~`                           | Change character and use elemental skill |
+| `1~5`                         | Change character                         |
+| `Alt + 1~5`                   | Change character and use elemental burst |
+| `Alt + W`                     | Enter/Exit auto forward mode             |
+| `W/S`                         | Exit auto forward mode                   |
+| Long press `F`                | Quickly pick up items/Skips dialogues    |
+| `Alt + F`                     | Enter/Exit auto pick-up mode             |
+| `Alt + Space`                 | Enable/Disable improved jump             |
+| `Left/Right/Up/Down`          | Move camera                              |
+| `Win + Left/Right/Up/Down`    | Move window                              |
+| `Ctrl + Numpad Dot`           | Start/Stop recording                     |
+| `Ctrl + Numpad 0~9`           | Play recording                           |

@@ -23,6 +23,9 @@ class SkillG extends KeyBinding
     ###* @type import('./type/skill').SkillG['listRecord'] ###
     @listRecord = {}
 
+    ###* @type import('./type/skill').SkillG['namespace'] ###
+    @namespace = 'skill'
+
     ###* @type import('./type/skill').SkillG['tsUseE'] ###
     @tsUseE = 0
 
@@ -167,6 +170,9 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['init'] ###
   init: ->
+
+    return
+
     unless Config.get 'misc/use-skill-timer' then return
     @reset()
     @aboutBinding()
