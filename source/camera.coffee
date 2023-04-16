@@ -17,6 +17,9 @@ class CameraG extends KeyBinding
     ###* @type import('./type/camera').CameraG['namespace'] ###
     @namespace = 'camera'
 
+  ###* @type import('./type/camera'). CameraG['center'] ###
+  center: -> $.press 'm-button'
+
   ###* @type import('./type/camera'). CameraG['init'] ###
   init: ->
 

@@ -4,8 +4,7 @@
 
 - Automatic pickup
 
-- Combat assistance, including skill countdown, one-button combat macro, and
-  other multiple functions
+- Combat assistance, including skill countdown, one-button combat macro, and other multiple functions
 
 - Key recording and replaying
 

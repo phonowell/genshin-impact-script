@@ -106,12 +106,12 @@ class Party2G extends KeyBinding
       if Party.isCurrent slot
         Timer.remove token
         callback()
-        console.log "##{token}: [#{slot}] passed in #{diff}ms"
+        console.log "##{token}: [#{slot}] passed in #{diff} ms"
         return
 
       unless diff > limit then return
       Timer.remove token
-      console.log "##{token}: [#{slot}] failed after #{diff}ms"
+      console.log "##{token}: [#{slot}] failed after #{diff} ms"
 
       # @retry slot
 

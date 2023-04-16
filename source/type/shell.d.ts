@@ -8,6 +8,7 @@ export type Shell = {
   clearInterval: SA.ClearInterval
   clearTimeout: SA.ClearTimeout
   click: SA.Click
+  clone: SA.Clone
   confirm: SA.Confirm
   debounce: SA.Debounce
   delete: SA.Delete

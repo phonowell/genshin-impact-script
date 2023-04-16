@@ -1,7 +1,6 @@
 # Keymap
 
-All keys use default game key bindings, but `Toggle Walk/Run` needs to be bound
-to `Right Ctrl`.
+All keys use default game key bindings, but `Toggle Walk/Run` needs to be bound to `Right Ctrl`.
 
 | Key                           | Function                                 |
 | ----------------------------- | ---------------------------------------- |

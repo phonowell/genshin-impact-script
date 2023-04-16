@@ -17,7 +17,7 @@ type Keys<K extends keyof Data> = K extends keyof Data
   : never
 type Key = Keys<keyof Data>
 
-export class ConfigG {
+export class ConfigG extends EmitterShell {
   data: Record<Key, string | number>
   namespace: 'config'
   private source: 'config.ini'

@@ -1,13 +1,10 @@
 # Tactic
 
-Tactics allow you to save a lot of repetitive operations. You just need to press
-and hold the left button.
+Tactics allow you to save a lot of repetitive operations. You just need to press and hold the left button.
 
-Note that starting from version `0.0.35`, custom actions need to be configured
-in `character.ini`.
+Note that starting from version `0.0.35`, custom actions need to be configured in `character.ini`.
 
-Starting from version `0.0.40`, you can use the `on-side-button-1` and
-`on-side-button-2` options to configure the side button actions.
+Starting from version `0.0.40`, you can use the `on-side-button-1` and `on-side-button-2` options to configure the side button actions.
 
 ## Quick Start
 
@@ -63,15 +60,11 @@ Hu Tao's logic is much more complicated and divided into two groups:
 
 - When the elemental skill is effective, loop with charged attack jump
 
-- When the elemental skill is not effective, loop with normal attack, and use
-  the elemental skill when it is ready
+- When the elemental skill is not effective, loop with normal attack, and use the elemental skill when it is ready
 
-`@e` is a special marker that only continues to execute if the elemental skill
-is effective; otherwise it jumps to the next group.
+`@e` is a special marker that only continues to execute if the elemental skill is effective; otherwise it jumps to the next group.
 
-The remaining two examples are relatively simple. Klee will loop normal attacks
-plus charged attacks, while Zhongli will keep the shield active during normal
-attacks.
+The remaining two examples are relatively simple. Klee will loop normal attacks plus charged attacks, while Zhongli will keep the shield active during normal attacks.
 
 ## Recommended
 
@@ -111,8 +104,7 @@ on-long-press = a, a~
 on-long-press = a, e~
 ```
 
-The above configuration is not an optimal solution. If you have a better
-solution, please let me know at any time.
+The above configuration is not an optimal solution. If you have a better solution, please let me know at any time.
 
 ## Wildcards
 
@@ -139,8 +131,6 @@ on-long-press = a, e
 
 ## Raw key
 
-Since version `0.0.38`, you can call the keys on the keyboard by using `$`
-followed by the key name, for example, `$w` represents pressing the `w` key.
+Since version `0.0.38`, you can call the keys on the keyboard by using `$` followed by the key name, for example, `$w` represents pressing the `w` key.
 
-Similarly, `$l-button:down, 1000, $l-button:up` represents holding down the left
-button.
+Similarly, `$l-button:down, 1000, $l-button:up` represents holding down the left button.

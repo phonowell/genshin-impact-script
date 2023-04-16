@@ -9,6 +9,7 @@ export class MovementG extends KeyBinding {
   private aboutMove(): void
   private aboutUnhold(): void
   init(): void
+  private report(): void
   sprint(): void
   private startForward(): void
   stopForward(): void

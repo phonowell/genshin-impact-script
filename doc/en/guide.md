@@ -6,11 +6,9 @@
 
 - Launch the game.
 
-- Adjust the game screen to a `16:9` aspect ratio with a minimum resolution of
-  `1600x900`.
+- Adjust the game screen to a `16:9` aspect ratio with a minimum resolution of `1600x900`.
 
-- In the settings, rebind the `Switch Walk/Run` function to the `Right Ctrl`
-  key.
+- In the settings, rebind the `Switch Walk/Run` function to the `Right Ctrl` key.
 
 - Launch the script.
 
@@ -22,8 +20,7 @@
 
 - Ensure that the script is launched with administrator privileges.
 
-- Ensure that the game screen has a `16:9` aspect ratio with a minimum
-  resolution of `1600x900`.
+- Ensure that the game screen has a `16:9` aspect ratio with a minimum resolution of `1600x900`.
 
 - Ensure that no screen filters are in use.
 
@@ -31,8 +28,7 @@
 
 - For players in East Asia, ensure that the input method is in English mode.
 
-- The script is developed in a `1600x900` resolution windowed mode. If issues
-  arise, try switching to that resolution.
+- The script is developed in a `1600x900` resolution windowed mode. If issues arise, try switching to that resolution.
 
 - Raise an `issue'.
 
@@ -44,5 +40,4 @@
 
 - The game should be running in `16:9` resolution with a minimum of `1600x900`.
 
-- Since version `0.0.31`, `Celestia` and `Irminsul` servers are no longer
-  supported by default.
+- Since version `0.0.31`, `Celestia` and `Irminsul` servers are no longer supported by default.

@@ -4,6 +4,7 @@ export class CameraG extends KeyBinding {
   private listKey: ['left', 'right', 'up', 'down']
   namespace: 'camera'
   constructor()
+  center(): void
   init(): void
   move(): void
   private watch(): void
