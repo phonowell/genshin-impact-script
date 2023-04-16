@@ -11,7 +11,7 @@ Developed using coffee-ahk, it has a small size and low resource usage. The func
 - [Guide](./guide.md)
 - [Features](./feature.md)
 - [Keymap](./keymap.md)
-- [Tactics](./tactic.md)
+- ~~[Tactics](./tactic.md)~~
 - [Recording](./recording.md)
 - [FAQ](./faq.md)
 - [Contact](./contact.md)
