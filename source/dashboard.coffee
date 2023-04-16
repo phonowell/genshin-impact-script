@@ -71,4 +71,5 @@ class DashboardG
 
     return
 
+# @ts-ignore
 Dashboard = new DashboardG()

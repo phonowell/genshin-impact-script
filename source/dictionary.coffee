@@ -1,5 +1,6 @@
 # @ts-check
 
+# @ts-ignore
 import __character_a_n__ from '../../gis-static/dictionary/character/a-n.yaml'
 import __character_o_z__ from '../../gis-static/dictionary/character/o-z.yaml'
 import __misc__ from '../../gis-static/dictionary/misc.yaml'
@@ -11,6 +12,9 @@ class DictionaryG
     ###* @type import('./type/dictionary').DictionaryG['data'] ###
     @data = {}
 
+    ###* @type import('./type/dictionary').DictionaryG['namespace'] ###
+    @namespace = 'dictionary'
+
   ###* @type import('./type/dictionary').DictionaryG['get'] ###
   get: (name) ->
 
@@ -20,7 +24,7 @@ class DictionaryG
     message = group[0]
     switch A_language
       when '0804' then message = group[1]
-      when '0411' then message = group[2]
+      # when '0411' then message = group[2]
 
     return $.replace message, '<br>', '\n'
 
@@ -40,4 +44,8 @@ class DictionaryG
     @data = data
     return
 
+  ###* @type import('./type/dictionary').DictionaryG['noop'] ###
+  noop: -> undefined
+
+# @ts-ignore
 Dictionary = new DictionaryG()

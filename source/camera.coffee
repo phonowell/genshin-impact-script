@@ -7,44 +7,55 @@ class CameraG extends KeyBinding
 
     ###* @type import('./type/camera').CameraG['count'] ###
     @count = 0
+
     ###* @type import('./type/camera').CameraG['isWatching'] ###
     @isWatching = false
+
     ###* @type import('./type/camera').CameraG['listKey'] ###
     @listKey = ['left', 'right', 'up', 'down']
+
+    ###* @type import('./type/camera').CameraG['namespace'] ###
+    @namespace = 'camera'
+
+  ###* @type import('./type/camera'). CameraG['center'] ###
+  center: -> $.press 'm-button'
 
   ###* @type import('./type/camera'). CameraG['init'] ###
   init: ->
 
-    for key in @listKey
-      @registerEvent 'press', key
-
     @on 'press:start', =>
-      unless Scene.is 'normal' then return
       unless @count then @emit 'move:start'
       if @count >= 4 then return
       @count++
 
     @on 'press:end', =>
-      unless Scene.is 'normal' then return
       if @count == 1 then @emit 'move:end'
       if @count <= 0 then return
       @count--
 
     @on 'move:start', @watch
-
     @on 'move:end', @watch
+
+    Scene.useExact ['normal'], =>
+
+      for key in @listKey
+        @registerEvent 'press', key
+
+      return =>
+        for key in @listKey
+          @unregisterEvent 'press', key
 
   ###* @type import('./type/camera').CameraG['move'] ###
   move: ->
 
     unless Scene.is 'normal' then return
 
-    if @isPressed['left'] then x = -1
-    else if @isPressed['right'] then x = 1
+    if $.isPressing 'left' then x = -1
+    else if $.isPressing 'right' then x = 1
     else x = 0
 
-    if @isPressed['up'] then y = -1
-    else if @isPressed['down'] then y = 1
+    if $.isPressing 'up' then y = -1
+    else if $.isPressing 'down' then y = 1
     else y = 0
 
     if x == 0 and y == 0 then return
@@ -78,5 +89,5 @@ class CameraG extends KeyBinding
     Client.on eventActivate, => Timer.loop token, interval, @move
     Timer.loop token, interval, @move
 
-# export
+# @ts-ignore
 Camera = new CameraG()

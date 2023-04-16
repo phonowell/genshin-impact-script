@@ -15,6 +15,9 @@ class GdipG
       pBitmap: 0
       pToken: 0
 
+    ###* @type import('./type/gdip').GdipG['namespace'] ###
+    @namespace = 'gdip'
+
   ###* @type import('./type/gdip').GdipG['argb2rgb'] ###
   argb2rgb: (argb) -> argb - 0xFF000000
 
@@ -42,11 +45,7 @@ class GdipG
   ###* @type import('./type/gdip').GdipG['findColor'] ###
   findColor: (color, a) ->
 
-    unless @screenshot()
-      Indicator.setCount 'gdip/error'
-      return [-1, -1]
-
-    Indicator.setCount 'gdip/findColor'
+    Indicator.setCount 'gdip/findColor2'
 
     [x, y, w, h] = [
       a[0]
@@ -75,16 +74,13 @@ class GdipG
     unless x1 == -1 then result[0] = x1 + x
     unless y1 == -1 then result[1] = y1 + y
     @cache.findColor[key2] = result
-    Indicator.setCount 'gdip/findColor2'
+    Indicator.setCount 'gdip/findColor'
     return result
 
   ###* @type import('./type/gdip').GdipG['getColor'] ###
   getColor: (p) ->
 
-    unless @screenshot()
-      Indicator.setCount 'gdip/error'
-      return 0
-    Indicator.setCount 'gdip/getColor'
+    Indicator.setCount 'gdip/getColor2'
 
     key = "#{p[0]}|#{p[1]}"
     result = @cache.getColor[key]
@@ -96,13 +92,14 @@ class GdipG
 
     result = rgb
     @cache.getColor[key] = result
-    Indicator.setCount 'gdip/getColor2'
+    Indicator.setCount 'gdip/getColor'
     return result
 
   ###* @type import('./type/gdip').GdipG['init'] ###
   init: ->
     @start()
-    if Config.get 'debug/enable' then Indicator.on 'update', @report
+    if Config.get 'misc/use-debug-mode'
+      Indicator.on 'update', @report
 
   ###* @type import('./type/gdip').GdipG['report'] ###
   report: ->
@@ -114,12 +111,16 @@ class GdipG
     token = 'gdip/findColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/findColor2'
-    if count then console.log "##{token}: #{count} / #{count2}"
+    if count then console.log "##{token}: #{count2} / #{count}"
 
     token = 'gdip/getColor'
     count = Indicator.getCount token
     count2 = Indicator.getCount 'gdip/getColor2'
-    if count then console.log "##{token}: #{count} / #{count2}"
+    if count then console.log "##{token}: #{count2} / #{count}"
+
+    token = 'gdip/prevent'
+    count = Indicator.getCount token
+    if count then console.log "##{token}: #{count}"
 
     token = 'gdip/screenshot'
     count = Indicator.getCount token
@@ -133,22 +134,20 @@ class GdipG
   screenshot: ->
 
     token = 'gdip/screenshot'
-    interval = $.max [100, $.min [200, (Indicator.getCost token) * 3]]
-
-    if @cache.pBitmap and not Timer.checkInterval 'gdip/throttle', interval then return true
     Indicator.setCount token
     Indicator.setCost token, 'start'
 
-    {x, y, width, height} = Client
-    pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
-    unless pBitmap then return false
+    # {x, y, width, height} = Window2.bounds
+    # pBitmap = Gdip_BitmapFromScreen "#{x}|#{y}|#{width}|#{height}"
+
+    unless Window2.id then return
+    pBitmap = Gdip_BitmapFromHWND Window2.id
+    unless pBitmap then return
 
     @clearCache()
-    Timer.add token, 1e3, @clearCache
     @cache.pBitmap = pBitmap
 
     Indicator.setCost token, 'end'
-    return true
 
   ###* @type import('./type/gdip').GdipG['start'] ###
   start: ->
@@ -156,4 +155,5 @@ class GdipG
     @cache.pToken = Gdip_Startup()
     return
 
+# @ts-ignore
 Gdip = new GdipG()

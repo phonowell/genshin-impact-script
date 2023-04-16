@@ -10,8 +10,12 @@ class FishingG
 
     ###* @type import('./type/fishing').FishingG['isActive'] ###
     @isActive = false
+
     ###* @type import('./type/fishing').FishingG['isPulling'] ###
     @isPulling = false
+
+    ###* @type import('./type/fishing').FishingG['namespace'] ###
+    @namespace = 'fishing'
 
   ###* @type import('./type/fishing').FishingG['checkIsFishing'] ###
   checkIsFishing: -> ColorManager.findAll 0xFFFFFF, [
@@ -68,10 +72,17 @@ class FishingG
   toggle: ->
 
     unless @isActive
-      unless Scene.is 'normal', 'busy'
+
+      unless Scene.is 'normal'
         Sound.beep()
         return
+
+      if State.is 'free'
+        Sound.beep()
+        return
+
       @isActive = true
+
     else @isActive = false
 
     Timer.remove 'fishing/watch'
@@ -104,4 +115,5 @@ class FishingG
 
     @pull()
 
+# @ts-ignore
 Fishing = new FishingG()

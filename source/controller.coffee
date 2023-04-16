@@ -12,8 +12,10 @@ class ControllerG extends EmitterShell
       n: {}
       s: {}
     }
+
     ###* @type import('./type/controller').ControllerG['isPressed'] ###
     @isPressed = {}
+
     ###* @type import('./type/controller').ControllerG['listLeftStick'] ###
     @listLeftStick = [
       ['left-stick-left', 'a', 'left']
@@ -21,6 +23,7 @@ class ControllerG extends EmitterShell
       ['left-stick-up', 'w', 'up']
       ['left-stick-down', 's', 'down']
     ]
+
     ###* @type import('./type/controller').ControllerG['listRightStick'] ###
     @listRightStick = [
       ['right-stick-left', 'left']
@@ -28,6 +31,7 @@ class ControllerG extends EmitterShell
       ['right-stick-up', 'up']
       ['right-stick-down', 'down']
     ]
+
     ###* @type import('./type/controller').ControllerG['mapButton'] ###
     @mapButton = {
       a: 4096
@@ -43,8 +47,13 @@ class ControllerG extends EmitterShell
       left: 4
       right: 8
     }
+
+    ###* @type import('./type/controller').ControllerG['namespace'] ###
+    @namespace = 'controller'
+
     ###* @type import('./type/controller').ControllerG['thresholdStick'] ###
     @thresholdStick = 1e4
+
     ###* @type import('./type/controller').ControllerG['ts'] ###
     @ts = {}
 
@@ -114,7 +123,9 @@ class ControllerG extends EmitterShell
   ###* @type import('./type/controller').ControllerG['init'] ###
   init: ->
 
-    unless Config.get 'controller/enable' then return
+    return
+
+    unless Config.get 'misc/use-controller' then return
 
     XInput_Init()
     @watch()
@@ -274,12 +285,10 @@ class ControllerG extends EmitterShell
     console.log "#controller/button: #{wButtons}"
 
   ###* @type import('./type/controller').ControllerG['watch'] ###
-  watch: ->
+  watch: -> Client.useActive =>
+    [interval, token] = [50, 'controller/watch']
+    Timer.loop token, interval, @update
+    return -> Timer.remove token
 
-    interval = 50
-    token = 'controller/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @update
-
+# @ts-ignore
 Controller = new ControllerG()

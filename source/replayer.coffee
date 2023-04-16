@@ -6,6 +6,10 @@ class ReplayerG
 
     ###* @type import('./type/replayer').ReplayerG['isActive'] ###
     @isActive = false
+
+    ###* @type import('./type/replayer').ReplayerG['namespace'] ###
+    @namespace = 'replayer'
+
     ###* @type import('./type/replayer').ReplayerG['token'] ###
     @token = 'replayer/next'
 
@@ -44,13 +48,21 @@ class ReplayerG
       return
 
   ###* @type import('./type/replayer').ReplayerG['init'] ###
-  init: ->
-    Client.on 'idle', @stop
+  init: -> Client.useActive =>
 
     for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+      $.preventDefaultKey "ctrl + numpad-#{n}", true
       $.on "ctrl + numpad-#{n}", => @start $.toString n
 
-    return
+    return =>
+
+      @stop()
+
+      for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        $.preventDefaultKey "ctrl + numpad-#{n}", false
+        $.off "ctrl + numpad-#{n}"
 
   ###* @type import('./type/replayer').ReplayerG['next'] ###
   next: (list, i, callback = undefined) ->
@@ -67,13 +79,16 @@ class ReplayerG
       return
 
     [stringDelay, key, position] = list[i]
-    delay = $.toNumber stringDelay
+    delay = $.Math.max 1, $.toNumber stringDelay
 
-    if delay < 1 then delay = 1 # to make it works
     Timer.add @token, delay, =>
+
       if ($.includes key, 'l-button') and position
         $.move Point.create $.split position, ','
-      $.trigger key
+
+      unless $.isKeyPreventedDefault key then $.press key
+      if $.isKeyBound key then $.trigger key
+
       @next list, i + 1, callback
 
   ###* @type import('./type/replayer').ReplayerG['start'] ###
@@ -115,5 +130,5 @@ class ReplayerG
     Timer.remove @token
     Hud.render 0, Dictionary.get 'end_replaying'
 
-# export
+# @ts-ignore
 Replayer = new ReplayerG()

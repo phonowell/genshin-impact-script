@@ -16,15 +16,6 @@ type Item = {
   weapon: string
 }
 
-type TypeE =
-  | 0
-  | 1 // amber beidou fischl jean keqing
-  | 2 // diluc nilou
-  | 3 // tartaglia
-  | 4 // sayu yelan
-
-type TypeSprint = 0 | 1 // mona kamisato_ayaka
-
 type ItemRaw = {
   'cd-e': number | [number, number]
   'cd-q': number
@@ -43,10 +34,27 @@ type ItemRaw = {
   weapon: string
 }
 
+type Keyword = '5-star' | Vision | Weapon
+
+type TypeE =
+  | 0
+  | 1 // alhaitham amber beidou fischl jean mika nahida keqing yaoyao
+  | 2 // diluc nilou
+  | 3 // tartaglia
+  | 4 // sayu yelan
+
+type TypeSprint = 0 | 1 // mona kamisato_ayaka
+
+type Vision = 'anemo' | 'cryo' | 'dendro' | 'electro' | 'geo' | 'hydro' | 'pyro'
+type Weapon = 'bow' | 'catalyst' | 'claymore' | 'polearm' | 'sword'
+
 export type dataRaw = Record<string, ItemRaw>
 
 export class CharacterG {
   data: Record<string, Item>
+  private listVision: Vision[]
+  private listWeapon: Weapon[]
+  namespace: 'character'
   private source: 'character.ini'
   constructor()
   get<T extends keyof Item | void = void>(
@@ -54,6 +62,7 @@ export class CharacterG {
     key?: T,
   ): T extends string ? Item[T] : Item
   init(): void
+  is(name: string, keyword: Keyword): boolean
   private isTuple(ipt: number[]): ipt is [number, number]
   load(): void
   private makeValueIntoArray(value: number | number[]): number[]

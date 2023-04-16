@@ -7,10 +7,15 @@ class IndicatorG extends EmitterShell
 
     ###* @type import('./type/indicator').IndicatorG['cacheCost'] ###
     @cacheCost = {} # Record<string, number[]>
+
     ###* @type import('./type/indicator').IndicatorG['cacheCount'] ###
     @cacheCount = {} # Record<string, number>
+
     ###* @type import('./type/indicator').IndicatorG['cacheTs'] ###
     @cacheTs = {} # Record<string, number>
+
+    ###* @type import('./type/indicator').IndicatorG['namespace'] ###
+    @namespace = 'indicator'
 
   ###* @type import('./type/indicator').IndicatorG['clear'] ###
   clear: ->
@@ -71,12 +76,10 @@ class IndicatorG extends EmitterShell
     return
 
   ###* @type import('./type/indicator').IndicatorG['watch'] ###
-  watch: ->
+  watch: -> Client.useActive =>
+    [interval, token] = [1e3, 'indicator/watch']
+    Timer.loop token, interval, @clear
+    return -> Timer.remove token
 
-    interval = 1e3
-    token = 'indicator/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @clear
-
+# @ts-ignore
 Indicator = new IndicatorG()

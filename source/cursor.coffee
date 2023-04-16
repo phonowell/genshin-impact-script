@@ -3,6 +3,7 @@
 class CursorG
 
   constructor: ->
+
     ###* @type import('./type/cursor').CursorG['map'] ###
     @map = {
       left: false
@@ -10,6 +11,7 @@ class CursorG
       up: false
       down: false
     }
+
     ###* @type import('./type/cursor').CursorG['speed'] ###
     @speed = 0
 
@@ -35,10 +37,11 @@ class CursorG
     if @map['down'] then y += d
 
     margin = 10
+    {width, height} = Window2.bounds
     if x < margin then x = margin
-    if x > Client.width - margin then x = Client.width - margin
+    if x > width - margin then x = width - margin
     if y < margin then y = margin
-    if y > Client.height - margin then y = Client.height - margin
+    if y > height - margin then y = height - margin
 
     $.move [x, y]
 
@@ -77,5 +80,5 @@ class CursorG
     Client.on eventActivate, => Timer.loop token, interval, @move
     Timer.loop token, interval, @move
 
-# export
+# @ts-ignore
 Cursor = new CursorG()

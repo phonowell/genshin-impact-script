@@ -1,5 +1,7 @@
-import $ from 'fire-keeper'
 import c2a from 'coffee-ahk'
+import $ from 'fire-keeper'
+
+import sort from './sort'
 
 // function
 
@@ -9,6 +11,7 @@ const compile = (source: string) =>
   c2a(`./source/${source}.coffee`, { salt: 'genshin' })
 
 const main = async () => {
+  await sort()
   await compile('index')
   await clean()
   await pack('index', 'GIS')

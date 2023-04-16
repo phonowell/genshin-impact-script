@@ -27,10 +27,15 @@ class TacticG extends KeyBinding
 
     ###* @type import('./type/tactic').TacticG['intervalLong'] ###
     @intervalLong = 100
+
     ###* @type import('./type/tactic').TacticG['intervalShort'] ###
     @intervalShort = 50
+
     ###* @type import('./type/tactic').TacticG['isActive'] ###
     @isActive = false
+
+    ###* @type import('./type/tactic').TacticG['namespace'] ###
+    @namespace = 'tactic'
 
   ###* @type import('./type/tactic').TacticG['atDuration'] ###
   atDuration: (cbA, cbB, isNot) ->
@@ -227,25 +232,39 @@ class TacticG extends KeyBinding
   ###* @type import('./type/tactic').TacticG['init'] ###
   init: ->
 
-    @registerEvent 'attack', 'l-button'
+    return
+
+    # left button
     @on 'attack:start', =>
       unless Party.name then return
       @start Character.get Party.name, 'onLongPress'
     @on 'attack:end', @stop
+    Scene.useExact ['single'], =>
+      @registerEvent 'attack', 'l-button'
+      return => @unregisterEvent 'attack', 'l-button'
 
-    @registerEvent 'side-button-1', 'x-button-1'
+    # side button 1
     @on 'side-button-1:start', =>
       unless Party.name then return
       @start Character.get Party.name, 'onSideButton1'
     @on 'side-button-1:end', @stop
+    Scene.useExact ['single'], =>
+      @registerEvent 'side-button-1', 'x-button-1'
+      return => @unregisterEvent 'side-button-1', 'x-button-1'
 
-    @registerEvent 'side-button-2', 'x-button-2'
+    # side button 2
     @on 'side-button-2:start', =>
       unless Party.name then return
       @start Character.get Party.name, 'onSideButton2'
     @on 'side-button-2:end', @stop
+    Scene.useExact ['single'], =>
+      @registerEvent 'side-button-2', 'x-button-2'
+      return => @unregisterEvent 'side-button-2', 'x-button-2'
 
-    Party.on 'switch', @stop
+    # party
+    Scene.useExact ['single'], =>
+      Party.on 'switch.tactic', @stop
+      return -> Party.off 'switch.tactic'
 
   ###* @type import('./type/tactic').TacticG['start'] ###
   start: (line, callback = undefined) ->
@@ -255,6 +274,9 @@ class TacticG extends KeyBinding
     unless Scene.is 'normal'
       if callback then callback()
       return
+
+    if Movement.isForwarding
+      Movement.stopForward()
 
     list = @format line
     unless $.length list
@@ -269,4 +291,5 @@ class TacticG extends KeyBinding
     @isActive = false
     Timer.remove 'tactic/next'
 
+# @ts-ignore
 Tactic = new TacticG()

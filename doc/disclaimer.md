@@ -1,5 +1,3 @@
-# 免责声明 Disclaimer
+# 免责声明
 
 你懂的。
-
-You knew that.

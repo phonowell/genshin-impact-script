@@ -1,8 +1,8 @@
 import argv from 'fire-keeper/dist/argv'
-import compact from 'lodash/compact'
 import getBasename from 'fire-keeper/dist/getBasename'
 import glob from 'fire-keeper/dist/glob'
 import prompt from 'fire-keeper/dist/prompt'
+import compact from 'lodash/compact'
 
 // interface
 

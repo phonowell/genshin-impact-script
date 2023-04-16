@@ -9,46 +9,41 @@ $ = $
 
 # import
 
-import './dictionary'
-import './config'
+# ---start---
+import './area'
+import './cursor'
+import './dashboard'
 import './key-binding'
 import './point'
-import './area'
+import './scene2'
 import './timer'
-
 import './client'
-import './console'
-import './idle'
-import './indicator'
-
-import './character'
-import './gdip'
 import './color-manager'
-import './sound'
-import './transparent'
-
-import './scene'
-import './party'
-import './buff'
-import './hud'
-
-import './camera'
-import './menu'
-import './dashboard'
-import './skill'
-import './movement'
-import './jumper'
-
-import './picker'
-import './tactic'
+import './dictionary'
 import './fishing'
-import './upgrader'
-
+import './hud'
+import './indicator'
+import './jumper'
+import './picker'
 import './recorder'
 import './replayer'
-
+import './scene'
+import './state'
+import './tactic'
+import './camera'
+import './character'
+import './config'
+import './console'
+import './gdip'
+import './menu'
+import './movement'
+import './party'
+import './party2'
+import './skill'
+import './sound'
+import './window'
 import './alice'
-import './controller'
-import './cursor'
+import './buff'
+# ---end---
 
 import './misc'

@@ -1,4 +1,6 @@
 export class PickerG extends KeyBinding {
+  private listShapeForbidden: [number, number][]
+  namespace: 'picker'
   private tsPick: number
   constructor()
   private checkShape(p: [number, number]): boolean
@@ -6,7 +8,6 @@ export class PickerG extends KeyBinding {
   private findTitleColor(y: number): number | false
   init(): void
   private listen(): void
-  private next(): void
+  next(): void
   private skip(): boolean
-  private watch(): void
 }

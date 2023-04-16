@@ -24,7 +24,7 @@ class PointG
   h: (n) ->
     if $.isNumber n then return n
     n = $.replace n, '%', ''
-    return $.Math.round Client.height * ($.toNumber n) * 0.01
+    return $.Math.round Window2.bounds.height * ($.toNumber n) * 0.01
 
   ###* @type import('./type/point').PointG['isValid'] ###
   isValid: (p) ->
@@ -38,6 +38,7 @@ class PointG
   w: (n) ->
     if $.isNumber n then return n
     n = $.replace n, '%', ''
-    return $.Math.round Client.width * ($.toNumber n) * 0.01
+    return $.Math.round Window2.bounds.width * ($.toNumber n) * 0.01
 
+# @ts-ignore
 Point = new PointG()

@@ -1,5 +1,5 @@
-import * as SA from 'node_modules/shell-ahk/dist/type/module'
 import { KeyBindingShell } from 'node_modules/shell-ahk/dist/type/keyBindingShell'
+import * as SA from 'node_modules/shell-ahk/dist/type/module'
 
 export type Shell = {
   Math: SA.Math
@@ -8,7 +8,9 @@ export type Shell = {
   clearInterval: SA.ClearInterval
   clearTimeout: SA.ClearTimeout
   click: SA.Click
+  clone: SA.Clone
   confirm: SA.Confirm
+  debounce: SA.Debounce
   delete: SA.Delete
   emitter: SA.Emitter
   eq: SA.Eq
@@ -16,21 +18,21 @@ export type Shell = {
   file: SA.File
   filter: SA.Filter
   forEach: SA.ForEach
-  get: SA.Get
   getPosition: SA.GetPosition
-  getState: SA.GetState
   getType: SA.GetType
+  httpGet: SA.HttpGet
   includes: SA.Includes
   isArray: SA.IsArray
   isFunction: SA.IsFunction
+  isKeyBound: SA.IsKeyBound
+  isKeyPreventedDefault: SA.IsKeyPreventedDefault
   isNumber: SA.IsNumber
+  isPressing: SA.IsPressing
   isString: SA.IsString
   join: SA.Join
   keys: SA.Keys
   length: SA.Length
   map: SA.Map
-  max: SA.Max
-  min: SA.Min
   mixin: SA.Mixin
   move: SA.Move
   noop: SA.Noop
@@ -39,6 +41,7 @@ export type Shell = {
   on: KeyBindingShell['add']
   open: SA.Open
   press: SA.Press
+  preventDefaultKey: SA.PreventDefaultKey
   push: SA.Push
   reload: SA.Reload
   replace: SA.Replace

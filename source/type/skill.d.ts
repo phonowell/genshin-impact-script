@@ -2,10 +2,11 @@ import { AreaLike, Fn } from './global'
 
 export class SkillG extends KeyBinding {
   listCache: Record<number, [number, number]>
+  private listCharacterECharge: string[]
   listCountDown: Record<number, number>
   listDuration: Record<number, number>
-  private listQ: Record<number, number>
   private listRecord: Record<number, number>
+  namespace: 'skill'
   private tsUseE: number
   constructor()
   private aboutBinding(): void

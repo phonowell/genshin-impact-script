@@ -1,11 +1,30 @@
 # @ts-check
 
-class ConfigG
+class ConfigG extends EmitterShell
 
   constructor: ->
+    super()
 
     ###* @type import('./type/config').ConfigG['data'] ###
-    @data = {}
+    @data = {
+      'basic/arguments': ''
+      'basic/path': ''
+      'basic/process': ''
+      'better-pickup/enable': '0'
+      'better-pickup/use-fast-pickup': '0'
+      'better-pickup/use-quick-skip': '0'
+      'misc/use-beep': '0'
+      'misc/use-better-jump': '0'
+      'misc/use-controller': '0'
+      'misc/use-debug-mode': '0'
+      'misc/use-mute': '0'
+      'misc/use-skill-timer': '0'
+      'misc/use-tactic': '0'
+    }
+
+    ###* @type import('./type/config').ConfigG['namespace'] ###
+    @namespace = 'config'
+
     ###* @type import('./type/config').ConfigG['source'] ###
     @source = 'config.ini'
 
@@ -43,43 +62,32 @@ class ConfigG
 
   ###* @type import('./type/config').ConfigG['init'] ###
   init: ->
+    Dictionary.noop() # for keeping loading order
     unless @detectRegion() then return
     @load()
 
   ###* @type import('./type/config').ConfigG['load'] ###
   load: ->
 
-    # debug
-    @register 'debug/enable'
-
     # basic
     @register 'basic/path'
     @set 'basic/process', @read 'basic/process', 'GenshinImpact.exe'
-
-    # better-jump
-    @register 'better-jump/enable', 'alt + space'
 
     # better-pickup
     @register 'better-pickup/enable', 'alt + f'
     @register 'better-pickup/use-fast-pickup'
     @register 'better-pickup/use-quick-skip'
 
-    # idle
-    @set 'idle/use-time', @read 'idle/use-time', '60'
-    @register 'idle/use-mouse-move-out'
-
-    # skill-timer
-    @register 'skill-timer/enable'
-
-    # sound
-    @register 'sound/use-beep'
-    @register 'sound/use-mute-when-idle'
-
-    # controller
-    @register 'controller/enable'
-
     # misc
-    @register 'misc/use-transparency-when-idle'
+    @register 'misc/use-beep'
+    @register 'misc/use-better-jump', 'alt + space'
+    @register 'misc/use-controller'
+    @register 'misc/use-debug-mode'
+    @register 'misc/use-mute'
+    @register 'misc/use-skill-timer'
+    @register 'misc/use-tactic', 'alt + t'
+
+    @emit 'change'
 
   ###* @type import('./type/config').ConfigG['read'] ###
   read: (ipt, defaultValue = '') ->
@@ -92,9 +100,17 @@ class ConfigG
 
   ###* @type import('./type/config').ConfigG['register'] ###
   register: (ipt, key = '') ->
+
+    # set value
     @set ipt, @read ipt, '0'
-    if key then $.on key, => @toggle ipt
-    return
+
+    unless key then return
+
+    # register toggling key
+    $.preventDefaultKey key, true
+    $.on key, =>
+      @toggle ipt
+      @emit 'change'
 
   ###* @type import('./type/config').ConfigG['set'] ###
   set: (ipt, value) ->
@@ -121,4 +137,5 @@ class ConfigG
     Native 'IniWrite, % value, % this.source, % section, % key'
     return
 
+# @ts-ignore
 Config = new ConfigG()

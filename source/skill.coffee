@@ -1,5 +1,8 @@
 # @ts-check
 
+# @ts-ignore
+import __e_charge__ from '../../gis-static/data/character-e-charge.yaml'
+
 class SkillG extends KeyBinding
 
   constructor: ->
@@ -7,14 +10,22 @@ class SkillG extends KeyBinding
 
     ###* @type import('./type/skill').SkillG['listCache'] ###
     @listCache = {}
+
+    ###* @type import('./type/skill').SkillG['listCharacterECharge'] ###
+    @listCharacterECharge = __e_charge__.list
+
     ###* @type import('./type/skill').SkillG['listCountDown'] ###
     @listCountDown = {}
+
     ###* @type import('./type/skill').SkillG['listDuration'] ###
     @listDuration = {}
-    ###* @type import('./type/skill').SkillG['listQ'] ###
-    @listQ = {}
+
     ###* @type import('./type/skill').SkillG['listRecord'] ###
     @listRecord = {}
+
+    ###* @type import('./type/skill').SkillG['namespace'] ###
+    @namespace = 'skill'
+
     ###* @type import('./type/skill').SkillG['tsUseE'] ###
     @tsUseE = 0
 
@@ -154,17 +165,15 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['freeze'] ###
   freeze: ->
-    {name} = Party
-    unless name then return
-
-    {star} = Character.get name
-    unless star == 5 then return
-
-    Scene.freezeAs ['normal', 'using-q'], 1500
+    unless Character.is Party.name, '5-star' then return
+    # Scene.freezeAs ['normal', 'single', 'using-q'], 1500
 
   ###* @type import('./type/skill').SkillG['init'] ###
   init: ->
-    unless Config.get 'skill-timer/enable' then return
+
+    return
+
+    unless Config.get 'misc/use-skill-timer' then return
     @reset()
     @aboutBinding()
     @watch()
@@ -172,9 +181,7 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['isEUsed'] ###
   isEUsed: ->
 
-    if Timer.has 'party/is-current-as' then return
-    if Timer.has 'party/wait-for' then return
-    unless Scene.is 'normal', 'not-busy', 'not-using-q' then return
+    unless State.is 'free' then return
     unless $.now() - @tsUseE > 500 then return
 
     {current, name} = Party
@@ -189,6 +196,7 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['isEUsed2'] ###
   isEUsed2: ->
+
     {current} = Party
 
     if ColorManager.findAll 0xFFFFFF, @makeArea1()
@@ -212,17 +220,7 @@ class SkillG extends KeyBinding
 
   ###* @type import('./type/skill').SkillG['makeArea2'] ###
   makeArea2: ->
-    listName = [
-      'amber'
-      'ganyu'
-      'klee'
-      'shenhe'
-      'sucrose'
-      'xiao'
-      'yae_miko'
-      'yelan'
-    ]
-    unless $.includes listName, Party.name then return []
+    unless $.includes @listCharacterECharge, Party.name then return []
     return ['87%', '87%', '89%', '89%']
 
   ###* @type import('./type/skill').SkillG['reset'] ###
@@ -231,7 +229,6 @@ class SkillG extends KeyBinding
       @listCache[n] = [0, 0]
       @listCountDown[n] = 0
       @listDuration[n] = 0
-      @listQ[n] = 0
       @listRecord[n] = 0
     return
 
@@ -251,24 +248,19 @@ class SkillG extends KeyBinding
     return
 
   ###* @type import('./type/skill').SkillG['switchQ'] ###
-  switchQ: (n) ->
+  switchQ: (slot) ->
 
-    unless Scene.is 'normal', 'not-busy'
-      $.press "alt + #{n}"
+    unless State.is 'free'
+      $.press "alt + #{slot}"
       return
 
-    if Party.current == n
+    if Party.current == slot
       @useQ()
       return
 
-    $.press "alt + #{n}"
-    Party.emit 'switch', n
+    $.press "alt + #{slot}"
+    Party.emit 'switch', slot
     @freeze()
-
-    {current, name} = Party
-    unless current then return
-    @listQ[current] = $.now()
-    return
 
   ###* @type import('./type/skill').SkillG['useE'] ###
   useE: (isHolding = false, callback = undefined) ->
@@ -289,22 +281,22 @@ class SkillG extends KeyBinding
   ###* @type import('./type/skill').SkillG['useQ'] ###
   useQ: ->
 
-    unless Scene.is 'normal', 'not-busy' then return
+    unless State.is 'free' then return
 
     $.press 'q'
     @freeze()
 
     {current, name} = Party
     unless current then return
-    @listQ[current] = $.now()
     return
 
   ###* @type import('./type/skill').SkillG['watch'] ###
-  watch: ->
+  watch: -> Scene.useExact ['single'], =>
     [interval, token] = [200, 'skill/watch']
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, =>
+    Timer.loop token, interval, =>
       Dashboard.update()
-      if Timer.checkInterval 'skill/is-e-used', 1e3 then @isEUsed()
+      if Timer.hasElapsed 'skill/is-e-used', 1e3 then @isEUsed()
+    return -> Timer.remove token
 
+# @ts-ignore
 Skill = new SkillG()

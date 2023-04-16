@@ -1,10 +1,14 @@
+type Name = string
+type Key = string
+
 export class KeyBinding extends EmitterShell {
-  private isFired: Record<string, boolean>
-  private isPressed: Record<string, boolean>
-  private map: Record<string, string[]>
+  private mapFired: Record<Name, boolean>
   constructor()
-  private registerEvent(name: string, key: string, isPrevented?: boolean): void
-  private unregisterEvent(name: string, key: string): void
+  private endEvent(name: Name, key: Key): void
+  private log(name: Name, key: Key, step: string, message: unknown): void
+  private registerEvent(name: Name, key: Key): void
+  private startEvent(name: Name, key: Key): void
+  private unregisterEvent(name: Name, key: Key): void
 }
 
 declare global {

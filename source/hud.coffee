@@ -6,10 +6,15 @@ class HudG
 
     ###* @type import('./type/hud').HudG['lifetime'] ###
     @lifetime = 5e3
+
     ###* @type import('./type/hud').HudG['map'] ###
     @map = {}
+
     ###* @type import('./type/hud').HudG['mapLast'] ###
     @mapLast = {}
+
+    ###* @type import('./type/hud').HudG['namespace'] ###
+    @namespace = 'hud'
 
   ###* @type import('./type/hud').HudG['hide'] ###
   hide: (n, isForce) ->
@@ -28,16 +33,14 @@ class HudG
     return
 
   ###* @type import('./type/hud').HudG['init'] ###
-  init: ->
-    Client.on 'idle', @hideAll
-    @watch()
+  init: -> @watch()
 
   ###* @type import('./type/hud').HudG['makePosition'] ###
   makePosition: (n) ->
 
-    if Client.isFullScreen
+    if Window2.isFullScreen
       left = Point.w '77%'
-    else left = Client.width
+    else left = Window2.bounds.width
 
     [a, b] = [Party.size - 1, n - 1]
     unless Party.size then a = 3
@@ -66,7 +69,7 @@ class HudG
   update: ->
 
     interval = 200
-    unless Timer.checkInterval 'hud/throttle', interval then return
+    unless Timer.hasElapsed 'hud/throttle', interval then return
 
     now = $.now()
 
@@ -93,12 +96,12 @@ class HudG
     return
 
   ###* @type import('./type/hud').HudG['watch'] ###
-  watch: ->
+  watch: -> Client.useActive =>
+    [interval, token] = [200, 'hud/watch']
+    Timer.loop token, interval, @update
+    return =>
+      Timer.remove token
+      @hideAll()
 
-    interval = 200
-    token = 'hud/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @update
-
+# @ts-ignore
 Hud = new HudG()

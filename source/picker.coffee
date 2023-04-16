@@ -1,9 +1,18 @@
 # @ts-check
 
+# @ts-ignore
+import __shape__ from '../../gis-static/data/shape-forbidden.yaml'
+
 class PickerG extends KeyBinding
 
   constructor: ->
     super()
+
+    ###* @type import('./type/picker').PickerG['listShapeForbidden'] ###
+    @listShapeForbidden = __shape__.list
+
+    ###* @type import('./type/picker').PickerG['namespace'] ###
+    @namespace = 'picker'
 
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
@@ -15,23 +24,17 @@ class PickerG extends KeyBinding
     c1 = ColorManager.format ColorManager.get [x, y + 1]
     c2 = ColorManager.format ColorManager.get [x + 1, y]
 
-    # 0xFFFFFF, 0xFFFFFF chat, cook, gear
-    if c1 == 0xFFFFFF and c2 == 0xFFFFFF then return true
+    for shape in @listShapeForbidden
+      if c1 == shape[0] and c2 == shape[1]
+        return true
 
-    # 0xFFFFFF, 0xFEFEFE magnifier
-    if c1 == 0xFFFFFF and c2 == 0xFEFEFE then return true
-
-    # 0xF8F9F9, 0xFDFDFE hook
-    # 0xFBFBFB, 0xFFFFFF hook
-    if c1 == 0xF8F9F9 and c2 == 0xFDFDFE then return true
-    if c1 == 0xFBFBFB and c2 == 0xFFFFFF then return true
-
+    # console.log "#{c1} #{c2}"
     return false
 
   ###* @type import('./type/picker').PickerG['find'] ###
   find: ->
 
-    if @isPressed['f'] then return
+    if $.isPressing 'f' then return
     unless Scene.is 'normal', 'not-domain' then return
 
     p = ColorManager.findAny 0x323232, [
@@ -72,7 +75,6 @@ class PickerG extends KeyBinding
 
   ###* @type import('./type/picker').PickerG['init'] ###
   init: ->
-    @watch()
 
     @registerEvent 'l-button', 'l-button'
     @registerEvent 'pick', 'f'
@@ -91,7 +93,7 @@ class PickerG extends KeyBinding
     diff = $.now() - @tsPick
     unless diff > 150 then return
 
-    unless @isPressed['f'] then return
+    unless $.isPressing 'f' then return
 
     if @skip() then return
 
@@ -106,11 +108,11 @@ class PickerG extends KeyBinding
       @listen()
       return
 
-    if @isPressed['f']
+    if $.isPressing 'f'
       @listen()
       return
 
-    if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'event'
+    if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'dialogue'
       @skip()
       return
 
@@ -121,11 +123,10 @@ class PickerG extends KeyBinding
   ###* @type import('./type/picker').PickerG['skip'] ###
   skip: ->
 
-    unless Scene.is 'event' then return false
-    if @isPressed['l-button'] then return false # enable camera
+    unless Scene.is 'dialogue' then return false
+    if $.isPressing 'l-button' then return false # enable camera
 
-    Idle.setTimer() # avoid idle
-    if @isPressed['f'] then $.press 'f'
+    if $.isPressing 'f' then $.press 'f'
     else $.press 'space'
 
     p = ColorManager.findAny [
@@ -141,13 +142,5 @@ class PickerG extends KeyBinding
     Point.click p
     return true
 
-  ###* @type import('./type/picker').PickerG['watch'] ###
-  watch: ->
-
-    interval = 100
-    token = 'picker/watch'
-
-    Client.on 'idle', -> Timer.remove token
-    Client.on 'activate', => Timer.loop token, interval, @next
-
+# @ts-ignore
 Picker = new PickerG()

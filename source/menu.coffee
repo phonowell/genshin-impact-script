@@ -2,12 +2,15 @@
 
 class MenuG extends KeyBinding
 
-  constructor: -> super()
+  constructor: ->
+
+    super()
+
+    ###* @type import('./type/menu').MenuG['namespace'] ###
+    @namespace = 'menu'
 
   ###* @type import('./type/menu').MenuG['asMap'] ###
   asMap: ->
-
-    unless Scene.is 'map' then return
 
     p = ColorManager.findAny 0x2F2E2C, [
       '2%', '4%'
@@ -18,8 +21,6 @@ class MenuG extends KeyBinding
 
   ###* @type import('./type/menu').MenuG['asMiniMenu'] ###
   asMiniMenu: ->
-
-    unless Scene.is 'mini-menu' then return
 
     p = ColorManager.findAny 0xFFCC33, [
       '76%', '92%'
@@ -33,25 +34,37 @@ class MenuG extends KeyBinding
 
   ###* @type import('./type/menu').MenuG['init'] ###
   init: ->
+
     unless Config.get 'better-pickup/use-quick-skip' then return
 
     # r-button
-    @registerEvent 'right-click', 'r-button'
-    @on 'right-click', =>
-      unless @isMenu() then return
-      $.press 'esc'
+    do =>
+      token = 'right-click/menu'
+      @on token, -> $.press 'esc'
+      Client.useChange [Scene], ->
+        if Scene.is 'half-menu' then return true
+        if Scene.is 'menu' then return true
+        if Scene.is 'mini-menu' then return true
+        return false
+      , =>
+        @registerEvent token, 'r-button'
+        return => @unregisterEvent token, 'r-button'
 
-    # space
-    @registerEvent 'space', 'space'
-    @on 'space', =>
-      @asMap()
-      @asMiniMenu()
+    # space for map
+    do =>
+      token = 'space/map'
+      @on token, @asMap
+      Scene.useExact ['map'], =>
+        @registerEvent token, 'space'
+        return => @unregisterEvent token, 'space'
 
-  ###* @type import('./type/menu').MenuG['isMenu'] ###
-  isMenu: ->
-    if Scene.is 'half-menu' then return true
-    if Scene.is 'menu' then return true
-    if Scene.is 'mini-menu' then return true
-    return false
+    # space for mini-menu
+    do =>
+      token = 'space/mini-menu'
+      @on token, @asMiniMenu
+      Scene.useExact ['mini-menu'], =>
+        @registerEvent token, 'space'
+        return => @unregisterEvent token, 'space'
 
+# @ts-ignore
 Menu2 = new MenuG()

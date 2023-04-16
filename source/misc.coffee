@@ -1,98 +1,68 @@
 # @ts-check
 
-aboutCaps = ->
-  Client.on 'activate', -> Native 'SetCapsLockState, Off'
-  $.on 'CapsLock', -> $.beep()
+aboutCaps = -> Scene.useExact ['normal'], ->
+  Native 'SetCapsLockState, Off'
+  $.on 'CapsLock', -> Sound.beep()
+  return -> $.off 'CapsLock'
 
 aboutClient = ->
   report = ->
-    {isFullScreen, x, y, width, height} = Client
+    {x, y, width, height} = Window2.bounds
     $.forEach [
-      "#client/is-fullscreen: #{isFullScreen}"
-      "#client/position: #{x}, #{y}"
-      "#client/size: #{width}, #{height}"
+      "#client/bounds: #{x}, #{y}, #{width}, #{height}"
+      "#client/is-fullscreen: #{Window2.isFullScreen}"
     ], (msg) -> console.log msg
 
-  Client.window.focus()
+  Window2.window.focus()
 
   Timer.add 200, ->
     Client.emit 'enter'
     report()
 
-  Timer.add 1e3, Upgrader.check
-
 aboutDebug = ->
-  unless Config.get 'debug/enable' then return
+  unless Config.get 'misc/use-debug-mode' then return
   $.on 'alt + f9', ColorManager.pick
-
-aboutSkillTimer = ->
-
-  unless Config.get 'skill-timer/enable' then return
-
-  # auto scan
-
-  token = 'change.auto-scan'
-
-  autoScan = ->
-    unless Scene.is 'normal', 'not-busy', 'not-multi', 'not-using-q' then return
-    Scene.off token
-    Party.scan()
-
-  addListener = ->
-    Scene.off token
-    Scene.on token, autoScan
-
-  Scene.on 'change', ->
-    unless Scene.is 'party' then return
-    addListener()
-
-  addListener()
-
-  # clear party
-
-  Scene.on 'change', ->
-    unless Party.size then return
-    unless Scene.is 'multi' then return
-    $.trigger 'alt + f12'
 
 boot = (callback) ->
 
   list = [
-    Dictionary
-    Config
-
+    # ---start---
     Client
-    console
-    Idle
-    Indicator
-
-    Character
-    Gdip
-    Sound
-    Transparent
-
-    Scene
-    Party
-    Hud
-
-    Camera
-    Menu2
-    Skill
-    Movement
-    Jumper
-
-    Picker
-    Tactic
+    ColorManager
+    Dictionary
     Fishing
-
+    Hud
+    Indicator
+    Jumper
+    Picker
     Recorder
     Replayer
-
+    Scene
+    State
+    Tactic
+    Camera
+    Character
+    Config
+    console
+    Gdip
+    Menu2
+    Movement
+    Party
+    Party2
+    Skill
+    Sound
+    Window2
     Alice
-    Controller
+    Buff
+    # ---end---
   ]
 
   for m in list
+
+    unless $.isString m.namespace
+      $.alert 'misc/boot: invalid namespace'
+      return
+
     unless $.isFunction m.init
       $.setTimeout ->
         boot callback
@@ -100,6 +70,7 @@ boot = (callback) ->
       return
 
   $.forEach list, (m) -> m.init()
+
   callback()
   return
 
@@ -107,5 +78,9 @@ boot = (callback) ->
 boot ->
   aboutCaps()
   aboutClient()
-  aboutSkillTimer()
   aboutDebug()
+
+# exit
+OnExit ->
+  Sound.unmute()
+  Window2.window.setPriority 'normal'

@@ -4,12 +4,17 @@ class ConsoleG
 
   constructor: ->
 
-    ###* @type import('./type/console').ConsoleG['isChanged'] ###
-    @isChanged = false
+    ###* @type import('./type/console').ConsoleG['isEnabled'] ###
+    @isEnabled = false
+
     ###* @type import('./type/console').ConsoleG['lifetime'] ###
     @lifetime = 10e3
+
     ###* @type import('./type/console').ConsoleG['listContent'] ###
     @listContent = []
+
+    ###* @type import('./type/console').ConsoleG['namespace'] ###
+    @namespace = 'console'
 
   ###* @type import('./type/console').ConsoleG['add'] ###
   add: (msg) ->
@@ -44,48 +49,48 @@ class ConsoleG
     return
 
   ###* @type import('./type/console').ConsoleG['init'] ###
-  init: -> @watch()
+  init: ->
+
+    unless Config.get 'misc/use-debug-mode' then return
+
+    Client.useActive =>
+      @isEnabled = true
+      return =>
+        @isEnabled = false
+        @hide()
+
+    return
 
   ###* @type import('./type/console').ConsoleG['log'] ###
   log: (ipt...) ->
-    unless Config.get 'debug/enable' then return
+    unless @isEnabled then return
     @add $.join ($.map ipt, $.toString), ' '
     @render()
     return
 
   ###* @type import('./type/console').ConsoleG['render'] ###
-  render: $.throttle =>
-    unless Client.isActive then return
+  render: ->
+
+    unless @isEnabled then return
+
     list = $.map @listContent, (item) -> item[1]
     text = $.trim ($.join list, '\n'), ' \n'
-    [x, y] = [0 - Client.x, Point.h '55%']
+    [x, y] = [0 - Window2.bounds.x, Point.h '50%']
+
     $.noop text, x, y
     Native 'ToolTip, % text, % x, % y, 20'
+
     return
-  , 500
 
   ###* @type import('./type/console').ConsoleG['update'] ###
   update: ->
-    unless Client.isActive then return
+
+    unless @isEnabled then return
+
     now = $.now()
-    len = $.length @listContent
     @listContent = $.filter @listContent, (item) -> item[0] >= now
-    if len != $.length @listContent then @render()
 
-  ###* @type import('./type/console').ConsoleG['watch'] ###
-  watch: ->
+    @render()
 
-    unless Config.get 'debug/enable' then return
-
-    interval = 500
-    token = 'console/watch'
-
-    Client.on 'idle', =>
-      Timer.remove token
-      @hide()
-
-    Client.on 'activate', =>
-      Timer.loop token, interval, @update
-      @update()
-
+# @ts-ignore
 console = new ConsoleG()

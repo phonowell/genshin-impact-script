@@ -1,19 +1,16 @@
 export class MovementG extends KeyBinding {
-  private count: {
-    forward: number
-    move: number
-  }
-  private isForwarding: boolean
+  direction: string[]
+  isForwarding: boolean
   isMoving: boolean
-  private ts: {
-    forward: number
-  }
+  namespace: 'movement'
   constructor()
+  private aboutAim(): void
+  private aboutForward(): void
+  private aboutMove(): void
+  private aboutUnhold(): void
   init(): void
-  private onAim(step: 'start' | 'end'): void
-  private onUnhold(step: 'start' | 'end'): void
+  private report(): void
   sprint(): void
   private startForward(): void
-  private stopForward(): void
-  private toggleForward(key: string): void
+  stopForward(): void
 }

@@ -1,13 +1,15 @@
 type Data = {
-  debug: ['enable']
   basic: ['arguments', 'path', 'process']
-  'better-jump': ['enable']
   'better-pickup': ['enable', 'use-fast-pickup', 'use-quick-skip']
-  idle: ['use-time', 'use-mouse-move-out']
-  'skill-timer': ['enable']
-  sound: ['use-beep', 'use-mute-when-idle']
-  controller: ['enable']
-  misc: ['use-transparency-when-idle']
+  misc: [
+    'use-beep',
+    'use-better-jump',
+    'use-controller',
+    'use-debug-mode',
+    'use-mute',
+    'use-skill-timer',
+    'use-tactic',
+  ]
 }
 
 type Keys<K extends keyof Data> = K extends keyof Data
@@ -15,8 +17,9 @@ type Keys<K extends keyof Data> = K extends keyof Data
   : never
 type Key = Keys<keyof Data>
 
-export class ConfigG {
+export class ConfigG extends EmitterShell {
   data: Record<Key, string | number>
+  namespace: 'config'
   private source: 'config.ini'
   constructor()
   detectPath(): void

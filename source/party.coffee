@@ -7,125 +7,30 @@ class PartyG extends KeyBinding
 
     ###* @type import('./type/party').PartyG['current'] ###
     @current = 0
+
     ###* @type import('./type/party').PartyG['list'] ###
     @list = [''] # '' is a placeholder, don't remove it
-    ###* @type import('./type/party').PartyG['listOnSwitch'] ###
-    @listOnSwitch = []
+
     ###* @type import('./type/party').PartyG['listSlot'] ###
     @listSlot = [1, 2, 3, 4, 5]
+
     ###* @type import('./type/party').PartyG['name'] ###
     @name = ''
+
+    ###* @type import('./type/party').PartyG['namespace'] ###
+    @namespace = 'party'
+
     ###* @type import('./type/party').PartyG['size'] ###
     @size = 0
 
-  ###* @type import('./type/party').PartyG['aboutBinding1'] ###
-  aboutBinding1: ->
+    ###* @type import('./type/party').PartyG['tsSwitch'] ###
+    @tsSwitch = 0
 
-    for slot in @listSlot
-      @registerEvent 'press', $.toString slot
-      $.on "alt + #{slot}", =>
-        unless @size
-          $.press "alt + #{slot}"
-          return
-        Skill.switchQ slot
-
-    @on 'press:start', (key) =>
-
-      Timer.remove 'party/is-current-as'
-      Timer.remove 'party/wait-for'
-
-      unless Scene.is 'normal' then return
-
-      n = $.toNumber key
-      unless n <= @size then return
-
-      @isCurrentAs n, =>
-        @tsSwitch = $.now()
-        @emit 'switch', n
-        @emit 'switch:start'
-      , -> Sound.beep 2
-
-    @on 'press:end', (key) =>
-
-      unless Scene.is 'normal' then return
-
-      n = $.toNumber key
-      unless n <= @size then return
-
-      @waitFor n, => @emit 'switch:end'
-
-    @on 'switch:start', =>
-      onSwitch = @listOnSwitch[@current]
-      unless onSwitch then return
-
-      if onSwitch == 'e'
-        $.trigger 'e:down'
-        return
-
-    @on 'switch:end', =>
-      onSwitch = @listOnSwitch[@current]
-      unless onSwitch then return
-
-      if onSwitch == 'e'
-        $.trigger 'e:up'
-        return
-
-      Tactic.start onSwitch, $.noop
-
-  ###* @type import('./type/party').PartyG['aboutBinding2'] ###
-  aboutBinding2: ->
-
-    @on 'change', =>
-
-      unless @size then return
-      console.log "#party/member: #{$.join ($.tail @list), ', '}"
-
-      for name in @list
-
-        unless name
-          $.push @listOnSwitch, ''
-          continue
-
-        {onSwitch} = Character.get name
-        unless onSwitch
-          $.push @listOnSwitch, ''
-          continue
-
-        $.push @listOnSwitch, onSwitch
-      # console.log "#party/on-switch: #{$.join ($.tail @listOnSwitch), ', '}"
-
-      Buff.pick()
-
-    @on 'switch', (n) =>
-
-      last = @current
-      @current = $.toNumber n
-
-      nameLast = @list[last]
-      @name = @list[@current]
-
-      unless nameLast then nameLast = 'unknown'
-      unless @name then @name = 'unknown'
-
-      console.log $.join [
-        '#party:'
-        "[#{last}]#{nameLast}"
-        '->'
-        "[#{@current}]#{@name}"
-        @listOnSwitch[@current]
-      ], ' '
-
-      {typeE} = Character.get nameLast
-      if typeE == 3 then Skill.endEAsType3 last
-
-    $.on 'f12', =>
-      Character.load()
-      @scan()
-
-    $.on 'alt + f12', =>
-      @reset()
-      @emit 'change'
-      Hud.render 0, Dictionary.get 'party_is_cleared'
+  ###* @type import('./type/party').PartyG['clear'] ###
+  clear: ->
+    @reset()
+    @emit 'change'
+    Hud.render 0, Dictionary.get 'party_is_cleared'
 
   ###* @type import('./type/party').PartyG['countMember'] ###
   countMember: ->
@@ -145,6 +50,13 @@ class PartyG extends KeyBinding
 
     @size = result + 1
     return
+
+  ###* @type import('./type/party').PartyG['findCurrent'] ###
+  findCurrent: ->
+    for n in @listSlot
+      unless @isCurrent n then continue
+      return n
+    return 0
 
   ###* @type import('./type/party').PartyG['getNameViaSlot'] ###
   getNameViaSlot: (n) ->
@@ -170,33 +82,98 @@ class PartyG extends KeyBinding
 
   ###* @type import('./type/party').PartyG['init'] ###
   init: ->
-    unless Config.get 'skill-timer/enable' then return
-    @aboutBinding1()
-    @aboutBinding2()
+
+    @on 'change', =>
+
+      unless @size then return
+
+      list = $.tail @list
+      if $.includes list, '' then Sound.beep()
+      console.log "#party/member: #{$.join list, ', '}"
+
+      Buff.update()
+
+    @on 'switch', (key) =>
+
+      slot = $.toNumber key
+      unless @isSlotValid slot then return
+
+      last = @current
+      @current = slot
+
+      nameLast = @list[last]
+      @name = @list[@current]
+
+      unless nameLast then nameLast = 'unknown'
+      unless @name then @name = 'unknown'
+
+      @tsSwitch = $.now()
+
+      console.log $.join [
+        '#party:'
+        "[#{last}]#{nameLast}"
+        '->'
+        "[#{@current}]#{@name}"
+      ], ' '
+
+      {typeE} = Character.get nameLast
+      if typeE == 3 then Skill.endEAsType3 last
+
+    Scene.useExact ['single'], =>
+
+      $.on 'f12', =>
+
+        unless State.is 'ready'
+          Sound.beep()
+          Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
+          return
+
+        Character.load()
+        @scan()
+
+      return -> $.off 'f12'
+
+    Scene.useExact ['normal'], =>
+      $.on 'alt + f12', @clear
+      return -> $.off 'alt + f12'
+
+    # auto clear/scan party
+    do addListener = =>
+      token = 'party/addListener'
+      Timer.loop token, 1e3, =>
+
+        if Party.size
+          Timer.remove token
+          return
+
+        unless Scene.is 'single' then return
+        unless State.is 'ready' then return
+        @scan()
+
+    Client.useChange [Scene], ->
+      unless Party.size then return false # if party has no member, ignore
+      if Scene.is 'party' then return true
+      if Scene.is 'normal', 'not-single' then return true
+      return false
+    , =>
+      @clear()
+      return addListener
 
   ###* @type import('./type/party').PartyG['isCurrent'] ###
-  isCurrent: (n) -> not ColorManager.findAll 0xFFFFFF, @makeArea n, true
+  isCurrent: (n) ->
 
-  ###* @type import('./type/party').PartyG['isCurrentAs'] ###
-  isCurrentAs: (n, cbDone, cbFail = undefined) ->
-    [interval, limit, token] = [25, 500, 'party/is-current-as']
+    unless Scene.is 'normal' then return false
 
-    tsCheck = $.now()
-    Timer.loop token, interval, =>
+    if ColorManager.findAll [0xFFFFFF, 0x323232], @makeArea n, true
+      return false
 
-      unless Scene.is 'normal' then return
-      diff = $.now() - tsCheck
+    return true
 
-      if @isCurrent n
-        Timer.remove token
-        cbDone()
-        console.log "##{token}: [#{n}] passed in #{diff} ms"
-        return
-
-      unless diff >= limit then return
-      Timer.remove token
-      if cbFail then cbFail()
-      console.log "##{token}: [#{n}] failed after #{diff} ms"
+  ###* @type import("./type/party").PartyG['isSlotValid'] ###
+  isSlotValid: (slot) ->
+    unless slot > 0 then return false
+    unless slot <= @size then return false
+    return true
 
   ###* @type import('./type/party').PartyG['makeArea'] ###
   makeArea: (n, isNarrow = false) ->
@@ -226,20 +203,16 @@ class PartyG extends KeyBinding
     token = 'party/scan'
     Indicator.setCost token, 'start'
 
-    unless Scene.is 'normal', 'not-busy', 'not-multi', 'not-using-q'
-      Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
-      Sound.beep()
-      return
-
     @reset()
     @countMember()
 
     Skill.reset()
     Hud.reset()
 
-    for n in @listSlot
-      if n > @size then break
-      @scanSlot n
+    ColorManager.freeze =>
+      for n in @listSlot
+        if n > @size then break
+        @scanSlot n
 
     @emit 'change'
 
@@ -255,6 +228,7 @@ class PartyG extends KeyBinding
     $.push @list, name
 
     nameOutput = Dictionary.get name
+    unless name then nameOutput = Dictionary.get 'unknown_character'
     if ($.length nameOutput) > 10 and $.includes nameOutput, ' '
       nameOutput = $.replace nameOutput, ' ', '\n'
 
@@ -275,20 +249,5 @@ class PartyG extends KeyBinding
 
     Hud.render n, nameOutput
 
-  ###* @type import('./type/party').PartyG['waitFor'] ###
-  waitFor: (n, callback) ->
-    [interval, limit, token] = [15, 1e3, 'party/wait-for']
-    tsCheck = $.now()
-    Timer.loop token, interval, =>
-
-      if Timer.has 'party/is-current-as' then return
-
-      if n == @current
-        Timer.remove token
-        callback()
-        return
-
-      unless $.now() - tsCheck >= limit then return
-      Timer.remove token
-
+# @ts-ignore
 Party = new PartyG()
