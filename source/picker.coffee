@@ -17,6 +17,17 @@ class PickerG extends KeyBinding
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
 
+  ###* @type import('./type/picker').PickerG['asAutoGadget'] ###
+  asAutoGadget: ->
+
+    unless Config.get 'better-pickup/use-auto-gadget' then return
+    unless State.is 'ready' then return
+
+    unless Timer.hasElapsed 'picker/auto-gadget', 1e3 then return
+    unless State.checkIsGadgetUsable() then return
+
+    $.press 'z'
+
   ###* @type import('./type/picker').PickerG['checkShape'] ###
   checkShape: (p) ->
 
@@ -111,6 +122,8 @@ class PickerG extends KeyBinding
     if $.isPressing 'f'
       @listen()
       return
+
+    @asAutoGadget()
 
     if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'dialogue'
       @skip()

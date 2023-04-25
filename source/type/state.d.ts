@@ -1,4 +1,10 @@
-type Name = 'aiming' | 'free' | 'frozen' | 'ready' | NameElement
+type Name =
+  | 'aiming'
+  | 'free'
+  | 'frozen'
+  | 'gadget-usable'
+  | 'ready'
+  | NameElement
 type NameElement = 'cryo' | 'hydro'
 
 export class StateG extends EmitterShell {
@@ -10,6 +16,7 @@ export class StateG extends EmitterShell {
   private checkIsAiming(): boolean
   private checkIsFree(): boolean
   private checkIsFrozen(list: Name[]): boolean
+  checkIsGadgetUsable(): boolean
   private checkIsReady(): boolean
   init(): void
   is(name: Name): boolean

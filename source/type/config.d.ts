@@ -1,6 +1,11 @@
 type Data = {
   basic: ['arguments', 'path', 'process']
-  'better-pickup': ['enable', 'use-fast-pickup', 'use-quick-skip']
+  'better-pickup': [
+    'enable',
+    'use-auto-gadget',
+    'use-fast-pickup',
+    'use-quick-skip',
+  ]
   misc: [
     'use-beep',
     'use-better-jump',

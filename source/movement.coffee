@@ -118,7 +118,7 @@ class MovementG extends KeyBinding
 
   ###* @type import('./type/movement').MovementG['init'] ###
   init: ->
-    @aboutAim()
+    # @aboutAim()
     @aboutForward()
     @aboutMove()
     @aboutUnhold()

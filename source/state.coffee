@@ -61,9 +61,26 @@ class StateG extends EmitterShell
 
     return true
 
+  ###* @type import('./type/state').StateG['checkIsGadgetUsable'] ###
+  checkIsGadgetUsable: ->
+
+    p = ColorManager.findAny 0xFFFFFF, [
+      '93%', '76%'
+      '96%', '78%'
+    ]
+    unless p then return true
+
+    if ColorManager.findAny 0xFFFFFF, [
+      p[0] + 1, p[1]
+      '96%', p[1] + 1
+    ] then return false
+
+    return true
+
   ###* @type import('./type/state').StateG['checkIsReady'] ###
   checkIsReady: ->
 
+    unless Scene.is 'single', 'not-domain' then return false
     unless Party.size > 1 then return true
 
     unless ColorManager.findAny [0x96D722, 0xFF6666], [
