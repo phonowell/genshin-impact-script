@@ -86,6 +86,9 @@ class Party2G extends KeyBinding
 
   ###* @type import('./type/party2').Party2G['init'] ###
   init: ->
+
+    return
+
     unless Config.get 'misc/use-skill-timer' then return
     @aboutPress()
     @aboutPressAlt()
@@ -141,14 +144,14 @@ class Party2G extends KeyBinding
       Timer.remove token
 
   ###* @type import('./type/party2').Party2G['watch'] ###
-  watch: -> Scene.useExact ['single'], =>
+  watch: -> Scene.useExact ['normal'], =>
 
     [interval, token] = [200, 'party2/watch']
 
     Timer.loop token, interval, =>
 
       unless Party.size then return
-      unless State.is 'free' then return
+      unless State.is 'free', 'single' then return
       unless $.now() - Party.tsSwitch > 1e3 then return
       if Party.isCurrent Party.current then return
 

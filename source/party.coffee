@@ -119,7 +119,7 @@ class PartyG extends KeyBinding
       {typeE} = Character.get nameLast
       if typeE == 3 then Skill.endEAsType3 last
 
-    Scene.useExact ['single'], =>
+    Scene.useExact ['normal'], =>
 
       $.on 'f12', =>
 
@@ -146,14 +146,13 @@ class PartyG extends KeyBinding
           Timer.remove token
           return
 
-        unless Scene.is 'single' then return
-        unless State.is 'ready' then return
+        unless State.is 'ready', 'single' then return
         @scan()
 
     Client.useChange [Scene], ->
       unless Party.size then return false # if party has no member, ignore
       if Scene.is 'party' then return true
-      if Scene.is 'normal', 'not-single' then return true
+      if (Scene.is 'normal') and State.is 'not-single' then return true
       return false
     , =>
       @clear()

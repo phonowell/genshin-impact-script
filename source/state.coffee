@@ -8,6 +8,9 @@ class StateG extends EmitterShell
   constructor: ->
     super()
 
+    ### @type import('./type/state').StateG['cache'] ###
+    @cache = {}
+
     ###* @type import('./type/state').StateG['list'] ###
     @list = []
 
@@ -80,7 +83,7 @@ class StateG extends EmitterShell
   ###* @type import('./type/state').StateG['checkIsReady'] ###
   checkIsReady: ->
 
-    unless Scene.is 'single', 'not-domain' then return false
+    unless Scene.is 'not-domain' then return false
     unless Party.size > 1 then return true
 
     unless ColorManager.findAny [0x96D722, 0xFF6666], [
@@ -89,6 +92,13 @@ class StateG extends EmitterShell
     ] then return false
 
     return true
+
+  ###* @type import('./type/state').StateG['checkIsSingle'] ###
+  checkIsSingle: -> @throttle 'check-is-single', 2e3, ->
+    return not ColorManager.findAny [0x006699, 0x408000], [
+      '18%', '2%'
+      '20%', '6%'
+    ]
 
   ###* @type import('./type/state').StateG['init'] ###
   init: ->
@@ -99,10 +109,31 @@ class StateG extends EmitterShell
       else console.log '#state:', $.join @list, ', '
 
   ###* @type import('./type/state').StateG['is'] ###
-  is: (name) -> $.includes @list, name
+  is: (names...) ->
+
+    for name in names
+
+      if $.startsWith name, 'not-'
+        name2 = $.subString name, 4
+        if $.includes @list, name2 then return false
+        continue
+
+      unless $.includes @list, name then return false
+      continue
+
+    return true
 
   ###* @type import('./type/state').StateG['makeListName'] ###
   makeListName: -> []
+
+  ###* @type import('./type/state').StateG['throttle'] ###
+  throttle: (id, interval, fn) ->
+
+    unless Timer.hasElapsed "state/#{id}", interval
+      Indicator.setCount 'gdip/prevent'
+      return @cache[id]
+
+    return @cache[id] = fn()
 
   ###* @type import('./type/state').StateG['update'] ###
   update: ->
@@ -117,6 +148,8 @@ class StateG extends EmitterShell
       if @checkElement 'hydro' then $.push l, 'hydro'
       if @checkIsFrozen l then $.push l, 'frozen'
       if $.includes l, 'frozen' then return l
+
+      if @checkIsSingle() then $.push l, 'single'
 
       # free
       if @checkIsFree()

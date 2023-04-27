@@ -23,7 +23,6 @@ export class Scene2G {
   private checkIsNormal(): boolean
   private checkIsParty(): boolean
   private checkIsPlaying(): boolean
-  private checkIsSingle(): boolean
   private makeListName(...names: Name[]): Name[]
   private throttle(id: string, interval: number, fn: () => boolean): boolean
 }

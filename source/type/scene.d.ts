@@ -12,7 +12,6 @@ export type Name =
   | 'normal'
   | 'party'
   | 'playing'
-  | 'single'
 type NameNot = `not-${Name}`
 type NamePossible = Name | NameNot | 'unknown'
 

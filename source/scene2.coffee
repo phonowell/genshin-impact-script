@@ -81,7 +81,6 @@ class Scene2G
     list = @makeListName 'normal'
 
     if @checkIsDomain() then $.push list, 'domain'
-    if @checkIsSingle() then $.push list, 'single'
 
     return list
 
@@ -202,13 +201,6 @@ class Scene2G
     return ColorManager.findAll [0xFFFFFF, 0xFFE92C], [
       '9%', '2%'
       '11%', '6%'
-    ]
-
-  ###* @type import('./type/scene2').Scene2G['checkIsSingle'] ###
-  checkIsSingle: -> @throttle 'check-is-single', 2e3, ->
-    return not ColorManager.findAny [0x006699, 0x408000], [
-      '18%', '2%'
-      '20%', '6%'
     ]
 
   ###* necessary for types, do not remove
