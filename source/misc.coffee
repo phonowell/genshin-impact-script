@@ -1,6 +1,6 @@
 # @ts-check
 
-aboutCaps = -> Scene.useExact ['normal'], ->
+aboutCaps = -> Scene.useExact 'normal', ->
   Native 'SetCapsLockState, Off'
   $.on 'CapsLock', -> Sound.beep()
   return -> $.off 'CapsLock'

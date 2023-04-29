@@ -119,11 +119,11 @@ class PartyG extends KeyBinding
       {typeE} = Character.get nameLast
       if typeE == 3 then Skill.endEAsType3 last
 
-    Scene.useExact ['normal'], =>
+    Scene.useExact 'normal', =>
 
       $.on 'f12', =>
 
-        unless State.is 'ready'
+        unless State.is 'ready', 'single'
           Sound.beep()
           Hud.render 0, Dictionary.get 'cannot_use_party_scanning'
           return
@@ -133,7 +133,7 @@ class PartyG extends KeyBinding
 
       return -> $.off 'f12'
 
-    Scene.useExact ['normal'], =>
+    Scene.useExact 'normal', =>
       $.on 'alt + f12', @clear
       return -> $.off 'alt + f12'
 
@@ -149,12 +149,7 @@ class PartyG extends KeyBinding
         unless State.is 'ready', 'single' then return
         @scan()
 
-    Client.useChange [Scene], ->
-      unless Party.size then return false # if party has no member, ignore
-      if Scene.is 'party' then return true
-      if (Scene.is 'normal') and State.is 'not-single' then return true
-      return false
-    , =>
+    Scene.useExact 'party', =>
       @clear()
       return addListener
 

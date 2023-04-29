@@ -1,5 +1,6 @@
 type Name =
   | 'aiming'
+  | 'domain'
   | 'free'
   | 'frozen'
   | 'gadget-usable'
@@ -18,6 +19,7 @@ export class StateG extends EmitterShell {
   constructor()
   private checkElement(name: NameElement): boolean
   private checkIsAiming(): boolean
+  private checkIsDomain(): boolean
   private checkIsFree(): boolean
   private checkIsFrozen(list: Name[]): boolean
   checkIsGadgetUsable(): boolean

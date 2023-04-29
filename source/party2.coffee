@@ -13,7 +13,7 @@ class Party2G extends KeyBinding
 
     @on 'press:start', (key) =>
 
-      unless State.is 'free' then return
+      unless State.is 'free', 'not-domain' then return
 
       Timer.remove 'party2/is-current-as'
       Timer.remove 'party2/wait-for'
@@ -27,14 +27,14 @@ class Party2G extends KeyBinding
 
     @on 'press:end', (key) =>
 
-      unless State.is 'free' then return
+      unless State.is 'free', 'not-domain' then return
 
       n = $.toNumber key
       unless Party.isSlotValid n then return
 
       @waitFor n, => @emit 'switch:end'
 
-    Scene.useExact ['single'], =>
+    Scene.useExact 'normal', =>
 
       for slot in Party.listSlot
         @registerEvent 'press', $.toString slot
@@ -44,22 +44,20 @@ class Party2G extends KeyBinding
           @unregisterEvent 'press', $.toString slot
 
   ###* @type import('./type/party2').Party2G['aboutPressAlt'] ###
-  aboutPressAlt: -> Scene.useExact ['single'], ->
+  aboutPressAlt: ->
 
-    for slot in Party.listSlot
-      $.on "alt + #{slot}", ->
+    @on 'alt-press', (key) ->
+      unless State.is 'free', 'not-domain' then return
+      Skill.switchQ key
 
-        unless Party.size
-          $.press "alt + #{slot}"
-          return
+    Scene.useExact 'normal', =>
 
-        unless State.is 'free' then return
-
-        Skill.switchQ slot
-
-    return ->
       for slot in Party.listSlot
-        $.off "alt + #{slot}"
+        @registerEvent 'alt-press', $.toString slot
+
+      return =>
+        for slot in Party.listSlot
+          @unregisterEvent 'alt-press', $.toString slot
 
   ###* @type import('./type/party2').Party2G['aboutSwitch'] ###
   aboutSwitch: ->
@@ -144,7 +142,7 @@ class Party2G extends KeyBinding
       Timer.remove token
 
   ###* @type import('./type/party2').Party2G['watch'] ###
-  watch: -> Scene.useExact ['normal'], =>
+  watch: -> Scene.useExact 'normal', =>
 
     [interval, token] = [200, 'party2/watch']
 

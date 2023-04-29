@@ -3,7 +3,6 @@ import { Fn } from './global'
 export type Name =
   | 'chat'
   | 'dialogue'
-  | 'domain'
   | 'half-menu'
   | 'loading'
   | 'map'
@@ -20,7 +19,7 @@ export class SceneG extends EmitterShell {
   namespace: 'scene'
   constructor()
   init(): void
-  is(...names: NamePossible[]): boolean
+  is(name: NamePossible): boolean
   update(): void
-  useExact(listDeps: NamePossible[], fn: () => Fn): void
+  useExact(name: NamePossible, fn: () => Fn): void
 }

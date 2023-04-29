@@ -31,6 +31,13 @@ class StateG extends EmitterShell
     unless (Character.get Party.name, 'weapon') == 'bow' then return false
     return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
 
+  ###* @type import('./type/state').StateG['checkIsDomain'] ###
+  checkIsDomain: -> @throttle 'check-is-domain', 1e3, ->
+    return ColorManager.findAll [0x38425C, 0xFFFFFF], [
+      '1%', '9%'
+      '3%', '13%'
+    ]
+
   ###* @type import('./type/state').StateG['checkIsFree'] ###
   checkIsFree: ->
 
@@ -83,7 +90,7 @@ class StateG extends EmitterShell
   ###* @type import('./type/state').StateG['checkIsReady'] ###
   checkIsReady: ->
 
-    unless Scene.is 'not-domain' then return false
+    unless @is 'not-domain' then return false
     unless Party.size > 1 then return true
 
     unless ColorManager.findAny [0x96D722, 0xFF6666], [
@@ -94,11 +101,15 @@ class StateG extends EmitterShell
     return true
 
   ###* @type import('./type/state').StateG['checkIsSingle'] ###
-  checkIsSingle: -> @throttle 'check-is-single', 2e3, ->
-    return not ColorManager.findAny [0x006699, 0x408000], [
+  checkIsSingle: -> @throttle 'check-is-single', 1e3, ->
+
+    a = [
       '18%', '2%'
       '20%', '6%'
     ]
+
+    unless ColorManager.findAny 0xFFFFFF, a then return false
+    return not ColorManager.findAny [0x006699, 0x408000], a
 
   ###* @type import('./type/state').StateG['init'] ###
   init: ->
@@ -138,31 +149,44 @@ class StateG extends EmitterShell
   ###* @type import('./type/state').StateG['update'] ###
   update: ->
 
-    list = do =>
+    d = list: @makeListName()
 
-      l = @makeListName()
-      unless Scene.is 'normal' then return l
+    do => # single, domain
 
-      # element
-      if @checkElement 'cryo' then $.push l, 'cryo'
-      if @checkElement 'hydro' then $.push l, 'hydro'
-      if @checkIsFrozen l then $.push l, 'frozen'
-      if $.includes l, 'frozen' then return l
+      unless Scene.is 'normal' then return
 
-      if @checkIsSingle() then $.push l, 'single'
+      if @checkIsSingle() then $.push d.list, 'single'
+      if @checkIsDomain() then $.push d.list, 'domain'
+
+      return
+
+    do => # element
+
+      unless Scene.is 'normal' then return
+
+      if @checkElement 'cryo' then $.push d.list, 'cryo'
+      if @checkElement 'hydro' then $.push d.list, 'hydro'
+      if @checkIsFrozen d.list then $.push d.list, 'frozen'
+
+      return
+
+    do => # free, ready, aiming
+
+      unless Scene.is 'normal' then return
+      if $.includes d.list, 'frozen' then return
 
       # free
       if @checkIsFree()
-        $.push l, 'free'
-        if @checkIsReady() then $.push l, 'ready'
-        return l
+        $.push d.list, 'free'
+        if @checkIsReady() then $.push d.list, 'ready'
+        return
 
       # not free
-      if @checkIsAiming() then $.push l, 'aiming'
-      return l
+      if @checkIsAiming() then $.push d.list, 'aiming'
+      return
 
-    if $.eq list, @list then return
-    @list = list
+    if $.eq d.list, @list then return
+    @list = d.list
     @emit 'change'
 
 # @ts-ignore

@@ -77,10 +77,9 @@ class Scene2G
 
   ###* @type import('./type/scene2').Scene2G['aboutNormal'] ###
   aboutNormal: ->
+
     unless @checkIsNormal() then return []
     list = @makeListName 'normal'
-
-    if @checkIsDomain() then $.push list, 'domain'
 
     return list
 
@@ -122,13 +121,6 @@ class Scene2G
     '45%', '79%'
     '55%', '82%'
   ]
-
-  ###* @type import('./type/scene2').Scene2G['checkIsDomain'] ###
-  checkIsDomain: -> @throttle 'check-is-domain', 1e3, ->
-    return ColorManager.findAll [0x38425C, 0xFFFFFF], [
-      '1%', '9%'
-      '3%', '13%'
-    ]
 
   ###* @type import('./type/scene2').Scene2G['checkIsHalfMenu'] ###
   checkIsHalfMenu: -> ColorManager.findAll [0x3B4255, 0xECE5D8], [

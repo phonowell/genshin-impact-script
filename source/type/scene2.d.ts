@@ -14,7 +14,6 @@ export class Scene2G {
   check(): Name[]
   private checkIsChat(): boolean
   private checkIsDialogue(): boolean
-  private checkIsDomain(): boolean
   private checkIsHalfMenu(): boolean
   private checkIsLoading(): boolean
   private checkIsMap(): boolean

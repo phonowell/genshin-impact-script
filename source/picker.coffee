@@ -21,7 +21,7 @@ class PickerG extends KeyBinding
   asAutoGadget: ->
 
     unless Config.get 'better-pickup/use-auto-gadget' then return
-    unless State.is 'ready' then return
+    unless State.is 'ready', 'single', 'not-domain' then return
 
     unless Timer.hasElapsed 'picker/auto-gadget', 1e3 then return
     unless State.checkIsGadgetUsable() then return
@@ -46,7 +46,8 @@ class PickerG extends KeyBinding
   find: ->
 
     if $.isPressing 'f' then return
-    unless Scene.is 'normal', 'not-domain' then return
+    unless Scene.is 'normal' then return
+    if State.is 'domain' then return
 
     p = ColorManager.findAny 0x323232, [
       '57%', '30%'
@@ -108,7 +109,8 @@ class PickerG extends KeyBinding
 
     if @skip() then return
 
-    unless Scene.is 'normal', 'not-domain' then return
+    unless Scene.is 'normal' then return
+    if State.is 'domain' then return
 
     $.press 'f'
 
@@ -129,7 +131,7 @@ class PickerG extends KeyBinding
       @skip()
       return
 
-    if (Config.get 'better-pickup/use-fast-pickup') and Scene.is 'normal', 'not-domain'
+    if (Config.get 'better-pickup/use-fast-pickup') and (Scene.is 'normal') and not State.is 'domain'
       @find()
       return
 
