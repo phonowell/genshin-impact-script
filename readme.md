@@ -20,7 +20,6 @@
   align = 'right'
   src = './static/paimon.png'
   width = '320'
-  style = 'background: none; transform: translateY(-32px);'
 />
 
 原神脚本，包含自动钓鱼、自动拾取、自动跳过对话等多项实用功能。
@@ -29,7 +28,7 @@
 
 **不包含任何作弊功能**。
 
-<a align = 'center' href = 'https://github.com/phonowell/genshin-impact-script/releases' style = 'display: inline-block; width: 320px; height: 64px; line-height: 64px; background-color: rgb(170, 125, 91); color: rgb(234, 215, 189); font-size: 24px; font-weight: bold; border-radius: 32px;'>下载</a>
+<a align = 'center' href = 'https://github.com/phonowell/genshin-impact-script/releases'>>>下载<<</a>
 
 ---
 

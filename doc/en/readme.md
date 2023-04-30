@@ -20,7 +20,6 @@
   align = 'right'
   src = '../../static/paimon.png'
   width = '320'
-  style = 'background: none; transform: translateY(-32px);'
 />
 
 Genshin Impact script, including multiple functions such as automatic fishing, automatic picking up, and automatic dialogue skipping.
@@ -29,7 +28,7 @@ The functions are achieved through image recognition, without any involvement of
 
 **Does not contain any cheating functions.**
 
-<a align = 'center' href = 'https://github.com/phonowell/genshin-impact-script/releases' style = 'display: inline-block; width: 320px; height: 64px; line-height: 64px; background-color: rgb(170, 125, 91); color: rgb(234, 215, 189); font-size: 24px; font-weight: bold; border-radius: 32px;'>Download</a>
+<a align = 'center' href = 'https://github.com/phonowell/genshin-impact-script/releases'>>>Download<<</a>
 
 ---
 
