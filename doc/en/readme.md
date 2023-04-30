@@ -1,12 +1,37 @@
+<p align = 'right'>
+  <a href = 'https://github.com/phonowell/march-7th'>Star Rail</a>
+  |
+  <a href = '../../readme.md'>Chinese</a>
+  |
+  English
+</p>
+
+<p align = 'center'>
+  <img
+    align = 'center'
+    src = '../../static/slimes.png'
+    width = '160'
+  />
+</p>
+
 # GIS
 
-[Chinese](../../readme.md) | English
+<img
+  align = 'right'
+  src = '../../static/paimon.png'
+  width = '320'
+  style = 'background: none; transform: translateY(-32px);'
+/>
 
-Genshin Impact script, including multiple functions such as automatic fishing, automatic picking up, and combat assistance.
+Genshin Impact script, including multiple functions such as automatic fishing, automatic picking up, and automatic dialogue skipping.
 
-Developed using coffee-ahk, it has a small size and low resource usage. The functions are achieved through image recognition, without any involvement of memory reading and writing or network packet modification.
+The functions are achieved through image recognition, without any involvement of memory reading and writing or network packet modification.
 
 **Does not contain any cheating functions.**
+
+<a align = 'center' href = 'https://github.com/phonowell/genshin-impact-script/releases' style = 'display: inline-block; width: 320px; height: 64px; line-height: 64px; background-color: rgb(170, 125, 91); color: rgb(234, 215, 189); font-size: 24px; font-weight: bold; border-radius: 32px;'>Download</a>
+
+---
 
 - [Guide](./guide.md)
 - [Features](./feature.md)
