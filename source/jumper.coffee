@@ -21,12 +21,12 @@ class JumperG extends KeyBinding
   init: ->
 
     @on 'jump:start', =>
-      unless State.is 'free' then return
+      unless State.is 'free', 'not-domain' then return
       @tsJump = $.now()
 
     @on 'jump:end', =>
 
-      unless State.is 'free' then return
+      unless State.is 'free', 'not-domain' then return
 
       now = $.now()
       diff = now - @tsJump

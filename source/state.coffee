@@ -90,15 +90,13 @@ class StateG extends EmitterShell
   ###* @type import('./type/state').StateG['checkIsReady'] ###
   checkIsReady: ->
 
-    unless @is 'not-domain' then return false
+    unless @is 'single' then return true
     unless Party.size > 1 then return true
 
-    unless ColorManager.findAny [0x96D722, 0xFF6666], [
+    return !!ColorManager.findAny [0x96D722, 0xFF6666], [
       '88%', '25%'
       '89%', '53%'
-    ] then return false
-
-    return true
+    ]
 
   ###* @type import('./type/state').StateG['checkIsSingle'] ###
   checkIsSingle: -> @throttle 'check-is-single', 1e3, ->

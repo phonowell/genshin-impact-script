@@ -77,7 +77,7 @@ class FishingG
         Sound.beep()
         return
 
-      if State.is 'free'
+      if State.is 'free', 'not-domain'
         Sound.beep()
         return
 
