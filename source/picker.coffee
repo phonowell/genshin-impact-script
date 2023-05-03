@@ -1,15 +1,12 @@
 # @ts-check
 
-# @ts-ignore
-import __shape__ from '../../gis-static/data/shape-forbidden.yaml'
-
 class PickerG extends KeyBinding
 
   constructor: ->
     super()
 
     ###* @type import('./type/picker').PickerG['listShapeForbidden'] ###
-    @listShapeForbidden = __shape__.list
+    @listShapeForbidden = []
 
     ###* @type import('./type/picker').PickerG['namespace'] ###
     @namespace = 'picker'
@@ -87,6 +84,9 @@ class PickerG extends KeyBinding
 
   ###* @type import('./type/picker').PickerG['init'] ###
   init: ->
+
+    j = Json2.read './data/misc/shape-forbidden.json'
+    @listShapeForbidden = j.list
 
     @registerEvent 'l-button', 'l-button'
     @registerEvent 'pick', 'f'

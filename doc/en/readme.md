@@ -37,6 +37,7 @@ The functions are achieved through image recognition, without any involvement of
 - [Keymap](./keymap.md)
 - ~~[Tactics](./tactic.md)~~
 - [Recording](./recording.md)
+- [Characters](../../data/dictionary/character.yaml)
 - [FAQ](./faq.md)
 - [Contact](./contact.md)
 - [Disclaimer](./disclaimer.md)

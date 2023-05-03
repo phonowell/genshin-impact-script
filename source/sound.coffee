@@ -1,6 +1,6 @@
 # @ts-check
 
-import '../../gis-static/lib/ShiftAppVolume.ahk'
+import './lib/ShiftAppVolume.ahk'
 
 class SoundG
 

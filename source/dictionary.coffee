@@ -1,10 +1,5 @@
 # @ts-check
 
-# @ts-ignore
-import __character_a_n__ from '../../gis-static/dictionary/character/a-n.yaml'
-import __character_o_z__ from '../../gis-static/dictionary/character/o-z.yaml'
-import __misc__ from '../../gis-static/dictionary/misc.yaml'
-
 class DictionaryG
 
   constructor: ->
@@ -37,9 +32,8 @@ class DictionaryG
     ###* @type import('./type/dictionary').DictionaryG['data'] ###
     data = {}
 
-    $.mixin data, __character_a_n__
-    $.mixin data, __character_o_z__
-    $.mixin data, __misc__
+    $.mixin data, Json2.read './data/dictionary/character.json'
+    $.mixin data, Json2.read './data/dictionary/misc.json'
 
     @data = data
     return

@@ -37,6 +37,7 @@
 - [按键](./doc/keymap.md)
 - ~~[自定义动作](./doc/tactic.md)~~
 - [录像](./doc/recording.md)
+- [角色名称](./data/dictionary/character.yaml)
 - [常见问题](./doc/faq.md)
 - [联系方式](./doc/contact.md)
 - [免责声明](./doc/disclaimer.md)
