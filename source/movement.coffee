@@ -23,7 +23,7 @@ class MovementG extends KeyBinding
     checkIsReadyToAim = ->
       unless Party.size then return false
       unless Character.is Party.name, 'bow' then return false
-      return State.is 'free'
+      return State.is 'free', 'not-domain'
 
     @on 'aim:start', ->
       if checkIsReadyToAim() then return
@@ -33,7 +33,7 @@ class MovementG extends KeyBinding
       if checkIsReadyToAim() then return
       $.press 't:up'
 
-    Scene.useExact ['normal', 'not-domain'], =>
+    Scene.useExact 'normal', =>
       @registerEvent 'aim', 'r'
       return => @unregisterEvent 'aim', 'r'
 
@@ -44,9 +44,10 @@ class MovementG extends KeyBinding
 
     # on event 'toggle', start or stop auto-forward
     @on token, =>
+      if State.is 'domain' then return
       if @isForwarding then @stopForward() else @startForward()
 
-    Scene.useExact ['normal', 'not-domain'], =>
+    Scene.useExact 'normal', =>
 
       $.preventDefaultKey key, true
       @registerEvent token, key
@@ -69,7 +70,7 @@ class MovementG extends KeyBinding
       if @isForwarding and $.includes @direction, 's'
         @stopForward()
 
-    Scene.useExact ['normal'], =>
+    Scene.useExact 'normal', =>
 
       [interval, token] = [100, 'movement/move']
 
@@ -112,13 +113,13 @@ class MovementG extends KeyBinding
       if State.is 'free' then return
       $.press 'x:up'
 
-    Scene.useExact ['normal'], =>
+    Scene.useExact 'normal', =>
       @registerEvent 'unhold', 'l-button'
       return => @unregisterEvent 'unhold', 'l-button'
 
   ###* @type import('./type/movement').MovementG['init'] ###
   init: ->
-    @aboutAim()
+    # @aboutAim()
     @aboutForward()
     @aboutMove()
     @aboutUnhold()

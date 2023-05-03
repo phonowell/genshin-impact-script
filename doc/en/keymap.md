@@ -17,6 +17,7 @@ All keys use default game key bindings, but `Toggle Walk/Run` needs to be bound 
 | `W/S`                         | Exit auto forward mode                   |
 | Long press `F`                | Quickly pick up items/Skips dialogues    |
 | `Alt + F`                     | Enter/Exit auto pick-up mode             |
+| `Alt + Z`                     | Enter/Exit auto gadget mode              |
 | `Alt + Space`                 | Enable/Disable improved jump             |
 | `Left/Right/Up/Down`          | Move camera                              |
 | `Win + Left/Right/Up/Down`    | Move window                              |

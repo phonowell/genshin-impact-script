@@ -89,11 +89,10 @@ class WindowG extends KeyBinding
 
     unless @window.isExists()
       if Config.get 'basic/path'
-        try $.open $.join [
+        $.open $.join [
           $.toString Config.get 'basic/path'
           $.toString Config.get 'basic/arguments'
         ], ' '
-        catch then $.alert Dictionary.get 'invalid_path'
 
     @window.wait @main
 

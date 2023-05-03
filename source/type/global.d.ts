@@ -16,6 +16,7 @@ import { FishingG } from './fishing'
 import { GdipG } from './gdip'
 import { HudG } from './hud'
 import { IndicatorG } from './indicator'
+import { JsonG } from './json'
 import { JumperG } from './jumper'
 import { KeyBinding as KB } from './key-binding'
 import { MenuG } from './menu'
@@ -34,6 +35,7 @@ import { SoundG } from './sound'
 import { StateG } from './state'
 import { TacticG } from './tactic'
 import { TimerG } from './timer'
+import { UtilityG } from './utility'
 import { WindowG } from './window'
 
 declare global {
@@ -94,6 +96,7 @@ declare global {
   const Gdip: GdipG
   const Hud: HudG
   const Indicator: IndicatorG
+  const Json2: JsonG
   const Jumper: JumperG
   const Menu2: MenuG
   const Movement: MovementG
@@ -110,6 +113,7 @@ declare global {
   const State: StateG
   const Tactic: TacticG
   const Timer: TimerG
+  const Utility: UtilityG
   const Window2: WindowG
   const alice: never
   const area: never
@@ -127,8 +131,11 @@ declare global {
   const gdip: never
   const hud: never
   const indicator: never
+  const json2: never
+  const json: never
   const jumper: never
   const menu2: never
+  const menu: never
   const movement: never
   const party2: never
   const party: never
@@ -143,6 +150,7 @@ declare global {
   const state: never
   const tactic: never
   const timer: never
+  const utility: never
   const window2: never
 }
 

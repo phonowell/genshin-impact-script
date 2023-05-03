@@ -3,6 +3,7 @@ export class PickerG extends KeyBinding {
   namespace: 'picker'
   private tsPick: number
   constructor()
+  private asAutoGadget(): void
   private checkShape(p: [number, number]): boolean
   private find(): void
   private findTitleColor(y: number): number | false

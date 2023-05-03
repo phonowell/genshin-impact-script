@@ -1,7 +1,7 @@
 # @ts-check
 
-import '../../gis-static/lib/admin.ahk'
-import '../../gis-static/lib/head.ahk'
+import './lib/admin.ahk'
+import './lib/head.ahk'
 import 'shell-ahk'
 
 # declare
@@ -13,10 +13,12 @@ $ = $
 import './area'
 import './cursor'
 import './dashboard'
+import './json'
 import './key-binding'
 import './point'
 import './scene2'
 import './timer'
+import './utility'
 import './client'
 import './color-manager'
 import './dictionary'

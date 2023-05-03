@@ -1,8 +1,5 @@
 # @ts-check
 
-# @ts-ignore
-import __e_charge__ from '../../gis-static/data/character-e-charge.yaml'
-
 class SkillG extends KeyBinding
 
   constructor: ->
@@ -12,7 +9,7 @@ class SkillG extends KeyBinding
     @listCache = {}
 
     ###* @type import('./type/skill').SkillG['listCharacterECharge'] ###
-    @listCharacterECharge = __e_charge__.list
+    @listCharacterECharge = []
 
     ###* @type import('./type/skill').SkillG['listCountDown'] ###
     @listCountDown = {}
@@ -172,6 +169,9 @@ class SkillG extends KeyBinding
   init: ->
 
     return
+
+    j = Json2.read './data/misc/character-e-charge.json'
+    @listCharacterECharge = j
 
     unless Config.get 'misc/use-skill-timer' then return
     @reset()

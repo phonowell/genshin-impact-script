@@ -21,12 +21,12 @@ class JumperG extends KeyBinding
   init: ->
 
     @on 'jump:start', =>
-      unless State.is 'free' then return
+      unless State.is 'free', 'not-domain' then return
       @tsJump = $.now()
 
     @on 'jump:end', =>
 
-      unless State.is 'free' then return
+      unless State.is 'free', 'not-domain' then return
 
       now = $.now()
       diff = now - @tsJump
@@ -37,7 +37,7 @@ class JumperG extends KeyBinding
 
     Client.useChange [Config, Scene], ->
       unless Config.get 'misc/use-better-jump' then return false
-      unless Scene.is 'not-domain' then return false
+      if State.is 'domain' then return false
       return true
     , =>
       @registerEvent 'jump', 'space'

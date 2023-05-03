@@ -54,7 +54,7 @@ class MenuG extends KeyBinding
     do =>
       token = 'space/map'
       @on token, @asMap
-      Scene.useExact ['map'], =>
+      Scene.useExact 'map', =>
         @registerEvent token, 'space'
         return => @unregisterEvent token, 'space'
 
@@ -62,7 +62,7 @@ class MenuG extends KeyBinding
     do =>
       token = 'space/mini-menu'
       @on token, @asMiniMenu
-      Scene.useExact ['mini-menu'], =>
+      Scene.useExact 'mini-menu', =>
         @registerEvent token, 'space'
         return => @unregisterEvent token, 'space'
 

@@ -11,6 +11,7 @@ class ConfigG extends EmitterShell
       'basic/path': ''
       'basic/process': ''
       'better-pickup/enable': '0'
+      'better-pickup/use-auto-gadget': '0'
       'better-pickup/use-fast-pickup': '0'
       'better-pickup/use-quick-skip': '0'
       'misc/use-beep': '0'
@@ -75,6 +76,7 @@ class ConfigG extends EmitterShell
 
     # better-pickup
     @register 'better-pickup/enable', 'alt + f'
+    @register 'better-pickup/use-auto-gadget', 'alt + z'
     @register 'better-pickup/use-fast-pickup'
     @register 'better-pickup/use-quick-skip'
 

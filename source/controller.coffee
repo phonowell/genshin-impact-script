@@ -1,6 +1,6 @@
 # @ts-check
 
-import '../../gis-static/lib/XInput.ahk'
+import './lib/XInput.ahk'
 
 class ControllerG extends EmitterShell
 

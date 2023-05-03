@@ -20,21 +20,15 @@ class SceneG extends EmitterShell
       else console.log "#scene: #{$.join @list, ', '}"
 
   ###* @type import('./type/scene').SceneG['is'] ###
-  is: (names...) ->
+  is: (name) ->
 
-    if $.includes names, 'unknown' then return ($.length @list) == 0
+    if name == 'unknown' then return ($.length @list) == 0
 
-    for name in names
+    if $.startsWith name, 'not-'
+      name2 = $.subString name, 4
+      return not $.includes @list, name2
 
-      if $.startsWith name, 'not-'
-        name2 = $.subString name, 4
-        if $.includes @list, name2 then return false
-        continue
-
-      unless $.includes @list, name then return false
-      continue
-
-    return true
+    return $.includes @list, name
 
   ###* @type import('./type/scene').SceneG['update'] ###
   update: ->
@@ -48,7 +42,7 @@ class SceneG extends EmitterShell
     @emit 'change'
 
   ###* @type import('./type/scene').SceneG['useExact'] ###
-  useExact: (list, fn) ->
+  useExact: (name, fn) ->
 
     data = {
       callback: $.noop
@@ -57,7 +51,7 @@ class SceneG extends EmitterShell
 
     @on 'change', =>
 
-      if @is list...
+      if @is name
         unless data.isFired
           data.isFired = true
           data.callback = fn()

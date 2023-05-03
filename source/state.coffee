@@ -8,6 +8,9 @@ class StateG extends EmitterShell
   constructor: ->
     super()
 
+    ### @type import('./type/state').StateG['cache'] ###
+    @cache = {}
+
     ###* @type import('./type/state').StateG['list'] ###
     @list = []
 
@@ -27,6 +30,13 @@ class StateG extends EmitterShell
   checkIsAiming: ->
     unless (Character.get Party.name, 'weapon') == 'bow' then return false
     return (ColorManager.get ['50%', '50%']) == 0xFFFFFF
+
+  ###* @type import('./type/state').StateG['checkIsDomain'] ###
+  checkIsDomain: -> @throttle 'check-is-domain', 1e3, ->
+    return ColorManager.findAll [0x38425C, 0xFFFFFF], [
+      '1%', '9%'
+      '3%', '13%'
+    ]
 
   ###* @type import('./type/state').StateG['checkIsFree'] ###
   checkIsFree: ->
@@ -61,17 +71,43 @@ class StateG extends EmitterShell
 
     return true
 
-  ###* @type import('./type/state').StateG['checkIsReady'] ###
-  checkIsReady: ->
+  ###* @type import('./type/state').StateG['checkIsGadgetUsable'] ###
+  checkIsGadgetUsable: ->
 
-    unless Party.size > 1 then return true
+    p = ColorManager.findAny 0xFFFFFF, [
+      '93%', '76%'
+      '96%', '78%'
+    ]
+    unless p then return true
 
-    unless ColorManager.findAny [0x96D722, 0xFF6666], [
-      '88%', '25%'
-      '89%', '53%'
+    if ColorManager.findAny 0xFFFFFF, [
+      p[0] + 1, p[1]
+      '96%', p[1] + 1
     ] then return false
 
     return true
+
+  ###* @type import('./type/state').StateG['checkIsReady'] ###
+  checkIsReady: ->
+
+    unless @is 'single' then return true
+    unless Party.size > 1 then return true
+
+    return !!ColorManager.findAny [0x96D722, 0xFF6666], [
+      '88%', '25%'
+      '89%', '53%'
+    ]
+
+  ###* @type import('./type/state').StateG['checkIsSingle'] ###
+  checkIsSingle: -> @throttle 'check-is-single', 1e3, ->
+
+    a = [
+      '18%', '2%'
+      '20%', '6%'
+    ]
+
+    unless ColorManager.findAny 0xFFFFFF, a then return false
+    return not ColorManager.findAny [0x006699, 0x408000], a
 
   ###* @type import('./type/state').StateG['init'] ###
   init: ->
@@ -82,37 +118,73 @@ class StateG extends EmitterShell
       else console.log '#state:', $.join @list, ', '
 
   ###* @type import('./type/state').StateG['is'] ###
-  is: (name) -> $.includes @list, name
+  is: (names...) ->
+
+    for name in names
+
+      if $.startsWith name, 'not-'
+        name2 = $.subString name, 4
+        if $.includes @list, name2 then return false
+        continue
+
+      unless $.includes @list, name then return false
+      continue
+
+    return true
 
   ###* @type import('./type/state').StateG['makeListName'] ###
   makeListName: -> []
 
+  ###* @type import('./type/state').StateG['throttle'] ###
+  throttle: (id, interval, fn) ->
+
+    unless Timer.hasElapsed "state/#{id}", interval
+      Indicator.setCount 'gdip/prevent'
+      return @cache[id]
+
+    return @cache[id] = fn()
+
   ###* @type import('./type/state').StateG['update'] ###
   update: ->
 
-    list = do =>
+    d = list: @makeListName()
 
-      l = @makeListName()
-      unless Scene.is 'normal' then return l
+    do => # single, domain
 
-      # element
-      if @checkElement 'cryo' then $.push l, 'cryo'
-      if @checkElement 'hydro' then $.push l, 'hydro'
-      if @checkIsFrozen l then $.push l, 'frozen'
-      if $.includes l, 'frozen' then return l
+      unless Scene.is 'normal' then return
+
+      if @checkIsSingle() then $.push d.list, 'single'
+      if @checkIsDomain() then $.push d.list, 'domain'
+
+      return
+
+    do => # element
+
+      unless Scene.is 'normal' then return
+
+      if @checkElement 'cryo' then $.push d.list, 'cryo'
+      if @checkElement 'hydro' then $.push d.list, 'hydro'
+      if @checkIsFrozen d.list then $.push d.list, 'frozen'
+
+      return
+
+    do => # free, ready, aiming
+
+      unless Scene.is 'normal' then return
+      if $.includes d.list, 'frozen' then return
 
       # free
       if @checkIsFree()
-        $.push l, 'free'
-        if @checkIsReady() then $.push l, 'ready'
-        return l
+        $.push d.list, 'free'
+        if @checkIsReady() then $.push d.list, 'ready'
+        return
 
       # not free
-      if @checkIsAiming() then $.push l, 'aiming'
-      return l
+      if @checkIsAiming() then $.push d.list, 'aiming'
+      return
 
-    if $.eq list, @list then return
-    @list = list
+    if $.eq d.list, @list then return
+    @list = d.list
     @emit 'change'
 
 # @ts-ignore

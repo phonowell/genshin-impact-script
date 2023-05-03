@@ -1,7 +1,7 @@
 # @ts-check
 
-import '../../gis-static/lib/Gdip_All.ahk'
-import '../../gis-static/lib/Gdip_PixelSearch.ahk'
+import './lib/Gdip_All.ahk'
+import './lib/Gdip_PixelSearch.ahk'
 
 class GdipG
 

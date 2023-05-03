@@ -1,7 +1,14 @@
+import c from 'fire-compiler'
+import $ from 'fire-keeper'
+
 // function
 
-const main = () => {
-  console.log('Hello World!')
+const main = async () => {
+  const listYaml = await $.glob('./source/data/**/*.json')
+  await $.remove(listYaml)
+  // for (const source of listYaml) {
+  //   await c.compile(source)
+  // }
 }
 
 // export

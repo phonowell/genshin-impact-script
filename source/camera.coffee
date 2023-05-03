@@ -36,7 +36,7 @@ class CameraG extends KeyBinding
     @on 'move:start', @watch
     @on 'move:end', @watch
 
-    Scene.useExact ['normal'], =>
+    Scene.useExact 'normal', =>
 
       for key in @listKey
         @registerEvent 'press', key

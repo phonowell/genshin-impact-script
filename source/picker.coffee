@@ -1,21 +1,29 @@
 # @ts-check
 
-# @ts-ignore
-import __shape__ from '../../gis-static/data/shape-forbidden.yaml'
-
 class PickerG extends KeyBinding
 
   constructor: ->
     super()
 
     ###* @type import('./type/picker').PickerG['listShapeForbidden'] ###
-    @listShapeForbidden = __shape__.list
+    @listShapeForbidden = []
 
     ###* @type import('./type/picker').PickerG['namespace'] ###
     @namespace = 'picker'
 
     ###* @type import('./type/picker').PickerG['tsPick'] ###
     @tsPick = 0
+
+  ###* @type import('./type/picker').PickerG['asAutoGadget'] ###
+  asAutoGadget: ->
+
+    unless Config.get 'better-pickup/use-auto-gadget' then return
+    unless State.is 'ready', 'single', 'not-domain' then return
+
+    unless Timer.hasElapsed 'picker/auto-gadget', 1e3 then return
+    unless State.checkIsGadgetUsable() then return
+
+    $.press 'z'
 
   ###* @type import('./type/picker').PickerG['checkShape'] ###
   checkShape: (p) ->
@@ -35,7 +43,8 @@ class PickerG extends KeyBinding
   find: ->
 
     if $.isPressing 'f' then return
-    unless Scene.is 'normal', 'not-domain' then return
+    unless Scene.is 'normal' then return
+    if State.is 'domain' then return
 
     p = ColorManager.findAny 0x323232, [
       '57%', '30%'
@@ -76,6 +85,9 @@ class PickerG extends KeyBinding
   ###* @type import('./type/picker').PickerG['init'] ###
   init: ->
 
+    j = Json2.read './data/misc/shape-forbidden.json'
+    @listShapeForbidden = j.list
+
     @registerEvent 'l-button', 'l-button'
     @registerEvent 'pick', 'f'
 
@@ -97,7 +109,8 @@ class PickerG extends KeyBinding
 
     if @skip() then return
 
-    unless Scene.is 'normal', 'not-domain' then return
+    unless Scene.is 'normal' then return
+    if State.is 'domain' then return
 
     $.press 'f'
 
@@ -112,11 +125,13 @@ class PickerG extends KeyBinding
       @listen()
       return
 
+    @asAutoGadget()
+
     if (Config.get 'better-pickup/use-quick-skip') and Scene.is 'dialogue'
       @skip()
       return
 
-    if (Config.get 'better-pickup/use-fast-pickup') and Scene.is 'normal', 'not-domain'
+    if (Config.get 'better-pickup/use-fast-pickup') and (Scene.is 'normal') and not State.is 'domain'
       @find()
       return
 

@@ -2,6 +2,7 @@ import c2a from 'coffee-ahk'
 import $ from 'fire-keeper'
 
 import sort from './sort'
+import yaml from './yaml'
 
 // function
 
@@ -11,6 +12,7 @@ const compile = (source: string) =>
   c2a(`./source/${source}.coffee`, { salt: 'genshin' })
 
 const main = async () => {
+  await yaml()
   await sort()
   await compile('index')
   await clean()
@@ -23,7 +25,6 @@ const pack = async (source: string, target: string) => {
   const { version } = pkg
 
   const buffer = await $.read<Buffer>(`./source/${source}.ahk`)
-  const dir = `./dist/${target}_${version}`
 
   await $.write(`./dist/${target}.ahk`, buffer)
 
@@ -35,7 +36,11 @@ const pack = async (source: string, target: string) => {
       './source/off.ico',
       './source/on.ico',
     ],
-    dir,
+    `./dist/${target}_${version}`,
+  )
+
+  await $.copy('./source/data/**/*', (source) =>
+    source.replace('/source', `/dist/${target}_${version}`),
   )
 }
 

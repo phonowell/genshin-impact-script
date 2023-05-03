@@ -1,0 +1,35 @@
+ask_for_server:
+  - Are you from the CELESTIA or IRMINSUL server?<br>If you are not sure, please select NO.
+  - 你是否来自“天空岛”或“世界树”服务器？<br>如果不确定，请选择“否”。
+
+cannot_use_party_scanning:
+  - Currently unable to use party scanning
+  - 目前无法使用小队扫描
+
+end_recording:
+  - End recording
+  - 结束录制
+
+end_replaying:
+  - End replaying
+  - 结束回放
+
+invalid_path:
+  - Invalid game path, please start the game manually.
+  - 无效的游戏路径，请手动启动游戏。
+
+party_is_cleared:
+  - Party is cleared
+  - 小队已清空
+
+start_recording:
+  - Start recording
+  - 开始录制
+
+start_replaying:
+  - Start replaying
+  - 开始回放
+
+unknown_character:
+  - Unknown
+  - 未知角色

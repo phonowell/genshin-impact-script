@@ -14,7 +14,6 @@ export class Scene2G {
   check(): Name[]
   private checkIsChat(): boolean
   private checkIsDialogue(): boolean
-  private checkIsDomain(): boolean
   private checkIsHalfMenu(): boolean
   private checkIsLoading(): boolean
   private checkIsMap(): boolean
@@ -23,7 +22,6 @@ export class Scene2G {
   private checkIsNormal(): boolean
   private checkIsParty(): boolean
   private checkIsPlaying(): boolean
-  private checkIsSingle(): boolean
   private makeListName(...names: Name[]): Name[]
   private throttle(id: string, interval: number, fn: () => boolean): boolean
 }
