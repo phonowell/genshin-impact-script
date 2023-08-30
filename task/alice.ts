@@ -1,8 +1,5 @@
-import argv from 'fire-keeper/dist/argv'
-import getBasename from 'fire-keeper/dist/getBasename'
-import glob from 'fire-keeper/dist/glob'
-import prompt from 'fire-keeper/dist/prompt'
-import compact from 'lodash/compact'
+import { argv, getBasename, glob, prompt } from 'fire-keeper'
+import { compact } from 'lodash'
 
 // interface
 
@@ -45,7 +42,7 @@ const main = async () => {
 const run = async (task: string) => {
   const [source] = await glob([`./task/${task}.js`, `./task/${task}.ts`])
 
-  const fn: FnAsync = (await import(source)).default
+  const fn = ((await import(source)) as { default: FnAsync }).default
   await fn()
 }
 

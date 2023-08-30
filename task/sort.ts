@@ -1,5 +1,5 @@
-import $ from 'fire-keeper'
-import capitalize from 'lodash/capitalize'
+import { getBasename, glob, read, write } from 'fire-keeper'
+import { capitalize } from 'lodash'
 
 // variable
 
@@ -76,7 +76,7 @@ const getDepends = (listCont: string[], listName: string[]) => {
 }
 
 const getList = async () => {
-  const listA = await $.glob([
+  const listA = await glob([
     './source/*.coffee',
     '!./source/index.coffee',
     '!./source/misc.coffee',
@@ -88,13 +88,13 @@ const getList = async () => {
   const listC: string[] = []
 
   for (const source of listA) {
-    const content = await $.read<string>(source)
+    const content = await read<string>(source)
     if (!content) continue
     if (content.includes('init: ->')) {
       listB.push([getName(source), getContents(content.replace(/\r/g, '')), []])
       continue
     }
-    listC.push($.getBasename(source))
+    listC.push(getBasename(source))
   }
 
   const listName = listB.map((item) => item[0])
@@ -107,7 +107,7 @@ const getList = async () => {
 }
 
 const getName = (source: string) => {
-  const basename = $.getBasename(source)
+  const basename = getBasename(source)
   if (mapTrans[basename]) return mapTrans[basename]
   return capitalize(basename)
 }
@@ -130,7 +130,7 @@ const main = async () => {
 const saveIndex = async (listName: string[]) => {
   const source = './source/index.coffee'
 
-  const content = await $.read<string>(source)
+  const content = await read<string>(source)
   if (!content) return
 
   const result = content.replace(
@@ -141,13 +141,13 @@ const saveIndex = async (listName: string[]) => {
       '# ---end---',
     ].join('\n'),
   )
-  await $.write(source, result)
+  await write(source, result)
 }
 
 const saveMisc = async (listName: string[]) => {
   const source = './source/misc.coffee'
 
-  const content = await $.read<string>(source)
+  const content = await read<string>(source)
   if (!content) return
 
   const result = content.replace(
@@ -158,7 +158,7 @@ const saveMisc = async (listName: string[]) => {
       '    # ---end---',
     ].join('\n'),
   )
-  await $.write(source, result)
+  await write(source, result)
 }
 
 const sort = (listI: [string, string[], string[]][]) => {

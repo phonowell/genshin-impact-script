@@ -1,13 +1,13 @@
 import c from 'fire-compiler'
-import $ from 'fire-keeper'
+import { glob, read, remove, write } from 'fire-keeper'
 import iconv from 'iconv-lite'
 
 // function
 
 const main = async () => {
-  await $.remove('./source/data/**/*.json')
+  await remove('./source/data/**/*.json')
 
-  const listYaml = await $.glob('./data/**/*.yaml')
+  const listYaml = await glob('./data/**/*.yaml')
   for (const source of listYaml) {
     const target = source
       .replace('/data', '/source/data')
@@ -15,16 +15,16 @@ const main = async () => {
     await c.compileYaml(source as `${string}.yaml`, target)
   }
 
-  const listJson = await $.glob('./source/data/**/*.json')
+  const listJson = await glob('./source/data/**/*.json')
   for (const source of listJson) {
-    const content = await $.read(source, { raw: true })
+    const content = await read(source, { raw: true })
     if (!content) return
     const result = iconv
       .encode(content.toString(), 'utf8', {
         addBOM: true,
       })
       .toString()
-    await $.write(source, result)
+    await write(source, result)
   }
 }
 

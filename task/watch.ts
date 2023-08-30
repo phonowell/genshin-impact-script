@@ -1,6 +1,6 @@
-import watch from 'fire-keeper/dist/watch'
 import { debounce } from 'lodash'
 import say from 'say'
+import { watch } from 'fire-keeper'
 
 import build from './build'
 

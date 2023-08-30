@@ -1,9 +1,9 @@
-import $ from 'fire-keeper'
+import { glob, read, write } from 'fire-keeper'
 
 // function
 
 const main = async () => {
-  const listSource = await $.glob([
+  const listSource = await glob([
     './*.js',
     './*.ts',
     './source/**/*.ts',
@@ -12,11 +12,11 @@ const main = async () => {
     './task/*.ts',
   ])
   for (const source of listSource) {
-    const content = await $.read<string>(source)
+    const content = await read<string>(source)
     if (!content) continue
     const cont = content.replace(/\r/g, '')
     if (cont === content) continue
-    await $.write(source, cont)
+    await write(source, cont)
   }
 }
 

@@ -21,11 +21,6 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "paths": {
-      "@/*": [
-        "source/*"
-      ]
-    },
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": false,
@@ -41,8 +36,5 @@
   "exclude": [
     "node_modules"
   ],
-  "include": [
-    "source/**/*.ts",
-    "task/**/*.ts"
-  ]
+  "include": ["source", "task"]
 }

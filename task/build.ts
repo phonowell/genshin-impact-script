@@ -1,12 +1,12 @@
 import c2a from 'coffee-ahk'
-import $ from 'fire-keeper'
+import { copy, read, remove, write } from 'fire-keeper'
 
 import sort from './sort'
 import yaml from './yaml'
 
 // function
 
-const clean = () => $.remove('./dist')
+const clean = () => remove('./dist')
 
 const compile = (source: string) =>
   c2a(`./source/${source}.coffee`, { salt: 'genshin' })
@@ -20,15 +20,15 @@ const main = async () => {
 }
 
 const pack = async (source: string, target: string) => {
-  const pkg = await $.read<{ version: string }>('./package.json')
+  const pkg = await read<{ version: string }>('./package.json')
   if (!pkg) return
   const { version } = pkg
 
-  const buffer = await $.read<Buffer>(`./source/${source}.ahk`)
+  const buffer = await read<Buffer>(`./source/${source}.ahk`)
 
-  await $.write(`./dist/${target}.ahk`, buffer)
+  await write(`./dist/${target}.ahk`, buffer)
 
-  await $.copy(
+  await copy(
     [
       './data/character.ini',
       './data/config.ini',
@@ -39,7 +39,7 @@ const pack = async (source: string, target: string) => {
     `./dist/${target}_${version}`,
   )
 
-  await $.copy('./source/data/**/*', (source) =>
+  await copy('./source/data/**/*', (source) =>
     source.replace('/source', `/dist/${target}_${version}`),
   )
 }
