@@ -63,8 +63,8 @@ importers:
         specifier: ^0.6.3
         version: 0.6.3
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       prettier:
         specifier: ^2.8.8
         version: 2.8.8
@@ -1267,9 +1267,11 @@ packages:
 
   coffee-ahk@0.0.50:
     resolution: {integrity: sha512-tMJjqUCoJb496es2LK61IYLkNU1D6+Zj8MAOLVIifm73/8zIi4F+bxf+/rzz2jkKx6ANONJTv6PwCVX94i5Osg==}
+    deprecated: This version is deprecated. Please upgrade to 0.0.89 or later.
 
   coffee-ahk@0.0.52:
     resolution: {integrity: sha512-cnUZ0e9W6B3d96IWsH59eSU5sZLOT0Gi2NvOQpPAmXXdtwC4As63I/LiP1rO5CjIhr1uj7J6q0sMrz1KABPHOw==}
+    deprecated: This version is deprecated. Please upgrade to 0.0.89 or later.
 
   coffeescript@1.12.7:
     resolution: {integrity: sha512-pLXHFxQMPklVoEekowk8b3erNynC+DVJzChxS/LCBBgR6/8AJkHivkm//zbowcfc7BTCAjryuhx6gPqPRfsFoA==}
@@ -1618,6 +1620,7 @@ packages:
   eslint@8.39.0:
     resolution: {integrity: sha512-mwiok6cy7KTW7rBpo05k6+p4YVZByLNjAZ/ACB9DRCu4YDRwjXI01tWHp6KAUWelsBetTxKK/2sHB0vdS8Z2Og==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.5.1:
@@ -2143,8 +2146,8 @@ packages:
   lodash.union@4.6.0:
     resolution: {integrity: sha512-c4pB2CdGrGdjMKYLA+XiRDO7Y0PRQbm/Gzg8qMj+QH+pFVAoTp5sBpO0odL3FjoPCGjK96p6qsP+yQoiLoOBcw==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -4320,7 +4323,7 @@ snapshots:
       fire-keeper: 0.0.208
       iconv-lite: 0.6.3
       kleur: 4.1.5
-      lodash: 4.17.21
+      lodash: 4.17.23
 
   coffee-ahk@0.0.52:
     dependencies:
@@ -4329,7 +4332,7 @@ snapshots:
       fire-keeper: 0.0.208
       iconv-lite: 0.6.3
       kleur: 4.1.5
-      lodash: 4.17.21
+      lodash: 4.17.23
 
   coffeescript@1.12.7: {}
 
@@ -4677,7 +4680,7 @@ snapshots:
       '@babel/plugin-syntax-flow': 7.21.4(@babel/core@7.21.5)
       '@babel/plugin-transform-react-jsx': 7.21.5(@babel/core@7.21.5)
       eslint: 8.39.0
-      lodash: 4.17.21
+      lodash: 4.17.23
       string-natural-compare: 3.0.1
 
   eslint-plugin-import@2.27.5(@typescript-eslint/parser@5.59.1(eslint@8.39.0)(typescript@5.0.4))(eslint@8.39.0):
@@ -4928,7 +4931,7 @@ snapshots:
       coffee-ahk: 0.0.50
       csso: 5.0.5
       fire-keeper: 0.0.208
-      lodash: 4.17.21
+      lodash: 4.17.23
       nib: 1.2.0(stylus@0.59.0)
       prettier: 2.8.8
       pug: 3.0.2
@@ -4946,7 +4949,7 @@ snapshots:
       fs-extra: 10.1.0
       js-yaml: 4.1.0
       kleur: 4.1.5
-      lodash: 4.17.21
+      lodash: 4.17.23
       prompts: 2.4.2
       yargs: 17.7.2
 
@@ -4959,7 +4962,7 @@ snapshots:
       fs-extra: 10.1.0
       js-yaml: 4.1.0
       kleur: 4.1.5
-      lodash: 4.17.21
+      lodash: 4.17.23
       prompts: 2.4.2
       yargs: 17.7.2
 
@@ -5367,7 +5370,7 @@ snapshots:
 
   lodash.union@4.6.0: {}
 
-  lodash@4.17.21: {}
+  lodash@4.17.23: {}
 
   loose-envify@1.4.0:
     dependencies:
