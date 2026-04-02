@@ -22,7 +22,7 @@
     "fire-compiler": "^0.0.5",
     "fire-keeper": "^0.0.209",
     "iconv-lite": "^0.6.3",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "prettier": "^2.8.8",
     "say": "^0.16.0",
     "shell-ahk": "^0.0.36",
